@@ -1,1 +1,1 @@
-# wireless-telemetry
+# wireless-telemetry-gui
