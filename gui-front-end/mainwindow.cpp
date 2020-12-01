@@ -42,8 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     QChartView *view = new QChartView(chart);
     view->setRenderHint(QPainter::Antialiasing);
 
-    // central widget needs to be replaced by "graph_widget" for the graph to show up there.
-    //view->setParent(ui->centralWidget);
+    view->setParent(ui->graph_widget);
 }
 
 MainWindow::~MainWindow()
