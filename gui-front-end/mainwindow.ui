@@ -34,50 +34,86 @@
            <rect>
             <x>10</x>
             <y>0</y>
-            <width>131</width>
-            <height>241</height>
+            <width>91</width>
+            <height>291</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <layout class="QVBoxLayout" name="checkbox_layout">
+           <property name="spacing">
+            <number>20</number>
+           </property>
            <item>
-            <widget class="QCheckBox" name="checkBox">
+            <widget class="QCheckBox" name="rpm">
              <property name="text">
               <string>RPM</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_2">
+            <widget class="QCheckBox" name="tps">
              <property name="text">
               <string>TPS</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_3">
+            <widget class="QCheckBox" name="watertemp">
              <property name="text">
               <string>WaterTemp</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_5">
+            <widget class="QCheckBox" name="battery">
              <property name="text">
               <string>Battery</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_4">
+            <widget class="QCheckBox" name="speed">
              <property name="text">
               <string>Speed</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_6">
+            <widget class="QCheckBox" name="external">
              <property name="text">
               <string>External 5V</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="checkbox_spacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="controller">
+             <property name="text">
+              <string>Controller</string>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="sdcard">
+             <property name="text">
+              <string>SD Card</string>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
