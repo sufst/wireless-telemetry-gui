@@ -40,13 +40,13 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_2"/>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>0</y>
-            <width>96</width>
-            <height>291</height>
+            <y>10</y>
+            <width>121</width>
+            <height>251</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="checkbox_layout">
@@ -95,38 +95,45 @@
              </property>
             </widget>
            </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="status_widget" native="true">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>380</y>
+            <width>241</width>
+            <height>71</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <spacer name="checkbox_spacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>10</number>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="controller">
-             <property name="text">
-              <string>Controller</string>
-             </property>
-             <property name="checkable">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="sdcard">
-             <property name="text">
-              <string>SD Card</string>
-             </property>
-             <property name="checkable">
-              <bool>false</bool>
-             </property>
-            </widget>
+             <item>
+              <widget class="QCheckBox" name="sd_card">
+               <property name="text">
+                <string>SD Card</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="controller">
+               <property name="text">
+                <string>Controller</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="ecu">
+               <property name="text">
+                <string>Pro ECU</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>

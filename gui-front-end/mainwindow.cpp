@@ -6,6 +6,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->statusbar->addPermanentWidget(ui->status_widget);
+
+    QTimer::singleShot(0, this, SLOT(showFullScreen()));
+
     QLineSeries *blueSeries = new QLineSeries();
     blueSeries->setName("Simulation");
     blueSeries->append(0,6);
