@@ -23,7 +23,7 @@
          <bool>false</bool>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="core">
          <attribute name="title">
@@ -142,6 +142,99 @@
          <attribute name="title">
           <string>Power-train</string>
          </attribute>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <property name="spacing">
+             <number>50</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="lamda">
+              <property name="text">
+               <string>Lamda</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="advance">
+              <property name="text">
+               <string>Advance</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="inj_time">
+              <property name="text">
+               <string>Injection Time</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="crank_errors">
+              <property name="text">
+               <string>Crank Errors</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="cam_errors">
+              <property name="text">
+               <string>Cam Errors</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="duty_cycle">
+              <property name="text">
+               <string>Inj Duty Cycle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="lamda_pid_trg">
+              <property name="text">
+               <string>Lamda Pid Target</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="lamda_pid_adj">
+              <property name="text">
+               <string>Lamda Pid Adj</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="1">
+           <widget class="QWidget" name="power_graph_1" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: red; </string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_6"/>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QWidget" name="power_graph_2" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(155, 255, 186);</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_7"/>
+           </widget>
+          </item>
+         </layout>
         </widget>
         <widget class="QWidget" name="suspension">
          <attribute name="title">
