@@ -108,7 +108,7 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <layout class="QHBoxLayout" name="indicators_layout">
              <property name="spacing">
               <number>10</number>
              </property>
@@ -170,9 +170,27 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuStatus">
+    <property name="title">
+     <string>Status</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuLogs">
+    <property name="title">
+     <string>Logs</string>
+    </property>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuStatus"/>
+   <addaction name="menuLogs"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

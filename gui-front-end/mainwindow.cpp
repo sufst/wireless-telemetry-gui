@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->statusbar->addPermanentWidget(ui->status_widget);
 
-    QTimer::singleShot(0, this, SLOT(showFullScreen()));
+    //QTimer::singleShot(0, this, SLOT(showFullScreen()));
 
     QLineSeries *blueSeries = new QLineSeries();
     blueSeries->setName("Simulation");
