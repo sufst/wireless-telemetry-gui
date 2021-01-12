@@ -1,0 +1,55 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+	background-color: black;
+}
+
+header {
+	height: 70px;
+	color: white;
+	border-bottom: 1px solid rgb(31, 31, 31);
+}
+
+header .container {
+	height: 70px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.container {
+	max-width: 80%;
+	overflow: hidden;
+	margin: auto;
+}
+
+.state {
+	margin-top: 2rem;
+	color: white;
+}
+
+.status-dis {
+	font-weight: lighter;
+	color: lightcoral;
+	font-size: 1.5rem;
+	border-bottom: 3px solid lightcoral;
+}
+
+.status-connected {
+	font-weight: lighter;
+	color: lightgreen;
+	font-size: 1.5rem;
+	border-bottom: 3px solid lightgreen;
+}
+
+.header-title {
+	font-weight: lighter;
+	font-size: 1.5rem;
+	color: darkgray;
+}
+
