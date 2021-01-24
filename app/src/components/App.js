@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 
+// Config Imports 
 import { AIPDU, PORT, HOST } from '../config/config'
 import { parseData } from '../config/parser'
+
+// Component Imports
+import Header from './Header'
 
 const net = require('net'); 
 
@@ -54,17 +58,10 @@ class App extends Component {
 	}
 
 	render() {
-		const conStatus = this.state.connection_status; 
-		const isConnected = conStatus === 'CONNECTED' ? true : false 
-		const statusStyle = isConnected == true ? 'status-connected' : 'status-dis'
+		const conStatus = this.state.connection_status;
 		return (
 			<div>
-				<header>
-					<div className='container'>
-						<h1 className='header-title'>STAG Telemetry</h1> 
-						<h1 className={statusStyle}>{conStatus}</h1>
-					</div>
-				</header>
+				<Header conStatus={conStatus}/> 
 				<div className='container'>
 					<h1 className='state'>{'Data Received: ' + this.state.count}</h1>
 					<h1>fff</h1>
