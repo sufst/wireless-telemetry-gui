@@ -24,6 +24,10 @@ export const parseData = (stringData) => {
         speed: 0,
         rpm: 0,
         water_temp: 0, 
+        battery_mv: 0,
+        external_5v_mv: 0,
+		fuel_flow: 0,
+		lambda: 0
     }
 
     if (pduType == '1') {
@@ -31,18 +35,33 @@ export const parseData = (stringData) => {
         return 
     }
 
+    // TODO: Refactor each PDU on its own function. 
     if (pduType == '2') {
         console.log('Received: Core ACPDU');
-        console.log(stringData);
-        
-        const speed = stringData['12'];
-        data.speed = speed
 
         const rpm = stringData['5'];
         data.rpm = rpm
 
         const water_temp = stringData['6'];
         data.water_temp = water_temp
+
+        const tps = stringData['7'];
+        data.tps = tps
+
+        const battery_mv = stringData['8'];
+        data.battery_mv = battery_mv
+
+        const external_5v_mv = stringData['9'];
+        data.external_5v_mv = external_5v_mv
+
+        const fuel_flow = stringData['10'];
+        data.fuel_flow = fuel_flow
+
+        const lambda = stringData['11'];
+        data.lambda = lambda
+
+        const speed = stringData['12'];
+        data.speed = speed
         
         return data; 
     }

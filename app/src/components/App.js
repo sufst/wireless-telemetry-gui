@@ -20,7 +20,12 @@ class App extends Component {
 			data: {
 				speed: 0,
 				rpm: 0,
-				water_temp: 0
+				water_temp: 0,
+				tps: 0,
+				battery_mv: 0,
+				external_5v_mv: 0,
+				fuel_flow: 0,
+				lambda: 0
 			}
 		}
 	}
@@ -43,18 +48,17 @@ class App extends Component {
 
 			const parsedData = parseData(JSON.parse(data));
 
-			if (parsedData == undefined) {
-				// If PDU sent from server is not ACPDU there will be no speed so 'speed' will be undefined. 
-				//console.log('NO SPEED');
-				//return
-			}
-
 			// Defaulting to the previous value if the current PDU doesn't have that field. Example, if we got sent Aero PDU which doesn't have a speed field, we will default to the previous speed value. 
 			this.setState({
 				data: {
 					speed: parsedData?.speed ?? this.state.data.speed,
 					rpm: parsedData?.rpm ?? this.state.data.rpm,
-					water_temp: parsedData?.water_temp ?? this.state.data.water_temp
+					water_temp: parsedData?.water_temp ?? this.state.data.water_temp,
+					tps: parsedData?.tps ?? this.state.data.tps,
+					battery_mv: parsedData?.battery_mv ?? this.state.data.battery_mv,
+					external_5v_mv: parsedData?.external_5v_mv ?? this.state.data.external_5v_mv,
+					fuel_flow: parsedData?.fuel_flow ?? this.state.data.fuel_flow,
+					lambda: parsedData?.lambda ?? this.state.data.lambda
 				}
 			})
 		})
@@ -79,6 +83,11 @@ class App extends Component {
 					<h1 className='state'>{'RPM: ' + this.state.data.rpm}</h1>
 					<h1 className='state'>{'Speed: ' + this.state.data.speed + ' KM/H'}</h1>
 					<h1 className='state'>{'Water Temp: ' + this.state.data.water_temp + ' °C'}</h1>
+					<h1 className='state'>{'Throttle Position: ' + this.state.data.tps + '%'}</h1>
+					<h1 className='state'>{'Battery Voltage: ' + this.state.data.battery_mv + ' mV'}</h1>
+					<h1 className='state'>{'External 5V: ' + this.state.data.external_5v_mv + ' mV'}</h1>
+					<h1 className='state'>{'Fuel Flow: ' + this.state.data.fuel_flow}</h1>
+					<h1 className='state'>{'Lambda: ' + this.state.data.lambda}</h1>
 				</div>
 			</div> 
 		)
