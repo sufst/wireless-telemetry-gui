@@ -17,7 +17,11 @@ class App extends Component {
 		this.state = {
 			connection_status: 'DISCONNECTED',
 			count: 0,
-			speed: 0
+			data: {
+				speed: 0,
+				rpm: 0,
+				water_temp: 0
+			}
 		}
 	}
 
@@ -37,14 +41,22 @@ class App extends Component {
 		client.on('data',  (data) => {
 			this.setState({ count: this.state.count + 1})
 
-			const speed = parseData(JSON.parse(data));
+			const parsedData = parseData(JSON.parse(data));
 
-			if (speed == undefined) {
-				console.log('NO SPEED');
-				return
+			if (parsedData == undefined) {
+				// If PDU sent from server is not ACPDU there will be no speed so 'speed' will be undefined. 
+				//console.log('NO SPEED');
+				//return
 			}
 
-			this.setState({ speed: speed })
+			// Defaulting to the previous value if the current PDU doesn't have that field. Example, if we got sent Aero PDU which doesn't have a speed field, we will default to the previous speed value. 
+			this.setState({
+				data: {
+					speed: parsedData?.speed ?? this.state.data.speed,
+					rpm: parsedData?.rpm ?? this.state.data.rpm,
+					water_temp: parsedData?.water_temp ?? this.state.data.water_temp
+				}
+			})
 		})
 
 		client.on('error', (error) => {
@@ -64,8 +76,9 @@ class App extends Component {
 				<Header conStatus={conStatus}/> 
 				<div className='container'>
 					<h1 className='state'>{'Data Received: ' + this.state.count}</h1>
-					<h1>fff</h1>
-					<h1 className='state'>{'Speed: ' + this.state.speed + ' km/h'}</h1>
+					<h1 className='state'>{'RPM: ' + this.state.data.rpm}</h1>
+					<h1 className='state'>{'Speed: ' + this.state.data.speed + ' KM/H'}</h1>
+					<h1 className='state'>{'Water Temp: ' + this.state.data.water_temp + ' °C'}</h1>
 				</div>
 			</div> 
 		)
