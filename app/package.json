@@ -1,8 +1,8 @@
 {
-  "name": "simple-electron-react",
-  "productName": "React Electron App",
-  "version": "1.0.0",
-  "description": "Simple boilerplate for building Electron apps with React",
+  "name": "sufst-telemetry",
+  "productName": "SUFST Telemetry GUI",
+  "version": "0.0.1",
+  "description": "New experimental version of the Telemetry GUI using React.js & Electron.",
   "license": "MIT",
   "engines": {
     "node": ">=9.0.0",
