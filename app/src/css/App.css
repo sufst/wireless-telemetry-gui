@@ -6,7 +6,8 @@
 
 body {
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-	background-color: black;
+	background-color: white;
+	color: black;
 }
 
 header {
@@ -36,7 +37,7 @@ header .container {
 
 .state {
 	margin-top: 2rem;
-	color: white;
+	/* color: white; */
 }
 
 .status-dis {

@@ -1,3 +1,5 @@
+import { Line } from '@reactchartjs/react-chart.js'
+
 import React, { Component } from 'react'
 
 // Config Imports 
@@ -8,6 +10,18 @@ import { parseData } from '../config/parser'
 import Header from './Header'
 
 const net = require('net'); 
+
+const options = {
+	// scales: {
+	//   yAxes: [
+	// 	{
+	// 	  ticks: {
+	// 		beginAtZero: true,
+	// 	  },
+	// 	},
+	//   ],
+	// },
+  }
 
 class App extends Component {
 
@@ -28,6 +42,20 @@ class App extends Component {
 					fuel_flow: 0,
 					lambda: 0
 				},
+			},
+			graphs: {
+				rpmData: {
+					labels: [0],
+					datasets: [
+					  {
+						label: 'RPM',
+						data: [],
+						fill: false,
+						backgroundColor: 'rgb(255, 99, 132)',
+						borderColor: 'rgba(255, 99, 132, 1)',
+					  },
+					],
+				 }
 			}
 		}
 	}
@@ -72,6 +100,20 @@ class App extends Component {
 			count: this.state.count + 1, 
 			data: {
 				core: data
+			}, 
+			graphs: {
+				rpmData: {
+					labels: [...this.state.graphs.rpmData.labels, this.state.count],
+					datasets: [
+						{ 
+							label: 'RPM',
+							fill: false,
+							backgroundColor: 'rgb(255, 99, 132)',
+							borderColor: 'rgba(255, 99, 132, 1)',
+							data: [...this.state.graphs.rpmData.datasets[0].data, data.rpm] 
+						}
+					]
+				}
 			}
 		})
 	}
@@ -81,6 +123,7 @@ class App extends Component {
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
+				<Line className='chart' data={this.state.graphs.rpmData} options={options} />
 				<div className='container'>
 					<h1 className='state'>{'Core Data Received: ' + this.state.count}</h1>
 					<h1 className='state'>{'RPM: ' + this.state.data.core.rpm}</h1>
