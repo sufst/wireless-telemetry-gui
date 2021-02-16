@@ -37,7 +37,7 @@ export const parseData = (stringData) => {
 
     // TODO: Refactor each PDU on its own function. 
     if (pduType == '2') {
-        console.log('Received: Core ACPDU');
+        //console.log('Received: Core ACPDU');
 
         const rpm = stringData['5'];
         data.rpm = rpm
