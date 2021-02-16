@@ -13,6 +13,13 @@
 //
 // Enum Types for ACPDU (Core)
 // 1. PDU Type - In this case 2. 
+// 5. RPM
+// 6. Water Temp
+// 7. TPS
+// 8. Battery 
+// 9. External 5V 
+// 10. Fuel Flow
+// 11. Lambda 
 // 12. Car Speed 
 //
 
@@ -27,11 +34,12 @@ export const parseData = (stringData) => {
         battery_mv: 0,
         external_5v_mv: 0,
 		fuel_flow: 0,
+        tps: 0, 
 		lambda: 0
     }
 
     if (pduType == '1') {
-        console.log('Successfully sent AIPDU');
+        console.log('Successfully received AIPDU');
         return 
     }
 
