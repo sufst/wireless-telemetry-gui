@@ -48,16 +48,13 @@ class App extends Component {
 		client.on('data',  (data) => {
 			const parsedData = parseData(JSON.parse(data));
 
-			if (parsedData == undefined) {
-				return 
+			switch (parsedData.type) {
+				case 2:
+					this.onReceivedCore(parsedData);
+					break;
+				default:
+					break;
 			}
-		
-			this.setState({
-				count: this.state.count + 1, 
-				data: {
-					core: parsedData
-				}
-			})
 		})
 
 		client.on('error', (error) => {
@@ -70,14 +67,22 @@ class App extends Component {
 		})
 	}
 
+	onReceivedCore(data) {
+		this.setState({
+			count: this.state.count + 1, 
+			data: {
+				core: data
+			}
+		})
+	}
+
 	render() {
-		{console.count('Reloading....');}
 		const conStatus = this.state.connection_status;
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
 				<div className='container'>
-					<h1 className='state'>{'Data Received: ' + this.state.count}</h1>
+					<h1 className='state'>{'Core Data Received: ' + this.state.count}</h1>
 					<h1 className='state'>{'RPM: ' + this.state.data.core.rpm}</h1>
 					<h1 className='state'>{'Speed: ' + this.state.data.core.speed + ' KM/H'}</h1>
 					<h1 className='state'>{'Water Temp: ' + this.state.data.core.water_temp + ' °C'}</h1>
