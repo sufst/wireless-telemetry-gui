@@ -118,9 +118,9 @@ class App extends Component {
 						{ 
 							label: 'RPM',
 							fill: false,
-							backgroundColor: 'rgb(255, 99, 132)',
+							backgroundColor: 'rgba(0, 0, 0, 0.5)',
 							borderColor: 'rgba(255, 99, 132, 1)',
-							data: [...this.state.graphs.rpmData.datasets[0].data, data.rpm] 
+							data: data.rpm
 						}
 					]
 				}
@@ -130,12 +130,11 @@ class App extends Component {
 
 	render() {
 		const conStatus = this.state.connection_status;
-		console.log("Reloadingg");
 		const core = this.state.data.core
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
-				{/* <Line className='chart' data={this.state.graphs.rpmData} options={options} /> */}
+				<Line className='chart' data={this.state.graphs.rpmData} options={options} />
 				<div className='container'>
 					<h1 className='state'>{'Core Data Received: ' + this.state.count}</h1>
 					<h1 className='state'>{'RPM: ' + core.rpm.last()}</h1>
