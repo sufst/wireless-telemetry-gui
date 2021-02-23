@@ -23,9 +23,8 @@
 // 12: Car Speed 
 //
 
-export const parseData = (stringData) => {
-
-    const pduType = stringData['1']; 
+export const parseData = (oldData, newData) => {
+    const pduType = newData['1']; 
 
     let data = {
         type: -1
@@ -33,38 +32,36 @@ export const parseData = (stringData) => {
 
     if (pduType == '1') {
         console.log('Successfully received AIPDU');
-        data.type = 1;
         return data; 
     }
 
-    // TODO: Refactor each PDU on its own function. 
     if (pduType == '2') {
         data.type = 2; 
-
-        const rpm = stringData['5'];
-        data.rpm = rpm
-
-        const water_temp = stringData['6'];
-        data.water_temp = water_temp
-
-        const tps = stringData['7'];
-        data.tps = tps
-
-        const battery_mv = stringData['8'];
-        data.battery_mv = battery_mv
-
-        const external_5v_mv = stringData['9'];
-        data.external_5v_mv = external_5v_mv
-
-        const fuel_flow = stringData['10'];
-        data.fuel_flow = fuel_flow
-
-        const lambda = stringData['11'];
-        data.lambda = lambda
-
-        const speed = stringData['12'];
-        data.speed = speed
         
+        const rpm = newData['5'];
+        data.rpm = [...oldData.core.rpm, rpm]
+
+        const water_temp = newData['6'];
+        data.water_temp = [...oldData.core.water_temp, water_temp]
+        
+        const tps = newData['7'];
+        data.tps = [...oldData.core.tps, tps]
+        
+        const battery_mv = newData['8'];
+        data.battery_mv = [...oldData.core.battery_mv, battery_mv]
+        
+        const external_5v_mv = newData['9'];
+        data.external_5v_mv = [...oldData.core.external_5v_mv, external_5v_mv]
+        
+        const fuel_flow = newData['10'];
+        data.fuel_flow = [...oldData.core.fuel_flow, fuel_flow]
+        
+        const lambda = newData['11'];
+        data.lambda = [...oldData.core.lambda, lambda]
+        
+        const speed = newData['12'];
+        data.speed = [...oldData.core.speed, speed]
+
         return data; 
     }
 
@@ -92,4 +89,6 @@ export const parseData = (stringData) => {
         data.type = 7; 
         return data;
     }
+
+    return data;
 }

@@ -28,19 +28,26 @@ class App extends Component {
 	constructor(props) {
 		super(props); 
 
+		// Helper function to get last element of array...
+		if (!Array.prototype.last){
+			Array.prototype.last = function(){
+				return this[this.length - 1];
+			};
+		};
+
 		this.state = {
 			connection_status: 'DISCONNECTED',
 			count: 0,
 			data: {
 				core: {
-					speed: 0,
-					rpm: 0,
-					water_temp: 0,
-					tps: 0,
-					battery_mv: 0,
-					external_5v_mv: 0,
-					fuel_flow: 0,
-					lambda: 0
+					speed: [],
+					rpm: [],
+					water_temp: [],
+					tps: [],
+					battery_mv: [],
+					external_5v_mv: [],
+					fuel_flow: [],
+					lambda: [],
 				},
 			},
 			graphs: {
@@ -74,10 +81,13 @@ class App extends Component {
 		})
 
 		client.on('data',  (data) => {
-			const parsedData = parseData(JSON.parse(data));
+			const oldData = this.state.data
+			const newData = JSON.parse(data); 
+			const parsedData = parseData(oldData, newData);
 
 			switch (parsedData.type) {
 				case 2:
+					//console.log("Received parsed core");
 					this.onReceivedCore(parsedData);
 					break;
 				default:
@@ -120,20 +130,22 @@ class App extends Component {
 
 	render() {
 		const conStatus = this.state.connection_status;
+		console.log("Reloadingg");
+		const core = this.state.data.core
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
-				<Line className='chart' data={this.state.graphs.rpmData} options={options} />
+				{/* <Line className='chart' data={this.state.graphs.rpmData} options={options} /> */}
 				<div className='container'>
 					<h1 className='state'>{'Core Data Received: ' + this.state.count}</h1>
-					<h1 className='state'>{'RPM: ' + this.state.data.core.rpm}</h1>
-					<h1 className='state'>{'Speed: ' + this.state.data.core.speed + ' KM/H'}</h1>
-					<h1 className='state'>{'Water Temp: ' + this.state.data.core.water_temp + ' °C'}</h1>
-					<h1 className='state'>{'Throttle Position: ' + this.state.data.core.tps + '%'}</h1>
-					<h1 className='state'>{'Battery Voltage: ' + this.state.data.core.battery_mv + ' mV'}</h1>
-					<h1 className='state'>{'External 5V: ' + this.state.data.core.external_5v_mv + ' mV'}</h1>
-					<h1 className='state'>{'Fuel Flow: ' + this.state.data.core.fuel_flow}</h1>
-					<h1 className='state'>{'Lambda: ' + this.state.data.core.lambda}</h1>
+					<h1 className='state'>{'RPM: ' + core.rpm.last()}</h1>
+					<h1 className='state'>{'Speed: ' + core.speed.last() + ' KM/H'}</h1>
+					<h1 className='state'>{'Water Temp: ' + core.water_temp.last() + ' °C'}</h1>
+					<h1 className='state'>{'Throttle Position: ' + core.tps.last() + '%'}</h1>
+					<h1 className='state'>{'Battery Voltage: ' + core.battery_mv.last() + ' mV'}</h1>
+					<h1 className='state'>{'External 5V: ' + core.external_5v_mv.last() + ' mV'}</h1>
+					<h1 className='state'>{'Fuel Flow: ' + core.fuel_flow.last() }</h1>
+					<h1 className='state'>{'Lambda: ' + core.lambda.last() }</h1>
 				</div>
 			</div> 
 		)
