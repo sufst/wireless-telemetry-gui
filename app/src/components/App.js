@@ -25,6 +25,8 @@ const options = {
 	// },
   }
 
+var exportCoreData = [];
+
 class App extends Component {
 
 	constructor(props) {
@@ -84,13 +86,17 @@ class App extends Component {
 
 		client.on('data',  (data) => {
 			const oldData = this.state.data
-			const newData = JSON.parse(data); 
+			const newData = JSON.parse(data);
+			var newDataArray = Object.values(newData);
+			newDataArray.splice(0,3);
 			const parsedData = parseData(oldData, newData);
 
 			switch (parsedData.type) {
 				case 2:
-					//console.log("Received parsed core");
+					//console.log("Received parsed Core");
 					this.onReceivedCore(parsedData);
+					console.log(newDataArray);	
+					exportCoreData.push(newDataArray);
 					break;
 				default:
 					break;
@@ -135,26 +141,13 @@ class App extends Component {
 		const core = this.state.data.core;
 		var keys = Object.keys(core);
 		keys.splice(0,1);
-		var exportFormat = [];
-		{
-			var coreArray = Object.values(core);
-			for(var i=0; i<this.state.count; i++)
-			{
-				var record = [];	
-				for(var j=1; j<coreArray.length; j++)
-				{
-					record.push(coreArray[j][i]);
-				}
-				exportFormat.push(record);
-			}
-		}
 
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
 				<Line className='chart' data={this.state.graphs.rpmData} options={options} />
 				<div className='container'>
-					<CSVLink data={exportFormat} headers={keys}>Export to CSV</CSVLink>
+					<CSVLink data={exportCoreData} headers={keys}>Export to CSV</CSVLink>
 					<h1 className='state'>{'Core Data Received: ' + this.state.count}</h1>
 					<h1 className='state'>{'RPM: ' + core.rpm.last()}</h1>
 					<h1 className='state'>{'Speed: ' + core.speed.last() + ' KM/H'}</h1>
