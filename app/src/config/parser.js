@@ -23,6 +23,15 @@
 // 12: Car Speed 
 //
 
+
+//
+// Parses all incoming date from the back-end server.
+// 
+// @param oldData: The existing data 
+// @param newData: The new data sent from the server
+// 
+// @return data: object containing all data (old & new) plus PDU type. 
+//
 export const parseData = (oldData, newData) => {
     const pduType = newData['1']; 
 
