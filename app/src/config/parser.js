@@ -23,6 +23,18 @@
 // 12: Car Speed 
 //
 
+//
+// Enum Types for AAPDU (Aero)
+// 1: PDU Type - In this case 3. 
+// 5:  Evo Scanner 1
+// 6:  Evo Scanner 2
+// 7:  Evo Scanner 3
+// 8:  Evo Scanner 4
+// 9:  Evo Scanner 5 
+// 10: Evo Scanner 6
+// 11: Evo Scanner 7
+//
+
 
 //
 // Parses all incoming date from the back-end server.
@@ -36,7 +48,7 @@ export const parseData = (oldData, newData) => {
     const pduType = newData['1']; 
 
     let data = {
-        type: -1
+        type: -1,
     }
 
     if (pduType == '1') {
@@ -76,6 +88,29 @@ export const parseData = (oldData, newData) => {
 
     if (pduType == '3') {
         data.type = 3; 
+        //console.log('AAPDU: ', newData);
+
+        const evo_1 = newData['5']; 
+        data.evo_1 = [...oldData.aero.evo_1, evo_1]; 
+
+        const evo_2 = newData['6'];
+        data.evo_2 = [...oldData.aero.evo_2, evo_2]; 
+
+        const evo_3 = newData['7'];
+        data.evo_3 = [...oldData.aero.evo_3, evo_3]; 
+
+        const evo_4 = newData['8'];
+        data.evo_4 = [...oldData.aero.evo_4, evo_4]; 
+
+        const evo_5 = newData['9'];
+        data.evo_5 = [...oldData.aero.evo_5, evo_5]; 
+
+        const evo_6 = newData['10'];
+        data.evo_6 = [...oldData.aero.evo_6, evo_6]; 
+
+        const evo_7 = newData['11'];
+        data.evo_7 = [...oldData.aero.evo_7, evo_7]; 
+
         return data; 
     }
 
