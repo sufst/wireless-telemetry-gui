@@ -9,7 +9,7 @@ const _AIPDU = {
 	"7": "GUI"
 };
 
-// Net requires a Buffer to send via the socket so we convert the _AIPDU object to a Buffer. 
+// Net requires a Buffer to be send via the socket so we convert the _AIPDU object to a Buffer. 
 export const AIPDU = JSON.stringify(_AIPDU); 
 
 // Port of the back-end server

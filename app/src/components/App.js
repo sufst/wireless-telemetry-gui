@@ -50,6 +50,15 @@ class App extends Component {
 					fuel_flow: [],
 					lambda: [],
 				},
+				aero: {
+					evo_1: [],
+					evo_2: [],
+					evo_3: [],
+					evo_4: [],
+					evo_5: [],
+					evo_6: [],
+					evo_7: [],
+				}
 			},
 			// State from here and downwards is only used for the dummy graph. Will be changed for final version...
 			graphs: {
@@ -88,10 +97,12 @@ class App extends Component {
 			const oldData = this.state.data
 			const newData = JSON.parse(data); 
 			const parsedData = parseData(oldData, newData);
-
 			switch (parsedData.type) {
 				case 2:
 					this.onReceivedCore(parsedData);
+					break;
+				case 3: 
+					this.onReceivedAero(parsedData); 
 					break;
 				default:
 					break;
@@ -110,11 +121,21 @@ class App extends Component {
 		})
 	}
 
+	onReceivedAero(data) {
+		this.setState({
+			data: {
+				core: this.state.data.core,
+				aero: data
+			}
+		})
+	}
+
 	onReceivedCore(data) {
 		this.setState({
 			count: this.state.count + 1, 
 			data: {
-				core: data
+				core: data,
+				aero: this.state.data.aero
 			}, 
 			graphs: {
 				rpmData: {
@@ -136,20 +157,29 @@ class App extends Component {
 	render() {
 		const conStatus = this.state.connection_status;
 		const core = this.state.data.core
+		const aero = this.state.data.aero
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
-				<Line className='chart' data={this.state.graphs.rpmData} options={options} />
+				{/* <Line className='chart' data={this.state.graphs.rpmData} options={options} /> */}
 				<div className='container'>
-					<h1 className='state'>{'Core Data Received: ' + this.state.count}</h1>
-					<h1 className='state'>{'RPM: ' + core.rpm.last()}</h1>
-					<h1 className='state'>{'Speed: ' + core.speed.last() + ' KM/H'}</h1>
-					<h1 className='state'>{'Water Temp: ' + core.water_temp.last() + ' °C'}</h1>
-					<h1 className='state'>{'Throttle Position: ' + core.tps.last() + '%'}</h1>
-					<h1 className='state'>{'Battery Voltage: ' + core.battery_mv.last() + ' mV'}</h1>
-					<h1 className='state'>{'External 5V: ' + core.external_5v_mv.last() + ' mV'}</h1>
-					<h1 className='state'>{'Fuel Flow: ' + core.fuel_flow.last() }</h1>
-					<h1 className='state'>{'Lambda: ' + core.lambda.last() }</h1>
+					<p className='state'>{'Core Data Received: ' + this.state.count}</p>
+					<p className='state'>{'RPM: ' + core.rpm.last()}</p>
+					<p className='state'>{'Speed: ' + core.speed.last() + ' KM/H'}</p>
+					<p className='state'>{'Water Temp: ' + core.water_temp.last() + ' °C'}</p>
+					<p className='state'>{'Throttle Position: ' + core.tps.last() + '%'}</p>
+					<p className='state'>{'Battery Voltage: ' + core.battery_mv.last() + ' mV'}</p>
+					<p className='state'>{'External 5V: ' + core.external_5v_mv.last() + ' mV'}</p>
+					<p className='state'>{'Fuel Flow: ' + core.fuel_flow.last() }</p>
+					<p className='state'>{'Lambda: ' + core.lambda.last() }</p>
+					<hr></hr>
+					<p className='state'>{'EVO 1: ' + aero.evo_1.last() }</p>
+					<p className='state'>{'EVO 2: ' + aero.evo_2.last() }</p>
+					<p className='state'>{'EVO 3: ' + aero.evo_3.last() }</p>
+					<p className='state'>{'EVO 4: ' + aero.evo_4.last() }</p>
+					<p className='state'>{'EVO 5: ' + aero.evo_5.last() }</p>
+					<p className='state'>{'EVO 6: ' + aero.evo_6.last() }</p>
+					<p className='state'>{'EVO 7: ' + aero.evo_7.last() }</p>
 				</div>
 			</div> 
 		)
