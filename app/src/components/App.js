@@ -97,10 +97,7 @@ class App extends Component {
 
 			switch (parsedData.type) {
 				case 2:
-<<<<<<< HEAD
 					//console.log("Received parsed Core");
-=======
->>>>>>> b7b3e06f1bd59b9520ebb7f99b1505487a102f24
 					this.onReceivedCore(parsedData);
 					console.log(newDataArray);	
 					exportCoreData.push(newDataArray);
