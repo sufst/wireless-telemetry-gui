@@ -13,6 +13,7 @@ import { count } from 'console';
 
 const net = require('net'); 
 
+// For graph testing purposes. Ignore for now..
 const options = {
 	// scales: {
 	//   yAxes: [
@@ -54,6 +55,7 @@ class App extends Component {
 					lambda: [],
 				},
 			},
+			// State from here and downwards is only used for the dummy graph. Will be changed for final version...
 			graphs: {
 				rpmData: {
 					labels: [0],
@@ -80,11 +82,13 @@ class App extends Component {
 	
 		client.connect({ port: PORT, host: HOST }, () => {
 			client.write(AIPDU, ()  => {
+				// Successfully Connected to Back-End Server
 				this.setState({ connection_status: 'CONNECTED'} )
 			})
 		})
 
 		client.on('data',  (data) => {
+			// Called everytime data has been received by the back-end
 			const oldData = this.state.data
 			const newData = JSON.parse(data);
 			var newDataArray = Object.values(newData);
@@ -93,7 +97,10 @@ class App extends Component {
 
 			switch (parsedData.type) {
 				case 2:
+<<<<<<< HEAD
 					//console.log("Received parsed Core");
+=======
+>>>>>>> b7b3e06f1bd59b9520ebb7f99b1505487a102f24
 					this.onReceivedCore(parsedData);
 					console.log(newDataArray);	
 					exportCoreData.push(newDataArray);
@@ -104,10 +111,12 @@ class App extends Component {
 		})
 
 		client.on('error', (error) => {
-			console.log('Error Connnecting to Server...');
+			// An unhandled error has occured in the socket connection to the back-end
+			console.log('Error Connnecting to Server: ', error);
 		})
 
 		client.on('end', () => {
+			// The socket connection to the back-end has been terminated.
 			console.log('Server connection ended...');
 			this.setState( {connection_status: 'DISCONNECTED'} )
 		})
