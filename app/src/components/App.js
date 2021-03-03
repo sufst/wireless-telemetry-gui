@@ -10,6 +10,7 @@ import { CSVLink, CSVDownload } from "react-csv";
 // Component Imports
 import Header from './Header'
 import { count } from 'console';
+import Tabs from "./Tabs"; 
 
 const net = require('net'); 
 
@@ -27,6 +28,7 @@ const options = {
   }
 
 var exportCoreData = [];
+var exportAeroData = [];
 
 class App extends Component {
 
@@ -107,11 +109,11 @@ class App extends Component {
 				case 2:
 					//console.log("Received parsed Core");
 					this.onReceivedCore(parsedData);
-					console.log(newDataArray);	
 					exportCoreData.push(newDataArray);
 					break;
 				case 3: 
-					this.onReceivedAero(parsedData); 
+					this.onReceivedAero(parsedData);
+					exportAeroData.push(newDataArray);
 					break;
 				default:
 					break;
@@ -167,15 +169,17 @@ class App extends Component {
 		const conStatus = this.state.connection_status;
 		const core = this.state.data.core;
 		const aero = this.state.data.aero;
-		var keys = Object.keys(core);
-		keys.splice(0,1);
+		const aeroKeys = Object.keys(aero);
+		const coreKeys = Object.keys(core);
+		aeroKeys.splice(0,1);
+		coreKeys.splice(0,1);
 
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
 				{/* <Line className='chart' data={this.state.graphs.rpmData} options={options} /> */}
 				<div className='container'>
-				<CSVLink data={exportCoreData} headers={keys}>Export to CSV</CSVLink>
+					<CSVLink data={exportCoreData} headers={coreKeys}>Export to CSV</CSVLink>
 					<p className='state'>{'Core Data Received: ' + this.state.count}</p>
 					<p className='state'>{'RPM: ' + core.rpm.last()}</p>
 					<p className='state'>{'Speed: ' + core.speed.last() + ' KM/H'}</p>
@@ -186,6 +190,7 @@ class App extends Component {
 					<p className='state'>{'Fuel Flow: ' + core.fuel_flow.last() }</p>
 					<p className='state'>{'Lambda: ' + core.lambda.last() }</p>
 					<hr></hr>
+					<CSVLink data={exportAeroData} headers={aeroKeys}>Export to CSV</CSVLink>
 					<p className='state'>{'EVO 1: ' + aero.evo_1.last() }</p>
 					<p className='state'>{'EVO 2: ' + aero.evo_2.last() }</p>
 					<p className='state'>{'EVO 3: ' + aero.evo_3.last() }</p>
@@ -194,6 +199,17 @@ class App extends Component {
 					<p className='state'>{'EVO 6: ' + aero.evo_6.last() }</p>
 					<p className='state'>{'EVO 7: ' + aero.evo_7.last() }</p>
 				</div>
+				{/* <Tabs> 
+					<div label="Gator"> 
+						See ya later, <em>Alligator</em>! 
+					</div> 
+					<div label="Croc"> 
+						After 'while, <em>Crocodile</em>! 
+					</div> 
+					<div label="Sarcosuchus"> 
+						Nothing to see here, this tab is <em>extinct</em>! 
+					</div> 
+				</Tabs>  */}
 			</div> 
 		)
 	}
