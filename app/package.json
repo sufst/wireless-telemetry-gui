@@ -21,6 +21,7 @@
     "postpackage": "electron-packager ./ --out=./release-builds"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "@reactchartjs/react-chart.js": "^1.0.0-rc.3",
     "chart.js": "^2.9.4",
     "prop-types": "^15.7.2",
