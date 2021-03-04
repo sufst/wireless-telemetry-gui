@@ -105,9 +105,7 @@ class App extends Component {
 			const parsedData = parseData(oldData, newData);
 			switch (parsedData.type) {
 				case 2:
-					//console.log("Received parsed Core");
 					this.onReceivedCore(parsedData);
-					console.log(newDataArray);	
 					exportCoreData.push(newDataArray);
 					break;
 				case 3: 
@@ -140,6 +138,9 @@ class App extends Component {
 	}
 
 	onReceivedCore(data) {
+		if (this.state.count > 20) {
+			this.state.graphs.rpmData.labels.shift();
+		}
 		this.setState({
 			count: this.state.count + 1, 
 			data: {
@@ -153,7 +154,7 @@ class App extends Component {
 						{ 
 							label: 'RPM',
 							fill: false,
-							backgroundColor: 'rgba(0, 0, 0, 0.5)',
+							backgroundColor: 'rgba(0, 0, 0, 0.6)',
 							borderColor: 'rgba(255, 99, 132, 1)',
 							data: data.rpm
 						}
@@ -175,7 +176,7 @@ class App extends Component {
 				<Header conStatus={conStatus}/> 
 				{/* <Line className='chart' data={this.state.graphs.rpmData} options={options} /> */}
 				<div className='container'>
-				<CSVLink data={exportCoreData} headers={keys}>Export to CSV</CSVLink>
+					<CSVLink data={exportCoreData} headers={keys}>Export to CSV</CSVLink>
 					<p className='state'>{'Core Data Received: ' + this.state.count}</p>
 					<p className='state'>{'RPM: ' + core.rpm.last()}</p>
 					<p className='state'>{'Speed: ' + core.speed.last() + ' KM/H'}</p>

@@ -44,6 +44,16 @@
 // 
 // @return data: object containing all data (old & new) plus PDU type. 
 //
+
+const MAX_GRAPH_VALUES = 20; 
+
+const correctSizeArray = (input) => {
+    if (input.length > MAX_GRAPH_VALUES) {
+        input.shift(); 
+    }
+    return input; 
+}
+
 export const parseData = (oldData, newData) => {
     const pduType = newData['1']; 
 
@@ -60,56 +70,55 @@ export const parseData = (oldData, newData) => {
         data.type = 2; 
         
         const rpm = newData['5'];
-        data.rpm = [...oldData.core.rpm, rpm]
+        data.rpm = [...correctSizeArray(oldData.core.rpm), rpm]
 
         const water_temp = newData['6'];
-        data.water_temp = [...oldData.core.water_temp, water_temp]
+        data.water_temp = [...correctSizeArray(oldData.core.water_temp), water_temp]
         
         const tps = newData['7'];
         data.tps = [...oldData.core.tps, tps]
         
         const battery_mv = newData['8'];
-        data.battery_mv = [...oldData.core.battery_mv, battery_mv]
+        data.battery_mv = [...correctSizeArray(oldData.core.battery_mv), battery_mv]
         
         const external_5v_mv = newData['9'];
-        data.external_5v_mv = [...oldData.core.external_5v_mv, external_5v_mv]
+        data.external_5v_mv = [...correctSizeArray(oldData.core.external_5v_mv), external_5v_mv]
         
         const fuel_flow = newData['10'];
-        data.fuel_flow = [...oldData.core.fuel_flow, fuel_flow]
+        data.fuel_flow = [...correctSizeArray(oldData.core.fuel_flow), fuel_flow]
         
         const lambda = newData['11'];
-        data.lambda = [...oldData.core.lambda, lambda]
+        data.lambda = [...correctSizeArray(oldData.core.lambda), lambda]
         
         const speed = newData['12'];
-        data.speed = [...oldData.core.speed, speed]
+        data.speed = [...correctSizeArray(oldData.core.speed), speed]
 
         return data; 
     }
 
     if (pduType == '3') {
         data.type = 3; 
-        //console.log('AAPDU: ', newData);
 
         const evo_1 = newData['5']; 
-        data.evo_1 = [...oldData.aero.evo_1, evo_1]; 
+        data.evo_1 = [...correctSizeArray(oldData.aero.evo_1), evo_1]; 
 
         const evo_2 = newData['6'];
-        data.evo_2 = [...oldData.aero.evo_2, evo_2]; 
+        data.evo_2 = [...correctSizeArray(oldData.aero.evo_2), evo_2]; 
 
         const evo_3 = newData['7'];
-        data.evo_3 = [...oldData.aero.evo_3, evo_3]; 
+        data.evo_3 = [...correctSizeArray(oldData.aero.evo_3), evo_3]; 
 
         const evo_4 = newData['8'];
-        data.evo_4 = [...oldData.aero.evo_4, evo_4]; 
+        data.evo_4 = [...correctSizeArray(oldData.aero.evo_4), evo_4]; 
 
         const evo_5 = newData['9'];
-        data.evo_5 = [...oldData.aero.evo_5, evo_5]; 
+        data.evo_5 = [...correctSizeArray(oldData.aero.evo_5), evo_5]; 
 
         const evo_6 = newData['10'];
-        data.evo_6 = [...oldData.aero.evo_6, evo_6]; 
+        data.evo_6 = [...correctSizeArray(oldData.aero.evo_6), evo_6]; 
 
         const evo_7 = newData['11'];
-        data.evo_7 = [...oldData.aero.evo_7, evo_7]; 
+        data.evo_7 = [...correctSizeArray(oldData.aero.evo_7), evo_7]; 
 
         return data; 
     }
