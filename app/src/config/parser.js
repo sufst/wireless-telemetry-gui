@@ -54,6 +54,16 @@
 // 8:  Advance
 //
 
+//
+// Enum Types for ASPDU (Suspension)
+// 1: PDU Type - In this case 6. 
+// 4:  <NO SHOWING IN DATA>
+// 5:  Injection Duty Cycle
+// 6:  Lambda pid Adjust 
+// 7:  Lambda pid Target 
+// 8:  Advance
+//
+
 
 const MAX_GRAPH_VALUES = 20; 
 
@@ -178,7 +188,20 @@ export const parseData = (oldData, newData) => {
     }
 
     if (pduType == '6') {
-        data.type = 6; 
+        data.type = 6;
+
+        const height_fl = newData['5']; 
+        data.height_fl = [...correctSizeArray(oldData.susp.height_fl), height_fl];
+
+        const height_fr = newData['6']; 
+        data.height_fr = [...correctSizeArray(oldData.susp.height_fr), height_fr];
+
+        const height_flw = newData['7'];
+        data.height_flw = [...correctSizeArray(oldData.susp.height_flw), height_flw];
+
+        const height_rear = newData['8'];
+        data.height_rear = [...correctSizeArray(oldData.susp.height_rear), height_rear];
+
         return data;
     }
 

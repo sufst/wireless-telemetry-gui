@@ -74,6 +74,12 @@ class App extends Component {
 					lambda_adjust: [],
 					lambda_target: [],
 					advance: [],
+				}, 
+				susp: {
+					height_fl: [],
+					height_fr: [],
+					height_flw: [],
+					height_rear: [],
 				}
 			},
 			// State from here and downwards is only used for the dummy graph. Will be changed for final version...
@@ -129,6 +135,9 @@ class App extends Component {
 				case 5: 
 					this.onReceivePowertrain(parsedData); 
 					break; 
+				case 6: 
+					this.onReceiveSuspension(parsedData); 
+					break; 
 				default:
 					break;
 			}
@@ -146,6 +155,18 @@ class App extends Component {
 		})
 	}
 
+	onReceiveSuspension(data) {
+		this.setState({
+			data: {
+				core: this.state.data.core,
+				aero: this.state.data.aero, 
+				diagn: this.state.data.diagn,
+				power: this.state.data.power,
+				susp: data
+			}
+		})
+	}
+
 	onReceivePowertrain(data) {
 		this.setState({
 			data: {
@@ -153,6 +174,7 @@ class App extends Component {
 				aero: this.state.data.aero, 
 				diagn: this.state.data.diagn,
 				power: data,
+				susp: this.state.data.susp,
 			}
 		})
 	}
@@ -163,7 +185,8 @@ class App extends Component {
 				core: this.state.data.core,
 				aero: this.state.data.aero, 
 				diagn: data,
-				power: this.state.data.power
+				power: this.state.data.power,
+				susp: this.state.data.susp,
 			}
 		})
 	}
@@ -174,7 +197,8 @@ class App extends Component {
 				core: this.state.data.core,
 				aero: data, 
 				diagn: this.state.data.diagn, 
-				power: this.state.data.power
+				power: this.state.data.power, 
+				susp: this.state.data.susp,
 			}
 		})
 	}
@@ -189,7 +213,8 @@ class App extends Component {
 				core: data,
 				aero: this.state.data.aero,
 				diagn: this.state.data.diagn,
-				power: this.state.data.power
+				power: this.state.data.power,
+				susp: this.state.data.susp,
 			}, 
 			graphs: {
 				rpmData: {
@@ -214,6 +239,7 @@ class App extends Component {
 		const aero = this.state.data.aero;
 		const diagn = this.state.data.diagn; 
 		const power = this.state.data.power;
+		const susp = this.state.data.susp; 
 		var keys = Object.keys(core);
 		keys.splice(0,1);
 
@@ -254,6 +280,12 @@ class App extends Component {
 					<p className='state'>{'Lambda Adjust: ' + power.lambda_adjust.last() }</p>
 					<p className='state'>{'Lambda Target: ' + power.lambda_target.last() }</p>
 					<p className='state'>{'Advance: ' + power.advance.last() }</p>
+					<hr></hr>
+					<h2>Suspension</h2> 
+					<p className='state'>{'Height Front Left: ' + susp.height_fl.last() }</p>
+					<p className='state'>{'Height Front Right: ' + susp.height_fr.last() }</p>
+					<p className='state'>{'Height Front Left Wheel: ' + susp.height_flw.last() }</p>
+					<p className='state'>{'Height Rear: ' + susp.height_rear.last() }</p>
 				</div>
 			</div> 
 		)
