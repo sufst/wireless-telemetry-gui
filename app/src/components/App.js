@@ -80,6 +80,12 @@ class App extends Component {
 					height_fr: [],
 					height_flw: [],
 					height_rear: [],
+				},
+				misc: {
+					lap_timer: [],
+					accel_fl_x: [],
+					accel_fl_y: [],
+					accel_fl_z: [],
 				}
 			},
 			// State from here and downwards is only used for the dummy graph. Will be changed for final version...
@@ -138,6 +144,8 @@ class App extends Component {
 				case 6: 
 					this.onReceiveSuspension(parsedData); 
 					break; 
+				case 7: 
+					this.onReceiveMisc(parsedData); 
 				default:
 					break;
 			}
@@ -155,6 +163,20 @@ class App extends Component {
 		})
 	}
 
+	onReceiveMisc(data) {
+		console.log(data);
+		this.setState({
+			data: {
+				core: this.state.data.core,
+				aero: this.state.data.aero, 
+				diagn: this.state.data.diagn,
+				power: this.state.data.power,
+				susp: this.state.data.susp, 
+				misc: data
+			}
+		})
+	}
+
 	onReceiveSuspension(data) {
 		this.setState({
 			data: {
@@ -162,7 +184,8 @@ class App extends Component {
 				aero: this.state.data.aero, 
 				diagn: this.state.data.diagn,
 				power: this.state.data.power,
-				susp: data
+				susp: data,
+				misc: this.state.data.misc,
 			}
 		})
 	}
@@ -175,6 +198,7 @@ class App extends Component {
 				diagn: this.state.data.diagn,
 				power: data,
 				susp: this.state.data.susp,
+				misc: this.state.data.misc,
 			}
 		})
 	}
@@ -187,6 +211,7 @@ class App extends Component {
 				diagn: data,
 				power: this.state.data.power,
 				susp: this.state.data.susp,
+				misc: this.state.data.misc,
 			}
 		})
 	}
@@ -199,6 +224,7 @@ class App extends Component {
 				diagn: this.state.data.diagn, 
 				power: this.state.data.power, 
 				susp: this.state.data.susp,
+				misc: this.state.data.misc,
 			}
 		})
 	}
@@ -215,6 +241,7 @@ class App extends Component {
 				diagn: this.state.data.diagn,
 				power: this.state.data.power,
 				susp: this.state.data.susp,
+				misc: this.state.data.misc,
 			}, 
 			graphs: {
 				rpmData: {
@@ -240,6 +267,8 @@ class App extends Component {
 		const diagn = this.state.data.diagn; 
 		const power = this.state.data.power;
 		const susp = this.state.data.susp; 
+		const misc = this.state.data.misc;
+
 		var keys = Object.keys(core);
 		keys.splice(0,1);
 
@@ -282,6 +311,12 @@ class App extends Component {
 					<p className='state'>{'Advance: ' + power.advance.last() }</p>
 					<hr></hr>
 					<h2>Suspension</h2> 
+					<p className='state'>{'Height Front Left: ' + susp.height_fl.last() }</p>
+					<p className='state'>{'Height Front Right: ' + susp.height_fr.last() }</p>
+					<p className='state'>{'Height Front Left Wheel: ' + susp.height_flw.last() }</p>
+					<p className='state'>{'Height Rear: ' + susp.height_rear.last() }</p>
+					<hr></hr>
+					<h2>Miscellaneous</h2> 
 					<p className='state'>{'Height Front Left: ' + susp.height_fl.last() }</p>
 					<p className='state'>{'Height Front Right: ' + susp.height_fr.last() }</p>
 					<p className='state'>{'Height Front Left Wheel: ' + susp.height_flw.last() }</p>

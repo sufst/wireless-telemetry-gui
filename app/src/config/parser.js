@@ -57,7 +57,15 @@
 //
 // Enum Types for ASPDU (Suspension)
 // 1: PDU Type - In this case 6. 
-// 4:  <NO SHOWING IN DATA>
+// 5:  Injection Duty Cycle
+// 6:  Lambda pid Adjust 
+// 7:  Lambda pid Target 
+// 8:  Advance
+//
+
+//
+// Enum Types for AMPDU (Misc)
+// 1: PDU Type - In this case 7. 
 // 5:  Injection Duty Cycle
 // 6:  Lambda pid Adjust 
 // 7:  Lambda pid Target 
@@ -207,6 +215,19 @@ export const parseData = (oldData, newData) => {
 
     if (pduType == '7') {
         data.type = 7; 
+
+        const lap_timer = newData['5']; 
+        data.lap_timer = [...correctSizeArray(oldData.misc.lap_timer), lap_timer];
+        
+        const accel_fl_x = newData['6']; 
+        data.accel_fl_x = [...correctSizeArray(oldData.misc.accel_fl_x), accel_fl_x];
+        
+        const accel_fl_y = newData['7'];
+        data.accel_fl_y = [...correctSizeArray(oldData.misc.accel_fl_y), accel_fl_y];
+        
+        const accel_fl_z = newData['8']; 
+        data.accel_fl_z = [...correctSizeArray(oldData.misc.accel_fl_z), accel_fl_z];
+
         return data;
     }
 
