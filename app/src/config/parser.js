@@ -35,15 +35,15 @@
 // 11: Evo Scanner 7
 //
 
+//
+// Enum Types for ADPDU (Diagnostics)
+// 1: PDU Type - In this case 4. 
+// 5:  ECU Status
+// 6:  Engine Status
+// 7:  Battery Status
+// 8:  Car Logging Status
+//
 
-//
-// Parses all incoming date from the back-end server.
-// 
-// @param oldData: The existing data 
-// @param newData: The new data sent from the server
-// 
-// @return data: object containing all data (old & new) plus PDU type. 
-//
 
 const MAX_GRAPH_VALUES = 20; 
 
@@ -54,6 +54,14 @@ const correctSizeArray = (input) => {
     return input; 
 }
 
+//
+// Parses all incoming date from the back-end server.
+// 
+// @param oldData: The existing data 
+// @param newData: The new data sent from the server
+// 
+// @return data: object containing all data (old & new) plus PDU type. 
+//
 export const parseData = (oldData, newData) => {
     const pduType = newData['1']; 
 
@@ -76,7 +84,7 @@ export const parseData = (oldData, newData) => {
         data.water_temp = [...correctSizeArray(oldData.core.water_temp), water_temp]
         
         const tps = newData['7'];
-        data.tps = [...oldData.core.tps, tps]
+        data.tps = [...correctSizeArray(oldData.core.tps), tps]
         
         const battery_mv = newData['8'];
         data.battery_mv = [...correctSizeArray(oldData.core.battery_mv), battery_mv]
@@ -125,6 +133,19 @@ export const parseData = (oldData, newData) => {
 
     if (pduType == '4') {
         data.type = 4; 
+
+        const ecu_status = newData['5'];
+        data.ecu_status = [...correctSizeArray(oldData.diagn.ecu_status), ecu_status]; 
+
+        const engine_status = newData['6'];
+        data.engine_status = [...correctSizeArray(oldData.diagn.engine_status), engine_status]; 
+
+        const battery_status = newData['7'];
+        data.battery_status = [...correctSizeArray(oldData.diagn.battery_status), battery_status]; 
+
+        const logging_status = newData['8']; 
+        data.logging_status = [...correctSizeArray(oldData.diagn.logging_status), logging_status]; 
+
         return data;
     }
 

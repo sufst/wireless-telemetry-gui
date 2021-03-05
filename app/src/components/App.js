@@ -62,6 +62,12 @@ class App extends Component {
 					evo_5: [],
 					evo_6: [],
 					evo_7: [],
+				},
+				diagn: {
+					ecu_status: [],
+					engine_status: [],
+					battery_status: [],
+					logging_status: [],
 				}
 			},
 			// State from here and downwards is only used for the dummy graph. Will be changed for final version...
@@ -111,6 +117,9 @@ class App extends Component {
 				case 3: 
 					this.onReceivedAero(parsedData); 
 					break;
+				case 4: 
+					this.onReceiveDiagnostics(parsedData); 
+					break; 
 				default:
 					break;
 			}
@@ -128,11 +137,22 @@ class App extends Component {
 		})
 	}
 
+	onReceiveDiagnostics(data) {
+		this.setState({
+			data: {
+				core: this.state.data.core,
+				aero: this.state.data.aero, 
+				diagn: data,
+			}
+		})
+	}
+
 	onReceivedAero(data) {
 		this.setState({
 			data: {
 				core: this.state.data.core,
-				aero: data
+				aero: data, 
+				diagn: this.state.data.diagn, 
 			}
 		})
 	}
@@ -145,7 +165,8 @@ class App extends Component {
 			count: this.state.count + 1, 
 			data: {
 				core: data,
-				aero: this.state.data.aero
+				aero: this.state.data.aero,
+				diagn: this.state.data.diagn
 			}, 
 			graphs: {
 				rpmData: {
@@ -168,6 +189,7 @@ class App extends Component {
 		const conStatus = this.state.connection_status;
 		const core = this.state.data.core;
 		const aero = this.state.data.aero;
+		const diagn = this.state.data.diagn; 
 		var keys = Object.keys(core);
 		keys.splice(0,1);
 
@@ -176,6 +198,7 @@ class App extends Component {
 				<Header conStatus={conStatus}/> 
 				{/* <Line className='chart' data={this.state.graphs.rpmData} options={options} /> */}
 				<div className='container'>
+					<h2>Core</h2>
 					<CSVLink data={exportCoreData} headers={keys}>Export to CSV</CSVLink>
 					<p className='state'>{'Core Data Received: ' + this.state.count}</p>
 					<p className='state'>{'RPM: ' + core.rpm.last()}</p>
@@ -187,6 +210,7 @@ class App extends Component {
 					<p className='state'>{'Fuel Flow: ' + core.fuel_flow.last() }</p>
 					<p className='state'>{'Lambda: ' + core.lambda.last() }</p>
 					<hr></hr>
+					<h2>Aero</h2> 
 					<p className='state'>{'EVO 1: ' + aero.evo_1.last() }</p>
 					<p className='state'>{'EVO 2: ' + aero.evo_2.last() }</p>
 					<p className='state'>{'EVO 3: ' + aero.evo_3.last() }</p>
@@ -194,6 +218,12 @@ class App extends Component {
 					<p className='state'>{'EVO 5: ' + aero.evo_5.last() }</p>
 					<p className='state'>{'EVO 6: ' + aero.evo_6.last() }</p>
 					<p className='state'>{'EVO 7: ' + aero.evo_7.last() }</p>
+					<hr></hr>
+					<h2>Diagnostics</h2> 
+					<p className='state'>{'ECU Status: ' + diagn.ecu_status.last() }</p>
+					<p className='state'>{'Engine Status: ' + diagn.engine_status.last() }</p>
+					<p className='state'>{'Battery Status: ' + diagn.battery_status.last() }</p>
+					<p className='state'>{'Logging Status: ' + diagn.logging_status.last() }</p>
 				</div>
 			</div> 
 		)
