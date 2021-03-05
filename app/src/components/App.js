@@ -164,7 +164,6 @@ class App extends Component {
 	}
 
 	onReceiveMisc(data) {
-		console.log(data);
 		this.setState({
 			data: {
 				core: this.state.data.core,
@@ -317,10 +316,10 @@ class App extends Component {
 					<p className='state'>{'Height Rear: ' + susp.height_rear.last() }</p>
 					<hr></hr>
 					<h2>Miscellaneous</h2> 
-					<p className='state'>{'Height Front Left: ' + susp.height_fl.last() }</p>
-					<p className='state'>{'Height Front Right: ' + susp.height_fr.last() }</p>
-					<p className='state'>{'Height Front Left Wheel: ' + susp.height_flw.last() }</p>
-					<p className='state'>{'Height Rear: ' + susp.height_rear.last() }</p>
+					<p className='state'>{'Lap Timer: ' + misc.lap_timer.last() }</p>
+					<p className='state'>{'Accel X-Axis: ' + misc.accel_fl_x.last() }</p>
+					<p className='state'>{'Accel Y-Axis: ' + misc.accel_fl_y.last() }</p>
+					<p className='state'>{'Accel Z-Axis: ' + misc.accel_fl_z.last() }</p>
 				</div>
 			</div> 
 		)
