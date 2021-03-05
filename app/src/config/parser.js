@@ -66,10 +66,10 @@
 //
 // Enum Types for AMPDU (Misc)
 // 1: PDU Type - In this case 7. 
-// 5:  Injection Duty Cycle
-// 6:  Lambda pid Adjust 
-// 7:  Lambda pid Target 
-// 8:  Advance
+// 5:  Lap Timer 
+// 6:  Front-Left Accelerometer X-Axis
+// 7:  Front-Left Accelerometer Y-Axis
+// 8:  Front-Left Accelerometer Z-Axis
 //
 
 
