@@ -68,6 +68,12 @@ class App extends Component {
 					engine_status: [],
 					battery_status: [],
 					logging_status: [],
+				},
+				power: {
+					injection_cycle: [],
+					lambda_adjust: [],
+					lambda_target: [],
+					advance: [],
 				}
 			},
 			// State from here and downwards is only used for the dummy graph. Will be changed for final version...
@@ -120,6 +126,9 @@ class App extends Component {
 				case 4: 
 					this.onReceiveDiagnostics(parsedData); 
 					break; 
+				case 5: 
+					this.onReceivePowertrain(parsedData); 
+					break; 
 				default:
 					break;
 			}
@@ -137,12 +146,24 @@ class App extends Component {
 		})
 	}
 
+	onReceivePowertrain(data) {
+		this.setState({
+			data: {
+				core: this.state.data.core,
+				aero: this.state.data.aero, 
+				diagn: this.state.data.diagn,
+				power: data,
+			}
+		})
+	}
+
 	onReceiveDiagnostics(data) {
 		this.setState({
 			data: {
 				core: this.state.data.core,
 				aero: this.state.data.aero, 
 				diagn: data,
+				power: this.state.data.power
 			}
 		})
 	}
@@ -153,6 +174,7 @@ class App extends Component {
 				core: this.state.data.core,
 				aero: data, 
 				diagn: this.state.data.diagn, 
+				power: this.state.data.power
 			}
 		})
 	}
@@ -166,7 +188,8 @@ class App extends Component {
 			data: {
 				core: data,
 				aero: this.state.data.aero,
-				diagn: this.state.data.diagn
+				diagn: this.state.data.diagn,
+				power: this.state.data.power
 			}, 
 			graphs: {
 				rpmData: {
@@ -190,6 +213,7 @@ class App extends Component {
 		const core = this.state.data.core;
 		const aero = this.state.data.aero;
 		const diagn = this.state.data.diagn; 
+		const power = this.state.data.power;
 		var keys = Object.keys(core);
 		keys.splice(0,1);
 
@@ -224,6 +248,12 @@ class App extends Component {
 					<p className='state'>{'Engine Status: ' + diagn.engine_status.last() }</p>
 					<p className='state'>{'Battery Status: ' + diagn.battery_status.last() }</p>
 					<p className='state'>{'Logging Status: ' + diagn.logging_status.last() }</p>
+					<hr></hr>
+					<h2>Power-Train</h2> 
+					<p className='state'>{'Injection Cycle: ' + power.injection_cycle.last() }</p>
+					<p className='state'>{'Lambda Adjust: ' + power.lambda_adjust.last() }</p>
+					<p className='state'>{'Lambda Target: ' + power.lambda_target.last() }</p>
+					<p className='state'>{'Advance: ' + power.advance.last() }</p>
 				</div>
 			</div> 
 		)

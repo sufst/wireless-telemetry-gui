@@ -44,6 +44,16 @@
 // 8:  Car Logging Status
 //
 
+//
+// Enum Types for APPDU (Power-train)
+// 1: PDU Type - In this case 5. 
+// 4:  <NO SHOWING IN DATA>
+// 5:  Injection Duty Cycle
+// 6:  Lambda pid Adjust 
+// 7:  Lambda pid Target 
+// 8:  Advance
+//
+
 
 const MAX_GRAPH_VALUES = 20; 
 
@@ -151,6 +161,19 @@ export const parseData = (oldData, newData) => {
 
     if (pduType == '5') {
         data.type = 5; 
+
+        const injection_cycle = newData['5']; 
+        data.injection_cycle = [...correctSizeArray(oldData.power.injection_cycle), injection_cycle];
+        
+        const lambda_adjust = newData['6'];
+        data.lambda_adjust = [...correctSizeArray(oldData.power.lambda_adjust), lambda_adjust];
+         
+        const lambda_target = newData['7']; 
+        data.lambda_target = [...correctSizeArray(oldData.power.lambda_target), lambda_target];
+        
+        const advance = newData['8'];
+        data.advance = [...correctSizeArray(oldData.power.advance), advance];
+        
         return data;
     }
 
