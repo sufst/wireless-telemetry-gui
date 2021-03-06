@@ -278,49 +278,38 @@ class App extends Component {
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
-				{/* <Line className='chart' data={this.state.graphs.rpmData} options={options} /> */}
 				<div className='container'>
-					<h2>Core</h2>
-					<CSVLink data={exportCoreData} headers={keys}>Export to CSV</CSVLink>
-					<p className='state'>{'Core Data Received: ' + this.state.count}</p>
-					<p className='state'>{'RPM: ' + core.rpm.last()}</p>
-					<p className='state'>{'Speed: ' + core.speed.last() + ' KM/H'}</p>
-					<p className='state'>{'Water Temp: ' + core.water_temp.last() + ' °C'}</p>
-					<p className='state'>{'Throttle Position: ' + core.tps.last() + '%'}</p>
-					<p className='state'>{'Battery Voltage: ' + core.battery_mv.last() + ' mV'}</p>
-					<p className='state'>{'External 5V: ' + core.external_5v_mv.last() + ' mV'}</p>
-					<p className='state'>{'Fuel Flow: ' + core.fuel_flow.last() }</p>
-					<p className='state'>{'Lambda: ' + core.lambda.last() }</p>
+					{/* <AppBar position="static">
+						<Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+						<Tab label="Core" {...a11yProps(0)} />
+						<Tab label="Aero" {...a11yProps(1)} />
+						</Tabs>
+					</AppBar> */}
+					<div label="Core"> 
+							<h2>Core</h2>
+							<CSVLink data={exportCoreData} headers={coreKeys}>Export to CSV</CSVLink>
+							<p className='state'>{'Core Data Received: ' + this.state.count}</p>
+							<p className='state'>{'RPM: ' + core.rpm.last()}</p>
+							<p className='state'>{'Speed: ' + core.speed.last() + ' KM/H'}</p>
+							<p className='state'>{'Water Temp: ' + core.water_temp.last() + ' °C'}</p>
+							<p className='state'>{'Throttle Position: ' + core.tps.last() + '%'}</p>
+							<p className='state'>{'Battery Voltage: ' + core.battery_mv.last() + ' mV'}</p>
+							<p className='state'>{'External 5V: ' + core.external_5v_mv.last() + ' mV'}</p>
+							<p className='state'>{'Fuel Flow: ' + core.fuel_flow.last() }</p>
+							<p className='state'>{'Lambda: ' + core.lambda.last() }</p> 
+					</div>
 					<hr></hr>
-					<h2>Aero</h2> 
-				<AppBar position="static">
-					<Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-					<Tab label="Core" {...a11yProps(0)} />
-					<Tab label="Aero" {...a11yProps(1)} />
-					</Tabs>
-				</AppBar>
-				<div label="Core"> 
-						<CSVLink data={exportCoreData} headers={coreKeys}>Export to CSV</CSVLink>
-						<p className='state'>{'Core Data Received: ' + this.state.count}</p>
-						<p className='state'>{'RPM: ' + core.rpm.last()}</p>
-						<p className='state'>{'Speed: ' + core.speed.last() + ' KM/H'}</p>
-						<p className='state'>{'Water Temp: ' + core.water_temp.last() + ' °C'}</p>
-						<p className='state'>{'Throttle Position: ' + core.tps.last() + '%'}</p>
-						<p className='state'>{'Battery Voltage: ' + core.battery_mv.last() + ' mV'}</p>
-						<p className='state'>{'External 5V: ' + core.external_5v_mv.last() + ' mV'}</p>
-						<p className='state'>{'Fuel Flow: ' + core.fuel_flow.last() }</p>
-						<p className='state'>{'Lambda: ' + core.lambda.last() }</p> 
-				</div>
-				<div label="Aero"> 
-					<CSVLink data={exportAeroData} headers={aeroKeys}>Export to CSV</CSVLink>
-
-					<p className='state'>{'EVO 1: ' + aero.evo_1.last() }</p>
-					<p className='state'>{'EVO 2: ' + aero.evo_2.last() }</p>
-					<p className='state'>{'EVO 3: ' + aero.evo_3.last() }</p>
-					<p className='state'>{'EVO 4: ' + aero.evo_4.last() }</p>
-					<p className='state'>{'EVO 5: ' + aero.evo_5.last() }</p>
-					<p className='state'>{'EVO 6: ' + aero.evo_6.last() }</p>
-					<p className='state'>{'EVO 7: ' + aero.evo_7.last() }</p>
+					<div label="Aero"> 
+						<h2>Aero</h2>
+						<CSVLink data={exportAeroData} headers={aeroKeys}>Export to CSV</CSVLink>
+						<p className='state'>{'EVO 1: ' + aero.evo_1.last() }</p>
+						<p className='state'>{'EVO 2: ' + aero.evo_2.last() }</p>
+						<p className='state'>{'EVO 3: ' + aero.evo_3.last() }</p>
+						<p className='state'>{'EVO 4: ' + aero.evo_4.last() }</p>
+						<p className='state'>{'EVO 5: ' + aero.evo_5.last() }</p>
+						<p className='state'>{'EVO 6: ' + aero.evo_6.last() }</p>
+						<p className='state'>{'EVO 7: ' + aero.evo_7.last() }</p>
+					</div>
 					<hr></hr>
 					<h2>Diagnostics</h2> 
 					<p className='state'>{'ECU Status: ' + diagn.ecu_status.last() }</p>
