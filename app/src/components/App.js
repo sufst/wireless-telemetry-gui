@@ -63,6 +63,30 @@ class App extends Component {
 					evo_5: [],
 					evo_6: [],
 					evo_7: [],
+				},
+				diagn: {
+					ecu_status: [],
+					engine_status: [],
+					battery_status: [],
+					logging_status: [],
+				},
+				power: {
+					injection_cycle: [],
+					lambda_adjust: [],
+					lambda_target: [],
+					advance: [],
+				}, 
+				susp: {
+					height_fl: [],
+					height_fr: [],
+					height_flw: [],
+					height_rear: [],
+				},
+				misc: {
+					lap_timer: [],
+					accel_fl_x: [],
+					accel_fl_y: [],
+					accel_fl_z: [],
 				}
 			},
 			// State from here and downwards is only used for the dummy graph. Will be changed for final version...
@@ -106,7 +130,6 @@ class App extends Component {
 			const parsedData = parseData(oldData, newData);
 			switch (parsedData.type) {
 				case 2:
-					//console.log("Received parsed Core");
 					this.onReceivedCore(parsedData);
 					exportCoreData.push(newDataArray);
 					break;
@@ -114,6 +137,17 @@ class App extends Component {
 					this.onReceivedAero(parsedData);
 					exportAeroData.push(newDataArray);
 					break;
+				case 4: 
+					this.onReceiveDiagnostics(parsedData); 
+					break; 
+				case 5: 
+					this.onReceivePowertrain(parsedData); 
+					break; 
+				case 6: 
+					this.onReceiveSuspension(parsedData); 
+					break; 
+				case 7: 
+					this.onReceiveMisc(parsedData); 
 				default:
 					break;
 			}
@@ -131,21 +165,84 @@ class App extends Component {
 		})
 	}
 
+	onReceiveMisc(data) {
+		this.setState({
+			data: {
+				core: this.state.data.core,
+				aero: this.state.data.aero, 
+				diagn: this.state.data.diagn,
+				power: this.state.data.power,
+				susp: this.state.data.susp, 
+				misc: data
+			}
+		})
+	}
+
+	onReceiveSuspension(data) {
+		this.setState({
+			data: {
+				core: this.state.data.core,
+				aero: this.state.data.aero, 
+				diagn: this.state.data.diagn,
+				power: this.state.data.power,
+				susp: data,
+				misc: this.state.data.misc,
+			}
+		})
+	}
+
+	onReceivePowertrain(data) {
+		this.setState({
+			data: {
+				core: this.state.data.core,
+				aero: this.state.data.aero, 
+				diagn: this.state.data.diagn,
+				power: data,
+				susp: this.state.data.susp,
+				misc: this.state.data.misc,
+			}
+		})
+	}
+
+	onReceiveDiagnostics(data) {
+		this.setState({
+			data: {
+				core: this.state.data.core,
+				aero: this.state.data.aero, 
+				diagn: data,
+				power: this.state.data.power,
+				susp: this.state.data.susp,
+				misc: this.state.data.misc,
+			}
+		})
+	}
+
 	onReceivedAero(data) {
 		this.setState({
 			data: {
 				core: this.state.data.core,
-				aero: data
+				aero: data, 
+				diagn: this.state.data.diagn, 
+				power: this.state.data.power, 
+				susp: this.state.data.susp,
+				misc: this.state.data.misc,
 			}
 		})
 	}
 
 	onReceivedCore(data) {
+		if (this.state.count > 20) {
+			this.state.graphs.rpmData.labels.shift();
+		}
 		this.setState({
 			count: this.state.count + 1, 
 			data: {
 				core: data,
-				aero: this.state.data.aero
+				aero: this.state.data.aero,
+				diagn: this.state.data.diagn,
+				power: this.state.data.power,
+				susp: this.state.data.susp,
+				misc: this.state.data.misc,
 			}, 
 			graphs: {
 				rpmData: {
@@ -154,7 +251,7 @@ class App extends Component {
 						{ 
 							label: 'RPM',
 							fill: false,
-							backgroundColor: 'rgba(0, 0, 0, 0.5)',
+							backgroundColor: 'rgba(0, 0, 0, 0.6)',
 							borderColor: 'rgba(255, 99, 132, 1)',
 							data: data.rpm
 						}
@@ -168,6 +265,11 @@ class App extends Component {
 		const conStatus = this.state.connection_status;
 		const core = this.state.data.core;
 		const aero = this.state.data.aero;
+		const diagn = this.state.data.diagn; 
+		const power = this.state.data.power;
+		const susp = this.state.data.susp; 
+		const misc = this.state.data.misc;
+
 		const aeroKeys = Object.keys(aero);
 		const coreKeys = Object.keys(core);
 		aeroKeys.splice(0,1);
@@ -177,6 +279,20 @@ class App extends Component {
 			<div>
 				<Header conStatus={conStatus}/> 
 				{/* <Line className='chart' data={this.state.graphs.rpmData} options={options} /> */}
+				<div className='container'>
+					<h2>Core</h2>
+					<CSVLink data={exportCoreData} headers={keys}>Export to CSV</CSVLink>
+					<p className='state'>{'Core Data Received: ' + this.state.count}</p>
+					<p className='state'>{'RPM: ' + core.rpm.last()}</p>
+					<p className='state'>{'Speed: ' + core.speed.last() + ' KM/H'}</p>
+					<p className='state'>{'Water Temp: ' + core.water_temp.last() + ' °C'}</p>
+					<p className='state'>{'Throttle Position: ' + core.tps.last() + '%'}</p>
+					<p className='state'>{'Battery Voltage: ' + core.battery_mv.last() + ' mV'}</p>
+					<p className='state'>{'External 5V: ' + core.external_5v_mv.last() + ' mV'}</p>
+					<p className='state'>{'Fuel Flow: ' + core.fuel_flow.last() }</p>
+					<p className='state'>{'Lambda: ' + core.lambda.last() }</p>
+					<hr></hr>
+					<h2>Aero</h2> 
 				<AppBar position="static">
 					<Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
 					<Tab label="Core" {...a11yProps(0)} />
@@ -197,6 +313,7 @@ class App extends Component {
 				</div>
 				<div label="Aero"> 
 					<CSVLink data={exportAeroData} headers={aeroKeys}>Export to CSV</CSVLink>
+
 					<p className='state'>{'EVO 1: ' + aero.evo_1.last() }</p>
 					<p className='state'>{'EVO 2: ' + aero.evo_2.last() }</p>
 					<p className='state'>{'EVO 3: ' + aero.evo_3.last() }</p>
@@ -204,6 +321,30 @@ class App extends Component {
 					<p className='state'>{'EVO 5: ' + aero.evo_5.last() }</p>
 					<p className='state'>{'EVO 6: ' + aero.evo_6.last() }</p>
 					<p className='state'>{'EVO 7: ' + aero.evo_7.last() }</p>
+					<hr></hr>
+					<h2>Diagnostics</h2> 
+					<p className='state'>{'ECU Status: ' + diagn.ecu_status.last() }</p>
+					<p className='state'>{'Engine Status: ' + diagn.engine_status.last() }</p>
+					<p className='state'>{'Battery Status: ' + diagn.battery_status.last() }</p>
+					<p className='state'>{'Logging Status: ' + diagn.logging_status.last() }</p>
+					<hr></hr>
+					<h2>Power-Train</h2> 
+					<p className='state'>{'Injection Cycle: ' + power.injection_cycle.last() }</p>
+					<p className='state'>{'Lambda Adjust: ' + power.lambda_adjust.last() }</p>
+					<p className='state'>{'Lambda Target: ' + power.lambda_target.last() }</p>
+					<p className='state'>{'Advance: ' + power.advance.last() }</p>
+					<hr></hr>
+					<h2>Suspension</h2> 
+					<p className='state'>{'Height Front Left: ' + susp.height_fl.last() }</p>
+					<p className='state'>{'Height Front Right: ' + susp.height_fr.last() }</p>
+					<p className='state'>{'Height Front Left Wheel: ' + susp.height_flw.last() }</p>
+					<p className='state'>{'Height Rear: ' + susp.height_rear.last() }</p>
+					<hr></hr>
+					<h2>Miscellaneous</h2> 
+					<p className='state'>{'Lap Timer: ' + misc.lap_timer.last() }</p>
+					<p className='state'>{'Accel X-Axis: ' + misc.accel_fl_x.last() }</p>
+					<p className='state'>{'Accel Y-Axis: ' + misc.accel_fl_y.last() }</p>
+					<p className='state'>{'Accel Z-Axis: ' + misc.accel_fl_z.last() }</p>
 				</div>
 			</div> 
 		)
