@@ -9,7 +9,7 @@ import { CSVLink, CSVDownload } from "react-csv";
 
 // Component Imports
 import Header from './Header'
-import { count } from 'console';
+
 
 const net = require('net'); 
 
@@ -27,6 +27,7 @@ const options = {
   }
 
 var exportCoreData = [];
+var exportAeroData = [];
 
 class App extends Component {
 
@@ -133,7 +134,8 @@ class App extends Component {
 					exportCoreData.push(newDataArray);
 					break;
 				case 3: 
-					this.onReceivedAero(parsedData); 
+					this.onReceivedAero(parsedData);
+					exportAeroData.push(newDataArray);
 					break;
 				case 4: 
 					this.onReceiveDiagnostics(parsedData); 
@@ -268,8 +270,10 @@ class App extends Component {
 		const susp = this.state.data.susp; 
 		const misc = this.state.data.misc;
 
-		var keys = Object.keys(core);
-		keys.splice(0,1);
+		const aeroKeys = Object.keys(aero);
+		const coreKeys = Object.keys(core);
+		aeroKeys.splice(0,1);
+		coreKeys.splice(0,1);
 
 		return (
 			<div>
@@ -289,6 +293,27 @@ class App extends Component {
 					<p className='state'>{'Lambda: ' + core.lambda.last() }</p>
 					<hr></hr>
 					<h2>Aero</h2> 
+				<AppBar position="static">
+					<Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+					<Tab label="Core" {...a11yProps(0)} />
+					<Tab label="Aero" {...a11yProps(1)} />
+					</Tabs>
+				</AppBar>
+				<div label="Core"> 
+						<CSVLink data={exportCoreData} headers={coreKeys}>Export to CSV</CSVLink>
+						<p className='state'>{'Core Data Received: ' + this.state.count}</p>
+						<p className='state'>{'RPM: ' + core.rpm.last()}</p>
+						<p className='state'>{'Speed: ' + core.speed.last() + ' KM/H'}</p>
+						<p className='state'>{'Water Temp: ' + core.water_temp.last() + ' °C'}</p>
+						<p className='state'>{'Throttle Position: ' + core.tps.last() + '%'}</p>
+						<p className='state'>{'Battery Voltage: ' + core.battery_mv.last() + ' mV'}</p>
+						<p className='state'>{'External 5V: ' + core.external_5v_mv.last() + ' mV'}</p>
+						<p className='state'>{'Fuel Flow: ' + core.fuel_flow.last() }</p>
+						<p className='state'>{'Lambda: ' + core.lambda.last() }</p> 
+				</div>
+				<div label="Aero"> 
+					<CSVLink data={exportAeroData} headers={aeroKeys}>Export to CSV</CSVLink>
+
 					<p className='state'>{'EVO 1: ' + aero.evo_1.last() }</p>
 					<p className='state'>{'EVO 2: ' + aero.evo_2.last() }</p>
 					<p className='state'>{'EVO 3: ' + aero.evo_3.last() }</p>
