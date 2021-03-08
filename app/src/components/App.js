@@ -1,16 +1,19 @@
+// Module Imports
 import React, { Component } from 'react'
+import { CSVLink } from 'react-csv'
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 // Config Imports 
-import { CSVLink, CSVDownload } from "react-csv";
+import { PORT, HOST } from '../config/config'
+import { parseServerData } from '../config/server'
 
 // Component Imports
 import Header from './Header'
 
-
-const net = require('net'); 
-
 var exportCoreData = [];
 var exportAeroData = [];
+
+const socket = new WebSocket(`ws://${HOST}:${PORT}/`)
 
 class App extends Component {
 
@@ -26,9 +29,50 @@ class App extends Component {
 
 		this.state = {
 			connection_status: 'DISCONNECTED',
-			count: 0,
 			data: {
-				
+				core: {
+					speed: [],
+					rpm: [],
+					water_temp: [],
+					tps: [],
+					battery_mv: [],
+					external_5v_mv: [],
+					fuel_flow: [],
+					lambda: [],
+				},
+				aero: {
+					evo_1: [],
+					evo_2: [],
+					evo_3: [],
+					evo_4: [],
+					evo_5: [],
+					evo_6: [],
+					evo_7: [],
+				},
+				diagn: {
+					ecu_status: [],
+					engine_status: [],
+					battery_status: [],
+					logging_status: [],
+				},
+				power: {
+					injection_cycle: [],
+					lambda_adjust: [],
+					lambda_target: [],
+					advance: [],
+				}, 
+				susp: {
+					height_fl: [],
+					height_fr: [],
+					height_flw: [],
+					height_rear: [],
+				},
+				misc: {
+					lap_timer: [],
+					accel_fl_x: [],
+					accel_fl_y: [],
+					accel_fl_z: [],
+				}
 			},
 		}
 	}
@@ -38,7 +82,38 @@ class App extends Component {
 	}
 
 	connectToServer() {
-		console.log('Connecting to back-end RESTful API');
+
+		socket.onopen = () => {
+			console.log(`WebSocket Connected On ${HOST}:${PORT}`);
+			
+			this.setState({
+				connection_status: 'CONNECTED'
+			})
+
+			socket.send("GET /sensors?amount=10")
+
+			//this.interval = setInterval(this.getData, 2000)
+		}
+
+		socket.onmessage = (message) => {
+			parseServerData(message)
+		}
+
+		socket.onclose = (event) => {
+			console.log('WebSocket Disconnected ');
+			this.setState({
+				connection_status: 'DISCONNECTED'
+			})
+		}
+
+		socket.onerror = (error) => {
+			console.error('Web Socket Error: ', error);
+		}
+	}
+
+	getData = () => {
+		console.log('Sending API Call');
+		//socket.send("GET /sensors?amount=10")
 	}
 
 	render() {
