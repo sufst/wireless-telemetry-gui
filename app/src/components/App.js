@@ -1,10 +1,6 @@
-import { Line } from '@reactchartjs/react-chart.js'
-
 import React, { Component } from 'react'
 
 // Config Imports 
-import { AIPDU, PORT, HOST } from '../config/config'
-import { parseData } from '../config/parser'
 import { CSVLink, CSVDownload } from "react-csv";
 
 // Component Imports
@@ -12,19 +8,6 @@ import Header from './Header'
 
 
 const net = require('net'); 
-
-// For graph testing purposes. Ignore for now..
-const options = {
-	// scales: {
-	//   yAxes: [
-	// 	{
-	// 	  ticks: {
-	// 		beginAtZero: true,
-	// 	  },
-	// 	},
-	//   ],
-	// },
-  }
 
 var exportCoreData = [];
 var exportAeroData = [];
@@ -45,65 +28,8 @@ class App extends Component {
 			connection_status: 'DISCONNECTED',
 			count: 0,
 			data: {
-				core: {
-					speed: [],
-					rpm: [],
-					water_temp: [],
-					tps: [],
-					battery_mv: [],
-					external_5v_mv: [],
-					fuel_flow: [],
-					lambda: [],
-				},
-				aero: {
-					evo_1: [],
-					evo_2: [],
-					evo_3: [],
-					evo_4: [],
-					evo_5: [],
-					evo_6: [],
-					evo_7: [],
-				},
-				diagn: {
-					ecu_status: [],
-					engine_status: [],
-					battery_status: [],
-					logging_status: [],
-				},
-				power: {
-					injection_cycle: [],
-					lambda_adjust: [],
-					lambda_target: [],
-					advance: [],
-				}, 
-				susp: {
-					height_fl: [],
-					height_fr: [],
-					height_flw: [],
-					height_rear: [],
-				},
-				misc: {
-					lap_timer: [],
-					accel_fl_x: [],
-					accel_fl_y: [],
-					accel_fl_z: [],
-				}
+				
 			},
-			// State from here and downwards is only used for the dummy graph. Will be changed for final version...
-			graphs: {
-				rpmData: {
-					labels: [0],
-					datasets: [
-					  {
-						label: 'RPM',
-						data: [],
-						fill: false,
-						backgroundColor: 'rgb(255, 99, 132)',
-						borderColor: 'rgba(255, 99, 132, 1)',
-					  },
-					],
-				 }
-			}
 		}
 	}
 
@@ -112,153 +38,7 @@ class App extends Component {
 	}
 
 	connectToServer() {
-		const client = new net.Socket();
-	
-		client.connect({ port: PORT, host: HOST }, () => {
-			client.write(AIPDU, ()  => {
-				// Successfully Connected to Back-End Server
-				this.setState({ connection_status: 'CONNECTED'} )
-			})
-		})
-
-		client.on('data',  (data) => {
-			// Called everytime data has been received by the back-end
-			const oldData = this.state.data
-			const newData = JSON.parse(data);
-			var newDataArray = Object.values(newData);
-			newDataArray.splice(0,3);
-			const parsedData = parseData(oldData, newData);
-			switch (parsedData.type) {
-				case 2:
-					this.onReceivedCore(parsedData);
-					exportCoreData.push(newDataArray);
-					break;
-				case 3: 
-					this.onReceivedAero(parsedData);
-					exportAeroData.push(newDataArray);
-					break;
-				case 4: 
-					this.onReceiveDiagnostics(parsedData); 
-					break; 
-				case 5: 
-					this.onReceivePowertrain(parsedData); 
-					break; 
-				case 6: 
-					this.onReceiveSuspension(parsedData); 
-					break; 
-				case 7: 
-					this.onReceiveMisc(parsedData); 
-				default:
-					break;
-			}
-		})
-
-		client.on('error', (error) => {
-			// An unhandled error has occured in the socket connection to the back-end
-			console.log('Error Connnecting to Server: ', error);
-		})
-
-		client.on('end', () => {
-			// The socket connection to the back-end has been terminated.
-			console.log('Server connection ended...');
-			this.setState( {connection_status: 'DISCONNECTED'} )
-		})
-	}
-
-	onReceiveMisc(data) {
-		this.setState({
-			data: {
-				core: this.state.data.core,
-				aero: this.state.data.aero, 
-				diagn: this.state.data.diagn,
-				power: this.state.data.power,
-				susp: this.state.data.susp, 
-				misc: data
-			}
-		})
-	}
-
-	onReceiveSuspension(data) {
-		this.setState({
-			data: {
-				core: this.state.data.core,
-				aero: this.state.data.aero, 
-				diagn: this.state.data.diagn,
-				power: this.state.data.power,
-				susp: data,
-				misc: this.state.data.misc,
-			}
-		})
-	}
-
-	onReceivePowertrain(data) {
-		this.setState({
-			data: {
-				core: this.state.data.core,
-				aero: this.state.data.aero, 
-				diagn: this.state.data.diagn,
-				power: data,
-				susp: this.state.data.susp,
-				misc: this.state.data.misc,
-			}
-		})
-	}
-
-	onReceiveDiagnostics(data) {
-		this.setState({
-			data: {
-				core: this.state.data.core,
-				aero: this.state.data.aero, 
-				diagn: data,
-				power: this.state.data.power,
-				susp: this.state.data.susp,
-				misc: this.state.data.misc,
-			}
-		})
-	}
-
-	onReceivedAero(data) {
-		this.setState({
-			data: {
-				core: this.state.data.core,
-				aero: data, 
-				diagn: this.state.data.diagn, 
-				power: this.state.data.power, 
-				susp: this.state.data.susp,
-				misc: this.state.data.misc,
-			}
-		})
-	}
-
-	onReceivedCore(data) {
-		if (this.state.count > 20) {
-			this.state.graphs.rpmData.labels.shift();
-		}
-		this.setState({
-			count: this.state.count + 1, 
-			data: {
-				core: data,
-				aero: this.state.data.aero,
-				diagn: this.state.data.diagn,
-				power: this.state.data.power,
-				susp: this.state.data.susp,
-				misc: this.state.data.misc,
-			}, 
-			graphs: {
-				rpmData: {
-					labels: [...this.state.graphs.rpmData.labels, this.state.count],
-					datasets: [
-						{ 
-							label: 'RPM',
-							fill: false,
-							backgroundColor: 'rgba(0, 0, 0, 0.6)',
-							borderColor: 'rgba(255, 99, 132, 1)',
-							data: data.rpm
-						}
-					]
-				}
-			}
-		})
+		console.log('Connecting to back-end RESTful API');
 	}
 
 	render() {
