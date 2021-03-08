@@ -1,10 +1,9 @@
 // Module Imports
 import React, { Component } from 'react'
 import { CSVLink } from 'react-csv'
-import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 // Config Imports 
-import { PORT, HOST } from '../config/config'
+import { PORT, HOST, REQUESTS } from '../config/config'
 import { parseServerData } from '../config/server'
 
 // Component Imports
@@ -90,9 +89,7 @@ class App extends Component {
 				connection_status: 'CONNECTED'
 			})
 
-			socket.send("GET /sensors?amount=10")
-
-			//this.interval = setInterval(this.getData, 2000)
+			this.interval = setInterval(this.sendSocketDataRequest, 1000)
 		}
 
 		socket.onmessage = (message) => {
@@ -111,9 +108,8 @@ class App extends Component {
 		}
 	}
 
-	getData = () => {
-		console.log('Sending API Call');
-		//socket.send("GET /sensors?amount=10")
+	sendSocketDataRequest = () => {
+		socket.send(REQUESTS.sensors)
 	}
 
 	render() {
