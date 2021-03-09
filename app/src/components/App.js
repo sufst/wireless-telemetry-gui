@@ -3,14 +3,11 @@ import React, { Component } from 'react'
 import { CSVLink } from 'react-csv'
 
 // Config Imports 
-import { PORT, HOST, ENDPOINTS } from '../config/config'
+import { PORT, HOST } from '../config/config'
 import { parseServerData, sendServerRequest } from '../config/server'
 
 // Component Imports
 import Header from './Header'
-
-var exportCoreData = [];
-var exportAeroData = [];
 
 const socket = new WebSocket(`ws://${HOST}:${PORT}/`)
 
@@ -81,27 +78,20 @@ class App extends Component {
 	}
 
 	connectToServer() {
-
 		socket.onopen = () => {
-			console.log(`WebSocket Connected On ${HOST}:${PORT}`);
+			console.log(`WebSocket connected on ${HOST}:${PORT}`);
 			
-			this.setState({
-				connection_status: 'CONNECTED'
-			})
+			this.setState({ connection_status: 'CONNECTED' })
 
-			const five_ago = Math.round(Date.now() / 1000) - 5; 
-			socket.send(`GET /sensors?timesince=${five_ago}`)
-
-			this.interval = setInterval(this.sendSocketDataRequest, 1000)
+			this.interval = setInterval(this.fetchSensorData, 1000)
 		}
 
 		socket.onmessage = (message) => {
 			const rpm = parseServerData(message)
-			//console.log(rpm);
-			this.setState({
+			this.setState({ 
 				data: {
 					core: {
-						rpm: rpm
+						rpm: rpm.reverse()
 					}
 				}
 			})
@@ -109,9 +99,7 @@ class App extends Component {
 
 		socket.onclose = (event) => {
 			console.log('WebSocket Disconnected: ', event);
-			this.setState({
-				connection_status: 'DISCONNECTED'
-			})
+			this.setState({ connection_status: 'DISCONNECTED' })
 		}
 
 		socket.onerror = (error) => {
@@ -119,25 +107,20 @@ class App extends Component {
 		}
 	}
 
-	sendSocketDataRequest = () => { 
-		sendServerRequest(socket)
+	fetchSensorData = () => { 
+		const epoch = Math.round(Date.now() / 1000) - 10; 
+		socket.send(`GET /sensors?amount=20&timesince=${epoch}`)
 	}
 
 	render() {
 		const conStatus = this.state.connection_status;
-		const core = this.state.data.core;
-
-		let rpm = 'NO'
-		if (!(core.rpm.last() == undefined)) {
-			console.log(core.rpm.last());
-			rpm = core.rpm.last().value
-		}
+		const rpm = this.state.data.core.rpm
 
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
 				<div className='container'>
-					<p className='state'>{'RPM: ' + rpm}</p>
+					<p className='state'>{'RPM: ' + rpm.last()?.value}</p>
 				</div>
 			</div> 
 		)

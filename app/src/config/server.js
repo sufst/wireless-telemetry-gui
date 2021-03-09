@@ -1,5 +1,3 @@
-let rpm = []
-
 export const parseServerData = (message) => {
     
     const data  = JSON.parse(message.data); 
@@ -10,17 +8,13 @@ export const parseServerData = (message) => {
     const misc = data.misc
     const power = data['Power Train']
 
-
-    //rpm = [...rpm, core.rpm]
-    rpm = rpm.concat(core.rpm)
-    //console.log(rpm)
-
-    return rpm
+    return core.rpm
 }
 
 export const ENDPOINTS = {
     TEST: 'GET /sensors?amount=', 
-    GET: `GET /sensors?timesince=`
+    GET_SINCE: `GET /sensors?timesince=`, 
+    GET: 'GET /sensors?amount=20'
 }
 
 export const sendServerRequest = (socket) => {
