@@ -2,9 +2,11 @@
 import React, { Component } from 'react'
 import { CSVLink } from 'react-csv'
 
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
 // Config Imports 
 import { PORT, HOST } from '../config/config'
-import { parseServerData, sendServerRequest } from '../config/server'
+import { parseServerData } from '../config/server'
 
 // Component Imports
 import Header from './Header'
@@ -110,11 +112,27 @@ class App extends Component {
 		const conStatus = this.state.connection_status;
 		const core = this.state.data.core
 
-		console.log(this.state.data.misc);
-
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
+				<LineChart
+					width={500}
+					height={300}
+					data={core.rpm.reverse()}
+					margin={{
+						top: 5,
+						right: 30,
+						left: 20,
+						bottom: 5,
+					}}
+					>
+					<CartesianGrid strokeDasharray="3 3" />
+					<XAxis dataKey="time" />
+					<YAxis />
+					<Tooltip />
+					<Legend />
+					<Line type="monotone" dataKey="value" stroke="#82ca9d" />
+        		</LineChart>
 				<div className='container'>
 					<h2>Core</h2>
 					<p className='state'>{'Speed: ' + core.speed_kph[0]?.value}</p>
