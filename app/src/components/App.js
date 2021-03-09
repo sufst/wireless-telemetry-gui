@@ -2,15 +2,13 @@
 import React, { Component } from 'react'
 import { CSVLink } from 'react-csv'
 
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
 // Config Imports 
 import { PORT, HOST } from '../config/config'
 import { parseServerData } from '../config/server'
 
 // Component Imports
 import Header from './Header'
-import LineGraph from './LineGraph'
+import LineGraph from './graphing/LineGraph'
 
 const socket = new WebSocket(`ws://${HOST}:${PORT}/`)
 
