@@ -10,11 +10,11 @@ import { parseServerData } from '../config/server'
 import Header from './Header'
 import LineGraph from './graphing/LineGraph'
 
-
+const socket = new WebSocket(`ws://${HOST}:${PORT}/`)
 
 function FuncApp() {    
 
-    const socket = new WebSocket(`ws://${HOST}:${PORT}/`)
+    
 
 	const [data, setData] = useState({
         core: {
@@ -66,8 +66,40 @@ function FuncApp() {
 
     const [connection_status, setConnectionStatus] = useState('Disconnected');
 
+    // useEffect(() => {
+    //     connectToServer()
+    // })
+
     useEffect(() => {
-        setInterval(connectToServer(),100);
+        socket.onopen = () => {
+			console.log(`WebSocket connected on ${HOST}:${PORT}`);
+			
+			setConnectionStatus('CONNECTED')
+
+			setInterval(fetchSensorData, 1000);
+		}
+    })
+
+    useEffect(() => {
+        socket.onmessage = (message) => {
+            const epoch = Math.round(Date.now() / 1000) - 120;CSVLink
+            console.log('Message Received :' + epoch);
+			const values = parseServerData(message)
+			setData(values);
+		}
+    })
+
+    useEffect(() => {
+        socket.onclose = (event) => {
+			console.log('WebSocket Disconnected: ', event);
+			setConnectionStatus('DISCONNECTED')
+		}
+    })
+
+    useEffect(() => {
+        socket.onerror = (error) => {
+			console.error('WebSocket Error: ', error);
+		}
     })
 
     const connectToServer = () => {
