@@ -87,14 +87,8 @@ class App extends Component {
 		}
 
 		socket.onmessage = (message) => {
-			const rpm = parseServerData(message)
-			this.setState({ 
-				data: {
-					core: {
-						rpm: rpm.reverse()
-					}
-				}
-			})
+			const values = parseServerData(message)
+			this.setState({ data: values })
 		}
 
 		socket.onclose = (event) => {
@@ -108,7 +102,7 @@ class App extends Component {
 	}
 
 	fetchSensorData = () => { 
-		const epoch = Math.round(Date.now() / 1000) - 10; 
+		const epoch = Math.round(Date.now() / 1000) - 120; 
 		socket.send(`GET /sensors?amount=20&timesince=${epoch}`)
 	}
 
@@ -120,7 +114,7 @@ class App extends Component {
 			<div>
 				<Header conStatus={conStatus}/> 
 				<div className='container'>
-					<p className='state'>{'RPM: ' + rpm.last()?.value}</p>
+					<p className='state'>{'RPM: ' + rpm[0]?.value}</p>
 				</div>
 			</div> 
 		)

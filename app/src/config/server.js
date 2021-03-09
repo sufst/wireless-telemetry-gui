@@ -1,25 +1,27 @@
+let values = {
+
+}
+
 export const parseServerData = (message) => {
-    
     const data  = JSON.parse(message.data); 
     
     const core = data.Core
+    values.core = core; 
+    
     const aero = data.Aero
+    values.aero = aero
+    
     const diagnostic = data.Diagnostic
-    const misc = data.misc
+    values.diagnostic = diagnostic
+
     const power = data['Power Train']
+    values.power = power
 
-    return core.rpm
-}
+    const susp = data.Suspension
+    values.suspension = susp
 
-export const ENDPOINTS = {
-    TEST: 'GET /sensors?amount=', 
-    GET_SINCE: `GET /sensors?timesince=`, 
-    GET: 'GET /sensors?amount=20'
-}
+    const misc = data.misc
+    values.misc = misc
 
-export const sendServerRequest = (socket) => {
-    let epochNow = Math.round(Date.now() / 1000); 
-    let five_seconds_ago = epochNow - 1; 
-
-    socket.send(`GET /sensors?timesince=${five_seconds_ago}`)
+    return values
 }
