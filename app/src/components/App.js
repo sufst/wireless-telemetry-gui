@@ -27,47 +27,47 @@ class App extends Component {
 			connection_status: 'DISCONNECTED',
 			data: {
 				core: {
-					speed: [],
+					speed_kph: [],
 					rpm: [],
-					water_temp: [],
-					tps: [],
+					water_temp_c: [],
+					tps_perc: [],
 					battery_mv: [],
 					external_5v_mv: [],
 					fuel_flow: [],
 					lambda: [],
 				},
 				aero: {
-					evo_1: [],
-					evo_2: [],
-					evo_3: [],
-					evo_4: [],
-					evo_5: [],
-					evo_6: [],
-					evo_7: [],
+					evo_scan_1: [],
+					evo_scan_2: [],
+					evo_scan_3: [],
+					evo_scan_4: [],
+					evo_scan_5: [],
+					evo_scan_6: [],
+					evo_scan_7: [],
 				},
-				diagn: {
-					ecu_status: [],
-					engine_status: [],
-					battery_status: [],
-					logging_status: [],
+				diagnostic: {
+					status_ecu_connected: [],
+					status_engine: [],
+					status_loggin: [],
+					inj_time: [],
 				},
 				power: {
-					injection_cycle: [],
+					inj_duty_cycle: [],
 					lambda_adjust: [],
 					lambda_target: [],
 					advance: [],
 				}, 
-				susp: {
-					height_fl: [],
-					height_fr: [],
-					height_flw: [],
-					height_rear: [],
+				suspension: {
+					ride_height_fl_cm: [],
+					ride_height_fr_cm: [],
+					ride_height_flw_cm: [],
+					ride_height_rear_cm: [],
 				},
 				misc: {
-					lap_timer: [],
-					accel_fl_x: [],
-					accel_fl_y: [],
-					accel_fl_z: [],
+					lap_time_s: [],
+					accel_fl_x_mg: [],
+					accel_fl_y_mg: [],
+					accel_fl_z_mg: [],
 				}
 			},
 		}
@@ -108,13 +108,19 @@ class App extends Component {
 
 	render() {
 		const conStatus = this.state.connection_status;
-		const rpm = this.state.data.core.rpm
+		const core = this.state.data.core
+
+		console.log(this.state.data.misc);
 
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
 				<div className='container'>
-					<p className='state'>{'RPM: ' + rpm[0]?.value}</p>
+					<h2>Core</h2>
+					<p className='state'>{'Speed: ' + core.speed_kph[0]?.value}</p>
+					<p className='state'>{'RPM: ' + core.rpm[0]?.value}</p>
+					<p className='state'>{'Lambda: ' + core.lambda[0]?.value}</p>
+					<p className='state'>{'Water Temp: ' + core.water_temp_c[0]?.value}</p>
 				</div>
 			</div> 
 		)

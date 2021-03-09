@@ -1,8 +1,6 @@
-let values = {
-
-}
-
 export const parseServerData = (message) => {
+    let values = {}
+
     const data  = JSON.parse(message.data); 
     
     const core = data.Core
@@ -20,7 +18,7 @@ export const parseServerData = (message) => {
     const susp = data.Suspension
     values.suspension = susp
 
-    const misc = data.misc
+    const misc = data.Misc
     values.misc = misc
 
     return values
