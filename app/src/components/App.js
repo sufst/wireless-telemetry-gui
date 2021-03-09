@@ -101,7 +101,7 @@ class App extends Component {
 			console.error('WebSocket Error: ', error);
 		}
 	}
-
+ 
 	fetchSensorData = () => { 
 		const epoch = Math.round(Date.now() / 1000) - 120; 
 		socket.send(`GET /sensors?amount=20&timesince=${epoch}`)
