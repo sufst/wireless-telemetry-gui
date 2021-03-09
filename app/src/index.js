@@ -1,6 +1,5 @@
 import React from 'react'
 import { render } from 'react-dom'
-import FuncApp from './components/FuncApp'
 import App from './components/App'
 import './css/App.css'
 
@@ -11,4 +10,4 @@ root.id = 'root'
 document.body.appendChild(root)
 
 // Now we can render our application into it
-render(<FuncApp />, document.getElementById('root'))
+render(<App />, document.getElementById('root'))
