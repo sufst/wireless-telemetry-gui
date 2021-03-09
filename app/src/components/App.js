@@ -1,159 +1,120 @@
-import { Line } from '@reactchartjs/react-chart.js'
-
-import React, { Component } from 'react'
+// Module Imports
+import React, { useState, useEffect } from 'react'
+import { CSVLink } from 'react-csv'
 
 // Config Imports 
-import { AIPDU, PORT, HOST } from '../config/config'
-import { parseData } from '../config/parser'
+import { PORT, HOST } from '../config/config'
+import { parseServerData } from '../config/server'
 
 // Component Imports
 import Header from './Header'
+import LineGraph from './graphing/LineGraph'
 
-const net = require('net'); 
+const socket = new WebSocket(`ws://${HOST}:${PORT}/`)
 
-// For graph testing purposes. Ignore for now..
-const options = {
-	// scales: {
-	//   yAxes: [
-	// 	{
-	// 	  ticks: {
-	// 		beginAtZero: true,
-	// 	  },
-	// 	},
-	//   ],
-	// },
-  }
+const App = () => {    
 
-class App extends Component {
+	const [data, setData] = useState({
+        core: {
+            speed_kph: [],
+            rpm: [],
+            water_temp_c: [],
+            tps_perc: [],
+            battery_mv: [],
+            external_5v_mv: [],
+            fuel_flow: [],
+            lambda: [],
+        },
+        aero: {
+            evo_scan_1: [],
+            evo_scan_2: [],
+            evo_scan_3: [],
+            evo_scan_4: [],
+            evo_scan_5: [],
+            evo_scan_6: [],
+            evo_scan_7: [],
+        },
+        diagnostic: {
+            status_ecu_connected: [],
+            status_engine: [],
+            status_loggin: [],
+            inj_time: [],
+        },
+        power: {
+            inj_duty_cycle: [],
+            lambda_adjust: [],
+            lambda_target: [],
+            advance: [],
+        }, 
+        suspension: {
+            ride_height_fl_cm: [],
+            ride_height_fr_cm: [],
+            ride_height_flw_cm: [],
+            ride_height_rear_cm: [],
+        },
+        misc: {
+            lap_time_s: [],
+            accel_fl_x_mg: [],
+            accel_fl_y_mg: [],
+            accel_fl_z_mg: [],
+        }
+    });
 
-	constructor(props) {
-		super(props); 
+    const {core, aero, diagnostic, power, suspension, misc } = data;
 
-		// Helper function to get last element of array...
-		if (!Array.prototype.last){
-			Array.prototype.last = function(){
-				return this[this.length - 1];
-			};
-		};
+    const [connection_status, setConnectionStatus] = useState('Disconnected');
 
-		this.state = {
-			connection_status: 'DISCONNECTED',
-			count: 0,
-			data: {
-				core: {
-					speed: [],
-					rpm: [],
-					water_temp: [],
-					tps: [],
-					battery_mv: [],
-					external_5v_mv: [],
-					fuel_flow: [],
-					lambda: [],
-				},
-			},
-			// State from here and downwards is only used for the dummy graph. Will be changed for final version...
-			graphs: {
-				rpmData: {
-					labels: [0],
-					datasets: [
-					  {
-						label: 'RPM',
-						data: [],
-						fill: false,
-						backgroundColor: 'rgb(255, 99, 132)',
-						borderColor: 'rgba(255, 99, 132, 1)',
-					  },
-					],
-				 }
-			}
+    useEffect(() => {
+        connectToServer()
+    }, [])
+
+    const connectToServer = () => {
+		socket.onopen = () => {
+			console.log(`WebSocket connected on ${HOST}:${PORT}`);
+			
+			setConnectionStatus('CONNECTED')
+
+			setInterval(fetchSensorData, 1000);
+		}
+
+		socket.onmessage = (message) => {
+            const epoch = Math.round(Date.now() / 1000) - 120;
+        
+			const values = parseServerData(message)
+			
+            setData(values);
+		}
+
+		socket.onclose = (event) => {
+			console.log('WebSocket Disconnected: ', event);
+			setConnectionStatus('DISCONNECTED')
+		}
+
+		socket.onerror = (error) => {
+			console.error('WebSocket Error: ', error);
 		}
 	}
 
-	componentDidMount() {
-		this.connectToServer(); 
+    const fetchSensorData = () => { 
+		const epoch = Math.round(Date.now() / 1000) - 120; 
+		socket.send(`GET /sensors?amount=20&timesince=${epoch}`)
 	}
 
-	connectToServer() {
-		const client = new net.Socket();
-	
-		client.connect({ port: PORT, host: HOST }, () => {
-			client.write(AIPDU, ()  => {
-				// Successfully Connected to Back-End Server
-				this.setState({ connection_status: 'CONNECTED'} )
-			})
-		})
-
-		client.on('data',  (data) => {
-			// Called everytime data has been received by the back-end
-			const oldData = this.state.data
-			const newData = JSON.parse(data); 
-			const parsedData = parseData(oldData, newData);
-
-			switch (parsedData.type) {
-				case 2:
-					this.onReceivedCore(parsedData);
-					break;
-				default:
-					break;
-			}
-		})
-
-		client.on('error', (error) => {
-			// An unhandled error has occured in the socket connection to the back-end
-			console.log('Error Connnecting to Server: ', error);
-		})
-
-		client.on('end', () => {
-			// The socket connection to the back-end has been terminated.
-			console.log('Server connection ended...');
-			this.setState( {connection_status: 'DISCONNECTED'} )
-		})
-	}
-
-	onReceivedCore(data) {
-		this.setState({
-			count: this.state.count + 1, 
-			data: {
-				core: data
-			}, 
-			graphs: {
-				rpmData: {
-					labels: [...this.state.graphs.rpmData.labels, this.state.count],
-					datasets: [
-						{ 
-							label: 'RPM',
-							fill: false,
-							backgroundColor: 'rgba(0, 0, 0, 0.5)',
-							borderColor: 'rgba(255, 99, 132, 1)',
-							data: data.rpm
-						}
-					]
-				}
-			}
-		})
-	}
-
-	render() {
-		const conStatus = this.state.connection_status;
-		const core = this.state.data.core
-		return (
-			<div>
-				<Header conStatus={conStatus}/> 
-				<Line className='chart' data={this.state.graphs.rpmData} options={options} />
-				<div className='container'>
-					<h1 className='state'>{'Core Data Received: ' + this.state.count}</h1>
-					<h1 className='state'>{'RPM: ' + core.rpm.last()}</h1>
-					<h1 className='state'>{'Speed: ' + core.speed.last() + ' KM/H'}</h1>
-					<h1 className='state'>{'Water Temp: ' + core.water_temp.last() + ' °C'}</h1>
-					<h1 className='state'>{'Throttle Position: ' + core.tps.last() + '%'}</h1>
-					<h1 className='state'>{'Battery Voltage: ' + core.battery_mv.last() + ' mV'}</h1>
-					<h1 className='state'>{'External 5V: ' + core.external_5v_mv.last() + ' mV'}</h1>
-					<h1 className='state'>{'Fuel Flow: ' + core.fuel_flow.last() }</h1>
-					<h1 className='state'>{'Lambda: ' + core.lambda.last() }</h1>
-				</div>
-			</div> 
-		)
-	}
+    return(
+        <div>
+            <Header conStatus={connection_status}/> 
+            <LineGraph data={core.rpm} animated={false} />
+            <LineGraph data={core.water_temp_c} animated={false} />
+            <div className='container'>
+                <h2>Core</h2>
+                <p className='state'>{'Speed: ' + core.speed_kph[0]?.value}</p>
+                <p className='state'>{'RPM: ' + core.rpm[0]?.value}</p>
+                <p className='state'>{'Lambda: ' + core.lambda[0]?.value}</p>
+                <p className='state'>{'Water Temp: ' + core.water_temp_c[0]?.value}</p>
+            </div>
+        </div> 
+    )
+    
 }
 
-export default App
+export default App;
