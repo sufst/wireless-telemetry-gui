@@ -111,7 +111,7 @@ class App extends Component {
 	render() {
 		const conStatus = this.state.connection_status;
 		const core = this.state.data.core
-
+		console.log('Reloading');
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
@@ -130,8 +130,26 @@ class App extends Component {
 					<XAxis dataKey="time" />
 					<YAxis />
 					<Tooltip />
-					<Legend />
+					{/* <Legend /> */}
 					<Line type="monotone" dataKey="value" stroke="#82ca9d" />
+        		</LineChart>
+				<LineChart
+					width={500}
+					height={300}
+					data={core.water_temp_c.reverse()}
+					margin={{
+						top: 5,
+						right: 30,
+						left: 20,
+						bottom: 5,
+					}}
+					>
+					<CartesianGrid strokeDasharray="3 3" />
+					<XAxis  dataKey="time" />
+					<YAxis   domain={[50, 150]}/>
+					<Tooltip />
+					{/* <Legend /> */}
+					<Line isAnimationActive={false} type="monotone" name="Water Temp" dataKey="value" stroke="#82ca9d" />
         		</LineChart>
 				<div className='container'>
 					<h2>Core</h2>
