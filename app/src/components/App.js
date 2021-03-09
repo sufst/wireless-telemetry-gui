@@ -10,6 +10,7 @@ import { parseServerData } from '../config/server'
 
 // Component Imports
 import Header from './Header'
+import LineGraph from './LineGraph'
 
 const socket = new WebSocket(`ws://${HOST}:${PORT}/`)
 
@@ -111,46 +112,11 @@ class App extends Component {
 	render() {
 		const conStatus = this.state.connection_status;
 		const core = this.state.data.core
-		console.log('Reloading');
 		return (
 			<div>
 				<Header conStatus={conStatus}/> 
-				<LineChart
-					width={500}
-					height={300}
-					data={core.rpm.reverse()}
-					margin={{
-						top: 5,
-						right: 30,
-						left: 20,
-						bottom: 5,
-					}}
-					>
-					<CartesianGrid strokeDasharray="3 3" />
-					<XAxis dataKey="time" />
-					<YAxis />
-					<Tooltip />
-					{/* <Legend /> */}
-					<Line type="monotone" dataKey="value" stroke="#82ca9d" />
-        		</LineChart>
-				<LineChart
-					width={500}
-					height={300}
-					data={core.water_temp_c.reverse()}
-					margin={{
-						top: 5,
-						right: 30,
-						left: 20,
-						bottom: 5,
-					}}
-					>
-					<CartesianGrid strokeDasharray="3 3" />
-					<XAxis  dataKey="time" />
-					<YAxis   domain={[50, 150]}/>
-					<Tooltip />
-					{/* <Legend /> */}
-					<Line isAnimationActive={false} type="monotone" name="Water Temp" dataKey="value" stroke="#82ca9d" />
-        		</LineChart>
+				<LineGraph data={core.rpm} animated={false} />
+				<LineGraph data={core.water_temp_c} animated={false} />
 				<div className='container'>
 					<h2>Core</h2>
 					<p className='state'>{'Speed: ' + core.speed_kph[0]?.value}</p>
