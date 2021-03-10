@@ -7,7 +7,7 @@ export default function LineGraph( { data, animated } ) {
         <LineChart
 			width={500}
 			height={300}
-			data={data.reverse()}
+			data={data}
             margin={{
                 top: 5,
                 right: 30,
