@@ -1,6 +1,6 @@
 // Module Imports
+import '../css/App.css'
 import React, { useState, useEffect } from 'react'
-import { CSVLink } from 'react-csv'
 
 // Config Imports 
 import { PORT, HOST } from '../config/config'
