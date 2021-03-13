@@ -8,6 +8,10 @@ h2, hr{
 	margin-top: 1rem;
 }
 
+.graphs {
+	display: flex;
+}
+
 body {
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
 	background-color: white;
