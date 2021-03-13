@@ -14,6 +14,7 @@ import {Tabs, Tab} from "@material-ui/core"
 
 const socket = new WebSocket(`ws://${HOST}:${PORT}/`)
 
+<<<<<<< HEAD
 function App() {    
 
 	const [data, setData] = useState({
@@ -101,6 +102,63 @@ function App() {
 			console.error('WebSocket Error: ', error);
 		}
     })
+=======
+const App = () => {    
+
+	const [data, setData] = useState({
+        core: {
+            speed_kph: [],
+            rpm: [],
+            water_temp_c: [],
+            tps_perc: [],
+            battery_mv: [],
+            external_5v_mv: [],
+            fuel_flow: [],
+            lambda: [],
+        },
+        aero: {
+            evo_scan_1: [],
+            evo_scan_2: [],
+            evo_scan_3: [],
+            evo_scan_4: [],
+            evo_scan_5: [],
+            evo_scan_6: [],
+            evo_scan_7: [],
+        },
+        diagnostic: {
+            status_ecu_connected: [],
+            status_engine: [],
+            status_loggin: [],
+            inj_time: [],
+        },
+        power: {
+            inj_duty_cycle: [],
+            lambda_adjust: [],
+            lambda_target: [],
+            advance: [],
+        }, 
+        suspension: {
+            ride_height_fl_cm: [],
+            ride_height_fr_cm: [],
+            ride_height_flw_cm: [],
+            ride_height_rear_cm: [],
+        },
+        misc: {
+            lap_time_s: [],
+            accel_fl_x_mg: [],
+            accel_fl_y_mg: [],
+            accel_fl_z_mg: [],
+        }
+    });
+
+    const {core, aero, diagnostic, power, suspension, misc } = data;
+
+    const [connection_status, setConnectionStatus] = useState('Disconnected');
+
+    useEffect(() => {
+        connectToServer()
+    }, [])
+>>>>>>> 9ccc5874c0674a1ef3552d03a2af80bf6bd9c76b
 
     const connectToServer = () => {
 		socket.onopen = () => {
@@ -112,10 +170,18 @@ function App() {
 		}
 
 		socket.onmessage = (message) => {
+<<<<<<< HEAD
             const epoch = Math.round(Date.now() / 1000) - 120;CSVLink
             console.log('Message Received :' + epoch);
 			const values = parseServerData(message)
 			setData(values);
+=======
+            const epoch = Math.round(Date.now() / 1000) - 120;
+        
+			const values = parseServerData(message)
+			
+            setData(values);
+>>>>>>> 9ccc5874c0674a1ef3552d03a2af80bf6bd9c76b
 		}
 
 		socket.onclose = (event) => {
@@ -133,6 +199,7 @@ function App() {
 		socket.send(`GET /sensors?amount=49 &timesince=${epoch}`)
 	}
 
+<<<<<<< HEAD
 
     const [selectedTab, selectTab] = React.useState(0);
     const handleTabChange = (event, newValue) => {
@@ -154,6 +221,12 @@ function App() {
             <Header conStatus={connection_status}/> 
             {/* <ExperimentalGraph data={core.rpm}/> */}
             <LineGraph data={core.rpm} animated={true} />
+=======
+    return(
+        <div>
+            <Header conStatus={connection_status}/> 
+            <LineGraph data={core.rpm} animated={false} />
+>>>>>>> 9ccc5874c0674a1ef3552d03a2af80bf6bd9c76b
             <LineGraph data={core.water_temp_c} animated={false} />
             <div className='container'>
                 <h2>Core</h2>
@@ -167,4 +240,8 @@ function App() {
     
 }
 
+<<<<<<< HEAD
 export default App;
+=======
+export default App;
+>>>>>>> 9ccc5874c0674a1ef3552d03a2af80bf6bd9c76b
