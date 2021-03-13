@@ -106,8 +106,6 @@ const App = () => {
             <div className='graphs'>
                 <LineGraph name='RPM' data={core.rpm} animated={false} />
                 <LineGraph name='Water Temp' data={core.water_temp_c} animated={false} />
-                <LineGraph data={core.rpm} animated={false} />
-                <LineGraph data={core.water_temp_c} animated={false} />
             </div>
             <div className='container'>
                 <h2>Core</h2>
