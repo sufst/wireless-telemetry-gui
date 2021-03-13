@@ -1,5 +1,5 @@
 // Module Imports
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CSVLink } from 'react-csv'
 
 // Config Imports 
@@ -9,122 +9,162 @@ import { parseServerData } from '../config/server'
 // Component Imports
 import Header from './Header'
 import LineGraph from './graphing/LineGraph'
+import {Tabs, Tab} from "@material-ui/core"
+// import ExperimentalGraph from './graphing/ExperimentalGraph'
 
 const socket = new WebSocket(`ws://${HOST}:${PORT}/`)
 
-class App extends Component {
+function App() {    
 
-	constructor(props) {
-		super(props); 
+	const [data, setData] = useState({
+        core: {
+            speed_kph: [],
+            rpm: [],
+            water_temp_c: [],
+            tps_perc: [],
+            battery_mv: [],
+            external_5v_mv: [],
+            fuel_flow: [],
+            lambda: [],
+        },
+        aero: {
+            evo_scan_1: [],
+            evo_scan_2: [],
+            evo_scan_3: [],
+            evo_scan_4: [],
+            evo_scan_5: [],
+            evo_scan_6: [],
+            evo_scan_7: [],
+        },
+        diagnostic: {
+            status_ecu_connected: [],
+            status_engine: [],
+            status_loggin: [],
+            inj_time: [],
+        },
+        power: {
+            inj_duty_cycle: [],
+            lambda_adjust: [],
+            lambda_target: [],
+            advance: [],
+        }, 
+        suspension: {
+            ride_height_fl_cm: [],
+            ride_height_fr_cm: [],
+            ride_height_flw_cm: [],
+            ride_height_rear_cm: [],
+        },
+        misc: {
+            lap_time_s: [],
+            accel_fl_x_mg: [],
+            accel_fl_y_mg: [],
+            accel_fl_z_mg: [],
+        }
+    });
 
-		// Helper function to get last element of array...
-		if (!Array.prototype.last){
-			Array.prototype.last = function(){
-				return this[this.length - 1];
-			};
-		};
+    const {core, aero, diagnostic, power, suspension, misc} = data;
 
-		this.state = {
-			connection_status: 'DISCONNECTED',
-			data: {
-				core: {
-					speed_kph: [],
-					rpm: [],
-					water_temp_c: [],
-					tps_perc: [],
-					battery_mv: [],
-					external_5v_mv: [],
-					fuel_flow: [],
-					lambda: [],
-				},
-				aero: {
-					evo_scan_1: [],
-					evo_scan_2: [],
-					evo_scan_3: [],
-					evo_scan_4: [],
-					evo_scan_5: [],
-					evo_scan_6: [],
-					evo_scan_7: [],
-				},
-				diagnostic: {
-					status_ecu_connected: [],
-					status_engine: [],
-					status_loggin: [],
-					inj_time: [],
-				},
-				power: {
-					inj_duty_cycle: [],
-					lambda_adjust: [],
-					lambda_target: [],
-					advance: [],
-				}, 
-				suspension: {
-					ride_height_fl_cm: [],
-					ride_height_fr_cm: [],
-					ride_height_flw_cm: [],
-					ride_height_rear_cm: [],
-				},
-				misc: {
-					lap_time_s: [],
-					accel_fl_x_mg: [],
-					accel_fl_y_mg: [],
-					accel_fl_z_mg: [],
-				}
-			},
+    const [connection_status, setConnectionStatus] = useState('Disconnected');
+
+    // useEffect(() => {
+    //     connectToServer()
+    // })
+
+    useEffect(() => {
+        socket.onopen = () => {
+			console.log(`WebSocket connected on ${HOST}:${PORT}`);
+			
+			setConnectionStatus('CONNECTED')
+
+			setInterval(fetchSensorData, 510);
 		}
-	}
+    })
 
-	componentDidMount() {
-		this.connectToServer(); 
-	}
+    useEffect(() => {
+        socket.onmessage = (message) => {
+            const epoch = Math.round(Date.now() / 1000) - 120;CSVLink
+            console.log('Message Received :' + epoch);
+			const values = parseServerData(message)
+			setData(values);
+		}
+    })
 
-	connectToServer() {
+    useEffect(() => {
+        socket.onclose = (event) => {
+			console.log('WebSocket Disconnected: ', event);
+			setConnectionStatus('DISCONNECTED')
+		}
+    })
+
+    useEffect(() => {
+        socket.onerror = (error) => {
+			console.error('WebSocket Error: ', error);
+		}
+    })
+
+    const connectToServer = () => {
 		socket.onopen = () => {
 			console.log(`WebSocket connected on ${HOST}:${PORT}`);
 			
-			this.setState({ connection_status: 'CONNECTED' })
+			setConnectionStatus('CONNECTED')
 
-			this.interval = setInterval(this.fetchSensorData, 1000)
+			setInterval(fetchSensorData, 1000);
 		}
 
 		socket.onmessage = (message) => {
+            const epoch = Math.round(Date.now() / 1000) - 120;CSVLink
+            console.log('Message Received :' + epoch);
 			const values = parseServerData(message)
-			this.setState({ data: values })
+			setData(values);
 		}
 
 		socket.onclose = (event) => {
 			console.log('WebSocket Disconnected: ', event);
-			this.setState({ connection_status: 'DISCONNECTED' })
+			setConnectionStatus('DISCONNECTED')
 		}
 
 		socket.onerror = (error) => {
 			console.error('WebSocket Error: ', error);
 		}
 	}
- 
-	fetchSensorData = () => { 
+
+    const fetchSensorData = () => { 
 		const epoch = Math.round(Date.now() / 1000) - 120; 
-		socket.send(`GET /sensors?amount=20&timesince=${epoch}`)
+		socket.send(`GET /sensors?amount=49 &timesince=${epoch}`)
 	}
 
-	render() {
-		const conStatus = this.state.connection_status;
-		const core = this.state.data.core
-		return (
-			<div>
-				<Header conStatus={conStatus}/> 
-				<LineGraph data={core.rpm} animated={false} />
-				<LineGraph data={core.water_temp_c} animated={false} />
-				<div className='container'>
-					<h2>Core</h2>
-					<p className='state'>{'Speed: ' + core.speed_kph[0]?.value}</p>
-					<p className='state'>{'RPM: ' + core.rpm[0]?.value}</p>
-					<p className='state'>{'Lambda: ' + core.lambda[0]?.value}</p>
-					<p className='state'>{'Water Temp: ' + core.water_temp_c[0]?.value}</p>
-				</div>
-			</div> 
-		)
-	}
+
+    const [selectedTab, selectTab] = React.useState(0);
+    const handleTabChange = (event, newValue) => {
+        selectTab(newValue);
+    }
+
+
+
+    return(
+        <div>
+            <Tabs value={selectedTab} onChange={handleTabChange}>
+                <Tab label = "Core"/>
+                <Tab label = "Aero"/>
+                <Tab label = "Diagnostics"/>
+                <Tab label = "Power"/>
+                <Tab label = "Suspension"/>
+                <Tab label = "Misc"/>
+            </Tabs>
+            <Header conStatus={connection_status}/> 
+            {/* <ExperimentalGraph data={core.rpm}/> */}
+            <LineGraph data={core.rpm} animated={true} />
+            <LineGraph data={core.water_temp_c} animated={false} />
+            <div className='container'>
+                <h2>Core</h2>
+                <p className='state'>{'Speed: ' + core.speed_kph[0]?.value}</p>
+                <p className='state'>{'RPM: ' + core.rpm[0]?.value}</p>
+                <p className='state'>{'Lambda: ' + core.lambda[0]?.value}</p>
+                <p className='state'>{'Water Temp: ' + core.water_temp_c[0]?.value}</p>
+            </div>
+        </div> 
+    )
+    
 }
 
-export default App
+export default App;
