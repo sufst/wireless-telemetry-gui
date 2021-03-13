@@ -1,5 +1,6 @@
 {
-  "name": "react-demo",
+  "name": "sufst-wireless-gui",
+  "productName": "SUFST Wireless Telemetry GUI",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
