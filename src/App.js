@@ -171,97 +171,87 @@ export default class App extends React.Component {
 
         this.socket = new WebSocket("ws://localhost:8765");
         this.lastEpoch = new Date().valueOf() / 1000;
-        this.onResponse = undefined;
         this.graphMetaData = {};
-        this.socketIntervalmS = 1000;
         this.sensorGroupData = {};
         this.expireTimeS = 2.0;
 
         this.socket.onopen = (event) => {
-            this.handleRestMetaRequest();
-        }
+            let onSocketResponsePromise = new Promise((resolve, reject) => {
+                this.socket.onmessage = (event) => this.handleSocketResponsePromise(event.data, resolve, reject);
+            });
 
-        this.socket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            console.log(data);
-
-            if (this.onResponse !== undefined) {
-                this.onResponse(data);
-
-                // Reset the response object for next request.
-                this.onResponse = undefined;
-            }
+            this.socket.send("GET /meta/sensors?");
+            onSocketResponsePromise.then((response) => this.handleRestMetaResponse(response));
         }
     }
 
-    handleRestMetaRequest() {
-        // Check to ensure there is no request active.
-        if (this.onResponse === undefined) {
-            this.socket.send("GET /meta/sensors?");
-            this.onResponse = this.handleRestMetaResponse;
+    handleSocketResponsePromise(data, resolve, reject) {
+        const response = JSON.parse(data);
+        console.log(response);
+
+        if(response.status === 200) {
+            resolve(response);
+        } else {
+            reject(response);
         }
     }
 
     handleRestMetaResponse(response) {
         // Save all the meta data for graph usage on sensor response.
-        if (response.status === 200) {
-            if (response.result !== undefined) {
-                for (let group in response.result) {
-                    if (this.graphMetaData[group] === undefined) {
-                        this.graphMetaData[group] = {};
-                    }
-                    for (let sensor in response.result[group]) {
-                        this.graphMetaData[group][sensor] = response.result[group][sensor];
-                    }
-                }
+        for (let group in response.result) {
+            if (this.graphMetaData[group] === undefined) {
+                this.graphMetaData[group] = {};
+            }
+            for (let sensor in response.result[group]) {
+                this.graphMetaData[group][sensor] = response.result[group][sensor];
             }
         }
 
-        this.setState({socketInterval: setInterval(() => this.handleRestSensorRequest(), this.socketIntervalmS)}); 
+        this.handleRestSensorRequest();
     }
 
     handleRestSensorRequest() {
-        // Check to ensure there is no request active.
-        if (this.onResponse === undefined) {
-            this.socket.send(`GET /sensors?timesince=${this.lastEpoch}`);
-            this.onResponse = this.handleRestSensorResponse;
-        }
+        let onSocketResponsePromise = new Promise((resolve, reject) => {
+            this.socket.onmessage = (event) => this.handleSocketResponsePromise(event.data, resolve, reject);
+        });
+
+        this.socket.send(`GET /sensors?timesince=${this.lastEpoch}`);
+        onSocketResponsePromise.then((response) => this.handleRestSensorResponsePromise(response));
     }
 
-    handleRestSensorResponse(response) {
+    handleRestSensorResponsePromise(response) {
         let newSensorGroupData = this.sensorGroupData;
         let newGraphsData = this.state.graphData;
 
         // Parse the result groups and sensors to re-built our sensor data.
-        if (response.status === 200) {
-            if (response.result !== undefined) {
-                for (let group in response.result) {
-                    if (newSensorGroupData[group] === undefined) {
-                        newSensorGroupData[group] = {};
+        for (let group in response.result) {
+            if (newSensorGroupData[group] === undefined) {
+                newSensorGroupData[group] = {};
+            } else {
+                for (let sensor in response.result[group]) {
+                    if (newSensorGroupData[group][sensor] === undefined) {
+                        newSensorGroupData[group][sensor] = [];
                     } else {
-                        for (let sensor in response.result[group]) {
-                            if (newSensorGroupData[group][sensor] === undefined) {
-                                newSensorGroupData[group][sensor] = [];
-                            } else {
-                                const trimmedData = this.trimOldData(this.sensorGroupData[group][sensor], this.expireTimeS + 1.0); 
-                                const combinedData = [...trimmedData, ...response.result[group][sensor]];                               
-                                newSensorGroupData[group][sensor] = combinedData;
-                            }
-                            const graphData = this.convertDataEpochTimesToGraphTimes(newSensorGroupData[group][sensor]);
-                            newGraphsData[sensor] = {
-                                data: graphData,
-                                min: this.graphMetaData[group][sensor].min,
-                                max: this.graphMetaData[group][sensor].max
-                            };
-                        }
+                        const trimmedData = this.trimOldData(this.sensorGroupData[group][sensor], this.expireTimeS + 1.0); 
+                        const combinedData = [...trimmedData, ...response.result[group][sensor]];                               
+                        newSensorGroupData[group][sensor] = combinedData;
                     }
+                    const graphData = this.convertDataEpochTimesToGraphTimes(newSensorGroupData[group][sensor]);
+                    newGraphsData[sensor] = {
+                        data: graphData,
+                        min: this.graphMetaData[group][sensor].min,
+                        max: this.graphMetaData[group][sensor].max
+                    };
                 }
-
-                this.lastEpoch = response.epoch;
-                this.sensorGroupData = newSensorGroupData;
-                this.setState({runRealTime: true, graphData: newGraphsData});
             }
         }
+
+        this.lastEpoch = response.epoch;
+        this.sensorGroupData = newSensorGroupData;
+        this.setState({graphData: newGraphsData});
+
+        // Make another sensor request.
+        this.handleRestSensorRequest();
     }
 
     trimOldData(data, expireSeconds) {
