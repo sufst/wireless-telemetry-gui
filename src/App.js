@@ -21,13 +21,15 @@ import React from "react";
 import AppHeader from "./appheader";
 import RESTfulServerSocket from "./restfulserversocket";
 import AppRealTimeGraphs from "./apprealtimegraphs";
+import AppSignIn from "./appsignin"
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            graphData: {}
+            graphData: {},
+            userAuthorized: false
         };
 
         this.graphMetaData = {};
@@ -114,12 +116,26 @@ export default class App extends React.Component {
         return newData;
     }
 
+    onSignInSubmit(event) {
+        if (event.target.username.value === "admin" && event.target.password.value === "root") {
+            this.setState({userAuthorized: true});
+        }
+    }
+
     render() {
-        return (
-            <span className="App">
-                <AppHeader />
-                <AppRealTimeGraphs graphData={this.state.graphData}/>
-            </span>
-        );
+        if (this.state.userAuthorized) {
+            return (
+                <span className="App">                    
+                    <AppHeader />
+                    <AppRealTimeGraphs graphData={this.state.graphData}/>
+                </span>
+            );
+        } else {
+            return (
+                <span className="App">
+                    <AppSignIn onSubmit={(event) => this.onSignInSubmit(event)}/>
+                </span>
+            );
+        }
     }
 }

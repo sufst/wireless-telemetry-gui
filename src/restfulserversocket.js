@@ -39,7 +39,6 @@ export default class RESTfulServerSocket {
 
     handleSocketResponsePromise(data, resolve, reject) {
         const response = JSON.parse(data);
-        console.log(response);
 
         if(response.status === 200) {
             this.lastEpoch = response.epoch;
