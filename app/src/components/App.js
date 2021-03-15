@@ -80,7 +80,7 @@ const App = () => {
 			
 			setConnectionStatus('CONNECTED')
 
-			setInterval(fetchSensorData, 200);
+			setInterval(fetchSensorData, 100);
 		}
 
 		socket.onmessage = (message) => {
@@ -111,11 +111,12 @@ const App = () => {
             <Header conStatus={connection_status}/> 
             <div className='graphs'>
                 <LineGraph name='RPM' data={core.rpm} animated={false} />
-                {/* <LineGraph name='Water Temp' data={core.water_temp_c} animated={false} /> */}
+                <LineGraph name='Water Temp' data={core.water_temp_c} animated={false} />
             </div>
             <div className='container'>
                 <h2>Core</h2>
                 <p className='state'>{'RPM: ' + core.rpm?.last()?.value}</p>
+                <p className='state'>{'Water Temp: ' + core.water_temp_c?.last()?.value}</p>
             </div>
         </div> 
     )
