@@ -1,3 +1,21 @@
+/*
+    Southampton University Formula Student Team Amazing Web App of Doom
+    Copyright (C) 2021 Nathan Rowley-Smith
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 import "./App.css"
 import React from "react";
 import {
@@ -10,33 +28,136 @@ import {
     Legend
   } from "recharts";
 
-function Chart(props) {
-    return (
-        <LineChart
-        width={800}
-        height={400}
-        data={props.data}
-        margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5
-        }}
-        >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="time" type="number" domain={[props.timeEndS, props.timeStartS]} />
-        <YAxis domain={[props.min, props.max]}/>
-        <Tooltip />
-        <Legend />
-        <Line
-            type="monotone"
-            isAnimationActive={false}
-            dataKey="value"
-            stroke="#8884d8"
-            strokeWidth={2}
-        />
-        </LineChart>
-    );
+
+class AppHeader extends React.Component {
+    render() {
+        return (
+            <div className="AppHeader">
+                <h1>SUFST Amazing Web App of Doom</h1> 
+                <hr></hr>
+                <p> SUFST Amazing Web App of Doom is licensed under the GNU General Public License v3.0. </p>
+                <hr></hr>
+            </div>
+        );
+    }
+}
+
+class AppRealTimeGraphs extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            //TODO: enable buttons for each graph type.
+            graphData: props.graphData,
+            numberGraphsPerRow: 2
+        };
+        
+        this.graphEndS = -2.0;
+        this.graphStartS = -0.0;
+    }
+
+    render() {
+         // Check if the graph data is empty (before socket request of sensor data occurs)
+         if (Object.keys(this.state.graphData).length === 0)
+         {
+             return (
+                 <div className="AppRealTimeGraphs">
+                     <h2>No Graphs Yet :(</h2>
+                 </div>
+             );
+         } else {
+             return (
+                 <div className="AppRealTimeGraphs">
+                    <h2>GRAPHS!!! :D</h2>
+                    <form>
+                        <p>Enter number of graphs per row:</p>
+                        <input type="number" onChange={(event) => this.setState({numberGraphsPerRow: event.target.value})}/>
+                    </form>
+                    {this.getGraphTable()}
+                 </div>
+             );
+         }
+    }
+
+    getGraphTable() {
+         let tableRowsMapping = [];
+        let rows = []
+
+        let rowBuffer = []
+        // Build the mapping of graph to rows
+        for (let entry in this.state.graphData) {
+
+            rowBuffer.push(entry);
+
+            if (rowBuffer.length >= this.state.numberGraphsPerRow) {
+                tableRowsMapping.push(rowBuffer);
+                rowBuffer = [];
+            }
+        }
+
+        tableRowsMapping.forEach((row_map, index) => 
+            rows.push(this.getGraphTableRowEntry(row_map, index))
+            );
+
+        return (
+            <table>
+                <tbody>
+                    {rows}
+                </tbody>
+            </table>
+        );
+    }
+
+    getGraphTableRowEntry(row_map, index) {
+        let row = [];
+        
+        row_map.forEach((entry, number) => {
+            const graph = this.state.graphData[entry];
+
+            row.push(
+                <td key={"td_" + number}>
+                    <this.Graph title={entry} timeEndS={this.graphEndS} timeStartS={this.graphStartS} min={graph.min} max={graph.max} graphData={graph.data}/>
+                </td>);
+        });
+
+        return (
+            <tr key={"tr_" + index}>
+                {row}
+            </tr>
+        );
+    }
+
+    Graph(props) {
+        return (
+            <>
+                <h2>{props.title}</h2>
+                <LineChart
+                    width={800}
+                    height={400}
+                    data={props.graphData}
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5
+                    }}
+                    >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="time" type="number" domain={[props.timeEndS, props.timeStartS]} />
+                    <YAxis domain={[props.min, props.max]}/>
+                    <Tooltip />
+                    <Legend />
+                    <Line
+                        type="monotone"
+                        isAnimationActive={false}
+                        dataKey="value"
+                        stroke="#8884d8"
+                        strokeWidth={2}
+                    />
+                </LineChart>
+            </>
+        );
+    }
 }
 
 export default class App extends React.Component {
@@ -44,19 +165,17 @@ export default class App extends React.Component {
         super(props);
 
         this.state = {
-            sensorGroupData: {},
             socketInterval: undefined,
-            graphTable: []
+            graphData: {}
         };
 
         this.socket = new WebSocket("ws://localhost:8765");
         this.lastEpoch = new Date().valueOf() / 1000;
         this.onResponse = undefined;
         this.graphMetaData = {};
-        this.socketIntervalS = 0.1;
-        this.expireTimeS = 3.0;
-        this.graphEndS = -4.0;
-        this.graphStartS = -0.5;
+        this.socketIntervalmS = 1000;
+        this.sensorGroupData = {};
+        this.expireTimeS = 2.0;
 
         this.socket.onopen = (event) => {
             this.handleRestMetaRequest();
@@ -64,6 +183,7 @@ export default class App extends React.Component {
 
         this.socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
+            console.log(data);
 
             if (this.onResponse !== undefined) {
                 this.onResponse(data);
@@ -97,7 +217,7 @@ export default class App extends React.Component {
             }
         }
 
-        this.setState({socketInterval: setInterval(() => this.handleRestSensorRequest(), this.socketIntervalS * 1000)}); 
+        this.setState({socketInterval: setInterval(() => this.handleRestSensorRequest(), this.socketIntervalmS)}); 
     }
 
     handleRestSensorRequest() {
@@ -109,8 +229,8 @@ export default class App extends React.Component {
     }
 
     handleRestSensorResponse(response) {
-        let newSensorGroupData = this.state.sensorGroupData;
-        let newGraphsTable = this.state.graphTable.splice();
+        let newSensorGroupData = this.sensorGroupData;
+        let newGraphsData = this.state.graphData;
 
         // Parse the result groups and sensors to re-built our sensor data.
         if (response.status === 200) {
@@ -123,25 +243,23 @@ export default class App extends React.Component {
                             if (newSensorGroupData[group][sensor] === undefined) {
                                 newSensorGroupData[group][sensor] = [];
                             } else {
-                                const trimmedData = this.trimOldData(this.state.sensorGroupData[group][sensor], this.expireTimeS + 1.0); 
+                                const trimmedData = this.trimOldData(this.sensorGroupData[group][sensor], this.expireTimeS + 1.0); 
                                 const combinedData = [...trimmedData, ...response.result[group][sensor]];                               
                                 newSensorGroupData[group][sensor] = combinedData;
                             }
                             const graphData = this.convertDataEpochTimesToGraphTimes(newSensorGroupData[group][sensor]);
-                            newGraphsTable.push({"key": sensor, "graph": 
-                                <Chart 
-                                    data={graphData} 
-                                    timeEndS={this.graphEndS}
-                                    timeStartS={this.graphStartS}
-                                    min={this.graphMetaData[group][sensor].min}
-                                    max={this.graphMetaData[group][sensor].max}
-                                />});
+                            newGraphsData[sensor] = {
+                                data: graphData,
+                                min: this.graphMetaData[group][sensor].min,
+                                max: this.graphMetaData[group][sensor].max
+                            };
                         }
                     }
                 }
 
                 this.lastEpoch = response.epoch;
-                this.setState({graphTable: newGraphsTable, sensorGroupData: newSensorGroupData});
+                this.sensorGroupData = newSensorGroupData;
+                this.setState({runRealTime: true, graphData: newGraphsData});
             }
         }
     }
@@ -171,43 +289,12 @@ export default class App extends React.Component {
         return newData;
     }
 
-    renderGraphTableRows() {
-        const tableData = this.state.graphTable;
-
-        if (!tableData) return null;
-
-        let result = [];
-
-        tableData.forEach(entry => {
-            result.push(
-            <tr key={entry.key}>
-                <td>
-                    {entry.key}
-                    {entry.graph}
-                </td>
-            </tr>
-            )
-        });
-        
-        return result;
-    }
-
     render() {
         return (
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                ALL THE GRAPHS!!
-                            </th>
-                        </tr>
-                    </thead>
-                <tbody>
-                    {this.renderGraphTableRows()}
-                </tbody>
-                </table>
-            </div>
+            <span className="App">
+                <AppHeader />
+                <AppRealTimeGraphs graphData={this.state.graphData}/>
+            </span>
         );
     }
 }
