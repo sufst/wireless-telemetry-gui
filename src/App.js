@@ -160,29 +160,43 @@ class AppRealTimeGraphs extends React.Component {
     }
 }
 
-export default class App extends React.Component {
-    constructor(props) {
-        super(props);
+class RESTfulServerSocket {
+    constructor() {
+        this.socket = undefined;
+        this.lastEpoch = undefined;
+    }
 
-        this.state = {
-            socketInterval: undefined,
-            graphData: {}
-        };
+    open() {
+        let promise = new Promise((resolve, reject) => {
+            this.socket = new WebSocket("ws://localhost:8765");
 
-        this.socket = new WebSocket("ws://localhost:8765");
-        this.lastEpoch = new Date().valueOf() / 1000;
-        this.graphMetaData = {};
-        this.sensorGroupData = {};
-        this.expireTimeS = 2.0;
+            this.socket.onopen = (event) => {
+                console.log("opened");
+                resolve();
+            }
+        });
 
-        this.socket.onopen = (event) => {
-            let onSocketResponsePromise = new Promise((resolve, reject) => {
-                this.socket.onmessage = (event) => this.handleSocketResponsePromise(event.data, resolve, reject);
-            });
+        return promise;
+    }
 
-            this.socket.send("GET /meta/sensors?");
-            onSocketResponsePromise.then((response) => this.handleRestMetaResponse(response));
-        }
+    requestMetaSensorData() {
+        let promise = new Promise((resolve, reject) => {
+            this.socket.onmessage = (event) => this.handleSocketResponsePromise(event.data, resolve, reject);
+        });
+
+        this.socket.send("GET /meta/sensors?");
+
+        return promise;
+    }
+
+    requestSensorData() {
+        let promise = new Promise((resolve, reject) => {
+            this.socket.onmessage = (event) => this.handleSocketResponsePromise(event.data, resolve, reject);
+        });
+
+        this.socket.send(`GET /sensors?timesince=${this.lastEpoch}`);
+
+        return promise;
     }
 
     handleSocketResponsePromise(data, resolve, reject) {
@@ -190,10 +204,31 @@ export default class App extends React.Component {
         console.log(response);
 
         if(response.status === 200) {
+            this.lastEpoch = response.epoch;
             resolve(response);
         } else {
             reject(response);
         }
+    }
+}
+
+export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            graphData: {}
+        };
+
+        this.graphMetaData = {};
+        this.sensorGroupData = {};
+        this.expireTimeS = 2.0;
+
+        this.restfulSocket = new RESTfulServerSocket();
+
+        this.restfulSocket.open()
+            .then(() => this.restfulSocket.requestMetaSensorData())
+            .then((response) => this.handleRestMetaResponse(response));
     }
 
     handleRestMetaResponse(response) {
@@ -207,19 +242,10 @@ export default class App extends React.Component {
             }
         }
 
-        this.handleRestSensorRequest();
+        this.restfulSocket.requestSensorData().then((response) => this.handleRestSensorResponse(response));
     }
 
-    handleRestSensorRequest() {
-        let onSocketResponsePromise = new Promise((resolve, reject) => {
-            this.socket.onmessage = (event) => this.handleSocketResponsePromise(event.data, resolve, reject);
-        });
-
-        this.socket.send(`GET /sensors?timesince=${this.lastEpoch}`);
-        onSocketResponsePromise.then((response) => this.handleRestSensorResponsePromise(response));
-    }
-
-    handleRestSensorResponsePromise(response) {
+    handleRestSensorResponse(response) {
         let newSensorGroupData = this.sensorGroupData;
         let newGraphsData = this.state.graphData;
 
@@ -246,12 +272,11 @@ export default class App extends React.Component {
             }
         }
 
-        this.lastEpoch = response.epoch;
         this.sensorGroupData = newSensorGroupData;
         this.setState({graphData: newGraphsData});
 
         // Make another sensor request.
-        this.handleRestSensorRequest();
+        this.restfulSocket.requestSensorData().then((response) => this.handleRestSensorResponse(response));
     }
 
     trimOldData(data, expireSeconds) {
