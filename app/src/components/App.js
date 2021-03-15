@@ -14,6 +14,12 @@ const socket = new WebSocket(`ws://${HOST}:${PORT}/`)
 
 const App = () => {    
 
+    if (!Array.prototype.last){
+        Array.prototype.last = function(){
+            return this[this.length - 1];
+        };
+    };
+
 	const [data, setData] = useState({
         core: {
             speed_kph: [],
@@ -105,14 +111,11 @@ const App = () => {
             <Header conStatus={connection_status}/> 
             <div className='graphs'>
                 <LineGraph name='RPM' data={core.rpm} animated={false} />
-                <LineGraph name='Water Temp' data={core.water_temp_c} animated={false} />
+                {/* <LineGraph name='Water Temp' data={core.water_temp_c} animated={false} /> */}
             </div>
             <div className='container'>
                 <h2>Core</h2>
-                <p className='state'>{'Speed: ' + core.speed_kph[0]?.value}</p>
-                <p className='state'>{'RPM: ' + core.rpm[0]?.value}</p>
-                <p className='state'>{'Lambda: ' + core.lambda[0]?.value}</p>
-                <p className='state'>{'Water Temp: ' + core.water_temp_c[0]?.value}</p>
+                <p className='state'>{'RPM: ' + core.rpm?.last()?.value}</p>
             </div>
         </div> 
     )
