@@ -1,13 +1,12 @@
-import React from 'react'
-import { render } from 'react-dom'
-import App from './components/App'
-import './css/App.css'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App';
 
-// Since we are using HtmlWebpackPlugin WITHOUT a template, we should create our own root node in the body element before rendering into it
-let root = document.createElement('div')
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 
-root.id = 'root'
-document.body.appendChild(root)
 
-// Now we can render our application into it
-render(<App />, document.getElementById('root'))

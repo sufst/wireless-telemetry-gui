@@ -1,6 +1,6 @@
 import React from 'react'
 
-import logo from '../../assets/app-logo.png'
+import logo from '../assets/app-logo.png'
 
 export default function Header( {conStatus} ) {
     

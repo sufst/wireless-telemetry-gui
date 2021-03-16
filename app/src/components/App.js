@@ -1,6 +1,6 @@
 // Module Imports
+import '../css/App.css'
 import React, { useState, useEffect } from 'react'
-import { CSVLink } from 'react-csv'
 
 // Config Imports 
 import { PORT, HOST } from '../config/config'
@@ -13,6 +13,12 @@ import LineGraph from './graphing/LineGraph'
 const socket = new WebSocket(`ws://${HOST}:${PORT}/`)
 
 const App = () => {    
+
+    if (!Array.prototype.last){
+        Array.prototype.last = function(){
+            return this[this.length - 1];
+        };
+    };
 
 	const [data, setData] = useState({
         core: {
@@ -74,7 +80,7 @@ const App = () => {
 			
 			setConnectionStatus('CONNECTED')
 
-			setInterval(fetchSensorData, 1000);
+			setInterval(fetchSensorData, 100);
 		}
 
 		socket.onmessage = (message) => {
@@ -97,20 +103,20 @@ const App = () => {
 
     const fetchSensorData = () => { 
 		const epoch = Math.round(Date.now() / 1000) - 120; 
-		socket.send(`GET /sensors?amount=20&timesince=${epoch}`)
+		socket.send(`GET /sensors?amount=100&timesince=${epoch}`)
 	}
 
     return(
         <div>
             <Header conStatus={connection_status}/> 
-            <LineGraph data={core.rpm} animated={false} />
-            <LineGraph data={core.water_temp_c} animated={false} />
+            <div className='graphs'>
+                <LineGraph name='RPM' data={core.rpm} animated={false} />
+                <LineGraph name='Water Temp' data={core.water_temp_c} animated={false} />
+            </div>
             <div className='container'>
                 <h2>Core</h2>
-                <p className='state'>{'Speed: ' + core.speed_kph[0]?.value}</p>
-                <p className='state'>{'RPM: ' + core.rpm[0]?.value}</p>
-                <p className='state'>{'Lambda: ' + core.lambda[0]?.value}</p>
-                <p className='state'>{'Water Temp: ' + core.water_temp_c[0]?.value}</p>
+                <p className='state'>{'RPM: ' + core.rpm?.last()?.value}</p>
+                <p className='state'>{'Water Temp: ' + core.water_temp_c?.last()?.value}</p>
             </div>
         </div> 
     )
