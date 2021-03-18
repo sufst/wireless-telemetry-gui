@@ -166,11 +166,12 @@ export default class AppSignIn extends React.Component {
         super(props);
 
         this.state = {
-            pages: {
-                signIn: <SignIn onSubmit={(event) => this.onSignInSubmit(event)} onCreateAccount={(event) => this.onCreateAccount(event)}/>,
-                createAccount: <CreateAccount onSubmit={(event) => this.onCreateAccountSubmit(event)} />
-            },
             onPage: "signIn"
+        };
+
+        this.pages = {
+            signIn: <SignIn onSubmit={(event) => this.onSignInSubmit(event)} onCreateAccount={(event) => this.onCreateAccount(event)}/>,
+            createAccount: <CreateAccount onSubmit={(event) => this.onCreateAccountSubmit(event)} />
         };
 
         this.onAuthUser = props.onAuthUser;
@@ -219,6 +220,6 @@ export default class AppSignIn extends React.Component {
     }
 
     render() {
-        return this.state.pages[this.state.onPage];
+        return this.pages[this.state.onPage];
     }
 }

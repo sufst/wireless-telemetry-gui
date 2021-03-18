@@ -23,13 +23,27 @@ import RESTfulServerSocket from "./restfulserversocket";
 import AppRealTimeGraphs from "./apprealtimegraphs";
 import AppSignIn from "./appsignin"
 
+function Dash(props) {
+    return (
+        <>
+            <AppHeader />
+            <AppRealTimeGraphs graphData={props.graphData}/>  
+        </>
+    );
+}
+
 export default class App extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             graphData: {},
-            isUserAuthorized: false
+            onPage: "signIn"
+        };
+
+        this.pages = {
+            dash: <Dash graphData={this.state.graphData} />,
+            signIn: <AppSignIn onAuthUser={(username) => this.onSignInAuthorized(username)}/>
         };
 
         this.graphMetaData = {};
@@ -118,23 +132,10 @@ export default class App extends React.Component {
         this.restfulIntermediateServerSocket.requestMetaSensorData()
         .then((response) => this.onSensorsMetaResponse(response));
 
-        this.setState({isUserAuthorized: true});
+        this.setState({onPage: "dash"});
     }
 
     render() {
-        if (this.state.isUserAuthorized) {
-            return (
-                <span className="App">                    
-                    <AppHeader />
-                    <AppRealTimeGraphs graphData={this.state.graphData}/>
-                </span>
-            );
-        } else {
-            return (
-                <span className="App">
-                    <AppSignIn onAuthUser={(username) => this.onSignInAuthorized(username)}/>
-                </span>
-            );
-        }
+        return this.pages[this.state.onPage];
     }
 }
