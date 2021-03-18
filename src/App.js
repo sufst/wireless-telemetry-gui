@@ -30,7 +30,7 @@ export default class App extends React.Component {
 
         this.state = {
             graphData: {},
-            userAuthorized: false
+            isUserAuthorized: false
         };
 
         this.graphMetaData = {};
@@ -44,7 +44,7 @@ export default class App extends React.Component {
         this.restfulBackendSocket.open().catch((error) => console.error(error.message));
     }
 
-    handleRestMetaResponse(response) {
+    onSensorsMetaResponse(response) {
         // Save all the meta data for graph usage on sensor response.
         for (let group in response.result) {
             if (this.graphMetaData[group] === undefined) {
@@ -55,10 +55,10 @@ export default class App extends React.Component {
             }
         }
 
-        this.restfulIntermediateServerSocket.requestSensorData().then((response) => this.handleRestSensorResponse(response));
+        this.restfulIntermediateServerSocket.requestSensorData().then((response) => this.onSensorsResponse(response));
     }
 
-    handleRestSensorResponse(response) {
+    onSensorsResponse(response) {
         let newSensorGroupData = this.sensorGroupData;
         let newGraphsData = this.state.graphData;
 
@@ -89,7 +89,7 @@ export default class App extends React.Component {
         this.setState({graphData: newGraphsData});
 
         // Make another sensor request.
-        this.restfulIntermediateServerSocket.requestSensorData().then((response) => this.handleRestSensorResponse(response));
+        this.restfulIntermediateServerSocket.requestSensorData().then((response) => this.onSensorsResponse(response));
     }
 
     trimOldData(data, expireSeconds) {
@@ -129,16 +129,15 @@ export default class App extends React.Component {
     onAuthorizeUserResponse(result) {
         console.log("User authorised? " + result);
         if (result) {
-            
             this.restfulIntermediateServerSocket.requestMetaSensorData()
-            .then((response) => this.handleRestMetaResponse(response));
+            .then((response) => this.onSensorsMetaResponse(response));
 
-            this.setState({userAuthorized: true});
+            this.setState({isUserAuthorized: true});
         }
     }
 
     render() {
-        if (this.state.userAuthorized) {
+        if (this.state.isUserAuthorized) {
             return (
                 <span className="App">                    
                     <AppHeader />
