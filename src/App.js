@@ -22,6 +22,7 @@ import AppHeader from "./appheader";
 import RESTfulServerSocket from "./restfulserversocket";
 import AppRealTimeGraphs from "./apprealtimegraphs";
 import AppSignIn from "./appsignin"
+import RESTfulBackendSocket from "./restfulbackendsocket"
 
 export default class App extends React.Component {
     constructor(props) {
@@ -36,11 +37,11 @@ export default class App extends React.Component {
         this.sensorGroupData = {};
         this.expireTimeS = 2.0;
 
-        this.restfulSocket = new RESTfulServerSocket();
+        this.restfulIntermediateServerSocket = new RESTfulServerSocket();
+        this.restfulIntermediateServerSocket.open().catch((error) => console.error(error.message));
 
-        this.restfulSocket.open()
-            .then(() => this.restfulSocket.requestMetaSensorData())
-            .then((response) => this.handleRestMetaResponse(response));
+        this.restfulBackendSocket = new RESTfulBackendSocket();
+        this.restfulBackendSocket.open().catch((error) => console.error(error.message));
     }
 
     handleRestMetaResponse(response) {
@@ -54,7 +55,7 @@ export default class App extends React.Component {
             }
         }
 
-        this.restfulSocket.requestSensorData().then((response) => this.handleRestSensorResponse(response));
+        this.restfulIntermediateServerSocket.requestSensorData().then((response) => this.handleRestSensorResponse(response));
     }
 
     handleRestSensorResponse(response) {
@@ -88,7 +89,7 @@ export default class App extends React.Component {
         this.setState({graphData: newGraphsData});
 
         // Make another sensor request.
-        this.restfulSocket.requestSensorData().then((response) => this.handleRestSensorResponse(response));
+        this.restfulIntermediateServerSocket.requestSensorData().then((response) => this.handleRestSensorResponse(response));
     }
 
     trimOldData(data, expireSeconds) {
@@ -117,7 +118,21 @@ export default class App extends React.Component {
     }
 
     onSignInSubmit(event) {
-        if (event.target.username.value === "admin" && event.target.password.value === "root") {
+        event.preventDefault();
+        let username = event.target.username.value;
+        let password = event.target.password.value;
+
+        this.restfulBackendSocket.requestUserAuth(username, password)
+        .then((response) => this.onAuthorizeUserResponse(response.result));
+    }
+
+    onAuthorizeUserResponse(result) {
+        console.log("User authorised? " + result);
+        if (result) {
+            
+            this.restfulIntermediateServerSocket.requestMetaSensorData()
+            .then((response) => this.handleRestMetaResponse(response));
+
             this.setState({userAuthorized: true});
         }
     }

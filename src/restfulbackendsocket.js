@@ -1,12 +1,11 @@
-export default class RESTfulServerSocket {
+export default class RESTfulBackendSocket {
     constructor() {
         this.socket = undefined;
-        this.lastEpoch = undefined;
     }
 
     open() {
         let promise = new Promise((resolve, reject) => {
-            this.socket = new WebSocket("ws://localhost:8765");
+            this.socket = new WebSocket("wss://localhost:8767");
 
             this.socket.onopen = (event) => {
                 console.log("opened");
@@ -21,22 +20,22 @@ export default class RESTfulServerSocket {
         return promise;
     }
 
-    requestMetaSensorData() {
+    requestUserAuth(username, password) {
         let promise = new Promise((resolve, reject) => {
             this.socket.onmessage = (event) => this.handleSocketResponsePromise(event.data, resolve, reject);
         });
 
-        this.socket.send("GET /meta/sensors?");
+        this.socket.send("GET /auth_user?username=" + username + "&password=" + password );
 
         return promise;
     }
 
-    requestSensorData() {
+    requestCreateUser(user_details) {
         let promise = new Promise((resolve, reject) => {
             this.socket.onmessage = (event) => this.handleSocketResponsePromise(event.data, resolve, reject);
         });
 
-        this.socket.send(`GET /sensors?timesince=${this.lastEpoch}`);
+        this.socket.send(`POST /users ` + JSON.stringify(user_details));
 
         return promise;
     }
