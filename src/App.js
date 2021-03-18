@@ -22,7 +22,6 @@ import AppHeader from "./appheader";
 import RESTfulServerSocket from "./restfulserversocket";
 import AppRealTimeGraphs from "./apprealtimegraphs";
 import AppSignIn from "./appsignin"
-import RESTfulBackendSocket from "./restfulbackendsocket"
 
 export default class App extends React.Component {
     constructor(props) {
@@ -39,9 +38,6 @@ export default class App extends React.Component {
 
         this.restfulIntermediateServerSocket = new RESTfulServerSocket();
         this.restfulIntermediateServerSocket.open().catch((error) => console.error(error.message));
-
-        this.restfulBackendSocket = new RESTfulBackendSocket();
-        this.restfulBackendSocket.open().catch((error) => console.error(error.message));
     }
 
     onSensorsMetaResponse(response) {
@@ -117,23 +113,12 @@ export default class App extends React.Component {
         return newData;
     }
 
-    onSignInSubmit(event) {
-        event.preventDefault();
-        let username = event.target.username.value;
-        let password = event.target.password.value;
+    onSignInAuthorized(username) {
+        console.log("User " + username + " authorised");
+        this.restfulIntermediateServerSocket.requestMetaSensorData()
+        .then((response) => this.onSensorsMetaResponse(response));
 
-        this.restfulBackendSocket.requestUserAuth(username, password)
-        .then((response) => this.onAuthorizeUserResponse(response.result));
-    }
-
-    onAuthorizeUserResponse(result) {
-        console.log("User authorised? " + result);
-        if (result) {
-            this.restfulIntermediateServerSocket.requestMetaSensorData()
-            .then((response) => this.onSensorsMetaResponse(response));
-
-            this.setState({isUserAuthorized: true});
-        }
+        this.setState({isUserAuthorized: true});
     }
 
     render() {
@@ -147,7 +132,7 @@ export default class App extends React.Component {
         } else {
             return (
                 <span className="App">
-                    <AppSignIn onSubmit={(event) => this.onSignInSubmit(event)}/>
+                    <AppSignIn onAuthUser={(username) => this.onSignInAuthorized(username)}/>
                 </span>
             );
         }

@@ -30,12 +30,12 @@ export default class RESTfulBackendSocket {
         return promise;
     }
 
-    requestCreateUser(user_details) {
+    requestCreateUser(username, password) {
         let promise = new Promise((resolve, reject) => {
             this.socket.onmessage = (event) => this.handleSocketResponsePromise(event.data, resolve, reject);
         });
 
-        this.socket.send(`POST /users ` + JSON.stringify(user_details));
+        this.socket.send(`POST /users ` + JSON.stringify({username: username, password: password}));
 
         return promise;
     }
