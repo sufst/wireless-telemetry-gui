@@ -19,9 +19,18 @@
 import "./app.css"
 import React from "react";
 import AppHeader from "./appheader";
-import RESTfulServerSocket from "./restfulserversocket";
 import AppRealTimeGraphs from "./apprealtimegraphs";
 import AppSignIn from "./appsignin"
+import io from "socket.io-client";
+import RESTfulBackend from "./restfulbackend"
+
+
+const socket = io("wss://localhost:5000");
+
+socket.on("connect", () => {
+    console.log(socket.id);
+    socket.send("Hello over socket io!");
+  });
 
 function Dash(props) {
     return (
@@ -43,15 +52,16 @@ export default class App extends React.Component {
 
         this.pages = {
             dash: <Dash graphData={this.state.graphData} />,
-            signIn: <AppSignIn onAuthUser={(username) => this.onSignInAuthorized(username)}/>
+            signIn: <AppSignIn onAuthUser={(access_token) => this.onSignInAuthorized(access_token)}/>
         };
 
         this.graphMetaData = {};
         this.sensorGroupData = {};
         this.expireTimeS = 2.0;
 
-        this.restfulIntermediateServerSocket = new RESTfulServerSocket();
-        this.restfulIntermediateServerSocket.open().catch((error) => console.error(error.message));
+        this.username = undefined;
+        this.accessToken = undefined;
+        this.restfulBackend = new RESTfulBackend();
     }
 
     onSensorsMetaResponse(response) {
@@ -64,8 +74,6 @@ export default class App extends React.Component {
                 this.graphMetaData[group][sensor] = response.result[group][sensor];
             }
         }
-
-        this.restfulIntermediateServerSocket.requestSensorData().then((response) => this.onSensorsResponse(response));
     }
 
     onSensorsResponse(response) {
@@ -97,9 +105,6 @@ export default class App extends React.Component {
 
         this.sensorGroupData = newSensorGroupData;
         this.setState({graphData: newGraphsData});
-
-        // Make another sensor request.
-        this.restfulIntermediateServerSocket.requestSensorData().then((response) => this.onSensorsResponse(response));
     }
 
     trimOldData(data, expireSeconds) {
@@ -127,10 +132,13 @@ export default class App extends React.Component {
         return newData;
     }
 
-    onSignInAuthorized(username) {
-        console.log("User " + username + " authorised");
-        this.restfulIntermediateServerSocket.requestMetaSensorData()
-        .then((response) => this.onSensorsMetaResponse(response));
+    onSignInAuthorized(accessToken) {
+        console.log("Sign in access token granted");
+        this.accessToken = accessToken;
+
+        this.restfulBackend.getUserData(this.accessToken, this.username)
+        .then((data) => console.log(data))
+        .catch((error) => console.error(error));
 
         this.setState({onPage: "dash"});
     }

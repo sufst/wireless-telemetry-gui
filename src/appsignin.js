@@ -9,7 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import RESTfulBackendSocket from "./restfulbackendsocket"
+import RESTfulBackend from "./restfulbackend"
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -171,39 +171,32 @@ export default class AppSignIn extends React.Component {
 
         this.pages = {
             signIn: <SignIn onSubmit={(event) => this.onSignInSubmit(event)} onCreateAccount={(event) => this.onCreateAccount(event)}/>,
-            createAccount: <CreateAccount onSubmit={(event) => this.onCreateAccountSubmit(event)} />
+            createAccount: <CreateAccount onSubmit={(event) => this.onCreateUserSubmit(event)} />
         };
 
+        this.restfulBackend = new RESTfulBackend();
         this.onAuthUser = props.onAuthUser;
         this.username = undefined;
-
-        this.restfulBackendSocket = new RESTfulBackendSocket();
-        this.restfulBackendSocket.open().catch((error) => console.error(error.message));
     }
 
-    onAuthorizeUserResponse(result) {
-        console.log("User auth? " + result);
-
-        if (result) {
-            this.onAuthUser(this.username);
-        }
+    onLogIn(accessToken) {
+        this.onAuthUser(accessToken);
     }
 
-    onCreateAccountResponse(result) {
-        console.log("Account created? " + result);
+    onCreateUser() {
+        console.log("Account created");
 
-        if (result) {
-            this.setState({onPage: "signIn"});
-        }
+        this.setState({onPage: "signIn"});
     }
 
-    onCreateAccountSubmit(event) {
+    onCreateUserSubmit(event) {
         event.preventDefault();
         let username = event.target.username.value;
         let password = event.target.password.value;
 
-        this.restfulBackendSocket.requestCreateUser(username, password)
-        .then((response) => this.onCreateAccountResponse(response.result));
+        this.restfulBackend.createUser(username, password)
+        .then(() => this.onCreateUser())
+        .catch((error) => console.error(error));
     }
 
     onSignInSubmit(event) {
@@ -211,8 +204,9 @@ export default class AppSignIn extends React.Component {
         this.username = event.target.username.value;
         let password = event.target.password.value;
 
-        this.restfulBackendSocket.requestUserAuth(this.username, password)
-        .then((response) => this.onAuthorizeUserResponse(response.result));
+        this.restfulBackend.logIn(this.username, password)
+        .then((accessToken) => this.onLogIn(accessToken))
+        .catch((error) => console.error(error));
     }
 
     onCreateAccount(event) {
