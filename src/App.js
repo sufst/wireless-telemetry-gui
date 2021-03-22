@@ -16,134 +16,117 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import "./app.css"
-import React from "react";
+import "./app.css";
+import React, { useEffect, useState } from 'react';
 import AppHeader from "./appheader";
 import AppRealTimeGraphs from "./apprealtimegraphs";
-import AppSignIn from "./appsignin"
-import io from "socket.io-client";
-import RESTfulBackend from "./restfulbackend"
-
-
-const socket = io("wss://localhost:5000");
-
-socket.on("connect", () => {
-    console.log(socket.id);
-    socket.send("Hello over socket io!");
-  });
+import AppSignIn from "./appsignin";
+import { getUserData } from "./backend"
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 
 function Dash(props) {
     return (
-        <>
-            <AppHeader />
+        <div className="Dash">
+            <AppHeader />,
             <AppRealTimeGraphs graphData={props.graphData}/>  
-        </>
+        </div>
     );
 }
 
-export default class App extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            graphData: {},
-            onPage: "signIn"
-        };
-
-        this.pages = {
-            dash: <Dash graphData={this.state.graphData} />,
-            signIn: <AppSignIn onAuthUser={(access_token) => this.onSignInAuthorized(access_token)}/>
-        };
-
-        this.graphMetaData = {};
-        this.sensorGroupData = {};
-        this.expireTimeS = 2.0;
-
-        this.username = undefined;
-        this.accessToken = undefined;
-        this.restfulBackend = new RESTfulBackend();
-    }
-
-    onSensorsMetaResponse(response) {
-        // Save all the meta data for graph usage on sensor response.
-        for (let group in response.result) {
-            if (this.graphMetaData[group] === undefined) {
-                this.graphMetaData[group] = {};
-            }
-            for (let sensor in response.result[group]) {
-                this.graphMetaData[group][sensor] = response.result[group][sensor];
-            }
+export default function App(props) {
+    const [userData, setUserData] = useState(undefined);
+    useEffect(() => {
+        if (userData !== undefined) {
+            console.log(userData);
         }
-    }
+    });
 
-    onSensorsResponse(response) {
-        let newSensorGroupData = this.sensorGroupData;
-        let newGraphsData = this.state.graphData;
+    const [signedIn, setSignedIn] = useState(false);
 
-        // Parse the result groups and sensors to re-built our sensor data.
-        for (let group in response.result) {
-            if (newSensorGroupData[group] === undefined) {
-                newSensorGroupData[group] = {};
-            } else {
-                for (let sensor in response.result[group]) {
-                    if (newSensorGroupData[group][sensor] === undefined) {
-                        newSensorGroupData[group][sensor] = [];
-                    } else {
-                        const trimmedData = this.trimOldData(this.sensorGroupData[group][sensor], this.expireTimeS + 1.0); 
-                        const combinedData = [...trimmedData, ...response.result[group][sensor]];                               
-                        newSensorGroupData[group][sensor] = combinedData;
-                    }
-                    const graphData = this.convertDataEpochTimesToGraphTimes(newSensorGroupData[group][sensor]);
-                    newGraphsData[sensor] = {
-                        data: graphData,
-                        min: this.graphMetaData[group][sensor].min,
-                        max: this.graphMetaData[group][sensor].max
-                    };
-                }
-            }
-        }
+    // onSensorsResponse(response) {
+    //     let newSensorGroupData = this.sensorGroupData;
+    //     let newGraphsData = this.state.graphData;
 
-        this.sensorGroupData = newSensorGroupData;
-        this.setState({graphData: newGraphsData});
-    }
+    //     // Parse the result groups and sensors to re-built our sensor data.
+    //     for (let group in response.result) {
+    //         if (newSensorGroupData[group] === undefined) {
+    //             newSensorGroupData[group] = {};
+    //         } else {
+    //             for (let sensor in response.result[group]) {
+    //                 if (newSensorGroupData[group][sensor] === undefined) {
+    //                     newSensorGroupData[group][sensor] = [];
+    //                 } else {
+    //                     const trimmedData = this.trimOldData(this.sensorGroupData[group][sensor], this.expireTimeS + 1.0); 
+    //                     const combinedData = [...trimmedData, ...response.result[group][sensor]];                               
+    //                     newSensorGroupData[group][sensor] = combinedData;
+    //                 }
+    //                 const graphData = this.convertDataEpochTimesToGraphTimes(newSensorGroupData[group][sensor]);
+    //                 newGraphsData[sensor] = {
+    //                     data: graphData,
+    //                     min: this.graphMetaData[group][sensor].min,
+    //                     max: this.graphMetaData[group][sensor].max
+    //                 };
+    //             }
+    //         }
+    //     }
 
-    trimOldData(data, expireSeconds) {
-        let dataNew = []
-        let epoch = new Date().valueOf() / 1000.0;
+    //     this.sensorGroupData = newSensorGroupData;
+    //     this.setState({graphData: newGraphsData});
+    // }
 
-        for (const entry in data) {
-            if (data[entry].time >= epoch - expireSeconds) {
-                dataNew.push(data[entry]);
+    // trimOldData(data, expireSeconds) {
+    //     let dataNew = []
+    //     let epoch = new Date().valueOf() / 1000.0;
+
+    //     for (const entry in data) {
+    //         if (data[entry].time >= epoch - expireSeconds) {
+    //             dataNew.push(data[entry]);
                 
-            }
-        }
+    //         }
+    //     }
 
-        return dataNew;
-    }
+    //     return dataNew;
+    // }
 
-    convertDataEpochTimesToGraphTimes(data) {
-        let newData = [];
-        const now = new Date().valueOf() / 1000;
+    // convertDataEpochTimesToGraphTimes(data) {
+    //     let newData = [];
+    //     const now = new Date().valueOf() / 1000;
 
-        data.forEach(entry => {
-            newData.push({time: 0.0 - (now - entry.time), value: entry.value});
-        });
+    //     data.forEach(entry => {
+    //         newData.push({time: 0.0 - (now - entry.time), value: entry.value});
+    //     });
 
-        return newData;
-    }
+    //     return newData;
+    // }
 
-    onSignInAuthorized(accessToken) {
-        console.log("Sign in access token granted");
-        this.accessToken = accessToken;
+    function onSignIn(username) {
+        console.log(username + "signed in");
 
-        this.restfulBackend.getUserData(this.accessToken, this.username)
-        .then((data) => console.log(data))
+        getUserData(username)
+        .then((data) => setUserData(data))
         .catch((error) => console.error(error));
 
-        this.setState({onPage: "dash"});
+        setSignedIn(true);
     }
 
-    render() {
-        return this.pages[this.state.onPage];
-    }
+    return (
+        <div className="App">
+            <Router>
+                <Switch>
+                <Route path="/" exact>
+                    { signedIn ? <Redirect to="/dashboard" /> : <Redirect to="/signin" /> }
+                </Route>
+                <Route path="/signin">
+                    { signedIn ? <Redirect to="/dashboard" /> : <AppSignIn onAuthUser={(username) => onSignIn(username)} /> }
+                </Route>
+                <Route path="/dashboard" exact>
+                    { signedIn ? <div>404 Not found</div> : <Redirect to="/signin" /> }
+                </Route>
+                <Route path="*">
+                    <div>404 Not found</div>
+                </Route>
+                </Switch>
+            </Router>
+        </div>
+    );
 }

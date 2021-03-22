@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +9,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import RESTfulBackend from "./restfulbackend"
+import {logIn, createUser} from "./backend"
+import { BrowserRouter as Router, Route, Switch, useRouteMatch, Redirect } from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignIn(props) {
-    const classes = useStyles()
+    const classes = useStyles();
 
     return (
         <Container componenet="main" maxWidth="xs">
@@ -161,59 +162,45 @@ function CreateAccount(props) {
     );
 }
 
-export default class AppSignIn extends React.Component {
-    constructor(props) {
-        super(props);
+export default function AppSignIn(props) {   
+    let match = useRouteMatch();
 
-        this.state = {
-            onPage: "signIn"
-        };
+    const [createAccount, setCreateAccount] = useState(false);
+    const [createdAccount, setCreatedAccount] = useState(false);
 
-        this.pages = {
-            signIn: <SignIn onSubmit={(event) => this.onSignInSubmit(event)} onCreateAccount={(event) => this.onCreateAccount(event)}/>,
-            createAccount: <CreateAccount onSubmit={(event) => this.onCreateUserSubmit(event)} />
-        };
-
-        this.restfulBackend = new RESTfulBackend();
-        this.onAuthUser = props.onAuthUser;
-        this.username = undefined;
-    }
-
-    onLogIn(accessToken) {
-        this.onAuthUser(accessToken);
-    }
-
-    onCreateUser() {
-        console.log("Account created");
-
-        this.setState({onPage: "signIn"});
-    }
-
-    onCreateUserSubmit(event) {
+    function onSignInSubmit(event) {
         event.preventDefault();
+
         let username = event.target.username.value;
         let password = event.target.password.value;
-
-        this.restfulBackend.createUser(username, password)
-        .then(() => this.onCreateUser())
+    
+        logIn(username, password)
+        .then(() => props.onAuthUser(username))
         .catch((error) => console.error(error));
     }
-
-    onSignInSubmit(event) {
+    
+    function onCreateUserSubmit(event) {
         event.preventDefault();
-        this.username = event.target.username.value;
+    
+        let username = event.target.username.value;
         let password = event.target.password.value;
-
-        this.restfulBackend.logIn(this.username, password)
-        .then((accessToken) => this.onLogIn(accessToken))
+    
+        createUser(username, password)
+        .then(() => setCreatedAccount(true))
         .catch((error) => console.error(error));
     }
 
-    onCreateAccount(event) {
-        this.setState({onPage: "createAccount"});
-    }
-
-    render() {
-        return this.pages[this.state.onPage];
-    }
+    return(
+        <Switch>
+            <Route path={"/signin"} exact>
+                {createAccount ? <Redirect to={"/signin/createaccount"} /> : <SignIn onSubmit={(event) => onSignInSubmit(event)} onCreateAccount={() => setCreateAccount(true)} />}
+            </Route>
+            <Route path={"/signin/createaccount"} exact>
+                {createdAccount ? <Redirect to={"/signin"} /> : <CreateAccount onSubmit={(event) => onCreateUserSubmit(event)} />}
+            </Route>
+            <Route path="*">
+                <div>404 Not found</div>
+            </Route>
+        </Switch>
+    )
 }
