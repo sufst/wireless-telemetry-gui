@@ -166,7 +166,6 @@ export default function AppSignIn(props) {
     let match = useRouteMatch();
 
     const [createAccount, setCreateAccount] = useState(false);
-    const [createdAccount, setCreatedAccount] = useState(false);
 
     function onSignInSubmit(event) {
         event.preventDefault();
@@ -186,7 +185,7 @@ export default function AppSignIn(props) {
         let password = event.target.password.value;
     
         createUser(username, password)
-        .then(() => setCreatedAccount(true))
+        .then(() => setCreateAccount(false))
         .catch((error) => console.error(error));
     }
 
@@ -196,7 +195,7 @@ export default function AppSignIn(props) {
                 {createAccount ? <Redirect to={"/signin/createaccount"} /> : <SignIn onSubmit={(event) => onSignInSubmit(event)} onCreateAccount={() => setCreateAccount(true)} />}
             </Route>
             <Route path={"/signin/createaccount"} exact>
-                {createdAccount ? <Redirect to={"/signin"} /> : <CreateAccount onSubmit={(event) => onCreateUserSubmit(event)} />}
+                {createAccount ? <CreateAccount onSubmit={(event) => onCreateUserSubmit(event)} /> : <Redirect to={"/signin"} /> }
             </Route>
             <Route path="*">
                 <div>404 Not found</div>

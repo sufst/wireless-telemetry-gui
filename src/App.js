@@ -100,7 +100,7 @@ export default function App(props) {
     // }
 
     function onSignIn(username) {
-        console.log(username + "signed in");
+        console.log(username + " signed in");
 
         getUserData(username)
         .then((data) => setUserData(data))
