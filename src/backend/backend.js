@@ -15,14 +15,16 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 import { 
     io 
 } from "socket.io-client";
+import { URL } from "../config";
 
 let accessToken = undefined;
 // const url = "localhost:5000";
 // const url = "nathanrs97devserver.com:5000";
-const url = "192.168.1.223:5000";
+const url = URL
 export let sio = undefined;
 const namespace = "emulation";
 

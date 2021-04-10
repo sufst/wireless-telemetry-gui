@@ -32,6 +32,9 @@ import {
     useSensorsData
 } from "../store/sensors";
 
+import { AppBar, Button, IconButton, Toolbar, Typography } from "@material-ui/core";
+import { useStyles } from "./styles";
+
 export function DashContainer(props) {
     const dataDispatch = useSensorDataDispatch();
 
@@ -46,9 +49,21 @@ export function DashContainer(props) {
             dataDispatch({type: "bulk_update", updates: data});
         });
     }, [dataDispatch, sensors]);
+
+    const classes = useStyles();
     
     return (
-        <RealTimeGraphs />
+        <>
+            <AppBar position="static" className={classes.appBar}>
+                <Toolbar>
+                    <Typography variant="h6" className={classes.title}>
+                    SUFST Wireless GUI
+                    </Typography>
+                    <Button color="inherit">Login</Button>
+                </Toolbar>
+            </AppBar>
+            <RealTimeGraphs />
+        </>
     );
 }
 
