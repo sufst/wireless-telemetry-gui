@@ -62,7 +62,7 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
     const socialIcons = (index) => {
         switch (index) {
             case 0: 
-                return <InstagramIcon /> 
+                return <InstagramIcon/>
             case 1: 
                 return <TwitterIcon /> 
             case 2: 
@@ -74,7 +74,15 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
     }
 
     const handleSocialIconClicked = (index) => () => {
-        console.log('Social Icon ', index);
+        console.log(window);
+        switch (index) {
+            case 0: 
+                break; 
+            case 1:
+                break;
+            case 2:
+                break;
+        }
     }
 
     return (
@@ -112,10 +120,10 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
             <List>
                 {socialTitles.map((text, index) => (
                 <ListItem button key={text} onClick={handleSocialIconClicked(index)}>
-                <ListItemIcon >
-                        {socialIcons(index)}
-                </ListItemIcon>
-                <ListItemText primary={text} />
+                    <ListItemIcon >
+                       {socialIcons(index)}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
                 </ListItem>
                 ))}
             </List>

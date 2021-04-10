@@ -33,7 +33,6 @@ import {
 } from "../store/sensors";
 
 import AppNavContainer from "../navigation/container";
-import { Paper } from "@material-ui/core";
 
 export function DashContainer(props) {
     const dataDispatch = useSensorDataDispatch();
@@ -54,7 +53,7 @@ export function DashContainer(props) {
         <>
             <AppNavContainer /> 
             <div style={{
-                marginTop: '10vh',
+                marginTop: '6vh',
                 marginLeft: '100px', 
             }}>
                 <RealTimeGraphs />

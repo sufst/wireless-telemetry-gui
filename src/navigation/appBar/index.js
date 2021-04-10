@@ -1,10 +1,18 @@
-import { AppBar, Button, CssBaseline, IconButton, Toolbar, Typography } from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu';
-
+// Module Imports 
 import React from 'react'
-import { useStyles } from '../style';
 import clsx from 'clsx';
 
+// Material UI Imports 
+import { AppBar, Badge, CssBaseline, IconButton, Toolbar, Typography } from '@material-ui/core'
+
+// Material UI Icon Imports
+import MenuIcon from '@material-ui/icons/Menu';
+import LockIcon from '@material-ui/icons/Lock';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+
+import { useStyles } from '../style';
 
 const AppNavigationBar = ({ handleDrawerOpen, open }) =>  {
    const classes = useStyles(); 
@@ -33,7 +41,26 @@ const AppNavigationBar = ({ handleDrawerOpen, open }) =>  {
                <Typography variant="h6" noWrap className={classes.title}>
                   SUFST Wireless GUI
                </Typography>
-               <Button color="inherit">Login</Button>
+               <IconButton aria-label="" color="inherit">
+                  <Badge color="secondary">
+                     <NotificationsIcon />
+                  </Badge>
+               </IconButton>
+               <IconButton aria-label="" color="inherit">
+                  <Badge color="secondary">
+                     <NotificationsActiveIcon />
+                  </Badge>
+               </IconButton>
+               <IconButton aria-label="" color="inherit">
+                  <Badge color="secondary">
+                     <NotificationsNoneIcon />
+                  </Badge>
+               </IconButton>
+               <IconButton aria-label="login" color="inherit">
+                  <Badge color="secondary">
+                     <LockIcon />
+                  </Badge>
+               </IconButton>
             </Toolbar>
          </AppBar>
       </div>
