@@ -1,5 +1,6 @@
 // Module Imports
 import React from 'react'
+import { useHistory } from "react-router";
 import clsx from 'clsx';
 
 // Material UI Imports 
@@ -32,6 +33,8 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 const AppSideBar = ({ open, handleDrawerClose }) => {
     const classes = useStyles();
     const theme = useTheme();
+
+    const history = useHistory();
 
     const actionTitles = ['Account', 'Dashboard', 'Session', 'Admin', 'Database', 'Feed', 'Settings']
 
@@ -68,7 +71,6 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
     }
 
     const handleActionIconClicked = (index) => () => {
-        console.log('Action Icon ', index);
     }
 
     const handleSocialIconClicked = (index) => () => {
