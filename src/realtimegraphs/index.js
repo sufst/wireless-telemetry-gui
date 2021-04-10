@@ -53,9 +53,6 @@ export function RealTimeGraphs(props) {
 
     return (
         <Grid container key={v4()} spacing={3}>
-            <Grid item key={v4()} xs={6}>
-                <h1>Graphs</h1>
-            </Grid>
             {groupContainers}
         </Grid>
     );

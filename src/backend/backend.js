@@ -22,8 +22,6 @@ import {
 import { URL } from "../config";
 
 let accessToken = undefined;
-const url = "localhost:5000";
-// const url = "nathanrs97devserver.com:5000";
 const url = URL
 export let sio = undefined;
 const namespace = "car";
