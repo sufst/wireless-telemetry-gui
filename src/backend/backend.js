@@ -20,16 +20,19 @@ import {
 } from "socket.io-client";
 
 let accessToken = undefined;
-// const url = "localhost:5000";
+const url = "localhost:5000";
 // const url = "nathanrs97devserver.com:5000";
-const url = "192.168.1.223:5000";
+// const url = "192.168.1.223:5000";
 export let sio = undefined;
-const namespace = "emulation";
+const namespace = "car";
 
 export function logIn(username, password) {
     return new Promise((resolve, reject) => 
     fetch(`http://${url}/login`, {
         method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
             username: username,
             password: password
@@ -60,21 +63,127 @@ export function createUser(username, password) {
     return new Promise((resolve, reject) => 
     fetch(`http://${url}/user`, {
         method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
             username: username,
             password: password,
-            meta: {
-                privilege: "basic"
-            }
+            // Optional meta fields.
+            likes_beans: true
         })
     })
     .then((response) => resolve(response))
     .catch((error) => reject(error)));
 }
 
-export function getUserData(username) {
+export function listUserMeta() {
     return new Promise((resolve, reject) => 
     fetch(`http://${url}/user`, {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + accessToken,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw response.statusText;
+        }
+        return response.json();
+    })
+    .then((data) => resolve(data))
+    .catch((error) => reject(error)));
+}
+
+export function createSession(name, sensors) {
+    return new Promise((resolve, reject) => 
+    fetch(`http://${url}/session`, {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + accessToken,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: name,
+            sensors: sensors  
+        })
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw response.statusText;
+        }
+        return response.json();
+    })
+    .then((data) => resolve(data))
+    .catch((error) => reject(error)));
+}
+
+export function startSession(name) {
+    return new Promise((resolve, reject) => 
+    fetch(`http://${url}/session/${name}`, {
+        method: "PUT",
+        headers: {
+            "Authorization": "Bearer " + accessToken,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            start: true
+        })
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw response.statusText;
+        }
+        return response.json();
+    })
+    .then((data) => resolve(data))
+    .catch((error) => reject(error)));
+}
+
+export function endSession(name) {
+    return new Promise((resolve, reject) => 
+    fetch(`http://${url}/session/${name}`, {
+        method: "PUT",
+        headers: {
+            "Authorization": "Bearer " + accessToken,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            end: true
+        })
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw response.statusText;
+        }
+        return response.json();
+    })
+    .then((data) => resolve(data))
+    .catch((error) => reject(error)));
+}
+
+export function listSessions() {
+    return new Promise((resolve, reject) => 
+    fetch(`http://${url}/session`, {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + accessToken
+        }
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw response.statusText;
+        }
+        return response.json();
+    })
+    .then((data) => resolve(data))
+    .catch((error) => reject(error)));
+}
+
+export function getSession(name) {
+    return new Promise((resolve, reject) => 
+    fetch(`http://${url}/session/${name}`, {
         method: "GET",
         headers: {
             "Authorization": "Bearer " + accessToken
