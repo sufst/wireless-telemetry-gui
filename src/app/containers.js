@@ -48,9 +48,10 @@ export function AppContainer(props) {
                     {/* { user.username !== undefined ? <Redirect to="/dashboard" /> : <Redirect to="/signin" /> } */}
                     {<Redirect to="/dashboard"/>}
                 </Route>
-                {/* <Route path="/signin">
-                    { user.username !== undefined ? <Redirect to={"/dashboard/" + user.username} /> : <SignIn /> }
-                </Route> */}
+                <Route path="/signin">
+                    {/* { user.username !== undefined ? <Redirect to={"/dashboard/" + user.username} /> : <SignIn /> } */}
+                    <SignIn />
+                </Route>
                 {/*<Route path={"/dashboard/" + user.username} exact>
                     <Dash />
                 </Route> */}

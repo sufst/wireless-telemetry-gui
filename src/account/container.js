@@ -25,7 +25,7 @@ const AccountContainer = ({ user, onLogoutClick }) => {
          <CardHeader
             avatar={
                <Avatar aria-label="recipe" className={classes.avatar}>
-                  {username?.charAt(0) ?? 'B'}
+                  {username?.charAt(0).toUpperCase() ?? 'B'}
                </Avatar>
             }
             title={username ?? "BOB BEANS"}
