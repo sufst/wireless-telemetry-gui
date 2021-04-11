@@ -7,7 +7,8 @@ export const useStyles = makeStyles((theme) => ({
      //maxWidth: 345,
    },
    btn: {
-      marginTop: '20px'
+      marginTop: '20px',
+      backgroundColor: 'red'
    },
    avatar: {
      backgroundColor: 'red',
