@@ -21,9 +21,12 @@ import {
 import {
     Session
 } from "./session/containers";
+import {
+    DashboardH
+} from "./header/containers"
 
 export function Dashboard(props) {
     return (
-        <Session/>
+        <DashboardH/>
     );
 }
