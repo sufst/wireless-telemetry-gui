@@ -35,11 +35,14 @@ import {
 import {
     useStyles
 } from "./styles";
+import Account from '../account';
 
-export function AppContainer(props) {
+import Alert from '../alert/Alert';
+
+const AppRouter = () => {
     const user = useUser();
     const classes = useStyles();
-    
+
     return (
         <Router>
             <Switch>
@@ -47,16 +50,23 @@ export function AppContainer(props) {
                     {/* { user.username !== undefined ? <Redirect to="/dashboard" /> : <Redirect to="/signin" /> } */}
                     {<Redirect to="/dashboard"/>}
                 </Route>
-                {/* <Route path="/signin">
-                    { user.username !== undefined ? <Redirect to={"/dashboard/" + user.username} /> : <SignIn /> }
+                <Route path="/signin">
+                    {/* { user.username !== undefined ? <Redirect to={"/dashboard/" + user.username} /> : <SignIn /> } */}
+                    <SignIn />
                 </Route>
-                <Route path={"/dashboard/" + user.username} exact>
+                {/*<Route path={"/dashboard/" + user.username} exact>
                     <Dash />
                 </Route> */}
                 <Route path={"/dashboard"} exact>
-                    <AppNavContainer/>
                     <Paper className={classes.viewPaper}>
+                        <Alert className={classes.alert} /> 
                         <Dashboard/>
+                    </Paper> 
+                </Route>
+                <Route path={"/account"} exact>
+                    <Paper className={classes.viewPaper}>
+                        {/* This needs to change to === 'guest' when the default user is the guest */}
+                        {user.username === undefined ? <SignIn /> : <Account/> }
                     </Paper> 
                 </Route>
                 <Route path="*">
@@ -65,5 +75,14 @@ export function AppContainer(props) {
                 </Route>
             </Switch>
         </Router>
+    )
+}
+
+export function AppContainer(props) {    
+    return (
+        <>
+            <AppNavContainer />
+            <AppRouter />
+        </>
     );
 } 

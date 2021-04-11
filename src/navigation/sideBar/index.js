@@ -1,6 +1,6 @@
 // Module Imports
 import React from 'react'
-import { useHistory } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import clsx from 'clsx';
 
 // Material UI Imports 
@@ -28,6 +28,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import { Link } from 'react-router-dom';
+import { useAlertStoreDispatcher } from '../../store/alert';
 
 
 const AppSideBar = ({ open, handleDrawerClose }) => {
@@ -38,7 +40,9 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
 
     const actionTitles = ['Account', 'Dashboard', 'Session', 'Admin', 'Database', 'Feed', 'Settings']
 
-    const socialTitles = ['Instagram', 'Twitter', 'GitHub']
+    const socialTitles = ['Instagram', 'Twitter', 'GitHub'] 
+
+    const dis = useAlertStoreDispatcher(); 
    
     const actionIcons = (index) => {
         switch (index) {
@@ -71,16 +75,29 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
     }
 
     const handleActionIconClicked = (index) => () => {
+        switch (index) {
+            case 0:
+                history.push('/account')
+                break;
+            case 1:
+                dis({method: 'SET_ALERT', text: 'SOME TEXT TEXT', type:'error'});
+                //history.push('/dashboard')
+                break;
+            default:
+                break;
+        }
     }
 
     const handleSocialIconClicked = (index) => () => {
-        console.log(window);
         switch (index) {
             case 0: 
+                console.log('INSTA');
                 break; 
             case 1:
+                console.log('TWITTER');
                 break;
             case 2:
+                console.log('GITHUB');
                 break;
         }
     }
@@ -109,10 +126,10 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
             <List>
                 {actionTitles.map((text, index) => (
                 <ListItem button key={text} onClick={handleActionIconClicked(index)}>
-                <ListItemIcon >
-                        {actionIcons(index)}
-                </ListItemIcon>
-                <ListItemText primary={text} />
+                    <ListItemIcon >
+                            {actionIcons(index)}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
                 </ListItem>
                 ))}
             </List>
@@ -121,7 +138,7 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
                 {socialTitles.map((text, index) => (
                 <ListItem button key={text} onClick={handleSocialIconClicked(index)}>
                     <ListItemIcon >
-                       {socialIcons(index)}
+                        {socialIcons(index)}
                     </ListItemIcon>
                     <ListItemText primary={text} />
                 </ListItem>

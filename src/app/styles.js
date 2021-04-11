@@ -26,5 +26,8 @@ export const useStyles = makeStyles((theme) => ({
       margin : '50px 0px 0px 75px',
       padding : '15px',
       boxShadow : '0px 0px 0px 0px'
+  },
+  alert: {
+    marginBottom: '2rem',
   }
 }));
