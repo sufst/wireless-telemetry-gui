@@ -15,3 +15,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+import { 
+    Paper
+} from "@material-ui/core";
+import {
+    Session
+} from "./session/containers";
+
+export function Dashboard(props) {
+    return (
+        <Session/>
+    );
+}

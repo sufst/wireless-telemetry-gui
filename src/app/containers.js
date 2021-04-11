@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 Nathan Rowley-Smith
+    Copyright (C) 2021 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,26 +26,42 @@ import {
     useUser
 } from "../store/user";
 import {
-    Dash
-} from "../dash/index";
+    Dashboard
+} from "../dashboard/index";
+import AppNavContainer from "../navigation/container";
+import {
+    Paper
+} from '@material-ui/core';
+import {
+    useStyles
+} from "./styles";
 
 export function AppContainer(props) {
     const user = useUser();
+    const classes = useStyles();
     
     return (
         <Router>
             <Switch>
                 <Route path="/" exact>
-                    { user.username !== undefined ? <Redirect to="/dashboard" /> : <Redirect to="/signin" /> }
+                    {/* { user.username !== undefined ? <Redirect to="/dashboard" /> : <Redirect to="/signin" /> } */}
+                    {<Redirect to="/dashboard"/>}
                 </Route>
-                <Route path="/signin">
+                {/* <Route path="/signin">
                     { user.username !== undefined ? <Redirect to={"/dashboard/" + user.username} /> : <SignIn /> }
                 </Route>
                 <Route path={"/dashboard/" + user.username} exact>
                     <Dash />
+                </Route> */}
+                <Route path={"/dashboard"} exact>
+                    <AppNavContainer/>
+                    <Paper className={classes.viewPaper}>
+                        <Dashboard/>
+                    </Paper> 
                 </Route>
                 <Route path="*">
-                    <Redirect to="/signin" />
+                    {/* <Redirect to="/signin" /> */}
+                    <Redirect to="/" />
                 </Route>
             </Switch>
         </Router>

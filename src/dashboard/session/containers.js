@@ -15,3 +15,50 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+import {
+    useCallback,
+    useState
+} from "react";
+import { 
+    Grid, 
+    Paper 
+} from "@material-ui/core";
+import {
+    Header,
+    NewSession,
+    StartStop
+} from "./components";
+
+export function Session(props) {
+    const [name, setName] = useState(undefined);
+    const [running, setRunning] = useState(false);
+
+    const headerName = name !== undefined ? name : "No Session";
+    const startStopColour = running ? "secondary" : "primary";
+    const StartStopText = running ? "STOP" : "START";
+
+    const onStartStopClick = useCallback(() => {
+        setRunning(!running);
+    }, [running]);
+
+    const onNewSubmit = useCallback((event) => {
+        console.log(event);
+        event.preventDefault();
+    }, []);
+
+    return (
+        <Paper>
+            <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    <Header name={headerName}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <StartStop color={startStopColour} text={StartStopText} onClick={onStartStopClick}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <NewSession onSubmit={onNewSubmit}/>
+                </Grid>
+            </Grid>
+        </Paper>
+    );
+}

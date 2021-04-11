@@ -15,3 +15,63 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
+import { 
+    Accordion,
+    Paper, 
+    Typography,
+    AccordionSummary,
+    AccordionDetails,
+    TextField,
+    Button
+} from "@material-ui/core";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {
+    useStyles
+} from "./styles";
+
+export function Header(props) {
+    return (
+        <Paper>
+            <Typography variant="h6" gutterBottom>
+                {props.name}
+            </Typography>
+        </Paper>
+    );
+}
+
+export function NewSession(props) {
+    const classes = useStyles();
+
+    return (
+        <Accordion>
+            <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+            >
+                <Typography className={classes.heading}>
+                    New Session
+                </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+                <form className={classes.root} noValidate autoComplete="off" onSubmit={props.onSubmit}>
+                    <TextField id="standard-basic" label="Name"/>
+                    <Button type="submit" variant="contained" color="primary">
+                        Submit
+                    </Button>
+                </form>
+            </AccordionDetails>
+        </Accordion>
+    );
+}
+
+export function StartStop(props) {
+    const classes = useStyles();
+
+    return (
+        <Button variant="contained" color={props.colour} onClick={props.onClick}>
+            {props.text}
+        </Button>
+    )
+}
