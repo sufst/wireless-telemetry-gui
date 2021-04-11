@@ -71,6 +71,13 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
     }
 
     const handleActionIconClicked = (index) => () => {
+        switch (index) {
+            case 0:
+                history.push('/account')
+                break;
+            default:
+                break;
+        }
     }
 
     const handleSocialIconClicked = (index) => () => {

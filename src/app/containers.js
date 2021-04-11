@@ -35,6 +35,7 @@ import {
 import {
     useStyles
 } from "./styles";
+import Account from '../account/Account';
 
 export function AppContainer(props) {
     const user = useUser();
@@ -57,6 +58,12 @@ export function AppContainer(props) {
                     <AppNavContainer/>
                     <Paper className={classes.viewPaper}>
                         <Dashboard/>
+                    </Paper> 
+                </Route>
+                <Route path={"/account"} exact>
+                    <AppNavContainer/>
+                    <Paper className={classes.viewPaper}>
+                        <Account />
                     </Paper> 
                 </Route>
                 <Route path="*">
