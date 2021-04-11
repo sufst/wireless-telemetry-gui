@@ -47,9 +47,7 @@ import {
     SensorPaperHeaderHideButton, 
     SensorPaperHeaderTitle, 
     SensorGraph, 
-    SensorLiveValue, 
-    GroupPaperHeaderHideButton, 
-    GroupPaperHeaderTitle 
+    SensorLiveValue
 } from "./components";
 
 function SensorPaperHeaderContainer(props) {
@@ -133,36 +131,6 @@ function SensorPaperContainer(props) {
     );
 }
 
-function GroupPaperHeaderContainer(props) {
-    const group = useGroup(props.name);
-    const dispatch = useSensorConfigDispatch();
-
-    const classes = useStyles();
-
-    const onChange = useCallback((event) => {
-        event.preventDefault();
-        dispatch({type: "update_group", group: props.name, key: "isDisplay", value: !group.isDisplay});
-    }, [dispatch, group.isDisplay, props.name]);
-
-    // See modules index.js for explaination of why memo is used.
-    // (same reason as useMemo)
-    const HeaderTitle = memo(GroupPaperHeaderTitle);
-    const HeaderButton = memo(GroupPaperHeaderHideButton);
-
-    return (
-        <Paper className={classes.groupPaperHeader}>
-            <Grid container alignItems="center" key={v4()} spacing={3}>
-                <Grid item key={v4()} xs={6}>
-                    <HeaderTitle name={props.name} />
-                </Grid>
-                <Grid item key={v4()} xs={6}>
-                    <HeaderButton checked={group.isDisplay} onChange={onChange}/>
-                </Grid>
-            </Grid>
-        </Paper>
-    );
-}
-
 export function GroupContainer(props) {
     const classes = useStyles();
     const group = useGroup( props.name);
@@ -170,25 +138,21 @@ export function GroupContainer(props) {
 
     // See modules index.js for explaination of why useMemo is used.
     const sensorContainers = useMemo(() => {
-        const containers = [];
 
-        for (const sensor in groupSensors) {
-            containers.push(
-                <Grid item key={v4()} xs={12}>
-                    <SensorPaperContainer key={v4()} group={props.name} name={sensor}/>
-                </Grid>
+
+        const containers = Object.keys(groupSensors).map(x => 
+        {
+            return (<Grid item key={v4()} xs={12}>
+                    <SensorPaperContainer key={v4()} group={props.name} name={x}/>
+                    </Grid>
             );
-        }
-
+        });
         return containers;
     }, [groupSensors, props.name]);
 
     return (
-        <Paper className={classes.groupPaper} >
-            <GroupPaperHeaderContainer key={v4()} name={props.name} />
-            <Grid container alignItems="center" key={v4()}>
-                {group.isDisplay ? sensorContainers : null}
-            </Grid>
-        </Paper>
+        <Grid container alignItems="center" key={v4()}>
+            {sensorContainers}
+        </Grid>
     );
 }

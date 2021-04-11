@@ -100,26 +100,3 @@ export function SensorGraph(props) {
         </LineChart>
     );
 }
-
-export function GroupPaperHeaderHideButton(props) {
-    const classes = useStyles();
-
-    return (
-        <FormControlLabel control={
-            <Switch checked={props.checked} onChange={props.onChange} color="primary"/>
-        }             
-        label="Show"
-        className={classes.groupPaperHeaderButton}
-        />
-    );
-}
-
-export function GroupPaperHeaderTitle(props) {
-    const classes = useStyles();
-
-    return (
-        <Typography variant="h3" className={classes.groupPaperHeaderTitle}>
-            {props.name}
-        </Typography >
-    );
-}
