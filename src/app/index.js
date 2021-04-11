@@ -29,20 +29,24 @@ import {
     SensorsConfigStore,
     SensorsDataStore
 } from "../store/sensors";
+import { AlertStore, useAlertStoreReducer } from '../store/alert';
 
 export function App(props) {
     const [userStore, userStoreDispatch] = useUserStoreReducer();
     const [sensorsData, sensorsDataDispatch] = useSensorsDataStoreReducer();
     const [sensorsConfig, sensorsConfigDispatch] = useSensorsConfigStoreReducer();
+    const [alertStore, alertStoreDispatch] = useAlertStoreReducer();
     
     return (
-        <UserStore.Provider value={{state: userStore, dispatch: userStoreDispatch}} >
-            <SensorsDataStore.Provider value={{state: sensorsData, dispatch: sensorsDataDispatch}} >
-                <SensorsConfigStore.Provider value={{state: sensorsConfig, dispatch: sensorsConfigDispatch}} >
-                    <AppContainer />
-                </SensorsConfigStore.Provider>
-            </SensorsDataStore.Provider>
-        </UserStore.Provider>
+        <AlertStore.Provider value={{state: alertStore, dispatch: alertStoreDispatch}}>
+            <UserStore.Provider value={{state: userStore, dispatch: userStoreDispatch}} >
+                <SensorsDataStore.Provider value={{state: sensorsData, dispatch: sensorsDataDispatch}} >
+                    <SensorsConfigStore.Provider value={{state: sensorsConfig, dispatch: sensorsConfigDispatch}} >
+                        <AppContainer />
+                    </SensorsConfigStore.Provider>
+                </SensorsDataStore.Provider>
+            </UserStore.Provider>
+        </AlertStore.Provider>
     );
 } 
 

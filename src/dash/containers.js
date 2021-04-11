@@ -32,7 +32,6 @@ import {
     useSensorsData
 } from "../store/sensors";
 
-import AppNavContainer from "../navigation/container";
 
 export function DashContainer(props) {
     const dataDispatch = useSensorDataDispatch();
@@ -51,13 +50,7 @@ export function DashContainer(props) {
     
     return (
         <>
-            <AppNavContainer /> 
-            <div style={{
-                marginTop: '6vh',
-                marginLeft: '100px', 
-            }}>
-                <RealTimeGraphs />
-            </div>
+            <RealTimeGraphs />
         </>
     );
 }

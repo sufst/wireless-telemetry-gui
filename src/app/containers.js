@@ -37,10 +37,12 @@ import {
 } from "./styles";
 import Account from '../account';
 
-export function AppContainer(props) {
+import Alert from '../alert/Alert';
+
+const AppRouter = () => {
     const user = useUser();
     const classes = useStyles();
-    
+
     return (
         <Router>
             <Switch>
@@ -56,13 +58,12 @@ export function AppContainer(props) {
                     <Dash />
                 </Route> */}
                 <Route path={"/dashboard"} exact>
-                    <AppNavContainer/>
                     <Paper className={classes.viewPaper}>
+                        <Alert className={classes.alert} /> 
                         <Dashboard/>
                     </Paper> 
                 </Route>
                 <Route path={"/account"} exact>
-                    <AppNavContainer/>
                     <Paper className={classes.viewPaper}>
                         {/* This needs to change to === 'guest' when the default user is the guest */}
                         {user.username === undefined ? <SignIn /> : <Account/> }
@@ -74,5 +75,14 @@ export function AppContainer(props) {
                 </Route>
             </Switch>
         </Router>
+    )
+}
+
+export function AppContainer(props) {    
+    return (
+        <>
+            <AppNavContainer />
+            <AppRouter />
+        </>
     );
 } 

@@ -29,6 +29,7 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import { Link } from 'react-router-dom';
+import { useAlertStoreDispatcher } from '../../store/alert';
 
 
 const AppSideBar = ({ open, handleDrawerClose }) => {
@@ -39,7 +40,9 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
 
     const actionTitles = ['Account', 'Dashboard', 'Session', 'Admin', 'Database', 'Feed', 'Settings']
 
-    const socialTitles = ['Instagram', 'Twitter', 'GitHub']
+    const socialTitles = ['Instagram', 'Twitter', 'GitHub'] 
+
+    const dis = useAlertStoreDispatcher(); 
    
     const actionIcons = (index) => {
         switch (index) {
@@ -77,6 +80,7 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
                 history.push('/account')
                 break;
             case 1:
+                dis({method: 'SET_ALERT', text: 'SOME TEXT TEXT', type:'error'});
                 //history.push('/dashboard')
                 break;
             default:
