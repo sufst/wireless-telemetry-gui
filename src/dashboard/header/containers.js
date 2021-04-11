@@ -17,30 +17,86 @@
 */
 
 import Tabs from '@material-ui/core/Tabs';
-import React, {useCallback, useRef} from 'react';
+import React, {useCallback, useRef, useEffect, useMemo} from 'react';
 import Tab from '@material-ui/core/Tab';
 import {
     Session
 } from "../session/containers"
+// import { useGroups, useGroupSensors, useSensorConfigDispatch } from '../../store/sensors';
+import {GroupContainer} from '../../realtimegraphs/containers';
+import {
+    useGroup,
+    useGroups,
+    useGroupSensors,
+    buildConfigStoreFromSensorConfig,
+    buildDataStoreFromSensorConfig,
+    useSensorConfigDispatch,
+    useSensorDataDispatch,
+    useSensorsData,
+} from "../../store/sensors";
+import {
+    v4 
+}from 'uuid';
+
+import {logIn, sio} from "../../backend/backend"; 
+
+
 
 export function DashboardH(props)
 {
-    const views = useRef([<Session/>, <></>]);
-    const tabs = useRef([<Tab label = "Session"/>, <Tab label = "Dash"/>]);
+    const viewTabs = React.useRef([[<Session key={v4()} />, <Tab key={v4()} label = "Session"/>], [<></>, <Tab key={v4()} label = "Dash"/>]]);
+    const tabNames = React.useRef(["Session", "Dash"]);  
+
+    const groups = useGroups();
+    useEffect(() => {
+        const groupNames = Object.keys(groups);
+        const newTabNames = groupNames.filter(x => !tabNames.current.includes(x));
+        const newViewTabs = newTabNames.map(x => [<GroupTab key={v4()} group={x}/>,<Tab key={v4()} label={x}/>]);
+        viewTabs.current.push(...newViewTabs);
+        tabNames.current.push(...newTabNames);
+
+    }, [groups]);
+
+    
+    //TEMP CODE PLEASE REMOVE BEFORE I REMOVE YOU
+    const [loggedIn, setLoggedIn] = React.useState(false);
+    const configDispatch = useSensorConfigDispatch();
+    const dataDispatch = useSensorDataDispatch();
+    if(!loggedIn)
+    {
+        logIn("bob", "kitty").then(() => sio.once("meta", message => {
+            const meta = JSON.parse(message);
+            console.log(meta);
+            const configBuild = buildConfigStoreFromSensorConfig(meta);
+            const dataBuild = buildDataStoreFromSensorConfig(meta);
+            configDispatch({type: "build", build: configBuild});
+            dataDispatch({type: "build", build: dataBuild});
+            setLoggedIn(true);
+        }));
+    }
+
+    
+
+
     const [selectedTab, selectTab] = React.useState(0);
-    const [selectedTabView, setSelectedTabView] = React.useState(<Session/>);
     const onTabChange = useCallback((event, newIndex) => {
         selectTab(newIndex);
-        setSelectedTabView(views.current[newIndex]);
     }, []);
 
     return(
         <div>
-            <Tabs value={selectedTab} onChange={onTabChange}>
-                {tabs.current}
+            <Tabs variant="scrollable" scrollButtons="auto" value={selectedTab} onChange={onTabChange}>
+                {viewTabs.current.map(x => x[1])}
             </Tabs>
-            {selectedTabView}
+            {viewTabs.current[selectedTab][0]}
         </div> 
-    )
+    );
 
+}
+
+export function GroupTab(props)
+{
+    return(
+        <GroupContainer key={v4()} name={props.group}/>
+    );
 }
