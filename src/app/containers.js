@@ -63,8 +63,8 @@ export function AppContainer(props) {
                 <Route path={"/account"} exact>
                     <AppNavContainer/>
                     <Paper className={classes.viewPaper}>
-                        {/* {user.username === undefined ? <Redirect to='/signin'/> : <Account/> } */}
-                        <Account />
+                        {/* This needs to change to === 'guest' when the default user is the guest */}
+                        {user.username === undefined ? <SignIn /> : <Account/> }
                     </Paper> 
                 </Route>
                 <Route path="*">
