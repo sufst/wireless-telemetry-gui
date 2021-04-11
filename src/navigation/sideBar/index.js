@@ -75,6 +75,9 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
             case 0:
                 history.push('/account')
                 break;
+            case 1:
+                history.push('/dashboard')
+                break;
             default:
                 break;
         }

@@ -7,9 +7,24 @@ export const useStyles = makeStyles((theme) => ({
      //maxWidth: 345,
    },
    btn: {
-      marginTop: '10px'
+      marginTop: '20px'
    },
    avatar: {
-     backgroundColor: red[500],
+     backgroundColor: 'red',
    },
+   list: {
+     margin: '0px',
+     paddingBottom: '0px',
+     paddingTop: '0px'
+   },
+   line: {
+     marginTop: '20px'
+   },
+   deptTitle: {
+    color: 'black',
+    fontWeight: 'bold'
+  },
+  dept: {
+    color: 'black',
+  },
 }));

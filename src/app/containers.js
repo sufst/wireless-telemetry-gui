@@ -35,7 +35,7 @@ import {
 import {
     useStyles
 } from "./styles";
-import Account from '../account/Account';
+import Account from '../account';
 
 export function AppContainer(props) {
     const user = useUser();
@@ -50,8 +50,8 @@ export function AppContainer(props) {
                 </Route>
                 {/* <Route path="/signin">
                     { user.username !== undefined ? <Redirect to={"/dashboard/" + user.username} /> : <SignIn /> }
-                </Route>
-                <Route path={"/dashboard/" + user.username} exact>
+                </Route> */}
+                {/*<Route path={"/dashboard/" + user.username} exact>
                     <Dash />
                 </Route> */}
                 <Route path={"/dashboard"} exact>
@@ -63,6 +63,7 @@ export function AppContainer(props) {
                 <Route path={"/account"} exact>
                     <AppNavContainer/>
                     <Paper className={classes.viewPaper}>
+                        {/* {user.username === undefined ? <Redirect to='/signin'/> : <Account/> } */}
                         <Account />
                     </Paper> 
                 </Route>
