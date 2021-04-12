@@ -29,7 +29,10 @@ import {
     SensorsConfigStore,
     SensorsDataStore
 } from "../store/sensors";
-import { AlertStore, useAlertStoreReducer } from '../store/alert';
+import { 
+    AlertStore, 
+    useAlertStoreReducer 
+} from '../store/alert';
 
 export function App(props) {
     const [userStore, userStoreDispatch] = useUserStoreReducer();

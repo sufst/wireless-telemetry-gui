@@ -17,7 +17,7 @@
 */
 
 import Tabs from '@material-ui/core/Tabs';
-import React, {useCallback, useRef, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import Tab from '@material-ui/core/Tab';
 import {
     Session
@@ -25,22 +25,11 @@ import {
 // import { useGroups, useGroupSensors, useSensorConfigDispatch } from '../../store/sensors';
 import {GroupContainer} from '../../realtimegraphs/containers';
 import {
-    useGroup,
-    useGroups,
-    useGroupSensors,
-    buildConfigStoreFromSensorConfig,
-    buildDataStoreFromSensorConfig,
-    useSensorConfigDispatch,
-    useSensorDataDispatch,
-    useSensorsData,
+    useGroups
 } from "../../store/sensors";
 import {
     v4 
 }from 'uuid';
-
-import {logIn, sio} from "../../backend/backend"; 
-
-
 
 export function DashboardH(props)
 {
@@ -56,27 +45,6 @@ export function DashboardH(props)
         tabNames.current.push(...newTabNames);
 
     }, [groups]);
-
-    
-    //TEMP CODE PLEASE REMOVE BEFORE I REMOVE YOU
-    const [loggedIn, setLoggedIn] = React.useState(false);
-    const configDispatch = useSensorConfigDispatch();
-    const dataDispatch = useSensorDataDispatch();
-    if(!loggedIn)
-    {
-        logIn("bob", "kitty").then(() => sio.once("meta", message => {
-            const meta = JSON.parse(message);
-            console.log(meta);
-            const configBuild = buildConfigStoreFromSensorConfig(meta);
-            const dataBuild = buildDataStoreFromSensorConfig(meta);
-            configDispatch({type: "build", build: configBuild});
-            dataDispatch({type: "build", build: dataBuild});
-            setLoggedIn(true);
-        }));
-    }
-
-    
-
 
     const [selectedTab, selectTab] = React.useState(0);
     const onTabChange = useCallback((event, newIndex) => {

@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React from 'react';
+import React, { useRef } from 'react';
 import { 
     SignIn
 } from "../signin/index";
@@ -36,8 +36,17 @@ import {
     useStyles
 } from "./styles";
 import Account from '../account';
-
 import Alert from '../alert/Alert';
+import {
+    logIn, 
+    sio
+} from "../backend/backend"; 
+import {
+    buildConfigStoreFromSensorConfig,
+    buildDataStoreFromSensorConfig,
+    useSensorConfigDispatch,
+    useSensorDataDispatch,
+} from "../store/sensors";
 
 const AppRouterSwitch = () => {
     const user = useUser();
@@ -77,7 +86,43 @@ const AppRouterSwitch = () => {
     )
 }
 
+function AnonymousLogin() {
+    const configDispatch = useSensorConfigDispatch();
+    const dataDispatch = useSensorDataDispatch();
+
+    logIn("anonymous", "anonymous").then(() => {
+        sio.on("meta", message => {
+            const meta = JSON.parse(message);
+            console.log(meta);
+            const configBuild = buildConfigStoreFromSensorConfig(meta);
+            const dataBuild = buildDataStoreFromSensorConfig(meta);
+            configDispatch({type: "build", build: configBuild});
+            dataDispatch({type: "build", build: dataBuild});
+            }
+        )
+        sio.on("data", message => {
+            const data = JSON.parse(message);
+    
+            console.log(data);
+    
+            dataDispatch({type: "bulk_update", updates: data});
+        });
+    })
+    .catch(error => {
+        console.error(error);
+        AnonymousLogin();
+    });
+}
+
 export function AppContainer(props) {    
+    const logginIn = useRef(true);
+
+    if(logginIn.current)
+    {
+        AnonymousLogin();
+        logginIn.current = false;
+    }
+
     return (
         <Router>
             <AppNavContainer />
