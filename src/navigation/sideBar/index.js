@@ -77,6 +77,7 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
     const handleActionIconClicked = (index) => () => {
         switch (index) {
             case 0:
+                console.log(history);
                 history.push('/account')
                 break;
             case 1:
