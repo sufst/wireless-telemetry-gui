@@ -1,5 +1,5 @@
 // Module Imports
-import React from 'react'
+import React, { useContext } from 'react'
 import { Redirect, useHistory } from "react-router";
 import clsx from 'clsx';
 
@@ -28,9 +28,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import { Link } from 'react-router-dom';
-import { useAlertStoreDispatcher } from '../../store/alert';
-
+import AlertContext from '../../store/alert/alertContext';
 
 const AppSideBar = ({ open, handleDrawerClose }) => {
     const classes = useStyles();
@@ -38,11 +36,13 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
 
     const history = useHistory();
 
+    const alertContext = useContext(AlertContext); 
+
+    const { setAlert } = alertContext; 
+
     const actionTitles = ['Account', 'Dashboard', 'Session', 'Admin', 'Database', 'Feed', 'Settings']
 
     const socialTitles = ['Instagram', 'Twitter', 'GitHub'] 
-
-    const alertDispatch = useAlertStoreDispatcher(); 
    
     const actionIcons = (index) => {
         switch (index) {
@@ -81,7 +81,7 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
                 history.push('/account')
                 break;
             case 1:
-                setAlert(); 
+                setAlertHere(); 
                 //history.push('/dashboard')
                 break;
             default:
@@ -104,14 +104,8 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
     }
 
     // Example of setting an alert - Please see alert/Alert.js for allowd 'type' values
-    const setAlert = () => {
-        const timeout = 2000; 
-
-        alertDispatch({method: 'SET_ALERT', text: 'Oups! Something went wrong! Please try again later...', type:'error', timeout: timeout}); 
-
-        setTimeout(() => {
-            alertDispatch( {method: 'REMOVE_ALERT'} ); 
-        }, timeout)
+    const setAlertHere = () => {
+        setAlert("error", "alert", 1000, "ERROR TEXT")
     }
 
     return (

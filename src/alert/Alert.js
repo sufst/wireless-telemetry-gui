@@ -1,10 +1,10 @@
 // Material UI Labs Imports
 import { Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
-import { useState } from 'react';
+import { useContext } from 'react';
 
 // Context Imports
-import { useAlert } from '../store/alert';
+import AlertContext from '../store/alert/alertContext';
 
 /**
  * Alert Types - (severity) - as specified from MUI Labs - Name of type to be specified
@@ -20,21 +20,36 @@ function AppAlert(props) {
 }
 
 const Alert = (props) => {
-    const alert = useAlert(); 
+    const alertContext = useContext(AlertContext)
 
-    const { type, text, timeout } = alert; 
+    // Bringing the AlertContext in 
+    const { alert } = alertContext; 
+
+    // Destructuring the values of the alert from the context 
+    const { text, type, timeout, level } = alert; 
+
+    const configureAlert = () => {
+        if (type === 'snack') {
+            return (
+                <Snackbar open={ type == "snack" } autoHideDuration={timeout}>
+                    <AppAlert severity={level}>
+                        {text ?? ''}
+                    </AppAlert>
+                </Snackbar>
+            )
+        } else {
+            return (
+                <MuiAlert elevation={6} variant="filled" {...props} severity={level}>
+                    {text ?? ''}
+                </MuiAlert>
+            )
+        }
+    }
 
     return (
         type !== undefined && (
             <>
-                <MuiAlert elevation={6} variant="filled" {...props} severity={type}>
-                    {text ?? ''}
-                </MuiAlert>
-                <Snackbar open={ type !== undefined } autoHideDuration={timeout}>
-                    <AppAlert severity={type}>
-                        {text ?? ''}
-                    </AppAlert>
-                </Snackbar>
+               { configureAlert() }
             </>
         )
     )
