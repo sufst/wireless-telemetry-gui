@@ -42,7 +42,7 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
 
     const socialTitles = ['Instagram', 'Twitter', 'GitHub'] 
 
-    const dis = useAlertStoreDispatcher(); 
+    const alertDispatch = useAlertStoreDispatcher(); 
    
     const actionIcons = (index) => {
         switch (index) {
@@ -81,7 +81,7 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
                 history.push('/account')
                 break;
             case 1:
-                dis({method: 'SET_ALERT', text: 'SOME TEXT TEXT', type:'error'});
+                setAlert(); 
                 //history.push('/dashboard')
                 break;
             default:
@@ -101,6 +101,17 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
                 console.log('GITHUB');
                 break;
         }
+    }
+
+    // Example of setting an alert - Please see alert/Alert.js for allowd 'type' values
+    const setAlert = () => {
+        const timeout = 2000; 
+
+        alertDispatch({method: 'SET_ALERT', text: 'Oups! Something went wrong! Please try again later...', type:'error', timeout: timeout}); 
+
+        setTimeout(() => {
+            alertDispatch( {method: 'REMOVE_ALERT'} ); 
+        }, timeout)
     }
 
     return (
