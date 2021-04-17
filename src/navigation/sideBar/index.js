@@ -105,7 +105,7 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
 
     // Example of setting an alert - Please see alert/Alert.js for allowd 'type' values
     const setAlertHere = () => {
-        setAlert("error", "alert", 1000, "ERROR TEXT")
+        setAlert("error", "alert", 1000, "Oups! Something went wrong... Please try again later!")
     }
 
     return (
