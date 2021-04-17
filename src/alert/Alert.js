@@ -2,6 +2,7 @@
 import { Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 
 // Context Imports
 import AlertContext from '../store/alert/alertContext';
@@ -20,10 +21,7 @@ function AppAlert(props) {
 }
 
 const Alert = (props) => {
-    const alertContext = useContext(AlertContext)
-
-    // Bringing the AlertContext in 
-    const { alert } = alertContext; 
+    const alert = useSelector((state => state.alert)); 
 
     // Destructuring the values of the alert from the context 
     const { text, type, timeout, level } = alert; 

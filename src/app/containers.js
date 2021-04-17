@@ -103,7 +103,7 @@ function AnonymousLogin() {
         sio.on("data", message => {
             const data = JSON.parse(message);
     
-            console.log(data);
+            ///console.log(data);
     
             dataDispatch({type: "bulk_update", updates: data});
         });

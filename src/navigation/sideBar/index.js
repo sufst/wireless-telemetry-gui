@@ -1,6 +1,6 @@
 // Module Imports
 import React, { useContext } from 'react'
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import clsx from 'clsx';
 
 // Material UI Imports 
@@ -28,7 +28,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import AlertContext from '../../store/alert/alertContext';
+import { useDispatch } from 'react-redux';
+import { REMOVE_ALERT, SET_ALERT, SHOW_ALERT } from '../../redux/alertSlide';
 
 const AppSideBar = ({ open, handleDrawerClose }) => {
     const classes = useStyles();
@@ -36,9 +37,7 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
 
     const history = useHistory();
 
-    const alertContext = useContext(AlertContext); 
-
-    const { setAlert } = alertContext; 
+    const dispatch = useDispatch()
 
     const actionTitles = ['Account', 'Dashboard', 'Session', 'Admin', 'Database', 'Feed', 'Settings']
 
@@ -105,7 +104,13 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
 
     // Example of setting an alert - Please see alert/Alert.js for allowd 'type' values
     const setAlertHere = () => {
-        setAlert("error", "alert", 1000, "Oups! Something went wrong... Please try again later!")
+        const demo = {
+            timeout: 5000,
+            level: 'error', 
+            type: 'alert',
+            text: 'something happened!'
+        }
+        dispatch(SHOW_ALERT(demo))
     }
 
     return (
