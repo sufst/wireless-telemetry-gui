@@ -29,7 +29,7 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import { useDispatch } from 'react-redux';
-import { show } from '../../redux/alertSlide';
+import { show } from '../../redux/slices/alertSlice';
 
 const AppSideBar = ({ open, handleDrawerClose }) => {
     const classes = useStyles();

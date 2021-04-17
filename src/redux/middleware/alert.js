@@ -1,4 +1,4 @@
-import { remove } from "../alertSlide";
+import { remove } from "../slices/alertSlice";
 
 export const alertMiddleware = storeAPI => next => action => {
    
