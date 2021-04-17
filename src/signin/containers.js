@@ -33,10 +33,6 @@ import {
     FooterMessage
 } from "./components";
 import {
-    useUserStoreDispatcher
-} from "../store/user";
-import {
-    logIn,
     createUser
 } from "../backend/backend";
 import { useDispatch } from 'react-redux';

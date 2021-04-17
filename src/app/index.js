@@ -17,13 +17,9 @@
 */
 
 import React from 'react';
-// import {
-//     useUserStoreReducer,
-//     UserStore,
-// } from "../store/user";
-import {
-    AppContainer
-} from "./containers";
+
+import { AppContainer } from "./containers";
+
 import {
     useSensorsConfigStoreReducer,
     useSensorsDataStoreReducer,
@@ -35,7 +31,6 @@ import { Provider } from 'react-redux';
 import store from '../redux/store';
 
 export function App(props) {
-    //const [userStore, userStoreDispatch] = useUserStoreReducer();
     const [sensorsData, sensorsDataDispatch] = useSensorsDataStoreReducer();
     const [sensorsConfig, sensorsConfigDispatch] = useSensorsConfigStoreReducer();
     

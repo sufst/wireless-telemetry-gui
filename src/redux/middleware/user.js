@@ -24,17 +24,17 @@ import { set } from "../slices/user";
 export const userMiddleware = storeAPI => next => action => {
 
    const loginFailedAlert = {
-      timeout: 1000, 
+      timeout: 3000, 
       type: 'alert', 
       level: 'error', 
-      text: 'Login Failed'
+      text: 'Login Failed :( Make sure your credentials are correct!'
    }
 
    const successAlert = {
       timeout: 3000, 
       type: 'snack', 
       level: 'success', 
-      text: 'GOOD JOB! YOU LOGGED IN?!'
+      text: 'Login Success! You successfully logged in!'
    }
    
    if (action.type === 'user/login') {
