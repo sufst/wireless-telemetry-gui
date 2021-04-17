@@ -17,40 +17,16 @@
 */
 import React from 'react';
 import {
-    useUserStoreReducer,
-    UserStore,
-} from "../store/user";
-import {
     AppContainer
 } from "./containers";
-import {
-    useSensorsConfigStoreReducer,
-    useSensorsDataStoreReducer,
-    SensorsConfigStore,
-    SensorsDataStore
-} from "../store/sensors";
-
-import AlertState from '../store/alert/AlertState'
 
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 
-export function App(props) {
-    const [userStore, userStoreDispatch] = useUserStoreReducer();
-    const [sensorsData, sensorsDataDispatch] = useSensorsDataStoreReducer();
-    const [sensorsConfig, sensorsConfigDispatch] = useSensorsConfigStoreReducer();
-    
+export function App(props) {   
     return (
         <Provider store={store}>
-            <AlertState>
-                <UserStore.Provider value={{state: userStore, dispatch: userStoreDispatch}} >
-                    <SensorsDataStore.Provider value={{state: sensorsData, dispatch: sensorsDataDispatch}} >
-                        <SensorsConfigStore.Provider value={{state: sensorsConfig, dispatch: sensorsConfigDispatch}} >
-                            <AppContainer />
-                        </SensorsConfigStore.Provider>
-                    </SensorsDataStore.Provider>
-                </UserStore.Provider>
-            </AlertState>
+            <AppContainer />
         </Provider>
     );
 } 

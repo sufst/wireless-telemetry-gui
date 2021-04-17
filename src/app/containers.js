@@ -23,9 +23,6 @@ import {
     BrowserRouter as Router, Route, Switch, Redirect 
 } from "react-router-dom";
 import {
-    useUser
-} from "../store/user";
-import {
     Dashboard
 } from "../dashboard/index";
 import AppNavContainer from "../navigation/container";
@@ -42,14 +39,14 @@ import {
     sio
 } from "../backend/backend"; 
 import {
-    buildConfigStoreFromSensorConfig,
-    buildDataStoreFromSensorConfig,
-    useSensorConfigDispatch,
-    useSensorDataDispatch,
-} from "../store/sensors";
+    buildFromMeta, 
+    insertBulkData
+} from "../redux/slices/sensors";
+import { 
+    useDispatch 
+} from 'react-redux';
 
 const AppRouterSwitch = () => {
-    const user = useUser();
     const classes = useStyles();
 
     return (
@@ -75,7 +72,7 @@ const AppRouterSwitch = () => {
                 <Paper className={classes.viewPaper}>
                     <Alert className={classes.alert} /> 
                     {/* This needs to change to === 'guest' when the default user is the guest */}
-                    {user.username === undefined ? <SignIn /> : <Account/> }
+                    {/* {user.username === undefined ? <SignIn /> : <Account/> } */}
                 </Paper> 
             </Route>
             <Route path="*">
@@ -87,25 +84,21 @@ const AppRouterSwitch = () => {
 }
 
 function AnonymousLogin() {
-    const configDispatch = useSensorConfigDispatch();
-    const dataDispatch = useSensorDataDispatch();
+    const dispatch = useDispatch();
 
     logIn("anonymous", "anonymous").then(() => {
         sio.on("meta", message => {
             const meta = JSON.parse(message);
             console.log(meta);
-            const configBuild = buildConfigStoreFromSensorConfig(meta);
-            const dataBuild = buildDataStoreFromSensorConfig(meta);
-            configDispatch({type: "build", build: configBuild});
-            dataDispatch({type: "build", build: dataBuild});
+            dispatch(buildFromMeta(meta));
             }
         )
         sio.on("data", message => {
             const data = JSON.parse(message);
     
-            ///console.log(data);
+            console.log(data);
     
-            dataDispatch({type: "bulk_update", updates: data});
+            dispatch(insertBulkData(data))
         });
     })
     .catch(error => {

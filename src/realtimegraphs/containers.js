@@ -21,13 +21,6 @@ import React, {
     memo, 
     useMemo 
 } from 'react';
-import { 
-    useSensorConfigDispatch,
-    useSensor,
-    useSensorData,
-    useGroup,
-    useGroupSensors
-} from "../store/sensors";
 import {
     v4 
 }from 'uuid';
@@ -49,15 +42,22 @@ import {
     SensorGraph, 
     SensorLiveValue
 } from "./components";
+import { useSelector } from 'react-redux';
+import {
+    updateMeta
+} from "../redux/slices/sensors";
+import { 
+    useDispatch 
+} from 'react-redux';
 
 function SensorPaperHeaderContainer(props) {
-    const sensor = useSensor(props.group, props.name);
-    const dispatch = useSensorConfigDispatch();
+    const sensor = useSelector(state => state.sensors.sensors[props.name].meta); 
+    const dispatch = useDispatch();
 
     const onChange = useCallback((event) => {
         event.preventDefault();
-        dispatch({type: "update_sensor", group: props.group, sensor: props.name, key: "isDisplay", value: !sensor.isDisplay});
-    }, [dispatch, props.group, props.name, sensor.isDisplay]);
+        dispatch(updateMeta({sensor: props.name, key: "isDisplay", value: !sensor.isDisplay}));
+    }, [dispatch, props.name, sensor.isDisplay]);
 
     const HeaderTitle = memo(SensorPaperHeaderTitle);
     const HeaderButton = memo(SensorPaperHeaderHideButton);
@@ -75,8 +75,8 @@ function SensorPaperHeaderContainer(props) {
 }
 
 function SensorGraphContainer(props) {
-    const sensor = useSensor(props.group, props.name);
-    const inData = useSensorData(props.name);
+    const sensor = useSelector(state => state.sensors.sensors[props.name].meta); 
+    const inData = useSelector(state => state.sensors.sensors[props.name].data); 
     const graphDataRef = useRef([]);
 
     graphDataRef.current = convertDataToGraphData(trimData([...graphDataRef.current, ...inData], sensor.timeEndS));
@@ -112,8 +112,7 @@ function SensorGraphContainer(props) {
 }
 
 function SensorPaperContainer(props) {
-    const sensor = useSensor(props.group, props.name);
-
+    const sensor = useSelector(state => state.sensors.sensors[props.name].meta); 
     const classes = useStyles();
 
     return (
@@ -132,15 +131,12 @@ function SensorPaperContainer(props) {
 }
 
 export function GroupContainer(props) {
-    const classes = useStyles();
-    const group = useGroup( props.name);
-    const groupSensors = useGroupSensors(props.name);
+    const group = useSelector(state => state.sensors.groups[props.name]); 
 
     // See modules index.js for explaination of why useMemo is used.
     const sensorContainers = useMemo(() => {
 
-
-        const containers = Object.keys(groupSensors).map(x => 
+        const containers = group.map(x => 
         {
             return (<Grid item key={v4()} xs={12}>
                     <SensorPaperContainer key={v4()} group={props.name} name={x}/>
@@ -148,7 +144,7 @@ export function GroupContainer(props) {
             );
         });
         return containers;
-    }, [groupSensors, props.name]);
+    }, [group, props.name]);
 
     return (
         <Grid container alignItems="center" key={v4()}>

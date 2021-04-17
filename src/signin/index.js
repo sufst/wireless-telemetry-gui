@@ -20,25 +20,21 @@ import {
     BrowserRouter as Router, Route, Switch, Redirect, useRouteMatch 
 } from "react-router-dom"
 import {
-    useUser
-} from "../store/user"
-import {
     SignInContainer,
     CreateAccountContainer
 } from "./containers";
 
 export function SignIn(props) {
-    const user = useUser();
     const match = useRouteMatch();
 
     return(
         <Router>
             <Switch>
                 <Route path={match.url} exact>
-                    {user.isCreatingAccount ? <Redirect to={match.url + "/createaccount"} /> : <SignInContainer />}
+                    {/* {user.isCreatingAccount ? <Redirect to={match.url + "/createaccount"} /> : <SignInContainer />} */}
                 </Route>
                 <Route path={match.url + "/createaccount"}>
-                    {user.isCreatingAccount ? <CreateAccountContainer /> : <Redirect to={match.url} /> }
+                    {/* {user.isCreatingAccount ? <CreateAccountContainer /> : <Redirect to={match.url} /> } */}
                 </Route>
                 <Route path="*">
                     <div>404 Not found</div>

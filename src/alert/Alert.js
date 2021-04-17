@@ -4,9 +4,6 @@ import MuiAlert from '@material-ui/lab/Alert';
 import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 
-// Context Imports
-import AlertContext from '../store/alert/alertContext';
-
 /**
  * Alert Types - (severity) - as specified from MUI Labs - Name of type to be specified
  * 
