@@ -23,13 +23,14 @@ import userReducer from './slices/user';
 
 
 import { alertMiddleware } from './middleware/alert';
+import { userMiddleware } from './middleware/user';
 
 const store = configureStore({
   reducer: {
      alert: alertReducer, 
      user: userReducer
   },
-  middleware: [alertMiddleware, ...getDefaultMiddleware()],
+  middleware: [alertMiddleware, userMiddleware, ...getDefaultMiddleware()],
 })
 
 export default store; 

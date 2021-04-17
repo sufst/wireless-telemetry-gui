@@ -40,7 +40,7 @@ import {
     createUser
 } from "../backend/backend";
 import { useDispatch } from 'react-redux';
-import { set, signin } from '../redux/slices/user';
+import { login, set, signin } from '../redux/slices/user';
 
 const createAccountPayload = {
     isCreatingAccount: true
@@ -60,6 +60,8 @@ export function SignInContainer(props) {
         const info = {
             username: username,
         }
+
+        dispatch(login( { username, password } ));
     
         logIn(username, password)
         .then(() => (dispatch(set(info))))
