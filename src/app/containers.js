@@ -45,21 +45,26 @@ import {
 import { 
     useDispatch 
 } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const AppRouterSwitch = () => {
     const classes = useStyles();
 
+    const user = useSelector((state => state.user)); 
+
+    const { username } = user; 
+
     return (
         <Switch>
             <Route path="/" exact>
-                {/* { user.username !== undefined ? <Redirect to="/dashboard" /> : <Redirect to="/signin" /> } */}
+                {/* { username !== undefined ? <Redirect to="/dashboard" /> : <Redirect to="/signin" /> } */}
                 {<Redirect to="/dashboard"/>}
             </Route>
             <Route path="/signin">
-                {/* { user.username !== undefined ? <Redirect to={"/dashboard/" + user.username} /> : <SignIn /> } */}
+                {/* { username !== undefined ? <Redirect to={"/dashboard/" + username} /> : <SignIn /> } */}
                 <SignIn />
             </Route>
-            {/*<Route path={"/dashboard/" + user.username} exact>
+            {/*<Route path={"/dashboard/" + username} exact>
                 <Dash />
             </Route> */}
             <Route path={"/dashboard"} exact>

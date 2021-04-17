@@ -16,23 +16,30 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
-import alertReducer from './slices/alertSlice';
-import sensorsReducer from './slices/sensors';
-import userReducer from './slices/user';
+export const userSlice = createSlice({
+   name: 'user',
+   initialState: {
+      username: undefined, 
+      isCreatingAccount: undefined,
+      meta: {
 
-
-import { alertMiddleware } from './middleware/alert';
-import { userMiddleware } from './middleware/user';
-
-const store = configureStore({
-  reducer: {
-     alert: alertReducer, 
-     sensors : sensorsReducer,
-     user: userReducer
-  },
-  middleware: [alertMiddleware, userMiddleware, ...getDefaultMiddleware()],
+      },
+   },
+   reducers: {
+      login: (state, action) => {
+         
+      }, 
+      set: (state, action) => {
+         state.username = action.payload.username 
+      },
+      signin: (state) => {
+         state.isCreatingAccount = true
+      } 
+   }
 })
 
-export default store; 
+export const { login, set, signin } = userSlice.actions; 
+
+export default userSlice.reducer;

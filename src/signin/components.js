@@ -93,8 +93,8 @@ export function CreateAccountButton(props) {
 export function WelcomeMessage(props) {
     return (
         <Typography componenet="h1" variant="h5">
-        {props.message}
-    </Typography>
+            {props.message}
+        </Typography>
     );
 }
 
