@@ -57,15 +57,7 @@ export function SignInContainer(props) {
         let username = event.target.username.value;
         let password = event.target.password.value;
 
-        const info = {
-            username: username,
-        }
-
         dispatch(login( { username, password } ));
-    
-        logIn(username, password)
-        .then(() => (dispatch(set(info))))
-        .catch((error) => console.error(error));
     }, [dispatch]);
 
     return (

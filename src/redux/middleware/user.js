@@ -19,6 +19,7 @@
 
 import { logIn } from "../../backend/backend"
 import { show } from "../slices/alertSlice";
+import { set } from "../slices/user";
 
 export const userMiddleware = storeAPI => next => action => {
 
@@ -42,6 +43,8 @@ export const userMiddleware = storeAPI => next => action => {
       logIn(username, password) 
          .then(() => {
             storeAPI.dispatch(show(successAlert))
+
+            next(set( { username } ))
          })
          .catch((error) => {
             storeAPI.dispatch(show(loginFailedAlert))
