@@ -1,11 +1,11 @@
-import { REMOVE_ALERT } from "../alertSlide";
+import { remove } from "../alertSlide";
 
 export const alertMiddleware = storeAPI => next => action => {
    
-   if (action.type === 'alert/SHOW_ALERT') {
-      
+   if (action.type === 'alert/show') {
+
      setTimeout(() => {
-        next(REMOVE_ALERT())
+        next(remove())
      }, action.payload.timeout)
      return next(action)
    }

@@ -29,7 +29,7 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import { useDispatch } from 'react-redux';
-import { REMOVE_ALERT, SET_ALERT, SHOW_ALERT } from '../../redux/alertSlide';
+import { show } from '../../redux/alertSlide';
 
 const AppSideBar = ({ open, handleDrawerClose }) => {
     const classes = useStyles();
@@ -110,7 +110,7 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
             type: 'alert',
             text: 'something happened!'
         }
-        dispatch(SHOW_ALERT(demo))
+        dispatch(show(demo))
     }
 
     return (

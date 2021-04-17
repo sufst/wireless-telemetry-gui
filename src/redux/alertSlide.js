@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const alertSlide = createSlice({
+export const alertSlice = createSlice({
    name: 'alert',
    initialState: {
       timeout: undefined, 
@@ -9,14 +9,13 @@ export const alertSlide = createSlice({
       text: undefined
    },
    reducers: {
-      SHOW_ALERT: (state, action) => {
+      show: (state, action) => {
          state.timeout = action.payload.timeout
          state.level = action.payload.level
          state.type = action.payload.type
          state.text = action.payload.text
       }, 
-      REMOVE_ALERT: (state) => {
-         console.log('REMOVING');
+      remove: (state) => {
          state.timeout = undefined
          state.level = undefined
          state.type = undefined 
@@ -25,6 +24,6 @@ export const alertSlide = createSlice({
    }
 })
 
-export const { SHOW_ALERT, REMOVE_ALERT } = alertSlide.actions; 
+export const { show, remove } = alertSlice.actions; 
 
-export default alertSlide.reducer;
+export default alertSlice.reducer;
