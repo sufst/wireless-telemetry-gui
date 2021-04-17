@@ -15,11 +15,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 import React from 'react';
-import {
-    useUserStoreReducer,
-    UserStore,
-} from "../store/user";
+// import {
+//     useUserStoreReducer,
+//     UserStore,
+// } from "../store/user";
 import {
     AppContainer
 } from "./containers";
@@ -30,27 +31,21 @@ import {
     SensorsDataStore
 } from "../store/sensors";
 
-import AlertState from '../store/alert/AlertState'
-
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 
 export function App(props) {
-    const [userStore, userStoreDispatch] = useUserStoreReducer();
+    //const [userStore, userStoreDispatch] = useUserStoreReducer();
     const [sensorsData, sensorsDataDispatch] = useSensorsDataStoreReducer();
     const [sensorsConfig, sensorsConfigDispatch] = useSensorsConfigStoreReducer();
     
     return (
         <Provider store={store}>
-            <AlertState>
-                <UserStore.Provider value={{state: userStore, dispatch: userStoreDispatch}} >
-                    <SensorsDataStore.Provider value={{state: sensorsData, dispatch: sensorsDataDispatch}} >
-                        <SensorsConfigStore.Provider value={{state: sensorsConfig, dispatch: sensorsConfigDispatch}} >
-                            <AppContainer />
-                        </SensorsConfigStore.Provider>
-                    </SensorsDataStore.Provider>
-                </UserStore.Provider>
-            </AlertState>
+            <SensorsDataStore.Provider value={{state: sensorsData, dispatch: sensorsDataDispatch}} >
+                <SensorsConfigStore.Provider value={{state: sensorsConfig, dispatch: sensorsConfigDispatch}} >
+                    <AppContainer />
+                </SensorsConfigStore.Provider>
+            </SensorsDataStore.Provider>
         </Provider>
     );
 } 

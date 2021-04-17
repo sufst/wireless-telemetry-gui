@@ -18,30 +18,28 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
-export const alertSlice = createSlice({
-   name: 'alert',
+export const userSlice = createSlice({
+   name: 'user',
    initialState: {
-      timeout: undefined, 
-      level: undefined, 
-      type: undefined, 
-      text: undefined
+      username: undefined, 
+      isCreatingAccount: undefined,
+      meta: {
+
+      },
    },
    reducers: {
-      show: (state, action) => {
-         state.timeout = action.payload.timeout
-         state.level = action.payload.level
-         state.type = action.payload.type
-         state.text = action.payload.text
+      login: (state, action) => {
+         
       }, 
-      remove: (state) => {
-         state.timeout = undefined
-         state.level = undefined
-         state.type = undefined 
-         state.text = undefined
-      }, 
+      set: (state, action) => {
+         state.username = action.payload.username 
+      },
+      signin: (state) => {
+         state.isCreatingAccount = true
+      } 
    }
 })
 
-export const { show, remove } = alertSlice.actions; 
+export const { login, set, signin } = userSlice.actions; 
 
-export default alertSlice.reducer;
+export default userSlice.reducer;

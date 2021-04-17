@@ -15,39 +15,39 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import {
-    createContext, 
-    useContext, 
-    useReducer 
-} from 'react';
+// import {
+//     createContext, 
+//     useContext, 
+//     useReducer 
+// } from 'react';
 
-export const UserStore = createContext();
+// export const UserStore = createContext();
 
-function UserStoreReducer(state, action) {
-    const temp = {...state};
+// function UserStoreReducer(state, action) {
+//     const temp = {...state};
 
-    switch(action.type) {
-        case "update":
-            temp[action.key] = action.value;
-            return temp;
-        default:
-            throw new Error();
-    }
-}
+//     switch(action.type) {
+//         case "update":
+//             temp[action.key] = action.value;
+//             return temp;
+//         default:
+//             throw new Error();
+//     }
+// }
 
-export function useUserStoreReducer() {
-    return useReducer(UserStoreReducer, {
-        username: undefined,
-        meta: {
+// export function useUserStoreReducer() {
+//     return useReducer(UserStoreReducer, {
+//         username: undefined,
+//         meta: {
 
-        }
-    });
-}
+//         }
+//     });
+// }
 
-export function useUserStoreDispatcher() {
-    return useContext(UserStore).dispatch;
-}
+// export function useUserStoreDispatcher() {
+//     return useContext(UserStore).dispatch;
+// }
 
-export function useUser() {
-    return useContext(UserStore).state;
-}
+// export function useUser() {
+//     return useContext(UserStore).state;
+// }

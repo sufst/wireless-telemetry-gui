@@ -47,22 +47,26 @@ import {
     useSensorConfigDispatch,
     useSensorDataDispatch,
 } from "../store/sensors";
+import { useSelector } from 'react-redux';
 
 const AppRouterSwitch = () => {
-    const user = useUser();
     const classes = useStyles();
+
+    const user = useSelector((state => state.user)); 
+
+    const { username } = user; 
 
     return (
         <Switch>
             <Route path="/" exact>
-                {/* { user.username !== undefined ? <Redirect to="/dashboard" /> : <Redirect to="/signin" /> } */}
+                {/* { username !== undefined ? <Redirect to="/dashboard" /> : <Redirect to="/signin" /> } */}
                 {<Redirect to="/dashboard"/>}
             </Route>
             <Route path="/signin">
-                {/* { user.username !== undefined ? <Redirect to={"/dashboard/" + user.username} /> : <SignIn /> } */}
+                {/* { username !== undefined ? <Redirect to={"/dashboard/" + username} /> : <SignIn /> } */}
                 <SignIn />
             </Route>
-            {/*<Route path={"/dashboard/" + user.username} exact>
+            {/*<Route path={"/dashboard/" + username} exact>
                 <Dash />
             </Route> */}
             <Route path={"/dashboard"} exact>
@@ -75,7 +79,7 @@ const AppRouterSwitch = () => {
                 <Paper className={classes.viewPaper}>
                     <Alert className={classes.alert} /> 
                     {/* This needs to change to === 'guest' when the default user is the guest */}
-                    {user.username === undefined ? <SignIn /> : <Account/> }
+                    {username === undefined ? <SignIn /> : <Account/> }
                 </Paper> 
             </Route>
             <Route path="*">

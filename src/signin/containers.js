@@ -39,22 +39,32 @@ import {
     logIn,
     createUser
 } from "../backend/backend";
+import { useDispatch } from 'react-redux';
+import { set, signin } from '../redux/slices/user';
+
+const createAccountPayload = {
+    isCreatingAccount: true
+}
 
 export function SignInContainer(props) {
     const classes = useStyles();
 
-    const userDispatcher = useUserStoreDispatcher();
+    const dispatch = useDispatch()
 
     const onSignInSubmit = useCallback((event) => {
         event.preventDefault();
 
         let username = event.target.username.value;
         let password = event.target.password.value;
+
+        const info = {
+            username: username,
+        }
     
         logIn(username, password)
-        .then(() => (userDispatcher({type: "update", key: "username", value: username})))
+        .then(() => (dispatch(set(info))))
         .catch((error) => console.error(error));
-    }, [userDispatcher]);
+    }, [dispatch]);
 
     return (
         <Container componenet="main" maxWidth="xs">
@@ -66,7 +76,7 @@ export function SignInContainer(props) {
                     <UsernameField />
                     <PasswordField />
                     <SubmitButton text="Sign In"/>
-                    <CreateAccountButton onClick={() => userDispatcher({type: "update", key: "isCreatingAccount", value: true})} />
+                    <CreateAccountButton onClick={() => dispatch(signin)} />
                 </form>
             </div>
             <FooterMessage />
@@ -77,7 +87,7 @@ export function SignInContainer(props) {
 export function CreateAccountContainer(props) {
     const classes = useStyles()
 
-    const userDispatcher = useUserStoreDispatcher();
+    const dispatch = useDispatch(); 
         
     const onCreateUserSubmit = useCallback((event) => {
         event.preventDefault();
@@ -86,9 +96,9 @@ export function CreateAccountContainer(props) {
         let password = event.target.password.value;
     
         createUser(username, password)
-        .then(() => userDispatcher({type: "update", key: "isCreatingAccount", value: false}))
+        .then(() => dispatch(set(createAccountPayload)))
         .catch((error) => console.error(error));
-    }, [userDispatcher]);
+    }, [dispatch]);
 
     return (
         <Container componenet="main" maxWidth="xs">
