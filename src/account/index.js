@@ -14,9 +14,9 @@ const Account = () => {
       console.log('Logging out');
    }
 
-//    return (
-//       <AccountContainer user={user} onLogoutClick={onLogoutClick}/>
-//    )
+   return (
+      <AccountContainer user={user} onLogoutClick={onLogoutClick}/>
+   )
 }
 
 export default Account

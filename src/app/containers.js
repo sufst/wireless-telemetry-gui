@@ -77,7 +77,7 @@ const AppRouterSwitch = () => {
                 <Paper className={classes.viewPaper}>
                     <Alert className={classes.alert} /> 
                     {/* This needs to change to === 'guest' when the default user is the guest */}
-                    {/* {user.username === undefined ? <SignIn /> : <Account/> } */}
+                    {user.username === undefined ? <SignIn /> : <Account/> }
                 </Paper> 
             </Route>
             <Route path="*">
@@ -101,7 +101,7 @@ function AnonymousLogin() {
         sio.on("data", message => {
             const data = JSON.parse(message);
     
-            console.log(data);
+            //console.log(data);
     
             dispatch(insertBulkData(data))
         });
