@@ -16,19 +16,30 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React from 'react';
-import {
-    AppContainer
-} from "./containers";
+import { createSlice } from "@reduxjs/toolkit";
 
-import { Provider } from 'react-redux';
-import store from '../redux/store';
+export const userSlice = createSlice({
+   name: 'user',
+   initialState: {
+      username: undefined, 
+      isCreatingAccount: undefined,
+      meta: {
 
-export function App(props) {   
-    return (
-        <Provider store={store}>
-            <AppContainer />
-        </Provider>
-    );
-} 
+      },
+   },
+   reducers: {
+      login: (state, action) => {
+         
+      }, 
+      set: (state, action) => {
+         state.username = action.payload.username 
+      },
+      signin: (state) => {
+         state.isCreatingAccount = true
+      } 
+   }
+})
 
+export const { login, set, signin } = userSlice.actions; 
+
+export default userSlice.reducer;

@@ -16,19 +16,17 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { 
     BrowserRouter as Router, Route, Switch, Redirect, useRouteMatch 
 } from "react-router-dom"
-import {
-    useUser
-} from "../store/user"
 import {
     SignInContainer,
     CreateAccountContainer
 } from "./containers";
 
 export function SignIn(props) {
-    const user = useUser();
+    const user = useSelector((state => state.user)); 
     const match = useRouteMatch();
 
     return(

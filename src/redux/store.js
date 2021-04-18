@@ -16,19 +16,23 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React from 'react';
-import {
-    AppContainer
-} from "./containers";
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
-import { Provider } from 'react-redux';
-import store from '../redux/store';
+import alertReducer from './slices/alertSlice';
+import sensorsReducer from './slices/sensors';
+import userReducer from './slices/user';
 
-export function App(props) {   
-    return (
-        <Provider store={store}>
-            <AppContainer />
-        </Provider>
-    );
-} 
 
+import { alertMiddleware } from './middleware/alert';
+import { userMiddleware } from './middleware/user';
+
+const store = configureStore({
+  reducer: {
+     alert: alertReducer, 
+     sensors : sensorsReducer,
+     user: userReducer
+  },
+  middleware: [alertMiddleware, userMiddleware, ...getDefaultMiddleware()],
+})
+
+export default store; 

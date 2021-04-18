@@ -1,6 +1,24 @@
+/*
+    Southampton University Formula Student Team
+    Copyright (C) 2021 SUFST
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 // Module Imports
 import React, { useContext } from 'react'
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import clsx from 'clsx';
 
 // Material UI Imports 
@@ -28,7 +46,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import AlertContext from '../../store/alert/alertContext';
+import { useDispatch } from 'react-redux';
+import { show } from '../../redux/slices/alertSlice';
 
 const AppSideBar = ({ open, handleDrawerClose }) => {
     const classes = useStyles();
@@ -36,9 +55,7 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
 
     const history = useHistory();
 
-    const alertContext = useContext(AlertContext); 
-
-    const { setAlert } = alertContext; 
+    const dispatch = useDispatch()
 
     const actionTitles = ['Account', 'Dashboard', 'Session', 'Admin', 'Database', 'Feed', 'Settings']
 
@@ -77,10 +94,10 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
     const handleActionIconClicked = (index) => () => {
         switch (index) {
             case 0:
-                console.log(history);
                 history.push('/account')
                 break;
             case 1:
+                // Setting an example alert
                 setAlertHere(); 
                 //history.push('/dashboard')
                 break;
@@ -105,7 +122,13 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
 
     // Example of setting an alert - Please see alert/Alert.js for allowd 'type' values
     const setAlertHere = () => {
-        setAlert("error", "alert", 1000, "Oups! Something went wrong... Please try again later!")
+        const demo = {
+            timeout: 5000,
+            level: 'error', 
+            type: 'alert',
+            text: 'something happened!'
+        }
+        dispatch(show(demo))
     }
 
     return (

@@ -5,10 +5,10 @@ import React from 'react'
 import AccountContainer from './container'
 
 // Context
-import { useUser } from '../store/user';
+import { useSelector } from 'react-redux';
 
 const Account = () => {
-   const user = useUser(); 
+   const user = useSelector(state => state.user)
 
    const onLogoutClick = () => {
       console.log('Logging out');

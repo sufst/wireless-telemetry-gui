@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 Nathan Rowley-Smith
+    Copyright (C) 2021 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,39 +15,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import {
-    createContext, 
-    useContext, 
-    useReducer 
-} from 'react';
 
-export const UserStore = createContext();
+import { remove } from "../slices/alertSlice";
 
-function UserStoreReducer(state, action) {
-    const temp = {...state};
+export const alertMiddleware = storeAPI => next => action => {
+   
+    if (action.type === 'alert/show') {
+        setTimeout(() => {
+            next(remove())
+        }, action.payload.timeout)
 
-    switch(action.type) {
-        case "update":
-            temp[action.key] = action.value;
-            return temp;
-        default:
-            throw new Error();
+        return next(action)
     }
-}
-
-export function useUserStoreReducer() {
-    return useReducer(UserStoreReducer, {
-        username: undefined,
-        meta: {
-
-        }
-    });
-}
-
-export function useUserStoreDispatcher() {
-    return useContext(UserStore).dispatch;
-}
-
-export function useUser() {
-    return useContext(UserStore).state;
-}
+ 
+   return next(action)
+ }
