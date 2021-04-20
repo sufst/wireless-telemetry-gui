@@ -98,8 +98,8 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
                 break;
             case 1:
                 // Setting an example alert
-                setAlertHere(); 
-                //history.push('/dashboard')
+                //setAlertHere(); 
+                history.push('/dashboard')
                 break;
             default:
                 break;

@@ -46,6 +46,7 @@ import {
     useDispatch 
 } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { login } from '../redux/slices/user';
 
 const AppRouterSwitch = () => {
     const classes = useStyles();
@@ -77,7 +78,7 @@ const AppRouterSwitch = () => {
                 <Paper className={classes.viewPaper}>
                     <Alert className={classes.alert} /> 
                     {/* This needs to change to === 'guest' when the default user is the guest */}
-                    {user.username === undefined ? <SignIn /> : <Account/> }
+                    {user.username === undefined || user.username === 'anonymous' ? <SignIn /> : <Account/> }
                 </Paper> 
             </Route>
             <Route path="*">
@@ -91,25 +92,10 @@ const AppRouterSwitch = () => {
 function AnonymousLogin() {
     const dispatch = useDispatch();
 
-    logIn("anonymous", "anonymous").then(() => {
-        sio.on("meta", message => {
-            const meta = JSON.parse(message);
-            console.log(meta);
-            dispatch(buildFromMeta(meta));
-            }
-        )
-        sio.on("data", message => {
-            const data = JSON.parse(message);
-    
-            //console.log(data);
-    
-            dispatch(insertBulkData(data))
-        });
-    })
-    .catch(error => {
-        console.error(error);
-        AnonymousLogin();
-    });
+    const username = "anonymous"
+    const password = "anonymous"
+
+    dispatch(login( { username, password } ))
 }
 
 export function AppContainer(props) {    
