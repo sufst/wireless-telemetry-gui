@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 SUFST
+    Copyright (C) SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,22 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { DashboardHeader } from "./header/containers"
 
-import alertReducer from './slices/alert';
-import sensorsReducer from './slices/sensors';
-import userReducer from './slices/user';
-
-import { alertMiddleware } from './middleware/alert';
-import { userMiddleware } from './middleware/user';
-
-const store = configureStore({
-  reducer: {
-     alert: alertReducer, 
-     sensors : sensorsReducer,
-     user: userReducer
-  },
-  middleware: [alertMiddleware, userMiddleware, ...getDefaultMiddleware()],
-})
-
-export default store; 
+export const Dashboard = () => {
+    return (
+        <DashboardHeader/>
+    );
+}

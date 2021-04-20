@@ -16,7 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import { makeStyles } from "@material-ui/core";
-import { shadows } from '@material-ui/system';
 
 export const useStyles = makeStyles((theme) => ({
   root: {

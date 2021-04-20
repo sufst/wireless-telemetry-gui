@@ -16,13 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { remove } from "../slices/alertSlice";
+import { removeAlert } from "../slices/alert";
 
 export const alertMiddleware = storeAPI => next => action => {
    
     if (action.type === 'alert/show') {
         setTimeout(() => {
-            next(remove())
+            next(removeAlert())
         }, action.payload.timeout)
 
         return next(action)

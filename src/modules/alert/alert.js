@@ -16,22 +16,22 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
-import alertReducer from './slices/alert';
-import sensorsReducer from './slices/sensors';
-import userReducer from './slices/user';
+import AlertContainer from './containers';
 
-import { alertMiddleware } from './middleware/alert';
-import { userMiddleware } from './middleware/user';
+/**
+ * Alert Types - (severity) - as specified from MUI Labs - Name of type to be specified
+ * 
+ * "info": Blue Background in the Alert
+ * "error": Red Background in the Alert 
+ * "warning": Yellow Background in the Alert
+ * "success": Green Background in the Alert
+ */
 
-const store = configureStore({
-  reducer: {
-     alert: alertReducer, 
-     sensors : sensorsReducer,
-     user: userReducer
-  },
-  middleware: [alertMiddleware, userMiddleware, ...getDefaultMiddleware()],
-})
+const Alert = (props) => {
+    return (
+        <AlertContainer props={props}/>
+    )
+}
 
-export default store; 
+export default Alert; 

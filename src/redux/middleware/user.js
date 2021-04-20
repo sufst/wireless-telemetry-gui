@@ -17,10 +17,10 @@
 */
 
 
-import { logIn, sio } from "../../backend/backend"
-import { show } from "../slices/alertSlice";
-import { buildFromMeta, insertBulkData } from "../slices/sensors";
-import { set } from "../slices/user";
+import { loginUser, sio } from "../../modules/backend/backend"
+import { showAlert } from "../slices/alert";
+import { buildSensorsFromMeta, insertSensorsBulkData } from "../slices/sensors";
+import { setUser } from "../slices/user";
 
 export const userMiddleware = storeAPI => next => action => {
 
@@ -30,37 +30,41 @@ export const userMiddleware = storeAPI => next => action => {
       level: 'error', 
       text: 'Login Failed :( Make sure your credentials are correct!'
    }
-
-   const successAlert = {
-      timeout: 3000, 
-      type: 'snack', 
-      level: 'success', 
-      text: 'Login Success! You successfully logged in!'
-   }
    
-   if (action.type === 'user/login') {
+   if (action.type === 'user/loginUser') {
       const { username, password } = action.payload; 
+
+      const successAlert = {
+         timeout: 3000, 
+         type: 'snack', 
+         level: 'success', 
+         text: `Login Success! ${username} successfully logged in!`
+      }
       
-      logIn(username, password) 
+      loginUser(username, password) 
          .then(() => {
-            storeAPI.dispatch(show(successAlert))
+            storeAPI.dispatch(showAlert(successAlert))
 
             sio.on("meta", message => {
                const meta = JSON.parse(message);
                console.log(meta);
-               storeAPI.dispatch(buildFromMeta(meta));
+               storeAPI.dispatch(buildSensorsFromMeta(meta));
             })
 
             sio.on("data", message => {
                const data = JSON.parse(message);
+
                //console.log(data);
-               storeAPI.dispatch(insertBulkData(data))
+               
+               storeAPI.dispatch(insertSensorsBulkData(data))
             });
 
-            next(set( { username } ))
+            next(setUser( { username } ))
          })
          .catch((error) => {
-            storeAPI.dispatch(show(loginFailedAlert))
+            // TODO: Show error in UI
+            console.error(error);
+            storeAPI.dispatch(showAlert(loginFailedAlert))
          })
 
       return next(action)

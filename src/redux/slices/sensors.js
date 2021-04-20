@@ -24,7 +24,7 @@ export const sensorsSlice = createSlice({
        groups: {}
    },
    reducers: {
-      buildFromMeta: (state, action) => {
+    buildSensorsFromMeta: (state, action) => {
             const meta = action.payload;
             for (const sensor in meta) {
                 // Set a default graph cut off of 2 seconds
@@ -36,7 +36,7 @@ export const sensorsSlice = createSlice({
                 state.groups[group].push(sensor);
             }
       }, 
-      insertBulkData: (state, action) => {
+      insertSensorsBulkData: (state, action) => {
         const data = action.payload;
 
         // Stale data cut off time
@@ -47,7 +47,7 @@ export const sensorsSlice = createSlice({
             state.sensors[sensor].data = [...state.sensors[sensor].data.filter(x => x.epoch > staleEpoch), ...data[sensor]];
         }
       },
-      updateMeta: (state, action) => {
+      updateSensorsMeta: (state, action) => {
           const sensor = action.payload.sensor;
           const key = action.payload.key;
           const value = action.payload.value;
@@ -56,6 +56,6 @@ export const sensorsSlice = createSlice({
    }
 })
 
-export const { buildFromMeta, insertBulkData, updateMeta } = sensorsSlice.actions; 
+export const { buildSensorsFromMeta, insertSensorsBulkData, updateSensorsMeta } = sensorsSlice.actions; 
 
 export default sensorsSlice.reducer;

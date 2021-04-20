@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 SUFST
+    Copyright (C) 2021 Nathan Rowley-Smith
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,23 +15,16 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+export const trimData = (data, expiredS) => {
+    const epoch = new Date().valueOf() / 1000.0;
 
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+    return data.filter(x => x.epoch > epoch + expiredS)
+}
 
-import alertReducer from './slices/alert';
-import sensorsReducer from './slices/sensors';
-import userReducer from './slices/user';
-
-import { alertMiddleware } from './middleware/alert';
-import { userMiddleware } from './middleware/user';
-
-const store = configureStore({
-  reducer: {
-     alert: alertReducer, 
-     sensors : sensorsReducer,
-     user: userReducer
-  },
-  middleware: [alertMiddleware, userMiddleware, ...getDefaultMiddleware()],
-})
-
-export default store; 
+export const convertDataToGraphData = (data) => {
+    return data.map(x => {
+        const date = (new Date(x.epoch * 1000));
+        const time = date.toTimeString().split(" ")[0] + ":" + date.getMilliseconds();
+        return {time: time, value: x.value}
+    });
+}

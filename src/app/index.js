@@ -24,7 +24,7 @@ import {
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 
-export function App(props) {   
+export const App = (props) => {   
     return (
         <Provider store={store}>
             <AppContainer />

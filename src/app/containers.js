@@ -18,35 +18,27 @@
 import React, { useRef } from 'react';
 import { 
     SignIn
-} from "../signin/index";
+} from "../pages/signin/index";
 import {
     BrowserRouter as Router, Route, Switch, Redirect 
 } from "react-router-dom";
 import {
     Dashboard
-} from "../dashboard/index";
-import AppNavContainer from "../navigation/container";
+} from "../pages/dashboard/index";
+import AppNavigation from "../modules/navigation/navigation";
 import {
     Paper
 } from '@material-ui/core';
 import {
     useStyles
 } from "./styles";
-import Account from '../account';
-import Alert from '../alert/Alert';
-import {
-    logIn, 
-    sio
-} from "../backend/backend"; 
-import {
-    buildFromMeta, 
-    insertBulkData
-} from "../redux/slices/sensors";
+import Account from '../pages/account/';
+import Alert from '../modules/alert/alert';
 import { 
     useDispatch 
 } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { login } from '../redux/slices/user';
+import { loginUser } from '../redux/slices/user';
 
 const AppRouterSwitch = () => {
     const classes = useStyles();
@@ -58,16 +50,12 @@ const AppRouterSwitch = () => {
     return (
         <Switch>
             <Route path="/" exact>
-                {/* { username !== undefined ? <Redirect to="/dashboard" /> : <Redirect to="/signin" /> } */}
-                {<Redirect to="/dashboard"/>}
+                <Redirect to="/dashboard"/>
             </Route>
             <Route path="/signin">
-                {/* { username !== undefined ? <Redirect to={"/dashboard/" + username} /> : <SignIn /> } */}
+                {/* TODO: Determine where to go */} 
                 <SignIn />
             </Route>
-            {/*<Route path={"/dashboard/" + username} exact>
-                <Dash />
-            </Route> */}
             <Route path={"/dashboard"} exact>
                 <Paper className={classes.viewPaper}>
                     <Alert className={classes.alert} /> 
@@ -77,25 +65,24 @@ const AppRouterSwitch = () => {
             <Route path={"/account"} exact>
                 <Paper className={classes.viewPaper}>
                     <Alert className={classes.alert} /> 
-                    {/* This needs to change to === 'guest' when the default user is the guest */}
-                    {user.username === undefined || user.username === 'anonymous' ? <SignIn /> : <Account/> }
+                    {console.log(username)}
+                    {username === undefined || username === 'anonymous' ? <SignIn /> : <Account/> }
                 </Paper> 
             </Route>
             <Route path="*">
-                {/* <Redirect to="/signin" /> */}
                 <Redirect to="/" />
             </Route>
         </Switch>
     )
 }
 
-function AnonymousLogin() {
+const AnonymousLogin = () => {
     const dispatch = useDispatch();
 
     const username = "anonymous"
     const password = "anonymous"
 
-    dispatch(login( { username, password } ))
+    dispatch(loginUser( { username, password } ))
 }
 
 export function AppContainer(props) {    
@@ -109,7 +96,7 @@ export function AppContainer(props) {
 
     return (
         <Router>
-            <AppNavContainer />
+            <AppNavigation />
             <AppRouterSwitch />
         </Router>
     );
