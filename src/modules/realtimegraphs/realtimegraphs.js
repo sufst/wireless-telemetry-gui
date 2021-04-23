@@ -45,7 +45,7 @@ import {
 import { useSelector } from 'react-redux';
 import {
     updateSensorsMeta
-} from "../../redux/slices/sensors";
+} from "redux/slices/sensors";
 import { 
     useDispatch 
 } from 'react-redux';

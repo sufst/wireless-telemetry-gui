@@ -17,7 +17,7 @@
 */
 
 
-import { loginUser, sio } from "../../modules/backend/backend"
+import { loginUser, sio } from "modules/backend/backend"
 import { showAlert } from "../slices/alert";
 import { buildSensorsFromMeta, insertSensorsBulkData } from "../slices/sensors";
 import { setUser } from "../slices/user";

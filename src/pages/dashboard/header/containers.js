@@ -22,7 +22,7 @@ import Tab from '@material-ui/core/Tab';
 import {
     Session
 } from "../session/containers"
-import RealtimeSensorsGroupContainer from '../../../modules/realtimegraphs/realtimegraphs';
+import RealtimeSensorsGroupContainer from 'modules/realtimegraphs/realtimegraphs';
 import {
     v4 
 }from 'uuid';

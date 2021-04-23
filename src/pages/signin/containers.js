@@ -32,11 +32,11 @@ import {
     CreateAccountButton,
     FooterMessage
 } from "./components";
-import {
-    createUser
-} from "../../modules/backend/backend";
+
+import { createUser } from "modules/backend/backend";
+
 import { useDispatch } from 'react-redux';
-import { loginUser, setUser } from '../../redux/slices/user';
+import { loginUser, setUser } from 'redux/slices/user';
 
 const createAccountPayload = {
     isCreatingAccount: true

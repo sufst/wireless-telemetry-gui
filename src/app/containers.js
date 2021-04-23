@@ -15,30 +15,25 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 import React, { useRef } from 'react';
-import { 
-    SignIn
-} from "../pages/signin/index";
 import {
-    BrowserRouter as Router, Route, Switch, Redirect 
+    BrowserRouter as Router, 
+    Route, 
+    Switch, 
+    Redirect 
 } from "react-router-dom";
-import {
-    Dashboard
-} from "../pages/dashboard/index";
-import AppNavigation from "../modules/navigation/navigation";
-import {
-    Paper
-} from '@material-ui/core';
-import {
-    useStyles
-} from "./styles";
-import Account from '../pages/account/';
-import Alert from '../modules/alert/alert';
-import { 
-    useDispatch 
-} from 'react-redux';
+import { Paper } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { loginUser } from '../redux/slices/user';
+
+import { Dashboard } from "pages/dashboard/index";
+import Account from 'pages/account/';
+import { SignIn } from "pages/signin/index";
+import AppNavigation from "modules/navigation/navigation";
+import { useStyles } from "./styles";
+import Alert from 'modules/alert/alert';
+import { loginUser } from 'redux/slices/user';
 
 const AppRouterSwitch = () => {
     const classes = useStyles();
