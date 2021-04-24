@@ -89,9 +89,9 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
     ], [history])
 
     const handleSocialIconClicked = useMemo(() => [
-        () => console.log('Social'),
-        () => console.log('Social'),
-        () => console.log('Social')
+        () => openSocial('https://www.instagram.com/sufst'),
+        () => openSocial('https://twitter.com/sufst'),
+        () => openSocial('https://github.com/orgs/sufst')
     ], [])
 
     const onIconClick = useCallback((index) => {
@@ -105,6 +105,11 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
             handleSocialIconClicked[index]()
         }
     }, [handleSocialIconClicked])
+
+    const openSocial = (url) => {
+        const win = window.open(url, '_blank');
+        win.focus(); 
+    }
 
     return (
       <div>

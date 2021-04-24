@@ -19,8 +19,9 @@
 import { removeAlert } from "../slices/alert";
 
 export const alertMiddleware = storeAPI => next => action => {
-   
-    if (action.type === 'alert/show') {
+  
+    if (action.type === 'alert/showAlert') {
+        
         setTimeout(() => {
             next(removeAlert())
         }, action.payload.timeout)
