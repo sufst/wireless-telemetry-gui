@@ -3,7 +3,7 @@
     "baseUrl": "src",
     "target": "es5",
     "module": "esnext",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
