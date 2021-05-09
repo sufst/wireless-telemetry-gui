@@ -18,21 +18,38 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
+type SetUserAction = {
+    payload: {
+        username: string
+    } 
+};
+
+type LoginUserAction = {
+
+};
+
+type UserState = {
+    username?: string,
+    isCreatingAccount: boolean,
+    meta: any
+};
+
+
 export const userSlice = createSlice({
    name: 'user',
    initialState: {
       username: undefined, 
-      isCreatingAccount: undefined,
+      isCreatingAccount: false,
       meta: {
 
       },
    },
    reducers: {
-      loginUser: (state, action) => {
+      loginUser: (state: UserState, action: LoginUserAction) => {
          
       }, 
-      setUser: (state, action) => {
-         state.username = action.payload.username 
+      setUser: (state: UserState, action: SetUserAction) => {
+         state.username = action.payload.username;
       },
    }
 })
