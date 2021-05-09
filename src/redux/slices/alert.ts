@@ -16,24 +16,45 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export const alertSlice = createSlice({
+type AlertTimeout = number;
+type AlertLevel = string;
+type AlertType = string;
+type AlertText = string;
+
+interface AlertState {
+    timeout?: AlertTimeout,
+    level?: AlertLevel,
+    type?: AlertType,
+    text?: AlertText
+};
+
+const initialState: AlertState = {
+    timeout: undefined,
+    level: undefined,
+    type: undefined,
+    text: undefined
+}
+
+type ShowAlertAction = {
+    timeout: AlertTimeout,
+    level: AlertLevel,
+    type: AlertType,
+    text: AlertText
+};
+
+const alertSlice = createSlice({
    name: 'alert',
-   initialState: {
-      timeout: undefined, 
-      level: undefined, 
-      type: undefined, 
-      text: undefined
-   },
+   initialState,
    reducers: {
-      showAlert: (state, action) => {
+      showAlert: (state: AlertState, action: PayloadAction<ShowAlertAction>) => {
          state.timeout = action.payload.timeout
          state.level = action.payload.level
          state.type = action.payload.type
          state.text = action.payload.text
       }, 
-      removeAlert: (state) => {
+      removeAlert: (state: AlertState) => {
          state.timeout = undefined
          state.level = undefined
          state.type = undefined 
@@ -43,5 +64,5 @@ export const alertSlice = createSlice({
 })
 
 export const { showAlert, removeAlert } = alertSlice.actions; 
-
+export type { ShowAlertAction };
 export default alertSlice.reducer;

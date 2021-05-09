@@ -15,16 +15,17 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
-
 import { loginUser, sio } from "modules/backend/backend"
 import { showAlert } from "../slices/alert";
 import { buildSensorsFromMeta, insertSensorsBulkData } from "../slices/sensors";
 import { setUser } from "../slices/user";
+import { Middleware } from 'redux'
+import type { ShowAlertAction } from "../slices/alert";
 
-export const userMiddleware = storeAPI => next => action => {
+// any should be rootState but I can't work out how to fix the circular dependancy issue.... 
+export const userMiddleware: Middleware<{}, any> = storeAPI => next => action => {
 
-   const loginFailedAlert = {
+   const loginFailedAlert: ShowAlertAction = {
       timeout: 3000, 
       type: 'alert', 
       level: 'error', 
@@ -34,7 +35,7 @@ export const userMiddleware = storeAPI => next => action => {
    if (action.type === 'user/loginUser') {
       const { username, password } = action.payload; 
 
-      const successAlert = {
+      const successAlert: ShowAlertAction = {
          timeout: 3000, 
          type: 'snack', 
          level: 'success', 
@@ -45,16 +46,16 @@ export const userMiddleware = storeAPI => next => action => {
          .then(() => {
             storeAPI.dispatch(showAlert(successAlert))
 
-            sio.on("meta", message => {
+            sio.on("meta", (message: string) => {
                const meta = JSON.parse(message);
                console.log(meta);
                storeAPI.dispatch(buildSensorsFromMeta(meta));
             })
 
-            sio.on("data", message => {
+            sio.on("data", (message: string) => {
                const data = JSON.parse(message);
 
-               //console.log(data);
+               console.log(data);
                
                storeAPI.dispatch(insertSensorsBulkData(data))
             });

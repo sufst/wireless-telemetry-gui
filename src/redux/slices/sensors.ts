@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type SensorData = {
     epoch: Number,
@@ -50,27 +50,26 @@ type BuildSensorsFromMetaAction = {
 };
 
 type InsertSensorsBulkDataAction = {
-    payload: {
-        [sensor: string]: Array<SensorData>
-    }
+    [sensor: string]: Array<SensorData>
 };
 
 type UpdateSensorsMetaAction = {
-    payload: {
-        sensor: string,
-        key: string,
-        value: any
-    }
+    sensor: string,
+    key: string,
+    value: any
 };
+
+const initialState: SensorsState = {
+    sensors: {},
+    groups: {}
+};
+
 
 export const sensorsSlice = createSlice({
    name: 'sensors',
-   initialState: {
-       sensors: {},
-       groups: {}
-   },
+   initialState,
    reducers: {
-    buildSensorsFromMeta: (state: SensorsState, action: BuildSensorsFromMetaAction) => {
+    buildSensorsFromMeta: (state: SensorsState, action: PayloadAction<BuildSensorsFromMetaAction>) => {
             const meta: Meta = action.payload;
             for (const sensor in meta) {
                 // Set a default graph cut off of 2 seconds
@@ -86,7 +85,7 @@ export const sensorsSlice = createSlice({
                 state.groups[group].push(sensor);
             }
       }, 
-      insertSensorsBulkData: (state: SensorsState, action: InsertSensorsBulkDataAction) => {
+      insertSensorsBulkData: (state: SensorsState, action: PayloadAction<InsertSensorsBulkDataAction>) => {
         const data = action.payload;
 
         // Stale data cut off time
@@ -97,7 +96,7 @@ export const sensorsSlice = createSlice({
             state.sensors[sensor].data = [...state.sensors[sensor].data.filter(x => x.epoch > staleEpoch), ...data[sensor]];
         }
       },
-      updateSensorsMeta: (state: SensorsState, action: UpdateSensorsMetaAction) => {
+      updateSensorsMeta: (state: SensorsState, action: PayloadAction<UpdateSensorsMetaAction>) => {
           const sensor = action.payload.sensor;
           const key = action.payload.key;
           const value = action.payload.value;

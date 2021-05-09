@@ -16,12 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type SetUserAction = {
-    payload: {
-        username: string
-    } 
+    username: string
 };
 
 type LoginUserAction = {
@@ -34,21 +32,23 @@ type UserState = {
     meta: any
 };
 
+const initialState: UserState = {
+    username: undefined, 
+    isCreatingAccount: false,
+    meta: {
+
+    }
+};
+
 
 export const userSlice = createSlice({
    name: 'user',
-   initialState: {
-      username: undefined, 
-      isCreatingAccount: false,
-      meta: {
-
-      },
-   },
+   initialState,
    reducers: {
-      loginUser: (state: UserState, action: LoginUserAction) => {
+      loginUser: (state: UserState, action: PayloadAction<LoginUserAction>) => {
          
       }, 
-      setUser: (state: UserState, action: SetUserAction) => {
+      setUser: (state: UserState, action: PayloadAction<SetUserAction>) => {
          state.username = action.payload.username;
       },
    }
