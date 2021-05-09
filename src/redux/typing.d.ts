@@ -83,11 +83,19 @@ export type SetUserAction = {
 };
 
 export type LoginUserAction = {
+    username: string,
+    password: string
+};
 
+export type UserMeta = {
+    dept?: string,
+    lastLogin?: string,
+    createdAt?: string    
 };
 
 export type UserState = {
     username?: string,
     isCreatingAccount: boolean,
-    meta: any
+    meta: UserMeta
 };
+

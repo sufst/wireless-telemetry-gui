@@ -24,9 +24,12 @@ import {
     SignInContainer,
     CreateAccountContainer
 } from "./containers";
+import { RootState } from "redux/store"; 
 
-export const SignIn = (props) => {
-    const user = useSelector((state => state.user)); 
+export const SignIn = () => {
+    const selectUser = (state: RootState) => state.user;
+    const user = useSelector(selectUser); 
+
     const match = useRouteMatch();
 
     return(

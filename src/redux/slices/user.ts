@@ -17,14 +17,18 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { UserState, LoginUserAction, SetUserAction } from "redux/typing";
+import type { UserState, LoginUserAction, SetUserAction, UserMeta } from "redux/typing";
+
+const initialMetaState: UserMeta = {
+    dept: undefined,
+    lastLogin: undefined,
+    createdAt: undefined    
+};
 
 const initialState: UserState = {
     username: undefined, 
     isCreatingAccount: false,
-    meta: {
-
-    }
+    meta: initialMetaState
 };
 
 export const userSlice = createSlice({

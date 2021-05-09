@@ -37,12 +37,10 @@ import { createUser } from "modules/backend/backend";
 
 import { useDispatch } from 'react-redux';
 import { loginUser, setUser } from 'redux/slices/user';
+import { LoginUserAction } from "redux/typing";
 
-const createAccountPayload = {
-    isCreatingAccount: true
-}
 
-export const SignInContainer = (props) => {
+export const SignInContainer = () => {
     const classes = useStyles();
 
     console.log('SIGN IN');
@@ -59,6 +57,8 @@ export const SignInContainer = (props) => {
     }, [dispatch]);
 
     return (
+        // Seems typescript doesn't understand component and maxWidth
+        // @ts-ignore
         <Container componenet="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
@@ -76,7 +76,7 @@ export const SignInContainer = (props) => {
     );
 }
 
-export const CreateAccountContainer = (props) => {
+export const CreateAccountContainer = () => {
     const classes = useStyles()
 
     const dispatch = useDispatch(); 
@@ -86,6 +86,11 @@ export const CreateAccountContainer = (props) => {
     
         let username = event.target.username.value;
         let password = event.target.password.value;
+
+        const createAccountPayload: LoginUserAction = {
+            username,
+            password
+        }
     
         createUser(username, password)
         .then(() => dispatch(setUser(createAccountPayload)))
@@ -93,6 +98,8 @@ export const CreateAccountContainer = (props) => {
     }, [dispatch]);
 
     return (
+        // Seems typescript doesn't understand component and maxWidth
+        // @ts-ignore
         <Container componenet="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>

@@ -27,7 +27,7 @@ import {
     useStyles 
 } from "./styles";
 
-export const UsernameField = (props) => {
+export const UsernameField = () => {
     return (
         <TextField 
             variant="outlined"
@@ -42,7 +42,7 @@ export const UsernameField = (props) => {
     );
 }
 
-export const PasswordField = (props) => {
+export const PasswordField = () => {
     return (
         <TextField 
             variant="outlined"
@@ -57,7 +57,7 @@ export const PasswordField = (props) => {
     );
 }
 
-export const SubmitButton = (props) => {
+export const SubmitButton = (props: { text: string }) => {
     const classes = useStyles();
 
     return (
@@ -73,7 +73,7 @@ export const SubmitButton = (props) => {
     );
 }
 
-export const CreateAccountButton = (props) => {
+export const CreateAccountButton = (props: { onClick: () => void}) => {
     const classes = useStyles();
 
     return (
@@ -90,15 +90,17 @@ export const CreateAccountButton = (props) => {
     );
 }
 
-export const WelcomeMessage = (props) => {
+export const WelcomeMessage = (props: { message: string }) => {
     return (
+        // Seems typescript doesn't understand component and variant
+        // @ts-ignore
         <Typography componenet="h1" variant="h5">
             {props.message}
         </Typography>
     );
 }
 
-export const SignInAvatar = (props) => {
+export const SignInAvatar = () => {
     const classes = useStyles();
 
     return(
@@ -108,13 +110,13 @@ export const SignInAvatar = (props) => {
     );
 }
 
-export const FooterMessage = (props) => {
+export const FooterMessage = () => {
     return (
     <Box mt={8}>
         <Typography variant="body2" color="textSecondary" align="center">
             {"Copyright © "}
             <Link color="inherit" href="https://github.com/sufst">
-                Nathan Rowley-Smith 
+                SUFST
             </Link>
             {" "}
             {new Date().getFullYear()}

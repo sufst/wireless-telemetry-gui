@@ -8,13 +8,14 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { Button, Divider, List, ListItemText } from '@material-ui/core';
+import type { UserState } from "redux/typing";
 
 // Styles 
 import { useStyles } from './styles';
 
-const AccountContainer = ({ user, onLogoutClick }) => {
+const AccountContainer = (props: { user: UserState, onLogoutClick: () => void}) => {
    const classes = useStyles();
-   const { username, meta } = user; 
+   const { username, meta } = props.user; 
 
    return (
       <Card className={classes.cardRoot}>
@@ -44,7 +45,7 @@ const AccountContainer = ({ user, onLogoutClick }) => {
                </ListItemText>
             </List>
             <Divider className={classes.line} />
-            <Button variant="contained" color="secondary" className={classes.btn} onClick={onLogoutClick}>
+            <Button variant="contained" color="secondary" className={classes.btn} onClick={props.onLogoutClick}>
                LOG OUT
             </Button>
          </CardContent>
