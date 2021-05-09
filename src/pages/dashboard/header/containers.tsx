@@ -27,12 +27,14 @@ import {
     v4 
 }from 'uuid';
 import { useSelector } from 'react-redux';
+import { RootState } from "redux/store";
 
-export const DashboardHeader = (props) => {
+export const DashboardHeader = () => {
     const viewTabs = React.useRef([[<Session key={v4()} />, <Tab key={v4()} label = "Session"/>], [<></>, <Tab key={v4()} label = "Dash"/>]]);
     const tabNames = React.useRef(["Session", "Dash"]);  
 
-    const groups = useSelector(state => state.sensors.groups); 
+    const selectGroups = (state: RootState) => state.sensors.groups;
+    const groups = useSelector(selectGroups); 
 
     const groupNames = Object.keys(groups);
     const newTabNames = groupNames.filter(name => !tabNames.current.includes(name));
@@ -55,7 +57,7 @@ export const DashboardHeader = (props) => {
     );
 }
 
-export const GroupTab = (props) => {
+export const GroupTab = (props: { group: string }) => {
     return(
         <RealtimeSensorsGroupContainer key={v4()} name={props.group}/>
     );

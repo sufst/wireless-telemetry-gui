@@ -15,14 +15,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Box from '@material-ui/core/Box';
+import { 
+    Avatar,
+    Button,
+    TextField,
+    Link,
+    Box,
+    Typography
+} from "@material-ui/core";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import {
     useStyles 
 } from "./styles";
@@ -92,9 +93,7 @@ export const CreateAccountButton = (props: { onClick: () => void}) => {
 
 export const WelcomeMessage = (props: { message: string }) => {
     return (
-        // Seems typescript doesn't understand component and variant
-        // @ts-ignore
-        <Typography componenet="h1" variant="h5">
+        <Typography variant="h5">
             {props.message}
         </Typography>
     );
