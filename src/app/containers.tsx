@@ -56,13 +56,13 @@ const AppRouterSwitch = () => {
             </Route>
             <Route path={"/dashboard"} exact>
                 <Paper className={classes.viewPaper}>
-                    <Alert className={classes.alert} /> 
+                    <Alert /> 
                     <Dashboard/>
                 </Paper> 
             </Route>
             <Route path={"/account"} exact>
                 <Paper className={classes.viewPaper}>
-                    <Alert className={classes.alert} /> 
+                    <Alert /> 
                     {console.log(username)}
                     {username === undefined || username === 'anonymous' ? <SignIn /> : <Account/> }
                 </Paper> 

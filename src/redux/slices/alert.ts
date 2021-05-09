@@ -17,9 +17,10 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { Color } from "@material-ui/lab/Alert"
 
 type AlertTimeout = number;
-type AlertLevel = string;
+type AlertLevel = Color;
 type AlertType = string;
 type AlertText = string;
 
