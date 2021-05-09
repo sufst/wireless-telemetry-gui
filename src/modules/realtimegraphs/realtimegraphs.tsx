@@ -50,7 +50,7 @@ import type {
 } from "redux/store";
 import type {
     SensorData
-} from "redux/slices/sensors";
+} from "redux/typing";
 import type {
     GraphData
 } from "./typing";
@@ -164,7 +164,7 @@ const RealtimeSensorsGroupContainer = (props: { name: string }) => {
     // See modules index.js for explaination of why useMemo is used.
     const sensorContainers = useMemo(() => {
 
-        const containers = sensor.map(x => 
+        const containers = sensor.map((x: string) => 
         {
             return (<Grid item key={v4()} xs={12}>
                     <SensorPaperContainer key={v4()} name={x}/>

@@ -16,54 +16,18 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export type SensorData = {
-    epoch: number,
-    value: number
-};
-
-type SensorMeta = { 
-    [entry: string ]: any 
-};
-
-type Sensor = {
-    meta: SensorMeta,
-    data: Array<SensorData>,
-    isDisplay: boolean
-};
-
-type SensorsState = {
-    sensors: {
-        [sensor: string]: Sensor
-    },
-    groups: {
-        [sensor: string]: Array<string>
-    }
-};
-
-type Meta = {
-    [sensor: string]: SensorMeta
-};
-
-type BuildSensorsFromMetaAction = {
-    payload: Meta
-};
-
-type InsertSensorsBulkDataAction = {
-    [sensor: string]: Array<SensorData>
-};
-
-type UpdateSensorsMetaAction = {
-    sensor: string,
-    key: string,
-    value: any
-};
+import type { 
+    Meta,
+    SensorsState, 
+    BuildSensorsFromMetaAction, 
+    InsertSensorsBulkDataAction, 
+    UpdateSensorsMetaAction
+} from "redux/typing";
 
 const initialState: SensorsState = {
     sensors: {},
     groups: {}
 };
-
 
 export const sensorsSlice = createSlice({
    name: 'sensors',

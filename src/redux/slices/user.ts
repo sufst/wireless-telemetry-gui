@@ -17,20 +17,7 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-type SetUserAction = {
-    username: string
-};
-
-type LoginUserAction = {
-
-};
-
-type UserState = {
-    username?: string,
-    isCreatingAccount: boolean,
-    meta: any
-};
+import type { UserState, LoginUserAction, SetUserAction } from "redux/typing";
 
 const initialState: UserState = {
     username: undefined, 
@@ -39,7 +26,6 @@ const initialState: UserState = {
 
     }
 };
-
 
 export const userSlice = createSlice({
    name: 'user',

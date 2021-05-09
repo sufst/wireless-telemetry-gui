@@ -17,19 +17,7 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { Color } from "@material-ui/lab/Alert"
-
-type AlertTimeout = number;
-type AlertLevel = Color;
-type AlertType = string;
-type AlertText = string;
-
-interface AlertState {
-    timeout?: AlertTimeout,
-    level?: AlertLevel,
-    type?: AlertType,
-    text?: AlertText
-};
+import type { AlertState, ShowAlertAction} from "redux/typing";
 
 const initialState: AlertState = {
     timeout: undefined,
@@ -37,13 +25,6 @@ const initialState: AlertState = {
     type: undefined,
     text: undefined
 }
-
-type ShowAlertAction = {
-    timeout: AlertTimeout,
-    level: AlertLevel,
-    type: AlertType,
-    text: AlertText
-};
 
 const alertSlice = createSlice({
    name: 'alert',
