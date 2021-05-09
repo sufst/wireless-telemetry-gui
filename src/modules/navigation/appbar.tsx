@@ -32,7 +32,7 @@ import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 
 import { useStyles } from './styles';
 
-const AppNavigationBar = ({ handleDrawerOpen, open }) =>  {
+const AppNavigationBar = (props: { handleDrawerOpen: () => void , open: boolean }) =>  {
    const classes = useStyles(); 
 
    return (
@@ -41,17 +41,17 @@ const AppNavigationBar = ({ handleDrawerOpen, open }) =>  {
          <AppBar
             position="fixed"
             className={clsx(classes.appBar, {
-            [classes.appBarShift]: open,
+            [classes.appBarShift]: props.open,
             })}
          >
             <Toolbar>
                <IconButton
                   color="inherit"
                   aria-label="open drawer"
-                  onClick={handleDrawerOpen}
+                  onClick={props.handleDrawerOpen}
                   edge="start"
                   className={clsx(classes.menuButton, {
-                  [classes.hide]: open,
+                  [classes.hide]: props.open,
                   })}
                >
                   <MenuIcon />

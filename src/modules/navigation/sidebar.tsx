@@ -47,7 +47,7 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
-const AppSideBar = ({ open, handleDrawerClose }) => {
+const AppSideBar = (props: { handleDrawerClose: () => void , open: boolean }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -106,9 +106,9 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
         }
     }, [handleSocialIconClicked])
 
-    const openSocial = (url) => {
+    const openSocial = (url: string) => {
         const win = window.open(url, '_blank');
-        win.focus(); 
+        win?.focus(); 
     }
 
     return (
@@ -116,18 +116,18 @@ const AppSideBar = ({ open, handleDrawerClose }) => {
          <Drawer
             variant="permanent"
             className={clsx(classes.drawer, {
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
+            [classes.drawerOpen]: props.open,
+            [classes.drawerClose]: !props.open,
             })}
             classes={{
             paper: clsx({
-               [classes.drawerOpen]: open,
-               [classes.drawerClose]: !open,
+               [classes.drawerOpen]: props.open,
+               [classes.drawerClose]: !props.open,
             }),
             }}
          >
             <div className={classes.toolbar}>
-            <IconButton onClick={handleDrawerClose}>
+            <IconButton onClick={props.handleDrawerClose}>
                {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
             </div>
