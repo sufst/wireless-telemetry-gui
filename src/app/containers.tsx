@@ -34,11 +34,14 @@ import AppNavigation from "modules/navigation/navigation";
 import { useStyles } from "./styles";
 import Alert from 'modules/alert/alert';
 import { loginUser } from 'redux/slices/user';
+import type { RootState } from 'redux/store';
+
 
 const AppRouterSwitch = () => {
     const classes = useStyles();
 
-    const user = useSelector((state => state.user)); 
+    const selectUser = (state: RootState) => state.user;
+    const user = useSelector(selectUser); 
 
     const { username } = user; 
 
@@ -80,7 +83,7 @@ const AnonymousLogin = () => {
     dispatch(loginUser( { username, password } ))
 }
 
-export function AppContainer(props) {    
+export function AppContainer() {    
     const logginIn = useRef(true);
 
     if(logginIn.current)
