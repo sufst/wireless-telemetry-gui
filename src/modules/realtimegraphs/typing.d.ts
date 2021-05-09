@@ -15,16 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-export const trimData = (data, expiredS) => {
-    const epoch = new Date().valueOf() / 1000.0;
-
-    return data.filter(x => x.epoch > epoch + expiredS)
-}
-
-export const convertDataToGraphData = (data) => {
-    return data.map(x => {
-        const date = (new Date(x.epoch * 1000));
-        const time = date.toTimeString().split(" ")[0] + ":" + date.getMilliseconds();
-        return {time: time, value: x.value}
-    });
-}
+export type GraphData = {
+    time: string,
+    value: number
+};

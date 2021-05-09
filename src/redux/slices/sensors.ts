@@ -17,9 +17,9 @@
 */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type SensorData = {
-    epoch: Number,
-    value: Number
+export type SensorData = {
+    epoch: number,
+    value: number
 };
 
 type SensorMeta = { 
