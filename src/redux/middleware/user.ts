@@ -15,12 +15,17 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { loginUser, sio } from "modules/backend/backend"
+import { loginUser } from "modules/api/login"
 import { showAlert } from "../slices/alert";
 import { buildSensorsFromMeta, insertSensorsBulkData } from "../slices/sensors";
 import { setUser } from "../slices/user";
 import { Middleware } from 'redux'
 import type { ShowAlertAction } from "../slices/alert";
+import type {
+   SioOnMetaHander,
+   SioOnDataHandler
+} from "modules/api/typing";
+import { connectSio } from "modules/api/sio";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue.... 
 export const userMiddleware: Middleware<{}, any> = storeAPI => next => action => {
@@ -43,26 +48,22 @@ export const userMiddleware: Middleware<{}, any> = storeAPI => next => action =>
       }
       
       loginUser(username, password) 
-         .then(() => {
+         .then((accessToken: string) => {
             storeAPI.dispatch(showAlert(successAlert))
 
-            sio.on("meta", (message: string) => {
-               const meta = JSON.parse(message);
-               console.log(meta);
+            const onMeta: SioOnMetaHander = (meta) => {
                storeAPI.dispatch(buildSensorsFromMeta(meta));
-            })
+            }
 
-            sio.on("data", (message: string) => {
-               const data = JSON.parse(message);
-
-               console.log(data);
-               
+            const onData: SioOnDataHandler = (data) => {
                storeAPI.dispatch(insertSensorsBulkData(data))
-            });
+            }
+
+            connectSio(accessToken, (meta) => onMeta(meta), (data) => onData(data));
 
             next(setUser( { username } ))
          })
-         .catch((error) => {
+         .catch((error: Error) => {
             // TODO: Show error in UI
             console.error(error);
             storeAPI.dispatch(showAlert(loginFailedAlert))

@@ -17,7 +17,7 @@
 */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { 
-    Meta,
+    SensorsMeta,
     SensorsState, 
     BuildSensorsFromMetaAction, 
     InsertSensorsBulkDataAction, 
@@ -34,7 +34,7 @@ export const sensorsSlice = createSlice({
    initialState,
    reducers: {
     buildSensorsFromMeta: (state: SensorsState, action: PayloadAction<BuildSensorsFromMetaAction>) => {
-            const meta: Meta = action.payload;
+            const meta: SensorsMeta = action.payload;
             for (const sensor in meta) {
                 // Set a default graph cut off of 2 seconds
                 state.sensors[sensor] = {

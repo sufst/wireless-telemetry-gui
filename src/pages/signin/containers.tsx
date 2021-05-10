@@ -33,7 +33,7 @@ import {
     FooterMessage
 } from "./components";
 
-import { createUser } from "modules/backend/backend";
+import { createUser } from "modules/api/users";
 
 import { useDispatch } from 'react-redux';
 import { loginUser, setUser } from 'redux/slices/user';
@@ -92,9 +92,9 @@ export const CreateAccountContainer = () => {
             password
         }
     
-        createUser(username, password)
+        createUser(username, password, {})
         .then(() => dispatch(setUser(createAccountPayload)))
-        .catch((error) => console.error(error));
+        .catch((error: Error) => console.error(error));
     }, [dispatch]);
 
     return (

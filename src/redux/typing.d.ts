@@ -60,13 +60,11 @@ export type SensorsState = {
     }
 };
 
-export type Meta = {
+export type SensorsMeta = {
     [sensor: string]: SensorMeta
 };
 
-export type BuildSensorsFromMetaAction = {
-    payload: Meta
-};
+export type BuildSensorsFromMetaAction = SensorsMeta;
 
 export type InsertSensorsBulkDataAction = {
     [sensor: string]: Array<SensorData>
@@ -92,6 +90,8 @@ export type UserMeta = {
     lastLogin?: string,
     createdAt?: string    
 };
+
+export type UserPrivilege = 'Anon' | 'Basic' | 'Admin' | 'Developer';
 
 export type UserState = {
     username?: string,
