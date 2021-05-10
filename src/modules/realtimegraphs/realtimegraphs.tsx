@@ -83,7 +83,7 @@ const SensorPaperHeaderContainer = (props: { name: string }) => {
 }
 
 const trimData: (data: Array<SensorData>, expiredS: number) => Array<SensorData> = (data, expiredS) => {
-    const epoch = new Date().valueOf() / 1000.0;
+    const epoch = data[data.length - 1].epoch;
 
     return data.filter(x => x.epoch > epoch + expiredS)
 }
@@ -106,10 +106,10 @@ const SensorGraphContainer = (props: { name: string }) => {
 
     graphDataRef.current = trimData([...graphDataRef.current, ...inData], sensor.timeEndS);
 
-    const LiveValue = memo(SensorLiveValue);
-    const Graph = memo(SensorGraph);
     const graphData = convertDataToGraphData(graphDataRef.current);
 
+    const LiveValue = memo(SensorLiveValue);
+    const Graph = memo(SensorGraph);
     const date = new Date();
     const timeXStart = date.toTimeString().split(" ")[0] + ":" + date.getMilliseconds();
     const dateEnd = new Date((date.valueOf() / 1000) + sensor.timeEndS);
