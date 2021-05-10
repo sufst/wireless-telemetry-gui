@@ -154,13 +154,13 @@ const SensorPaperContainer = (props: { name: string }) => {
 }
 
 const RealtimeSensorsGroupContainer = (props: { name: string }) => {
-    const selectSensor = (state: RootState) => state.sensors.groups[props.name];
-    const sensor = useSelector(selectSensor); 
+    const selectSensors = (state: RootState) => state.sensors.groups[props.name];
+    const sensors = useSelector(selectSensors); 
 
     // See modules index.js for explaination of why useMemo is used.
     const sensorContainers = useMemo(() => {
 
-        const containers = sensor.map((x: string) => 
+        const containers = sensors.map((x: string) => 
         {
             return (<Grid item key={v4()} xs={12}>
                     <SensorPaperContainer key={v4()} name={x}/>
@@ -168,7 +168,7 @@ const RealtimeSensorsGroupContainer = (props: { name: string }) => {
             );
         });
         return containers;
-    }, [sensor]);
+    }, [sensors]);
 
     return (
         <Grid container alignItems="center" key={v4()}>

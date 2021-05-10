@@ -25,7 +25,7 @@ import type {
    SioOnMetaHander,
    SioOnDataHandler
 } from "modules/api/typing";
-import { connectSio } from "modules/api/sio";
+import { sioConnect } from "modules/api/sio";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue.... 
 export const userMiddleware: Middleware<{}, any> = storeAPI => next => action => {
@@ -59,7 +59,7 @@ export const userMiddleware: Middleware<{}, any> = storeAPI => next => action =>
                storeAPI.dispatch(insertSensorsBulkData(data))
             }
 
-            connectSio(accessToken, (meta) => onMeta(meta), (data) => onData(data));
+            sioConnect(accessToken, (meta) => onMeta(meta), (data) => onData(data));
 
             next(setUser( { username } ))
          })

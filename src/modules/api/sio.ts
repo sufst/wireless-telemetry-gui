@@ -26,7 +26,12 @@ import type {
 
 let sio: Socket;
 
-export const connectSio: SioConnect = (accessToken, onMeta, onData) => {
+export const sioConnect: SioConnect = (accessToken, onMeta, onData) => {
+    sio?.disconnect();
+    sio?.off("connnect");
+    sio?.off("meta");
+    sio?.off("data");
+
     sio = io(`ws://${url}/car`, {
         reconnectionDelayMax: 10000,
         extraHeaders: {

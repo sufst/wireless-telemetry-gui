@@ -57,7 +57,7 @@ export const DashboardHeader = () => {
     );
 }
 
-export const GroupTab = (props: { group: string }) => {
+const GroupTab = (props: { group: string }) => {
     return(
         <RealtimeSensorsGroupContainer key={v4()} name={props.group}/>
     );

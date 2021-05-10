@@ -46,7 +46,9 @@ export const sensorsSlice = createSlice({
                 if (state.groups[group] === undefined) {
                     state.groups[group] = [];
                 } 
-                state.groups[group].push(sensor);
+                if (!state.groups[group].includes(sensor)) {
+                    state.groups[group].push(sensor);
+                }
             }
       }, 
       insertSensorsBulkData: (state: SensorsState, action: PayloadAction<InsertSensorsBulkDataAction>) => {
