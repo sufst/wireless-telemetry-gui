@@ -16,8 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import React, {
-    useCallback, 
-    useRef, 
+    useCallback,
     memo, 
     useMemo 
 } from 'react';
@@ -102,11 +101,8 @@ const SensorGraphContainer = (props: { name: string }) => {
 
     const sensor = useSelector(selectSensorMeta); 
     const inData = useSelector(selectSensorData); 
-    const graphDataRef: { current: Array<SensorData> } = useRef([]);
 
-    graphDataRef.current = trimData([...graphDataRef.current, ...inData], sensor.timeEndS);
-
-    const graphData = convertDataToGraphData(graphDataRef.current);
+    const graphData = convertDataToGraphData(trimData(inData, sensor.timeEndS));
 
     const LiveValue = memo(SensorLiveValue);
     const Graph = memo(SensorGraph);
@@ -118,7 +114,7 @@ const SensorGraphContainer = (props: { name: string }) => {
     return (
         <Grid container alignItems="center" key={v4()} spacing={1}>
             <Grid item key={v4()} xs={2}>
-                {graphDataRef.current.length > 0 ? <LiveValue key={v4()} value={Math.round(graphDataRef.current[graphDataRef.current.length - 1].value)}/> : <></>}
+                {graphData.length > 0 ? <LiveValue key={v4()} value={Math.round(graphData[graphData.length - 1].value)}/> : <></>}
             </Grid>
             <Grid item key={v4()} xs={10}>
                 <Graph 
