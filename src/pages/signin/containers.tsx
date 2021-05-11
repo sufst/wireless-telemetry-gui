@@ -44,8 +44,6 @@ import { loginUser } from 'redux/slices/user';
 export const SignInContainer = () => {
     const classes = useStyles();
 
-    console.log('SIGN IN');
-
     const dispatch = useDispatch()
 
     const onSignInSubmit = useCallback((event) => {

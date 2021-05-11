@@ -16,32 +16,20 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import type { Color } from "@material-ui/lab/Alert"
+import { AlertState } from "redux/typing";
 
-import AlertContainer from './containers';
-import { CreateAlert } from './typing';
+export type AlertTimeout = number;
+export type AlertLevel = Color;
+export type AlertType = "snack" | "alert";
+export type AlertText = string;
 
-/**
- * Alert Types - (severity) - as specified from MUI Labs - Name of type to be specified
- * 
- * "info": Blue Background in the Alert
- * "error": Red Background in the Alert 
- * "warning": Yellow Background in the Alert
- * "success": Green Background in the Alert
- */
 
-const Alert = () => {
-    return (
-        <AlertContainer />
-    )
+export type Alert = {
+   timeout: AlertTimeout,
+    level: AlertLevel,
+    type: AlertType,
+    text: AlertText
 }
 
-export const createAlert: CreateAlert = (timeout, level, type, text) => {
-    return {
-        timeout, 
-        level,
-        type,
-        text
-    }
-}
-
-export default Alert; 
+export type CreateAlert = (timeout: AlertTimeout, level: AlertLevel, type: AlertType, text: AlertText) => Alert;

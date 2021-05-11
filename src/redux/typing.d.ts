@@ -15,26 +15,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import type { Color } from "@material-ui/lab/Alert"
 
-type AlertTimeout = number;
-type AlertLevel = Color;
-type AlertType = string;
-type AlertText = string;
+import type { Alert, AlertLevel, AlertText, AlertTimeout, AlertType } from "modules/alert/typing";
 
-export interface AlertState {
+
+export type AlertState = {
     timeout?: AlertTimeout,
     level?: AlertLevel,
     type?: AlertType,
     text?: AlertText
 };
 
-export type ShowAlertAction = {
-    timeout: AlertTimeout,
-    level: AlertLevel,
-    type: AlertType,
-    text: AlertText
-};
+export type ShowAlertAction = Alert;
 
 export type SensorData = {
     epoch: number,

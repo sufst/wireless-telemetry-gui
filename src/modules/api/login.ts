@@ -33,7 +33,7 @@ export const loginUser: LoginUser = (username, password) => {
     })
     .then((response) => {
         if (!response.ok) {
-        throw response.statusText;
+            throw response.statusText;
         }
         return response.json();
     })

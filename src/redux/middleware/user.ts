@@ -15,6 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 import { loginUser } from "modules/api/login";
 import { showAlert } from "../slices/alert";
 import { buildSensorsFromMeta, insertSensorsBulkData } from "../slices/sensors";
@@ -22,13 +23,13 @@ import { SetUserAction } from "redux/typing";
 import { userGet } from "modules/api/user";
 import { setUser } from "../slices/user";
 import { Middleware } from "redux";
-import type { ShowAlertAction } from "../slices/alert";
 import type {
   SioOnMetaHander,
   SioOnDataHandler,
   UserGetResponse,
 } from "modules/api/typing";
 import { sioConnect } from "modules/api/sio";
+import { createAlert } from "modules/alert/alert";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
 export const userMiddleware: Middleware<{}, any> =
@@ -38,12 +39,8 @@ export const userMiddleware: Middleware<{}, any> =
 
       loginUser(username, password)
         .then((accessToken: string) => {
-          const successAlert: ShowAlertAction = {
-            timeout: 3000,
-            type: "snack",
-            level: "success",
-            text: `Login Success! ${username} successfully logged in!`,
-          };
+
+          const successAlert = createAlert(3000, "success", "snack", `Login Success! ${username} successfully logged in!`); 
 
           storeAPI.dispatch(showAlert(successAlert));
 
@@ -75,12 +72,7 @@ export const userMiddleware: Middleware<{}, any> =
               storeAPI.dispatch(setUser(user));
             })
             .catch((error: Error) => {
-              const getFailedAlert: ShowAlertAction = {
-                timeout: 3000,
-                type: "snack",
-                level: "error",
-                text: `Failed to get user details :(`,
-              };
+              const getFailedAlert = createAlert(3000, "error", "snack", `Failed to get user details :(`); 
 
               storeAPI.dispatch(showAlert(getFailedAlert));
 
@@ -101,12 +93,7 @@ export const userMiddleware: Middleware<{}, any> =
         .catch((error: Error) => {
           console.error(error);
 
-          const loginFailedAlert: ShowAlertAction = {
-            timeout: 3000,
-            type: "alert",
-            level: "error",
-            text: "Login Failed :( Make sure your credentials are correct!",
-          };
+          const loginFailedAlert = createAlert(3000, "error", "alert", "Login Failed :( Make sure your credentials are correct!"); 
 
           storeAPI.dispatch(showAlert(loginFailedAlert));
         });

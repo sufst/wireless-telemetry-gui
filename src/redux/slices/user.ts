@@ -52,10 +52,13 @@ export const userSlice = createSlice({
       state.privilege = action.payload.privilege;
       state.meta = action.payload.meta;
       state.creation = action.payload.creation;
+    }, 
+    logoutUser: (state: UserState) => {
+      state.username = undefined; 
     }
   },
 });
 
-export const { loginUser, setUser } = userSlice.actions;
+export const { loginUser, setUser, logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;
