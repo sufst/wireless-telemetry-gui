@@ -16,29 +16,47 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import { url } from "config";
-import { 
-    UserGet,
-    UserGetResponse
-} from "./typing";
+import { UserGet, UserGetResponse, UserPatch } from "./typing";
 
 export const userGet: UserGet = (accessToken) => {
-    return new Promise((resolve, reject) => {
-        fetch(`http://${url}/user`, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": "Bearer " + accessToken
-            }
-        })
-        .then((response) => {
-            if (!response.ok) {
-            throw response.statusText;
-            }
-            return response.json();
-        })
-        .then((data: UserGetResponse) => {
-            resolve(data)
-        })
-        .catch((error: Error) => reject(error));
+  return new Promise((resolve, reject) => {
+    fetch(`http://${url}/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
     })
-}
+      .then((response) => {
+        if (!response.ok) {
+          throw response.statusText;
+        }
+        return response.json();
+      })
+      .then((data: UserGetResponse) => {
+        resolve(data);
+      })
+      .catch((error: Error) => reject(error));
+  });
+};
+
+export const userPatch: UserPatch = (accessToken, fields) => {
+  return new Promise((resolve, reject) => {
+    fetch(`http://${url}/user`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+      body: JSON.stringify(fields),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw response.statusText;
+        } else {
+          resolve(null);
+        }
+      })
+      .catch((error: Error) => reject(error));
+  });
+};

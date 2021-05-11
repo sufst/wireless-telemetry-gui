@@ -18,8 +18,8 @@
 import type {
     SensorsMeta,
     SensorData,
-    UserMeta,
-    UserPrivilege
+    UserPrivilege,
+    UserMeta
 } from "redux/typing";
 
 export type LoginUser = (username: string, password: string) => Promise;
@@ -37,3 +37,11 @@ export type UserGetResponse = {
     privilege: UserPrivilege,
     meta: string
 };
+
+export type UserPatchRequest = {
+    [username: string?] : string,
+    [password: string?] : string,
+    [privilege: string?]: UserPrivilege,
+    [meta: string?]: UserMeta
+};
+export type UserPatch = (accessToken: string, fields: UserPatchRequest) => Promise;
