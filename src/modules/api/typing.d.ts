@@ -28,7 +28,22 @@ export type SioConnect = (accessToken: string, onMeta: SioOnMetaHander, onData: 
 export type SioOnMetaHander = (meta: SensorsMeta) => void;
 export type SioOnDataHandler = (data: { [sensor: string]: Array<SensorData> }) => void;
 
-export type UsersCreate = (username: string, password: string, meta: object) => Promise;
+export type UsersCreate = (username: string, privilege: string, password: string, meta: object, accessToken: string) => Promise;
+export type UsersGet = (username: string, accessToken: string) => Promise;
+export type UsersGetResponse = {
+    username: string,
+    creation: number,
+    privilege: UserPrivilege,
+    meta: string
+};
+
+export type UsersPatchRequest = {
+    [username: string?] : string,
+    [password: string?] : string,
+    [privilege: string?]: UserPrivilege,
+    [meta: string?]: UserMeta
+};
+export type UsersPatch = (username: string, accessToken: string, fields: UsersPatchRequest) => Promise;
 
 export type UserGet = (accessToken: string) => Promise;
 export type UserGetResponse = {

@@ -16,22 +16,72 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import { url } from "config";
-import {
-    UsersCreate
-} from "./typing";
+import { UsersCreate, UsersGet, UsersGetResponse, UsersPatch } from "./typing";
 
-export const usersCreate: UsersCreate = (username, password, meta) => {
-    return new Promise((resolve, reject) => 
+export const usersCreate: UsersCreate = (
+  username,
+  privilege,
+  password,
+  meta,
+  accessToken
+) => {
+  return new Promise((resolve, reject) =>
     fetch(`http://${url}/users/${username}`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            password,
-            meta
-        })
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+      body: JSON.stringify({
+        password,
+        privilege,
+        meta,
+      }),
     })
-    .then((response) => resolve(response))
-    .catch((error) => reject(error)));
-}
+      .then((response) => resolve(response))
+      .catch((error) => reject(error))
+  );
+};
+
+export const usersGet: UsersGet = (username, accessToken) => {
+  return new Promise((resolve, reject) =>
+    fetch(`http://${url}/users/${username}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw response.statusText;
+        }
+        return response.json();
+      })
+      .then((data: UsersGetResponse) => {
+        resolve(data);
+      })
+      .catch((error: Error) => reject(error))
+  );
+};
+
+export const usersPatch: UsersPatch = (username, accessToken, fields) => {
+  return new Promise((resolve, reject) => {
+    fetch(`http://${url}/users/${username}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+      body: JSON.stringify(fields),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw response.statusText;
+        } else {
+          resolve(null);
+        }
+      })
+      .catch((error: Error) => reject(error));
+  });
+};
