@@ -17,10 +17,10 @@
 */
 import { url } from "config";
 import {
-    CreateUser
+    UsersCreate
 } from "./typing";
 
-export const createUser: CreateUser = (username, password, meta) => {
+export const usersCreate: UsersCreate = (username, password, meta) => {
     return new Promise((resolve, reject) => 
     fetch(`http://${url}/users/${username}`, {
         method: "POST",

@@ -76,15 +76,6 @@ export type UpdateSensorsMetaAction = {
     value: any
 };
 
-export type SetUserAction = {
-    username: string
-};
-
-export type LoginUserAction = {
-    username: string,
-    password: string
-};
-
 export type UserMeta = {
     dept?: string,
     lastLogin?: string,
@@ -93,9 +84,24 @@ export type UserMeta = {
 
 export type UserPrivilege = 'Anon' | 'Basic' | 'Admin' | 'Developer';
 
-export type UserState = {
-    username?: string,
-    isCreatingAccount: boolean,
+export type SetUserAction = {
+    username: string,
+    accessToken: string,
+    creation: number,
+    privilege: UserPrivilege,
     meta: UserMeta
 };
 
+export type LoginUserAction = {
+    username: string,
+    password: string
+};
+
+export type UserState = {
+    username?: string,
+    accessToken?: string,
+    isCreatingAccount: boolean,
+    privilege?: UserPrivilege,
+    creation?: number,
+    meta: UserMeta
+};

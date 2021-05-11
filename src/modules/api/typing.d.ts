@@ -17,7 +17,9 @@
 */
 import type {
     SensorsMeta,
-    SensorData
+    SensorData,
+    UserMeta,
+    UserPrivilege
 } from "redux/typing";
 
 export type LoginUser = (username: string, password: string) => Promise;
@@ -26,4 +28,12 @@ export type SioConnect = (accessToken: string, onMeta: SioOnMetaHander, onData: 
 export type SioOnMetaHander = (meta: SensorsMeta) => void;
 export type SioOnDataHandler = (data: { [sensor: string]: Array<SensorData> }) => void;
 
-export type CreateUser = (username: string, password: string, meta: object) => Promise
+export type UsersCreate = (username: string, password: string, meta: object) => Promise;
+
+export type UserGet = (accessToken: string) => Promise;
+export type UserGetResponse = {
+    username: string,
+    creation: number,
+    privilege: UserPrivilege,
+    meta: string
+};

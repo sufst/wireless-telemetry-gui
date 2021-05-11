@@ -17,33 +17,45 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { UserState, LoginUserAction, SetUserAction, UserMeta } from "redux/typing";
+import type {
+  UserState,
+  LoginUserAction,
+  SetUserAction,
+  UserMeta
+} from "redux/typing";
 
 const initialMetaState: UserMeta = {
-    dept: undefined,
-    lastLogin: undefined,
-    createdAt: undefined    
+  dept: undefined,
+  lastLogin: undefined,
+  createdAt: undefined,
 };
 
 const initialState: UserState = {
-    username: undefined, 
-    isCreatingAccount: false,
-    meta: initialMetaState
+  username: undefined,
+  accessToken: undefined,
+  isCreatingAccount: false,
+  privilege: undefined,
+  creation: undefined,
+  meta: initialMetaState,
 };
 
 export const userSlice = createSlice({
-   name: 'user',
-   initialState,
-   reducers: {
-      loginUser: (state: UserState, action: PayloadAction<LoginUserAction>) => {
-         
-      }, 
-      setUser: (state: UserState, action: PayloadAction<SetUserAction>) => {
-         state.username = action.payload.username;
-      },
-   }
-})
+  name: "user",
+  initialState,
+  reducers: {
+    loginUser: (state: UserState, action: PayloadAction<LoginUserAction>) => {
+      state.username = action.payload.username;
+    },
+    setUser: (state: UserState, action: PayloadAction<SetUserAction>) => {
+      state.username = action.payload.username;
+      state.accessToken = action.payload.accessToken;
+      state.privilege = action.payload.privilege;
+      state.meta = action.payload.meta;
+      state.creation = action.payload.creation;
+    }
+  },
+});
 
-export const { loginUser, setUser } = userSlice.actions; 
+export const { loginUser, setUser } = userSlice.actions;
 
 export default userSlice.reducer;

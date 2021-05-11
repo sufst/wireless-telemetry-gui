@@ -15,4 +15,30 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-export {}
+import { url } from "config";
+import { 
+    UserGet,
+    UserGetResponse
+} from "./typing";
+
+export const userGet: UserGet = (accessToken) => {
+    return new Promise((resolve, reject) => {
+        fetch(`http://${url}/user`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + accessToken
+            }
+        })
+        .then((response) => {
+            if (!response.ok) {
+            throw response.statusText;
+            }
+            return response.json();
+        })
+        .then((data: UserGetResponse) => {
+            resolve(data)
+        })
+        .catch((error: Error) => reject(error));
+    })
+}
