@@ -15,19 +15,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Box from '@material-ui/core/Box';
+import { 
+    Avatar,
+    Button,
+    TextField,
+    Link,
+    Box,
+    Typography
+} from "@material-ui/core";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import {
     useStyles 
 } from "./styles";
 
-export const UsernameField = (props) => {
+export const UsernameField = () => {
     return (
         <TextField 
             variant="outlined"
@@ -42,7 +43,7 @@ export const UsernameField = (props) => {
     );
 }
 
-export const PasswordField = (props) => {
+export const PasswordField = () => {
     return (
         <TextField 
             variant="outlined"
@@ -57,7 +58,7 @@ export const PasswordField = (props) => {
     );
 }
 
-export const SubmitButton = (props) => {
+export const SubmitButton = (props: { text: string }) => {
     const classes = useStyles();
 
     return (
@@ -73,7 +74,7 @@ export const SubmitButton = (props) => {
     );
 }
 
-export const CreateAccountButton = (props) => {
+export const CreateAccountButton = (props: { onClick: () => void}) => {
     const classes = useStyles();
 
     return (
@@ -90,15 +91,15 @@ export const CreateAccountButton = (props) => {
     );
 }
 
-export const WelcomeMessage = (props) => {
+export const WelcomeMessage = (props: { message: string }) => {
     return (
-        <Typography componenet="h1" variant="h5">
+        <Typography variant="h5">
             {props.message}
         </Typography>
     );
 }
 
-export const SignInAvatar = (props) => {
+export const SignInAvatar = () => {
     const classes = useStyles();
 
     return(
@@ -108,13 +109,13 @@ export const SignInAvatar = (props) => {
     );
 }
 
-export const FooterMessage = (props) => {
+export const FooterMessage = () => {
     return (
     <Box mt={8}>
         <Typography variant="body2" color="textSecondary" align="center">
             {"Copyright © "}
             <Link color="inherit" href="https://github.com/sufst">
-                Nathan Rowley-Smith 
+                SUFST
             </Link>
             {" "}
             {new Date().getFullYear()}

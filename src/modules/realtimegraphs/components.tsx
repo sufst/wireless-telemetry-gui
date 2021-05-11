@@ -23,7 +23,6 @@ import {
     FormControlLabel, 
     Typography 
 } from '@material-ui/core';
-import React from 'react';
 import {
     LineChart,
     Line,
@@ -32,8 +31,11 @@ import {
     CartesianGrid,
     Label
 } from "recharts";
+import type {
+    GraphData
+} from "./typing";
 
-export const SensorPaperHeaderHideButton = (props) => {
+export const SensorPaperHeaderHideButton = (props: { onChange: (event: any) => void, checked: boolean }) => {
     const classes = useStyles();
 
     return (
@@ -46,7 +48,7 @@ export const SensorPaperHeaderHideButton = (props) => {
     );
 }
 
-export const SensorPaperHeaderTitle = (props) => {
+export const SensorPaperHeaderTitle = (props: { name: string }) => {
     const classes = useStyles();
 
     return (
@@ -56,7 +58,7 @@ export const SensorPaperHeaderTitle = (props) => {
     );
 }
 
-export const SensorLiveValue = (props) => {
+export const SensorLiveValue = (props: { value: number }) => {
     const classes = useStyles();
 
     return (
@@ -66,7 +68,15 @@ export const SensorLiveValue = (props) => {
     );
 }
 
-export const SensorGraph = (props) => {
+export const SensorGraph = (props: { 
+    width: number, 
+    data: Array<GraphData>,
+    xAxisDomainMin: string, 
+    xAxisDomainMax: string, 
+    yAxisDomainMin: number,
+    yAxisDomainMax: number,
+    yAxisLabel: string
+ }) => {
     const classes = useStyles();
 
     return (

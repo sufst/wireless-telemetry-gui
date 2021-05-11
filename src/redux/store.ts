@@ -16,18 +16,30 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { removeAlert } from "../slices/alert";
+import { configureStore } from '@reduxjs/toolkit'
 
-export const alertMiddleware = storeAPI => next => action => {
-  
-    if (action.type === 'alert/showAlert') {
-        
-        setTimeout(() => {
-            next(removeAlert())
-        }, action.payload.timeout)
+import alertReducer from './slices/alert';
+import sensorsReducer from './slices/sensors';
+import userReducer from './slices/user';
 
-        return next(action)
-    }
- 
-   return next(action)
- }
+import { alertMiddleware } from './middleware/alert';
+import { userMiddleware } from './middleware/user';
+
+
+const store = configureStore({
+  reducer: {
+     alert: alertReducer, 
+     sensors : sensorsReducer,
+     user: userReducer
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware()
+        .prepend(
+            alertMiddleware, 
+            userMiddleware
+        )
+})
+
+export type RootState = ReturnType<typeof store.getState>
+
+export default store; 

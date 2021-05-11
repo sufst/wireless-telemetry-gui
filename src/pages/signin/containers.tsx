@@ -33,16 +33,15 @@ import {
     FooterMessage
 } from "./components";
 
-import { createUser } from "modules/backend/backend";
+// import { usersCreate } from "modules/api/users";
 
 import { useDispatch } from 'react-redux';
-import { loginUser, setUser } from 'redux/slices/user';
+// import { loginUser, setUser } from 'redux/slices/user';
+import { loginUser } from 'redux/slices/user';
+// import { LoginUserAction } from "redux/typing";
 
-const createAccountPayload = {
-    isCreatingAccount: true
-}
 
-export const SignInContainer = (props) => {
+export const SignInContainer = () => {
     const classes = useStyles();
 
     console.log('SIGN IN');
@@ -59,6 +58,8 @@ export const SignInContainer = (props) => {
     }, [dispatch]);
 
     return (
+        // Seems typescript doesn't understand component and maxWidth
+        // @ts-ignore
         <Container componenet="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
@@ -76,29 +77,39 @@ export const SignInContainer = (props) => {
     );
 }
 
-export const CreateAccountContainer = (props) => {
+export const CreateAccountContainer = () => {
     const classes = useStyles()
 
-    const dispatch = useDispatch(); 
+    // const dispatch = useDispatch(); 
         
-    const onCreateUserSubmit = useCallback((event) => {
+    const onusersCreateSubmit = useCallback((event) => {
         event.preventDefault();
     
-        let username = event.target.username.value;
-        let password = event.target.password.value;
-    
-        createUser(username, password)
-        .then(() => dispatch(setUser(createAccountPayload)))
-        .catch((error) => console.error(error));
-    }, [dispatch]);
+    //     // let username = event.target.username.value;
+    //     // let password = event.target.password.value;
+
+    //     // TODO: Create user needs to be a slice
+
+    //     // const createAccountPayload: LoginUserAction = {
+    //     //     username,
+    //     //     password
+    //     // }
+        
+    //     // TODO: Create user needs to be a slice
+    //     // usersCreate(username, password, {})
+    //     // .then(() => dispatch(setUser(createAccountPayload)))
+    //     // .catch((error: Error) => console.error(error));
+    }, []);
 
     return (
+        // Seems typescript doesn't understand component and maxWidth
+        // @ts-ignore
         <Container componenet="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
                 <SignInAvatar />
                 <WelcomeMessage message="Create Account"/>
-                <form className={classes.form} onSubmit={onCreateUserSubmit}>
+                <form className={classes.form} onSubmit={onusersCreateSubmit}>
                     <UsernameField />
                     <PasswordField />
                     <SubmitButton text="Create Account"/>

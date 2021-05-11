@@ -15,28 +15,43 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { 
+    SensorsMeta,
+    SensorsState, 
+    BuildSensorsFromMetaAction, 
+    InsertSensorsBulkDataAction, 
+    UpdateSensorsMetaAction
+} from "redux/typing";
+
+const initialState: SensorsState = {
+    sensors: {},
+    groups: {}
+};
 
 export const sensorsSlice = createSlice({
    name: 'sensors',
-   initialState: {
-       sensors: {},
-       groups: {}
-   },
+   initialState,
    reducers: {
-    buildSensorsFromMeta: (state, action) => {
-            const meta = action.payload;
+    buildSensorsFromMeta: (state: SensorsState, action: PayloadAction<BuildSensorsFromMetaAction>) => {
+            const meta: SensorsMeta = action.payload;
             for (const sensor in meta) {
                 // Set a default graph cut off of 2 seconds
-                state.sensors[sensor] = {data: [], meta: {...meta[sensor], timeEndS: -2.0}, isDisplay: false};
+                state.sensors[sensor] = {
+                    data: [], 
+                    meta: {...meta[sensor], timeEndS: -2.0}, 
+                    isDisplay: false
+                };
                 const group = state.sensors[sensor].meta.group;
                 if (state.groups[group] === undefined) {
                     state.groups[group] = [];
                 } 
-                state.groups[group].push(sensor);
+                if (!state.groups[group].includes(sensor)) {
+                    state.groups[group].push(sensor);
+                }
             }
       }, 
-      insertSensorsBulkData: (state, action) => {
+      insertSensorsBulkData: (state: SensorsState, action: PayloadAction<InsertSensorsBulkDataAction>) => {
         const data = action.payload;
 
         // Stale data cut off time
@@ -47,7 +62,7 @@ export const sensorsSlice = createSlice({
             state.sensors[sensor].data = [...state.sensors[sensor].data.filter(x => x.epoch > staleEpoch), ...data[sensor]];
         }
       },
-      updateSensorsMeta: (state, action) => {
+      updateSensorsMeta: (state: SensorsState, action: PayloadAction<UpdateSensorsMetaAction>) => {
           const sensor = action.payload.sensor;
           const key = action.payload.key;
           const value = action.payload.value;

@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 SUFST
+    Copyright (C) 2021 Nathan Rowley-Smith
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,23 +15,26 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+import { url } from "config";
+import type { SessionsGet, SessionsGetResponse } from "./typing";
 
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-
-import alertReducer from './slices/alert';
-import sensorsReducer from './slices/sensors';
-import userReducer from './slices/user';
-
-import { alertMiddleware } from './middleware/alert';
-import { userMiddleware } from './middleware/user';
-
-const store = configureStore({
-  reducer: {
-     alert: alertReducer, 
-     sensors : sensorsReducer,
-     user: userReducer
-  },
-  middleware: [alertMiddleware, userMiddleware, ...getDefaultMiddleware()],
-})
-
-export default store; 
+export const sessionsGet: SessionsGet = () => {
+  return new Promise((resolve, reject) =>
+    fetch(`http://${url}/sessions`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw response.statusText;
+        }
+        return response.json();
+      })
+      .then((data: SessionsGetResponse) => {
+        resolve(data);
+      })
+      .catch((error: Error) => reject(error))
+  );
+};

@@ -6,9 +6,11 @@ import AccountContainer from './container'
 
 // Context
 import { useSelector } from 'react-redux';
+import type { RootState } from "redux/store";
 
 const Account = () => {
-   const user = useSelector(state => state.user)
+    const selectUser = (state: RootState) => state.user;
+    const user = useSelector(selectUser);
 
    const onLogoutClick = () => {
       console.log('Logging out');

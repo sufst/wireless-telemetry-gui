@@ -16,18 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import React, {
-    useCallback, 
-    useRef, 
+    useCallback,
     memo, 
     useMemo 
 } from 'react';
 import {
     v4 
 }from 'uuid';
-import { 
-    trimData, 
-    convertDataToGraphData 
-} from "./utils";
 import {
     useStyles 
 }from "./styles";
@@ -49,9 +44,21 @@ import {
 import { 
     useDispatch 
 } from 'react-redux';
+import type {
+    RootState
+} from "redux/store";
+import type {
+    SensorData
+} from "redux/typing";
+import type {
+    GraphData
+} from "./typing";
 
-const SensorPaperHeaderContainer = (props) => {
-    const sensor = useSelector(state => state.sensors.sensors[props.name].meta); 
+
+const SensorPaperHeaderContainer = (props: { name: string }) => {
+    const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
+    const sensor = useSelector(selectSensorMeta);
+
     const dispatch = useDispatch();
 
     const onChange = useCallback((event) => {
@@ -74,16 +81,31 @@ const SensorPaperHeaderContainer = (props) => {
     );
 }
 
-const SensorGraphContainer = (props) => {
-    const sensor = useSelector(state => state.sensors.sensors[props.name].meta); 
-    const inData = useSelector(state => state.sensors.sensors[props.name].data); 
-    const graphDataRef = useRef([]);
+const trimData: (data: Array<SensorData>, expiredS: number) => Array<SensorData> = (data, expiredS) => {
+    const epoch = data[data.length - 1].epoch;
 
-    graphDataRef.current = convertDataToGraphData(trimData([...graphDataRef.current, ...inData], sensor.timeEndS));
+    return data.filter(x => x.epoch > epoch + expiredS)
+}
+
+const convertDataToGraphData: (data: Array<SensorData>) => Array<GraphData> = (data) => {
+    return data.map(x => {
+        const date = (new Date(x.epoch * 1000));
+        const time = date.toTimeString().split(" ")[0] + ":" + date.getMilliseconds();
+        return {time: time, value: x.value}
+    });
+}
+
+const SensorGraphContainer = (props: { name: string }) => {
+    const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
+    const selectSensorData = (state: RootState) => state.sensors.sensors[props.name].data;
+
+    const sensor = useSelector(selectSensorMeta); 
+    const inData = useSelector(selectSensorData); 
+
+    const graphData = convertDataToGraphData(trimData(inData, sensor.timeEndS));
 
     const LiveValue = memo(SensorLiveValue);
     const Graph = memo(SensorGraph);
-
     const date = new Date();
     const timeXStart = date.toTimeString().split(" ")[0] + ":" + date.getMilliseconds();
     const dateEnd = new Date((date.valueOf() / 1000) + sensor.timeEndS);
@@ -92,12 +114,11 @@ const SensorGraphContainer = (props) => {
     return (
         <Grid container alignItems="center" key={v4()} spacing={1}>
             <Grid item key={v4()} xs={2}>
-                {graphDataRef.current.length > 0 ? <LiveValue key={v4()} value={Math.round(graphDataRef.current[graphDataRef.current.length - 1].value)}/> : <></>}
+                {graphData.length > 0 ? <LiveValue key={v4()} value={Math.round(graphData[graphData.length - 1].value)}/> : <></>}
             </Grid>
             <Grid item key={v4()} xs={10}>
                 <Graph 
-                    name={props.name} 
-                    data={graphDataRef.current} 
+                    data={graphData} 
                     width={700}
                     xAxisDomainMin={timeXStart}
                     xAxisDomainMax={timeXEnd}
@@ -111,40 +132,43 @@ const SensorGraphContainer = (props) => {
     );
 }
 
-const SensorPaperContainer = (props) => {
-    const sensor = useSelector(state => state.sensors.sensors[props.name].meta); 
+const SensorPaperContainer = (props: { name: string }) => {
+    const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
+    const sensor = useSelector(selectSensorMeta); 
+
     const classes = useStyles();
 
     return (
         <Paper className={classes.sensorPaper}>
             <Grid container alignItems="center" key={v4()} spacing={1}>
                 <Grid item key={v4()} xs={12}>
-                    <SensorPaperHeaderContainer key={v4()} name={props.name} group={props.group}/>
+                    <SensorPaperHeaderContainer key={v4()} name={props.name}/>
                     <Divider light />
                 </Grid>
                 <Grid item key={v4()} xs={12}>
-                    {sensor.isDisplay ? <SensorGraphContainer key={v4()} group={props.group} name={props.name}/> : <></>}
+                    {sensor.isDisplay ? <SensorGraphContainer key={v4()} name={props.name}/> : <></>}
                 </Grid>
             </Grid>
         </Paper>
     );
 }
 
-const RealtimeSensorsGroupContainer = (props) => {
-    const group = useSelector(state => state.sensors.groups[props.name]); 
+const RealtimeSensorsGroupContainer = (props: { name: string }) => {
+    const selectSensors = (state: RootState) => state.sensors.groups[props.name];
+    const sensors = useSelector(selectSensors); 
 
     // See modules index.js for explaination of why useMemo is used.
     const sensorContainers = useMemo(() => {
 
-        const containers = group.map(x => 
+        const containers = sensors.map((x: string) => 
         {
             return (<Grid item key={v4()} xs={12}>
-                    <SensorPaperContainer key={v4()} group={props.name} name={x}/>
+                    <SensorPaperContainer key={v4()} name={x}/>
                     </Grid>
             );
         });
         return containers;
-    }, [group, props.name]);
+    }, [sensors]);
 
     return (
         <Grid container alignItems="center" key={v4()}>

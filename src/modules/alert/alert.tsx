@@ -28,9 +28,9 @@ import AlertContainer from './containers';
  * "success": Green Background in the Alert
  */
 
-const Alert = (props) => {
+const Alert = () => {
     return (
-        <AlertContainer props={props}/>
+        <AlertContainer />
     )
 }
 

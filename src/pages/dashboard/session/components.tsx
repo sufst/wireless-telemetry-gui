@@ -30,7 +30,7 @@ import {
     useStyles
 } from "./styles";
 
-export const Header = (props) => {
+export const Header = (props: { name: string }) => {
     return (
         <Paper>
             <Typography variant="h6" gutterBottom>
@@ -40,7 +40,7 @@ export const Header = (props) => {
     );
 }
 
-export const NewSession = (props) => {
+export const NewSession = (props: { onSubmit: (event: any) => void}) => {
     const classes = useStyles();
 
     return (
@@ -66,8 +66,10 @@ export const NewSession = (props) => {
     );
 }
 
-export const StartStop = (props) => {
+export const StartStop = (props: { onClick: () => void, colour: string, text: string }) => {
     return (
+        // Seems typescript doesn't understand color
+        // @ts-ignore
         <Button variant="contained" color={props.colour} onClick={props.onClick}>
             {props.text}
         </Button>

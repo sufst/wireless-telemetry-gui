@@ -29,13 +29,13 @@ import {
     StartStop
 } from "./components";
 
-export const Session = (props) => {
+export const Session = () => {
     // TODO: setName to be used later - disabled warning for now
     // eslint-disable-next-line
     const [name, setName] = useState(undefined);
     const [running, setRunning] = useState(false);
 
-    const headerName = name !== undefined ? name : "No Session";
+    const headerName = name ?? "No Session";
     const startStopColour = running ? "secondary" : "primary";
     const StartStopText = running ? "STOP" : "START";
 
@@ -55,7 +55,7 @@ export const Session = (props) => {
                     <Header name={headerName}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <StartStop color={startStopColour} text={StartStopText} onClick={onStartStopClick}/>
+                    <StartStop colour={startStopColour} text={StartStopText} onClick={onStartStopClick}/>
                 </Grid>
                 <Grid item xs={12}>
                     <NewSession onSubmit={onNewSubmit}/>

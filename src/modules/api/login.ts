@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 SUFST
+    Copyright (C) 2021 Nathan Rowley-Smith
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,20 +15,30 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
-import React from 'react';
+import { url } from "config";
 import {
-    AppContainer
-} from "./containers";
+    LoginUser
+} from "./typing";
 
-import { Provider } from 'react-redux';
-import store from 'redux/store';
-
-export const App = (props) => {   
-    return (
-        <Provider store={store}>
-            <AppContainer />
-        </Provider>
-    );
-} 
-
+export const loginUser: LoginUser = (username, password) => {
+    return new Promise((resolve, reject) => 
+    fetch(`http://${url}/login/${username}`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            password: password
+        })
+    })
+    .then((response) => {
+        if (!response.ok) {
+        throw response.statusText;
+        }
+        return response.json();
+    })
+    .then((data: { access_token: string}) => {
+        resolve(data.access_token)
+    })
+    .catch((error: Error) => reject(error)));
+}
