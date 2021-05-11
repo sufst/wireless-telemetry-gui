@@ -16,47 +16,75 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import type {
-    SensorsMeta,
-    SensorData,
-    UserPrivilege,
-    UserMeta
+  SensorsMeta,
+  SensorData,
+  UserPrivilege,
+  UserMeta,
 } from "redux/typing";
 
 export type LoginUser = (username: string, password: string) => Promise;
 
-export type SioConnect = (accessToken: string, onMeta: SioOnMetaHander, onData: SioOnDataHandler) => void;
+export type SioConnect = (
+  accessToken: string,
+  onMeta: SioOnMetaHander,
+  onData: SioOnDataHandler
+) => void;
 export type SioOnMetaHander = (meta: SensorsMeta) => void;
-export type SioOnDataHandler = (data: { [sensor: string]: Array<SensorData> }) => void;
+export type SioOnDataHandler = (data: {
+  [sensor: string]: Array<SensorData>;
+}) => void;
 
-export type UsersCreate = (username: string, privilege: string, password: string, meta: object, accessToken: string) => Promise;
+export type UsersCreate = (
+  username: string,
+  privilege: string,
+  password: string,
+  meta: object,
+  accessToken: string
+) => Promise;
 export type UsersGet = (username: string, accessToken: string) => Promise;
 export type UsersGetResponse = {
-    username: string,
-    creation: number,
-    privilege: UserPrivilege,
-    meta: string
+  username: string;
+  creation: number;
+  privilege: UserPrivilege;
+  meta: string;
 };
 
 export type UsersPatchRequest = {
-    [username: string?] : string,
-    [password: string?] : string,
-    [privilege: string?]: UserPrivilege,
-    [meta: string?]: UserMeta
+  [username: ?string]: string;
+  [password: ?string]: string;
+  [privilege: ?string]: UserPrivilege;
+  [meta: ?string]: UserMeta;
 };
-export type UsersPatch = (username: string, accessToken: string, fields: UsersPatchRequest) => Promise;
+export type UsersPatch = (
+  username: string,
+  accessToken: string,
+  fields: UsersPatchRequest
+) => Promise;
 
 export type UserGet = (accessToken: string) => Promise;
 export type UserGetResponse = {
-    username: string,
-    creation: number,
-    privilege: UserPrivilege,
-    meta: string
+  username: string;
+  creation: number;
+  privilege: UserPrivilege;
+  meta: string;
 };
 
 export type UserPatchRequest = {
-    [username: string?] : string,
-    [password: string?] : string,
-    [privilege: string?]: UserPrivilege,
-    [meta: string?]: UserMeta
+  [username: ?string]: string;
+  [password: ?string]: string;
+  [privilege: ?string]: UserPrivilege;
+  [meta: ?string]: UserMeta;
 };
-export type UserPatch = (accessToken: string, fields: UserPatchRequest) => Promise;
+export type UserPatch = (
+  accessToken: string,
+  fields: UserPatchRequest
+) => Promise;
+
+export type SessionsGet = () => Promise;
+export type SessionsGetResponse = {
+    [name: string]: {
+        creation: number,
+        status: string,
+        sensors: [string]
+    }
+};

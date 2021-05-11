@@ -37,8 +37,8 @@ export const loginUser: LoginUser = (username, password) => {
         }
         return response.json();
     })
-    .then((data) => {
+    .then((data: { access_token: string}) => {
         resolve(data.access_token)
     })
-    .catch((error) => reject(error)));
+    .catch((error: Error) => reject(error)));
 }
