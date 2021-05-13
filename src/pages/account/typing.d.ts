@@ -15,30 +15,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { url } from "config";
-import {
-    LoginUser
-} from "./typing";
 
-export const loginUser: LoginUser = (username, password) => {
-    return new Promise((resolve, reject) => 
-    fetch(`http://${url}/login/${username}`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            password: password
-        })
-    })
-    .then((response) => {
-        if (!response.ok) {
-            throw response.statusText;
-        }
-        return response.json();
-    })
-    .then((data: { access_token: string}) => {
-        resolve(data.access_token)
-    })
-    .catch((error: Error) => reject(error)));
-}
+import { UserPrivilege } from "redux/typing";
+
+export type PrivilegeColor = 'red' | 'gray' | 'green';
+
+// TODO: Fix this here...
+export type PrivilegeToColors = {
+   [privilege: string]: PrivilegeColor
+}; 

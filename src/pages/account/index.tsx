@@ -1,20 +1,24 @@
 // Module Imports
-import React from 'react'
+import React, { useCallback } from 'react'
 
 // Container
 import AccountContainer from './container'
 
 // Context
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from "redux/store";
 
-const Account = () => {
-    const selectUser = (state: RootState) => state.user;
-    const user = useSelector(selectUser);
+import { logoutUser } from 'redux/slices/user';
 
-   const onLogoutClick = () => {
-      console.log('Logging out');
-   }
+const Account = () => {
+   const dispatch = useDispatch(); 
+
+   const selectUser = (state: RootState) => state.user;
+   const user = useSelector(selectUser);
+   
+   const onLogoutClick = useCallback(() => {
+      dispatch(logoutUser()); 
+   }, [dispatch]); 
 
    return (
       <AccountContainer user={user} onLogoutClick={onLogoutClick}/>

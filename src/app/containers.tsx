@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React, { useRef } from 'react';
+import React, { useEffect } from 'react';
 import {
     BrowserRouter as Router, 
     Route, 
@@ -40,10 +40,18 @@ import type { RootState } from 'redux/store';
 const AppRouterSwitch = () => {
     const classes = useStyles();
 
+    const dispatch = useDispatch();
     const selectUser = (state: RootState) => state.user;
     const user = useSelector(selectUser); 
 
-    const { username } = user; 
+    useEffect(() => {
+        if (user.username === undefined) {
+            const username = "anonymous"
+            const password = "anonymous"
+        
+            dispatch(loginUser( { username, password } ))
+        }
+    }, [user, dispatch])
 
     return (
         <Switch>
@@ -63,8 +71,7 @@ const AppRouterSwitch = () => {
             <Route path={"/account"} exact>
                 <Paper className={classes.viewPaper}>
                     <Alert /> 
-                    {console.log(username)}
-                    {username === undefined || username === 'anonymous' ? <SignIn /> : <Account/> }
+                    {user.username === undefined || user.username === 'anonymous' ? <SignIn /> : <Account/> }
                 </Paper> 
             </Route>
             <Route path="*">
@@ -74,24 +81,7 @@ const AppRouterSwitch = () => {
     )
 }
 
-const AnonymousLogin = () => {
-    const dispatch = useDispatch();
-
-    const username = "anonymous"
-    const password = "anonymous"
-
-    dispatch(loginUser( { username, password } ))
-}
-
-export function AppContainer() {    
-    const logginIn = useRef(true);
-
-    if(logginIn.current)
-    {
-        AnonymousLogin();
-        logginIn.current = false;
-    }
-
+export const AppContainer = () => {    
     return (
         <Router>
             <AppNavigation />
