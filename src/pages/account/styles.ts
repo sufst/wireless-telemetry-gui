@@ -1,24 +1,14 @@
 // Material UI Imports
 import { makeStyles } from '@material-ui/core/styles';
 import { UserPrivilege } from 'redux/typing';
-import { PrivilegeColor } from './typing';
+import { PrivilegeColor, PrivilegeToColors } from './typing';
 
-
-const privilegeColor = (privilege?: UserPrivilege): PrivilegeColor => {
-  if (privilege === 'Admin') {
-    return 'red'; 
-  }
-
-  if (privilege === 'Basic') {
-    return 'gray'; 
-  }
-
-  if (privilege === 'Developer') {
-    return 'green'; 
-  }
-
-  return 'gray';
-}
+const privilegeToColors: PrivilegeToColors = {
+  Anon: 'gray',
+  Admin: 'red',
+  Basic: 'gray',
+  Developer: 'green',
+};
 
 const privilegeFont = (privilege?: UserPrivilege) => {
   if (privilege === 'Admin' || privilege === 'Developer') {
@@ -28,10 +18,16 @@ const privilegeFont = (privilege?: UserPrivilege) => {
   return 400; 
 }
 
+const getPrivilegeColor = (privilege?: UserPrivilege): PrivilegeColor => {
+  const priv: keyof PrivilegeToColors = privilege ?? 'Basic'; 
+
+  return privilegeToColors[priv]; 
+}
+
 export const subheaderStyle = (privilege?: UserPrivilege) => {
   return {
     style: {
-      color: privilegeColor(privilege),
+      color: getPrivilegeColor(privilege),
       fontWeight: privilegeFont(privilege)
     }
   }
@@ -39,7 +35,7 @@ export const subheaderStyle = (privilege?: UserPrivilege) => {
 
 export const avatarStyle = (privilege?: UserPrivilege) => {
   return {
-    backgroundColor: privilegeColor(privilege)
+    backgroundColor: getPrivilegeColor(privilege)
   }
 }
 

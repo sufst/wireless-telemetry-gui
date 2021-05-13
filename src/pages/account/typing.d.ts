@@ -16,4 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import { UserPrivilege } from "redux/typing";
+
 export type PrivilegeColor = 'red' | 'gray' | 'green';
+
+// TODO: Fix this here...
+export type PrivilegeToColors = {
+   [privilege: string]: PrivilegeColor
+}; 
