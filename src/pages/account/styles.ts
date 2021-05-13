@@ -1,8 +1,10 @@
 // Material UI Imports
 import { makeStyles } from '@material-ui/core/styles';
 import { UserPrivilege } from 'redux/typing';
+import { PrivilegeColor } from './typing';
 
-const privilegeColor = (privilege?: UserPrivilege) => {
+
+const privilegeColor = (privilege?: UserPrivilege): PrivilegeColor => {
   if (privilege === 'Admin') {
     return 'red'; 
   }
@@ -14,6 +16,8 @@ const privilegeColor = (privilege?: UserPrivilege) => {
   if (privilege === 'Developer') {
     return 'green'; 
   }
+
+  return 'gray';
 }
 
 const privilegeFont = (privilege?: UserPrivilege) => {

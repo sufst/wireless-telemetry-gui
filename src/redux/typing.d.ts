@@ -76,6 +76,8 @@ export type UserMeta = {
 
 export type UserPrivilege = 'Anon' | 'Basic' | 'Admin' | 'Developer';
 
+export type UserDepartment = 'Electronics' | 'Operations' | 'Power-train' | 'Vehicle Performance' | 'Race Engineering' | 'Aerodynamics' | 'Tier 1' | 'NON SPECIFIED'
+
 export type SetUserAction = {
     username: string,
     accessToken: string,

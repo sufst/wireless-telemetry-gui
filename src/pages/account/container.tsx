@@ -9,7 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { Button, Divider, List, ListItemText } from '@material-ui/core';
-import type { UserState } from "redux/typing";
+import type { UserDepartment, UserState } from "redux/typing";
 
 // Styles 
 import { avatarStyle, subheaderStyle, useStyles } from './styles';
@@ -26,7 +26,7 @@ const AccountContainer = (props: { user: UserState, onLogoutClick: () => void}) 
    // TODO: Remove force unwrapping here. Make it safer. 
    const createdAt = new Date(creation!! * 1000).toLocaleString('en-GB', {day: 'numeric', month: 'numeric', year: 'numeric'});
 
-   const department: string = 'NON SPECIFIED'
+   const department: UserDepartment = 'NON SPECIFIED'
 
    const subheaderProps = subheaderStyle(privilege);
    const avatarColorStyle = avatarStyle(privilege);
