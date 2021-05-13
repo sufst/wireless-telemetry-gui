@@ -15,7 +15,15 @@ import { useStyles } from './styles';
 
 const AccountContainer = (props: { user: UserState, onLogoutClick: () => void}) => {
    const classes = useStyles();
-   const { username, meta } = props.user; 
+   
+   const user: UserState = props.user; 
+
+   const username = user.username; 
+   const privilege = user.privilege;
+   
+   const creation = user.creation; 
+   // TODO: Remove force unwrapping here. Make it safer. 
+   const createdAt = new Date(creation!! * 1000).toLocaleString('en-GB', {day: 'numeric', month: 'numeric', year: 'numeric'});
 
    return (
       <Card className={classes.cardRoot}>
@@ -26,21 +34,16 @@ const AccountContainer = (props: { user: UserState, onLogoutClick: () => void}) 
                </Avatar>
             }
             title={username ?? "BOB BEANS"}
-            subheader='Admin • Tier 1'
+            subheader={privilege + ' • Full Privileges'}
          />
          <CardContent className={classes.list}>
             <List className={classes.list}>
                <ListItemText>
-                  <span className={classes.deptTitle}>DEPARTMENT:</span> <span className={classes.dept}>{meta.dept ?? "ELECTRONICS"}</span>
+                  <span className={classes.deptTitle}>DEPARTMENT:</span> <span className={classes.dept}>{"ELECTRONICS"}</span>
                </ListItemText>
                <ListItemText>
                   <Typography variant="body2" color="textSecondary" component="p">
-                     Last Login: {meta.lastLogin ?? 'March 25th'} 
-                  </Typography>
-               </ListItemText>
-               <ListItemText>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                     Account Created: {meta.createdAt ?? 'March 25th'} 
+                     {`Account Created: ${createdAt}`}
                   </Typography>
                </ListItemText>
             </List>
