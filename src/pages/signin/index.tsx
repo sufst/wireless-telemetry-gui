@@ -15,36 +15,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { 
-    BrowserRouter as Router, Route, Switch, Redirect, useRouteMatch 
-} from "react-router-dom"
-import {
-    SignInContainer,
-    CreateAccountContainer
-} from "./containers";
-import { RootState } from "redux/store"; 
+
+import LoginContainer from "./containers";
 
 export const SignIn = () => {
-    const selectUser = (state: RootState) => state.user;
-    const user = useSelector(selectUser); 
-
-    const match = useRouteMatch();
 
     return(
-        <Router>
-            <Switch>
-                <Route path={match.url} exact>
-                    {user.isCreatingAccount ? <Redirect to={match.url + "/createaccount"} /> : <SignInContainer />}
-                </Route>
-                <Route path={match.url + "/createaccount"}>
-                    {user.isCreatingAccount ? <CreateAccountContainer /> : <Redirect to={match.url} /> }
-                </Route>
-                <Route path="*">
-                    <div>404 Not found</div>
-                </Route>
-            </Switch>
-        </Router>
+        <LoginContainer />
     )
 }

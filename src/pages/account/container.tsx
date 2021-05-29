@@ -23,6 +23,7 @@ const AccountContainer = (props: { user: UserState, onLogoutClick: () => void}) 
    const privilege = user.privilege;
    
    const creation = user.creation; 
+   
    // TODO: Remove force unwrapping here. Make it safer. 
    const createdAt = new Date(creation!! * 1000).toLocaleString('en-GB', {day: 'numeric', month: 'numeric', year: 'numeric'});
 
