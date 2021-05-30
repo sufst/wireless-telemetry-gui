@@ -15,6 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 import { 
     Avatar,
     Button,
@@ -73,14 +74,14 @@ export const LoginFooter = () => {
     );
  }
  
- export const PasswordField = () => {
+ export const PasswordField = (props: { label: string }) => {
     return (
        <TextField 
           variant="outlined"
           margin="normal"
           required
           fullWidth
-          label="Password"
+          label={props.label}
           type="password"
           id="password"
           autoComplete="current-password"
@@ -88,18 +89,34 @@ export const LoginFooter = () => {
     );
  }
  
- export const LoginButton = (props: { text: string }) => {
-    const classes = useStyles();
- 
-    return (
-       <Button 
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-       >
-          {props.text}
-        </Button>
-    );
- }
+export const LoginButton = (props: { text: string }) => {
+   const classes = useStyles();
+
+   return (
+      <Button 
+         type="submit"
+         fullWidth
+         variant="contained"
+         color="primary"
+         className={classes.submit}
+      >
+         {props.text}
+      </Button>
+   );
+}
+
+export const RegisterButton = (props: { text: string, onClick: any }) => {
+   const classes = useStyles();
+
+   return (
+      <Button 
+         fullWidth
+         variant="contained"
+         color="primary"
+         className={classes.submit}
+         onClick={props.onClick}
+      >
+         {props.text}
+      </Button>
+   );
+}

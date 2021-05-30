@@ -1,3 +1,21 @@
+/*
+    Southampton University Formula Student Team
+    Copyright (C) 2021 SUFST
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 // Module Imports 
 import React from 'react'
 
@@ -9,14 +27,16 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { Button, Divider, List, ListItemText } from '@material-ui/core';
-import type { UserDepartment, UserState } from "redux/typing";
+import type { UserState } from "redux/typing";
 
 // Styles 
 import { avatarStyle, subheaderStyle, useStyles } from './styles';
 
-const AccountContainer = (props: { user: UserState, onLogoutClick: () => void}) => {
+const AccountContainer = (props: { user: UserState, onLogoutClick: () => void, onRegisterNewUser: () => void}) => {
    const classes = useStyles();
    
+   const { onRegisterNewUser, onLogoutClick } = props;
+
    const user: UserState = props.user; 
 
    const username = user.username; 
@@ -61,8 +81,11 @@ const AccountContainer = (props: { user: UserState, onLogoutClick: () => void}) 
                      </ListItemText>
                   </List>
                   <Divider className={classes.line} />
-                  <Button variant="contained" color="secondary" className={classes.btn} onClick={props.onLogoutClick}>
+                  <Button variant="contained" color="secondary" className={classes.btn} onClick={onLogoutClick}>
                      LOG OUT
+                  </Button>
+                  <Button variant="contained" color="primary" className={classes.btn_register} onClick={onRegisterNewUser}>
+                     Register New User
                   </Button>
                </CardContent>
             </Card>

@@ -15,6 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 import React, {
     useCallback
 } from 'react';
@@ -25,15 +26,16 @@ import Container from '@material-ui/core/Container';
 import { useDispatch } from 'react-redux';
 
 import { loginUser } from 'redux/slices/user';
-import { LoginHeader, LoginFooter, LoginButton, UsernameField, PasswordField } from './components';
+import { LoginHeader, LoginFooter, LoginButton, UsernameField, PasswordField, RegisterButton } from './components';
 
 import { useStyles } from "./styles";
+import { useHistory } from 'react-router';
 
 const LoginContainer = () => {
     const classes = useStyles();
  
- 
     const dispatch = useDispatch(); 
+    const history = useHistory();
  
     const onLoginSubmit = useCallback((event) => {
        event.preventDefault();
@@ -43,6 +45,10 @@ const LoginContainer = () => {
  
        dispatch(loginUser( { username, password } ));
     }, [dispatch]);
+
+    const onRegisterClick = useCallback((event) => {
+      history.push('/register');
+    }, [history])
  
     return (
        <Container component="main" maxWidth="xs">
@@ -51,10 +57,10 @@ const LoginContainer = () => {
              <LoginHeader />
              <form className={classes.form} noValidate onSubmit={onLoginSubmit}>
                 <UsernameField /> 
-                <PasswordField />
+                <PasswordField label={'Password'} />
                 <div className={classes.btnContainer}>
                    <LoginButton text='Login' />
-                   <LoginButton text='Register New Account'/>
+                   <RegisterButton text='Register New Account' onClick={onRegisterClick}/>
                 </div>
              </form>
           </div>

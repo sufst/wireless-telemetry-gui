@@ -16,39 +16,38 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Module Imports
-import React, { useCallback } from 'react'
+import { createAlert } from "modules/alert/alert";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux"
+import { useHistory } from "react-router";
+import { showAlert } from "redux/slices/alert";
+import { RootState } from "redux/store";
+import { RegisterContainer } from "./containers";
 
-// Container
-import AccountContainer from './container'
 
-// Context
-import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from "redux/store";
-
-import { logoutUser } from 'redux/slices/user';
-import { useHistory } from 'react-router';
-
-const Account = () => {
+export const Register = () => {
    const dispatch = useDispatch(); 
-   const history = useHistory(); 
+   const history = useHistory();
 
    const selectUser = (state: RootState) => state.user;
    const user = useSelector(selectUser);
-  
-   const onLogoutClick = useCallback(() => {
-      dispatch(logoutUser()); 
-   }, [dispatch]); 
 
-   const onRegisterNewUser = useCallback(() => {
-      history.push('/register'); 
-   }, [history]); 
+   const privilege = user.privilege; 
+
+   useEffect(() => {
+      if (privilege === 'Anon' || privilege === 'Basic') {   
+         const cannotRegisterUserAlert = createAlert(3000, "error", "alert", "You cannot create a new user. Sorry :("); 
+         dispatch(showAlert(cannotRegisterUserAlert));
+        
+         history.push('/'); 
+      } 
+   }, [dispatch, user, privilege, history])
 
    return (
       <>
-          <AccountContainer user={user} onLogoutClick={onLogoutClick} onRegisterNewUser={onRegisterNewUser}/>
+         <h1>Registration</h1>
+         <RegisterContainer />
       </>
+      
    )
 }
-
-export default Account
