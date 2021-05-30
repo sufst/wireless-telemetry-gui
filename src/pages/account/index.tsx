@@ -15,7 +15,10 @@ const Account = () => {
 
    const selectUser = (state: RootState) => state.user;
    const user = useSelector(selectUser);
+
+   console.log("USER: ", user);
    
+  
    const onLogoutClick = useCallback(() => {
       dispatch(logoutUser()); 
    }, [dispatch]); 

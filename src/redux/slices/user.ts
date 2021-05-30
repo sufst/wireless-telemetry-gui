@@ -33,7 +33,7 @@ const initialMetaState: UserMeta = {
 const initialState: UserState = {
   username: undefined,
   accessToken: undefined,
-  isCreatingAccount: false,
+  department: "NON SPECIFIED",
   privilege: undefined,
   creation: undefined,
   meta: initialMetaState,
@@ -51,6 +51,7 @@ export const userSlice = createSlice({
       state.accessToken = action.payload.accessToken;
       state.privilege = action.payload.privilege;
       state.meta = action.payload.meta;
+      state.department = action.payload.department;
       state.creation = action.payload.creation;
     }, 
     logoutUser: (state: UserState) => {

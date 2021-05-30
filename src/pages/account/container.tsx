@@ -21,13 +21,11 @@ const AccountContainer = (props: { user: UserState, onLogoutClick: () => void}) 
 
    const username = user.username; 
    const privilege = user.privilege;
-   
+   const department = user.department; 
    const creation = user.creation; 
    
    // TODO: Remove force unwrapping here. Make it safer. 
    const createdAt = new Date(creation!! * 1000).toLocaleString('en-GB', {day: 'numeric', month: 'numeric', year: 'numeric'});
-
-   const department: UserDepartment = 'NON SPECIFIED'
 
    const subheaderProps = subheaderStyle(privilege);
    const avatarColorStyle = avatarStyle(privilege);

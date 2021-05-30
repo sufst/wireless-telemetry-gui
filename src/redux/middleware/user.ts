@@ -60,11 +60,12 @@ export const userMiddleware: Middleware<{}, any> =
 
           if (username !== "anonymous") {
             userGet(accessToken)
-            .then((data: UserGetResponse) => {
+            .then((data: UserGetResponse) => {      
               const user: SetUserAction = {
                 username: data.username,
                 accessToken: accessToken,
                 creation: data.creation,
+                department: data.department,
                 privilege: data.privilege,
                 meta: JSON.parse(data.meta),
               };
@@ -84,8 +85,9 @@ export const userMiddleware: Middleware<{}, any> =
                 accessToken,
                 creation: new Date().valueOf() / 1000,
                 privilege: "Anon",
+                department: "NON SPECIFIED",
                 meta: {},
-              };
+            };
 
             storeAPI.dispatch(setUser(user));
           }

@@ -20,6 +20,7 @@ import type {
   SensorData,
   UserPrivilege,
   UserMeta,
+  UserDepartment,
 } from "redux/typing";
 
 export type LoginUser = (username: string, password: string) => Promise;
@@ -66,6 +67,7 @@ export type UserGetResponse = {
   username: string;
   creation: number;
   privilege: UserPrivilege;
+  department: UserDepartment; 
   meta: string;
 };
 

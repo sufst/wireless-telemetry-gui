@@ -83,6 +83,7 @@ export type SetUserAction = {
     accessToken: string,
     creation: number,
     privilege: UserPrivilege,
+    department: UserDepartment,
     meta: UserMeta
 };
 
@@ -94,8 +95,8 @@ export type LoginUserAction = {
 export type UserState = {
     username?: string,
     accessToken?: string,
-    isCreatingAccount: boolean,
     privilege?: UserPrivilege,
     creation?: number,
+    department: UserDepartment,
     meta: UserMeta
 };
