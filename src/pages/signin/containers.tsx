@@ -16,26 +16,21 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React, {
-    useCallback
-} from 'react';
+import { useCallback } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-
 
 import { useDispatch } from 'react-redux';
 
 import { loginUser } from 'redux/slices/user';
-import { LoginHeader, LoginFooter, LoginButton, UsernameField, PasswordField, RegisterButton } from './components';
+import { LoginHeader, LoginFooter, LoginButton, UsernameField, PasswordField } from './components';
 
 import { useStyles } from "./styles";
-import { useHistory } from 'react-router';
 
 const LoginContainer = () => {
     const classes = useStyles();
  
     const dispatch = useDispatch(); 
-    const history = useHistory();
  
     const onLoginSubmit = useCallback((event) => {
        event.preventDefault();
@@ -45,27 +40,22 @@ const LoginContainer = () => {
  
        dispatch(loginUser( { username, password } ));
     }, [dispatch]);
-
-    const onRegisterClick = useCallback((event) => {
-      history.push('/register');
-    }, [history])
  
     return (
-       <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div className={classes.paper}>
-             <LoginHeader />
-             <form className={classes.form} noValidate onSubmit={onLoginSubmit}>
-                <UsernameField /> 
-                <PasswordField label={'Password'} />
-                <div className={classes.btnContainer}>
-                   <LoginButton text='Login' />
-                   <RegisterButton text='Register New Account' onClick={onRegisterClick}/>
-                </div>
-             </form>
-          </div>
-          <LoginFooter />
-       </Container>
+      <Container component="main" maxWidth="xs">
+         <CssBaseline />
+         <div className={classes.paper}>
+            <LoginHeader />
+            <form className={classes.form} noValidate onSubmit={onLoginSubmit}>
+            <UsernameField /> 
+            <PasswordField label={'Password'} id={'password'}/>
+            <div className={classes.btnContainer}>
+               <LoginButton text='Login' /> 
+            </div>
+            </form>
+         </div>
+         <LoginFooter />
+      </Container>
     );
  }
  

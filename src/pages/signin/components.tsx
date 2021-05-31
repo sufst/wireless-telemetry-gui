@@ -74,7 +74,7 @@ export const LoginFooter = () => {
     );
  }
  
- export const PasswordField = (props: { label: string }) => {
+ export const PasswordField = (props: { label: string, id: string }) => {
     return (
        <TextField 
           variant="outlined"
@@ -83,7 +83,7 @@ export const LoginFooter = () => {
           fullWidth
           label={props.label}
           type="password"
-          id="password"
+          id={props.id}
           autoComplete="current-password"
        />
     );
@@ -99,22 +99,6 @@ export const LoginButton = (props: { text: string }) => {
          variant="contained"
          color="primary"
          className={classes.submit}
-      >
-         {props.text}
-      </Button>
-   );
-}
-
-export const RegisterButton = (props: { text: string, onClick: any }) => {
-   const classes = useStyles();
-
-   return (
-      <Button 
-         fullWidth
-         variant="contained"
-         color="primary"
-         className={classes.submit}
-         onClick={props.onClick}
       >
          {props.text}
       </Button>

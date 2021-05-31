@@ -56,10 +56,13 @@ export const userSlice = createSlice({
     }, 
     logoutUser: (state: UserState) => {
       state.username = undefined; 
+    },
+    registerNewUser: () => {
+      console.log('Registering New User');
     }
   },
 });
 
-export const { loginUser, setUser, logoutUser } = userSlice.actions;
+export const { loginUser, setUser, logoutUser, registerNewUser } = userSlice.actions;
 
 export default userSlice.reducer;

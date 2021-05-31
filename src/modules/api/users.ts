@@ -20,8 +20,9 @@ import { UsersCreate, UsersGet, UsersGetResponse, UsersPatch } from "./typing";
 
 export const usersCreate: UsersCreate = (
   username,
-  privilege,
   password,
+  privilege,
+  department, 
   meta,
   accessToken
 ) => {
@@ -35,6 +36,7 @@ export const usersCreate: UsersCreate = (
       body: JSON.stringify({
         password,
         privilege,
+        department, 
         meta,
       }),
     })

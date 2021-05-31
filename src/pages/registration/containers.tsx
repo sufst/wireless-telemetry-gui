@@ -16,73 +16,70 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Container, CssBaseline, InputLabel, Select } from "@material-ui/core"
+import { Container, CssBaseline } from "@material-ui/core"
+import { createAlert } from "modules/alert/alert";
 import { LoginButton, PasswordField, UsernameField } from "pages/signin/components";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import { showAlert } from "redux/slices/alert";
 import { UserDepartment, UserPrivilege } from "redux/typing";
-import { RegisterFooter, RegisterHeader } from "./components";
+import { DepartmentSelect, PrivilegeSelect, RegisterFooter, RegisterHeader } from "./components";
 import { useStyles } from "./styles"
+import { UserRegister } from "./typing";
 
-export const RegisterContainer = () => {
+export const RegisterContainer = (props: { registerUser: UserRegister }) => {
    const classes = useStyles(); 
 
-   const [department, setDepartment] = useState<UserDepartment> ('NON SPECIFIED')
+   const { registerUser } = props;
 
-   const [privilege, setPrivilege] = useState<UserPrivilege> ('Basic')
+   const dispatch = useDispatch(); 
 
-   const handleDepartmentChange = (event: any) => {
-      setDepartment(event.target.value)   
-   }
+   const [department, setDepartment] = useState<UserDepartment>('NON SPECIFIED')
 
-   const handlePrivilegeChange = (event: any) => {
-      setPrivilege(event.target.value)
-   }
+   const [privilege, setPrivilege] = useState<UserPrivilege>('Basic'); 
+
+   const handleDepartmentChange = useCallback((event: any) => {
+      setDepartment(event.target.value);   
+   }, []); 
+
+   const handlePrivilegeChange = useCallback((event: any) => {
+      setPrivilege(event.target.value);   
+   }, []); 
+
+   const onRegisterSubmit = useCallback((event) => {
+      event.preventDefault(); 
+
+      const username: string = event.target.username.value;
+      const password: string = event.target.password.value; 
+      const confirmPass: string = event.target.passconfirm.value; 
+
+      if (username === '' || password === '' || confirmPass === '') {         
+         const emptyFieldAlert = createAlert(3000, "error", "alert", "Please fill all fields."); 
+         dispatch(showAlert(emptyFieldAlert));
+         return; 
+      }      
+
+      if (password === confirmPass) {
+         registerUser(username, password, privilege, department); 
+         return; 
+      } 
+
+      const mismatchPassAlert = createAlert(3000, "error", "alert", "The passwords don't match."); 
+      dispatch(showAlert(mismatchPassAlert));
+
+   }, [department, privilege, dispatch, registerUser])
 
    return (
       <Container component="main" maxWidth="xs">
          <CssBaseline />
          <div className={classes.paper}>
             <RegisterHeader />
-            <form className={classes.form} noValidate onSubmit={() => console.log('smoethi')
-            }>
+            <form className={classes.form} noValidate onSubmit={onRegisterSubmit}>
                <UsernameField /> 
-               <PasswordField label={'Password'}/>
-               <PasswordField label={'Confirm Password'}/>
-               <InputLabel htmlFor="department-select" className={classes.department_label}>Department</InputLabel>
-               <Select
-                  native
-                  value={department}
-                  onChange={handleDepartmentChange}
-                  className={classes.department_select}
-                  autoWidth={true}
-                  inputProps={{
-                     name: 'department',
-                     id: 'department-select',
-                  }}
-               >
-                  <option value={'Electronics'}>Electronics</option>
-                  <option value={'Tier 1'}>Tier 1</option>
-                  <option value={'Operations'}>Operations</option>
-                  <option value={'Power-Train'}>Power-Train</option>
-                  <option value={'Vehicle Performance'}>Vehicle Performance</option>
-                  <option value={'Race Engineering'}>Race Engineering</option>
-               </Select>
-               <InputLabel htmlFor="privilege-select" className={classes.department_label}>Privilege Level</InputLabel>
-               <Select
-                  native
-                  value={privilege}
-                  onChange={handlePrivilegeChange}
-                  className={classes.department_select}
-                  autoWidth={true}
-                  inputProps={{
-                     name: 'privilege',
-                     id: 'privilege-select',
-                  }}
-               >
-                  <option value={'Admin'}>Admin</option>
-                  <option value={'Basic'}>Basic</option>
-                  <option value={'Developer'}>Developer</option>
-               </Select>
+               <PasswordField label={'Password'} id={'password'}/>
+               <PasswordField label={'Confirm Password'} id={'passconfirm'}/>
+               <DepartmentSelect department={department} handleDepartmentChange={handleDepartmentChange} />
+               <PrivilegeSelect privilege={privilege} handlePrivilegeChange={handlePrivilegeChange} />
                <div className={classes.btnContainer}>
                   <LoginButton text='Register' />
                </div>

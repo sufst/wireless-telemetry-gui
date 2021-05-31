@@ -17,12 +17,15 @@
 */
 
 import { createAlert } from "modules/alert/alert";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router";
 import { showAlert } from "redux/slices/alert";
 import { RootState } from "redux/store";
 import { RegisterContainer } from "./containers";
+import { UserRegister } from "./typing";
+
+import { registerNewUser } from 'redux/slices/user';
 
 
 export const Register = () => {
@@ -43,10 +46,13 @@ export const Register = () => {
       } 
    }, [dispatch, user, privilege, history])
 
+   const registerUser: UserRegister = useCallback((username, password, privilege, department) => {
+      dispatch(registerNewUser()); 
+   }, [dispatch])
+
    return (
       <>
-         <h1>Registration</h1>
-         <RegisterContainer />
+         <RegisterContainer  registerUser={registerUser}/>
       </>
       
    )

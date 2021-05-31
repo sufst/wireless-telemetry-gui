@@ -16,9 +16,68 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Avatar, Box, Typography, Link } from "@material-ui/core";
+import { Avatar, Box, Typography, Link, InputLabel, Select } from "@material-ui/core";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { UserDepartment, UserPrivilege } from "redux/typing";
 import { useStyles } from "./styles";
+
+export const DepartmentSelect = (props: { department: UserDepartment, handleDepartmentChange: (event: any) => void }) => {
+   const classes = useStyles();
+
+   const { department, handleDepartmentChange } = props;
+
+   return (
+      <>
+         <InputLabel htmlFor="department-select" className={classes.department_label}>Department</InputLabel>
+         <Select
+            native
+            value={department}
+            onChange={handleDepartmentChange}
+            className={classes.department_select}
+            autoWidth={true}
+            inputProps={{
+               name: 'department',
+               id: 'department-select',
+            }}
+         >
+            <option value={'Electronics'}>Electronics</option>
+            <option value={'Tier 1'}>Tier 1</option>
+            <option value={'Operations'}>Operations</option>
+            <option value={'Power-Train'}>Power-Train</option>
+            <option value={'Vehicle Performance'}>Vehicle Performance</option>
+            <option value={'Race Engineering'}>Race Engineering</option>
+         </Select>
+      </>
+   )
+}
+
+export const PrivilegeSelect = (props: { privilege: UserPrivilege,  handlePrivilegeChange: (event: any) => void }) => {
+   const classes = useStyles(); 
+
+   const { privilege, handlePrivilegeChange } = props; 
+
+   return (
+      <>
+         <InputLabel htmlFor="privilege-select" className={classes.department_label}>Privilege Level</InputLabel>
+         <Select
+            native
+            value={privilege}
+            onChange={handlePrivilegeChange}
+            className={classes.department_select}
+            autoWidth={true}
+            inputProps={{
+               name: 'privilege',
+               id: 'privilege-select',
+            }}
+         >
+            <option value={'Admin'}>Admin</option>
+            <option value={'Basic'}>Basic</option>
+            <option value={'Developer'}>Developer</option>
+         </Select>
+      </>
+   )
+}
+
 
 export const RegisterHeader = () => {
    const classes = useStyles();
