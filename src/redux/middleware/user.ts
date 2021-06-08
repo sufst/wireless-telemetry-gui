@@ -30,6 +30,7 @@ import type {
 } from "modules/api/typing";
 import { sioConnect } from "modules/api/sio";
 import { createAlert } from "modules/alert/alert";
+import { usersCreate } from "modules/api/users";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
 export const userMiddleware: Middleware<{}, any> =
@@ -93,14 +94,36 @@ export const userMiddleware: Middleware<{}, any> =
           }
         })
         .catch((error: Error) => {
-          console.error(error);
-
+          console.log(error);
+        
           const loginFailedAlert = createAlert(3000, "error", "alert", "Login Failed :( Make sure your credentials are correct!"); 
 
           storeAPI.dispatch(showAlert(loginFailedAlert));
         });
-
+      
       return next(action);
+    } 
+
+    if (action.type === "user/registerNewUser") {
+      console.log('Catching From MiddleWare');
+
+      const { username, password, privilege, department } = action.payload; 
+      const accessToken = storeAPI.getState().user.accessToken; 
+    
+      usersCreate(username, password, privilege, department, {}, accessToken)
+        .then((response: any) => {
+          console.log(response);
+
+          const registerSuccessAlert = createAlert(3000, "success", "alert", "Success!! You can logout and login again with the new account."); 
+
+          storeAPI.dispatch(showAlert(registerSuccessAlert));
+        })
+        .catch((error: Error) => {
+          console.log('REGISTER ERROR: ', error); 
+          const registerFailedAlert = createAlert(3000, "error", "alert", "Something went wrong when creating a new user :("); 
+
+          storeAPI.dispatch(showAlert(registerFailedAlert));
+        })
     }
 
     return next(action);

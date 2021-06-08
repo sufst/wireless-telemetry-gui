@@ -40,8 +40,14 @@ export const usersCreate: UsersCreate = (
         meta,
       }),
     })
-      .then((response) => resolve(response))
-      .catch((error) => reject(error))
+    .then((response) => {
+      if(!response.ok) {
+        throw response.statusText; 
+      }
+
+      resolve(response) 
+    })
+    .catch((error: Error) => reject(error))
   );
 };
 

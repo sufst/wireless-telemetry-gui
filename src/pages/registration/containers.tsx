@@ -34,7 +34,7 @@ export const RegisterContainer = (props: { registerUser: UserRegister }) => {
 
    const dispatch = useDispatch(); 
 
-   const [department, setDepartment] = useState<UserDepartment>('NON SPECIFIED')
+   const [department, setDepartment] = useState<UserDepartment>('Electronics')
 
    const [privilege, setPrivilege] = useState<UserPrivilege>('Basic'); 
 

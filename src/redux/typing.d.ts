@@ -87,6 +87,13 @@ export type SetUserAction = {
     meta: UserMeta
 };
 
+export type RegisterUserAction = {
+    username: string, 
+    password: string, 
+    privilege: UserPrivilege, 
+    department: UserDepartment,
+}
+
 export type LoginUserAction = {
     username: string,
     password: string

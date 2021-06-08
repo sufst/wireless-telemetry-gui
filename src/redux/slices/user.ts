@@ -21,7 +21,8 @@ import type {
   UserState,
   LoginUserAction,
   SetUserAction,
-  UserMeta
+  UserMeta,
+  RegisterUserAction
 } from "redux/typing";
 
 const initialMetaState: UserMeta = {
@@ -43,8 +44,9 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    registerNewUser: (state: UserState, action: PayloadAction<RegisterUserAction>) => {
+    },
     loginUser: (state: UserState, action: PayloadAction<LoginUserAction>) => {
-      state.username = action.payload.username;
     },
     setUser: (state: UserState, action: PayloadAction<SetUserAction>) => {
       state.username = action.payload.username;
@@ -57,9 +59,6 @@ export const userSlice = createSlice({
     logoutUser: (state: UserState) => {
       state.username = undefined; 
     },
-    registerNewUser: () => {
-      console.log('Registering New User');
-    }
   },
 });
 

@@ -34,22 +34,22 @@ export const sensorsSlice = createSlice({
    initialState,
    reducers: {
     buildSensorsFromMeta: (state: SensorsState, action: PayloadAction<BuildSensorsFromMetaAction>) => {
-            const meta: SensorsMeta = action.payload;
-            for (const sensor in meta) {
-                // Set a default graph cut off of 2 seconds
-                state.sensors[sensor] = {
-                    data: [], 
-                    meta: {...meta[sensor], timeEndS: -2.0}, 
-                    isDisplay: false
-                };
-                const group = state.sensors[sensor].meta.group;
-                if (state.groups[group] === undefined) {
-                    state.groups[group] = [];
-                } 
-                if (!state.groups[group].includes(sensor)) {
-                    state.groups[group].push(sensor);
-                }
+        const meta: SensorsMeta = action.payload;
+        for (const sensor in meta) {
+            // Set a default graph cut off of 2 seconds
+            state.sensors[sensor] = {
+                data: [], 
+                meta: {...meta[sensor], timeEndS: -2.0}, 
+                isDisplay: false
+            };
+            const group = state.sensors[sensor].meta.group;
+            if (state.groups[group] === undefined) {
+                state.groups[group] = [];
+            } 
+            if (!state.groups[group].includes(sensor)) {
+                state.groups[group].push(sensor);
             }
+        }
       }, 
       insertSensorsBulkData: (state: SensorsState, action: PayloadAction<InsertSensorsBulkDataAction>) => {
         const data = action.payload;

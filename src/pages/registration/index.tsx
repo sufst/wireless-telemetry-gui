@@ -47,7 +47,8 @@ export const Register = () => {
    }, [dispatch, user, privilege, history])
 
    const registerUser: UserRegister = useCallback((username, password, privilege, department) => {
-      dispatch(registerNewUser()); 
+      const newUser = { username, password, privilege, department }; 
+      dispatch(registerNewUser(newUser)); 
    }, [dispatch])
 
    return (

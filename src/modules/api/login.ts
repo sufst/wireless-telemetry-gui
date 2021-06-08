@@ -31,7 +31,7 @@ export const loginUser: LoginUser = (username, password) => {
             password: password
         })
     })
-    .then((response) => {
+    .then((response) => {    
         if (!response.ok) {
             throw response.statusText;
         }
@@ -40,5 +40,7 @@ export const loginUser: LoginUser = (username, password) => {
     .then((data: { access_token: string}) => {     
         resolve(data.access_token)
     })
-    .catch((error: Error) => reject(error)));
+    .catch((error: Error) => {
+        reject(error)
+    }));
 }
