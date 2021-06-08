@@ -15,6 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 import { 
     Avatar,
     Button,
@@ -28,99 +29,78 @@ import {
     useStyles 
 } from "./styles";
 
-export const UsernameField = () => {
+export const LoginFooter = () => {
     return (
-        <TextField 
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="User Name"
-            autoComplete="root"
-            autoFocus
-        />
+       <Box mt={4} >
+          <Typography variant="body2" color="textSecondary" align="center">
+             {'Copyright © '}
+             <Link color="inherit" href="https://sufst.co.uk/">
+             SUFST
+             </Link>{' '}
+             {new Date().getFullYear()}
+             {'.'}
+          </Typography>
+       </Box>
     );
-}
-
-export const PasswordField = () => {
-    return (
-        <TextField 
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-        />
-    );
-}
-
-export const SubmitButton = (props: { text: string }) => {
+ }
+ 
+ export const LoginHeader = () => {
     const classes = useStyles();
-
+ 
     return (
-        <Button 
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-        >
-            {props.text}
-        </Button>
-    );
-}
-
-export const CreateAccountButton = (props: { onClick: () => void}) => {
-    const classes = useStyles();
-
+       <>
+          <Avatar className={classes.avatar}>
+             <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+             Please Login In
+          </Typography>
+       </>
+    )
+ }
+ 
+ export const UsernameField = () => {
     return (
-        <Button 
-            type="button"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={props.onClick}
-        >
-            Create Account
-    </Button>
+       <TextField 
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="username"
+          label="Username"
+          autoComplete="root"
+          autoFocus
+       />
     );
-}
-
-export const WelcomeMessage = (props: { message: string }) => {
+ }
+ 
+ export const PasswordField = (props: { label: string, id: string }) => {
     return (
-        <Typography variant="h5">
-            {props.message}
-        </Typography>
+       <TextField 
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          label={props.label}
+          type="password"
+          id={props.id}
+          autoComplete="current-password"
+       />
     );
-}
+ }
+ 
+export const LoginButton = (props: { text: string }) => {
+   const classes = useStyles();
 
-export const SignInAvatar = () => {
-    const classes = useStyles();
-
-    return(
-        <Avatar className={classes.avatar}>
-            <LockOutlinedIcon  />
-        </Avatar>
-    );
-}
-
-export const FooterMessage = () => {
-    return (
-    <Box mt={8}>
-        <Typography variant="body2" color="textSecondary" align="center">
-            {"Copyright © "}
-            <Link color="inherit" href="https://github.com/sufst">
-                SUFST
-            </Link>
-            {" "}
-            {new Date().getFullYear()}
-            {"."}
-        </Typography>
-    </Box>
-    );
+   return (
+      <Button 
+         type="submit"
+         fullWidth
+         variant="contained"
+         color="primary"
+         className={classes.submit}
+      >
+         {props.text}
+      </Button>
+   );
 }

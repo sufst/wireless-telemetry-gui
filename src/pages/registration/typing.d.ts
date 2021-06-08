@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 Nathan Rowley-Smith
+    Copyright (C) 2021 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,11 +16,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import LoginContainer from "./containers";
+import { UserDepartment, UserPrivilege } from "redux/typing";
 
-export const SignIn = () => {
+export type UserRegister = (
+   username: string,
+   password: string,
+   privilege: UserPrivilege,
+   department: UserDepartment,
+ ) => void;
 
-    return(
-        <LoginContainer />
-    )
-}

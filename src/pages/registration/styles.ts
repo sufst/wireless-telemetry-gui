@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 Nathan Rowley-Smith
+    Copyright (C) 2021 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,27 +15,38 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme) => ({
-    paper: {
-      marginTop: theme.spacing(8),
+   paper: {
+      marginTop: theme.spacing(2),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-    },
-    avatar: {
+   },
+   formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+   },
+   department_label: {
+      marginTop: '20px'
+   },
+   department_select: {
+      marginTop: '5px'
+   },
+   avatar: {
       margin: theme.spacing(1),
       backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
+   },
+   form: {
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
-    },
-    submit: {
+   },
+   submit: {
       margin: theme.spacing(2, 0, 1),
-    },
-    btnContainer: {
-       marginTop: '2rem',
-    }
-  }));
+   },
+   btnContainer: {
+      marginTop: '2rem',
+   }
+}));

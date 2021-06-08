@@ -20,8 +20,9 @@ import { UsersCreate, UsersGet, UsersGetResponse, UsersPatch } from "./typing";
 
 export const usersCreate: UsersCreate = (
   username,
-  privilege,
   password,
+  privilege,
+  department, 
   meta,
   accessToken
 ) => {
@@ -35,11 +36,18 @@ export const usersCreate: UsersCreate = (
       body: JSON.stringify({
         password,
         privilege,
+        department, 
         meta,
       }),
     })
-      .then((response) => resolve(response))
-      .catch((error) => reject(error))
+    .then((response) => {
+      if(!response.ok) {
+        throw response.statusText; 
+      }
+
+      resolve(response) 
+    })
+    .catch((error: Error) => reject(error))
   );
 };
 

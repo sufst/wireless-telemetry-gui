@@ -35,6 +35,7 @@ import { useStyles } from "./styles";
 import Alert from 'modules/alert/alert';
 import { loginUser } from 'redux/slices/user';
 import type { RootState } from 'redux/store';
+import { Register } from 'pages/registration';
 
 
 const AppRouterSwitch = () => {
@@ -58,9 +59,16 @@ const AppRouterSwitch = () => {
             <Route path="/" exact>
                 <Redirect to="/dashboard"/>
             </Route>
-            <Route path="/signin">
-                {/* TODO: Determine where to go */} 
-                <SignIn />
+            <Route path="/login">
+                <Paper className={classes.viewPaper} >
+                    <SignIn />
+                </Paper>
+            </Route>
+            <Route path="/register">
+                <Paper className={classes.viewPaper} >
+                    <Alert /> 
+                    <Register />
+                </Paper>
             </Route>
             <Route path={"/dashboard"} exact>
                 <Paper className={classes.viewPaper}>

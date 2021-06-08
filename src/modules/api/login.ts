@@ -20,7 +20,7 @@ import {
     LoginUser
 } from "./typing";
 
-export const loginUser: LoginUser = (username, password) => {
+export const loginUser: LoginUser = (username, password) => {    
     return new Promise((resolve, reject) => 
     fetch(`http://${url}/login/${username}`, {
         method: "POST",
@@ -31,14 +31,16 @@ export const loginUser: LoginUser = (username, password) => {
             password: password
         })
     })
-    .then((response) => {
+    .then((response) => {    
         if (!response.ok) {
             throw response.statusText;
         }
         return response.json();
     })
-    .then((data: { access_token: string}) => {
+    .then((data: { access_token: string}) => {     
         resolve(data.access_token)
     })
-    .catch((error: Error) => reject(error)));
+    .catch((error: Error) => {
+        reject(error)
+    }));
 }

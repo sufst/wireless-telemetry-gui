@@ -20,6 +20,7 @@ import type {
   SensorData,
   UserPrivilege,
   UserMeta,
+  UserDepartment,
 } from "redux/typing";
 
 export type LoginUser = (username: string, password: string) => Promise;
@@ -36,16 +37,20 @@ export type SioOnDataHandler = (data: {
 
 export type UsersCreate = (
   username: string,
-  privilege: string,
   password: string,
+  privilege: UserPrivilege,
+  department: UserDepartment,
   meta: object,
   accessToken: string
 ) => Promise;
+
 export type UsersGet = (username: string, accessToken: string) => Promise;
+
 export type UsersGetResponse = {
   username: string;
   creation: number;
   privilege: UserPrivilege;
+  department: UserDepartment; 
   meta: string;
 };
 
@@ -53,8 +58,10 @@ export type UsersPatchRequest = {
   [username: ?string]: string;
   [password: ?string]: string;
   [privilege: ?string]: UserPrivilege;
+  [department: ?string]: UserDepartment;
   [meta: ?string]: UserMeta;
 };
+
 export type UsersPatch = (
   username: string,
   accessToken: string,
@@ -62,10 +69,12 @@ export type UsersPatch = (
 ) => Promise;
 
 export type UserGet = (accessToken: string) => Promise;
+
 export type UserGetResponse = {
   username: string;
   creation: number;
   privilege: UserPrivilege;
+  department: UserDepartment; 
   meta: string;
 };
 
@@ -73,8 +82,10 @@ export type UserPatchRequest = {
   [username: ?string]: string;
   [password: ?string]: string;
   [privilege: ?string]: UserPrivilege;
+  [department: ?string]: UserDepartment; 
   [meta: ?string]: UserMeta;
 };
+
 export type UserPatch = (
   accessToken: string,
   fields: UserPatchRequest
