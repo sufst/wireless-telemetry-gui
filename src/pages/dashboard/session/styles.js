@@ -20,9 +20,29 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
+        margin: '0'
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
+    headerPaper: {
+        margin: '1rem 1rem 0 1rem',
+        padding: '0.5rem'
+    },
+    startStopBtn: {
+        marginLeft: '1rem',
+    },
+    newSessionWrapper: {
+        margin: '1rem 1rem 0 1rem',
+    }, 
+    newSessionSubmitBtn: {
+        marginLeft: '0.5rem',
+    }, 
+    newSessionTextField: {
+        width: '40%'
+    },
+    rootSessionPaper: {
+        marginTop: '1rem'
+    }
 }));
