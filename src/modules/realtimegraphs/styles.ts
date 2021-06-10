@@ -23,8 +23,8 @@ export const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    sensorPaperHeader: {
-
+    sensorGraphContainerRoot: {
+        paddingBottom: '10px'
     },
     sensorPaperHeaderButton: {
         color: 'black',
@@ -38,7 +38,7 @@ export const useStyles = makeStyles((theme) => ({
         margin: "0% 0% 0% 5%"
     },
     sensorGraph: {
-        fontSize: 23
+        fontSize: 23,
     },
     sensorLiveValue: {
         textAlign: "left",
@@ -50,7 +50,7 @@ export const useStyles = makeStyles((theme) => ({
         textAlign: "center",
         background: "white",
         width: "100%",
-        margin: "1% 0% .1% 0%"
+        margin: "1% 0% 1% 0%"
     },
     groupPaperHeaderButton: {
         color: '#002472',

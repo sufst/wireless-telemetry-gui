@@ -88,13 +88,13 @@ export const SensorGraph = (props: {
                 top: 5,
                 right: 30,
                 left: 20,
-                bottom: 5
+                bottom: 20
             }}
             >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="time" domain={[props.xAxisDomainMin, props.xAxisDomainMax]} >
             {/* <XAxis dataKey="time"> */}
-                <Label value="Time (s)" offset={0} position="insideBottom" className={classes.sensorGraph}/>
+                <Label value="Time (s)" offset={0} position="bottom" className={classes.sensorGraph}/>
             </XAxis>
             <YAxis domain={[props.yAxisDomainMin, props.yAxisDomainMax]} >
                 <Label value={props.yAxisLabel} offset={0} position="insideLeft" angle={-90} className={classes.sensorGraph}/>
