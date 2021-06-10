@@ -27,6 +27,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   title: {
    flexGrow: 1,
+   fontWeight: 'bold'
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -45,6 +46,16 @@ export const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: 36,
+  },
+  usernameLabel: {
+    color: 'white',
+    marginRight: '1rem'
+  },
+  loginButton: {
+    backgroundColor: 'green'
+  },
+  logoutButton: {
+    backgroundColor: 'red'
   },
   hide: {
     display: 'none',

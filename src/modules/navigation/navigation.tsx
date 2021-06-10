@@ -16,8 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// React Imports 
-import React from 'react'
+// React - Redux Imports 
+import React, { useCallback } from 'react'
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { RootState } from 'redux/store';
 
 // Components Impors 
 import AppNavigationBar from './appbar';
@@ -31,20 +34,28 @@ import { useStyles } from './styles'
  */
 const AppNav = () => {
    const classes = useStyles(); 
+   const history = useHistory(); 
+
+   const selectUser = (state: RootState) => state.user;
+   const user = useSelector(selectUser); 
 
    const [open, setOpen] = React.useState(false);
   
-   const handleDrawerOpen = () => {
+   const handleDrawerOpen = useCallback(() => {
       setOpen(true);
-   };
-  
-   const handleDrawerClose = () => {
+   }, [])
+
+   const handleDrawerClose = useCallback(() => {
       setOpen(false);
-   };
+   }, [])
+
+   const handleAccountClick = useCallback(() => {
+      history.push('/account');
+   }, [history])
 
    return (
       <div className={classes.navigationRoot}>
-         <AppNavigationBar open={open} handleDrawerOpen={handleDrawerOpen}/>
+         <AppNavigationBar open={open} handleDrawerOpen={handleDrawerOpen} onAccountClick={handleAccountClick} user={user}/>
          SideBar
          <AppSideBar open={open} handleDrawerClose={handleDrawerClose} />
       </div>
