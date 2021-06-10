@@ -15,6 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
@@ -28,13 +29,15 @@ export const useStyles = makeStyles((theme) => ({
     },
     headerPaper: {
         margin: '1rem 1rem 0 1rem',
-        padding: '0.5rem'
+        padding: '0.5rem',
+        backgroundColor: '#292929'
     },
     startStopBtn: {
         marginLeft: '1rem',
     },
     newSessionWrapper: {
         margin: '1rem 1rem 0 1rem',
+        backgroundColor: '#292929'
     }, 
     newSessionSubmitBtn: {
         marginLeft: '0.5rem',

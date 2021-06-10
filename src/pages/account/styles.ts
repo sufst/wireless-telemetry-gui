@@ -53,13 +53,15 @@ export const subheaderStyle = (privilege?: UserPrivilege) => {
 
 export const avatarStyle = (privilege?: UserPrivilege) => {
   return {
-    backgroundColor: getPrivilegeColor(privilege)
+    backgroundColor: getPrivilegeColor(privilege), 
+    color: 'white'
   }
 }
 
 export const useStyles = makeStyles((theme) => ({
    cardRoot: {
-     marginTop: '1em'
+     marginTop: '1em',
+     backgroundColor: '#292929'
    },
    btn: {
       marginTop: '20px',
@@ -78,11 +80,4 @@ export const useStyles = makeStyles((theme) => ({
    line: {
      marginTop: '20px'
    },
-   deptTitle: {
-    color: 'black',
-    fontWeight: 'bold'
-  },
-  dept: {
-    color: 'black',
-  },
 }));

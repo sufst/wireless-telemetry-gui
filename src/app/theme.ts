@@ -16,20 +16,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Provider } from 'react-redux';
-import store from 'redux/store';
-import { AppContainer } from "./containers";
+import { createMuiTheme } from "@material-ui/core";
+import { blue } from "@material-ui/core/colors";
 
-import { ThemeProvider } from '@material-ui/core/styles';
-import theme from './theme';
+const theme = createMuiTheme({
+   palette: {
+      type: 'dark',
+      primary: blue
+   }
+})
 
-export const App = () => {   
-    return (
-        <Provider store={store}>
-            <ThemeProvider theme={theme}>
-                <AppContainer />
-            </ThemeProvider>
-        </Provider>
-    );
-} 
-
+export default theme; 
