@@ -16,13 +16,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Material UI Labs Imports
+// Module Imports
 import { Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
-import { useStyles } from "./styles";
-import { useSelector } from 'react-redux';
-import type { RootState } from 'redux/store';
+import { useSelector } from 'react-redux' 
 
+// Styles 
+import { useStyles } from "./styles";
+
+// Redux Imports
+import type { RootState } from 'redux/store';
 
 const AlertContainer = () => {
     const classes = useStyles();

@@ -18,6 +18,8 @@
 
 // Module Imports 
 import React, { useCallback } from 'react'
+import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 
 // Material UI Imports 
@@ -26,12 +28,16 @@ import { AppBar, Button, CssBaseline, IconButton, Toolbar, Typography } from '@m
 // Material UI Icon Imports
 import MenuIcon from '@material-ui/icons/Menu';
 
+// Styles
 import { useStyles } from './styles';
+
+// Redux Imports
 import { UserState } from 'redux/typing';
-import { useHistory } from 'react-router';
-import { useDispatch } from 'react-redux';
 import { logoutUser } from 'redux/slices/user';
 
+/**
+ * A Component that holds the top navigation bar of the application.
+ */
 const AppNavigationBar = (props: { handleDrawerOpen: () => void , open: boolean, onAccountClick: () => void, user: UserState }) =>  {
    const classes = useStyles(); 
    const history = useHistory(); 
@@ -40,7 +46,7 @@ const AppNavigationBar = (props: { handleDrawerOpen: () => void , open: boolean,
    const username = props.user.username;
 
    const loginLogoutButtonText = useCallback(() =>{
-      if (username === 'anonymous') {
+      if (username === 'anonymous' || username === undefined) {
          return 'Login'
       } 
 
@@ -48,7 +54,7 @@ const AppNavigationBar = (props: { handleDrawerOpen: () => void , open: boolean,
    }, [username])
 
    const onLoginLogoutButtonClick = useCallback(() => {
-      if (username === 'anonymous') {
+      if (username === 'anonymous' || username === undefined) {
          history.push('/login');
       } 
       else {
