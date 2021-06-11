@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) SUFST
+    Copyright (C) 2021 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,9 +35,10 @@ export const useStyles = makeStyles((theme) => ({
     },
     box: {
         color: 'white',
+        overflow: 'hidden',
         height: '120px',
         fontWeight: 'bold',
-        fontSize: '24px',
+        fontSize: '20px',
         borderRadius: '10px',
         backgroundColor: 'green',
         display: 'flex',

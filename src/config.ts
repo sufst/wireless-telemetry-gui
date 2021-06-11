@@ -17,4 +17,4 @@
 */
 
 // YOUR IP HERE 
-export const url: string = '192.168.1.17:5000';
+export const url: string = '192.168.1.22:5000';
