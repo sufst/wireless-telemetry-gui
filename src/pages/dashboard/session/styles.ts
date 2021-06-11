@@ -30,7 +30,11 @@ export const useStyles = makeStyles((theme) => ({
     headerPaper: {
         margin: '1rem 1rem 0 1rem',
         padding: '0.5rem',
-        backgroundColor: '#292929'
+        textAlign: 'center',
+        backgroundColor: '#292929',
+    },
+    currentSessionText: { 
+        color: '#eee'
     },
     startStopBtn: {
         marginLeft: '1rem',
@@ -44,6 +48,9 @@ export const useStyles = makeStyles((theme) => ({
     }, 
     newSessionTextField: {
         width: '40%'
+    },
+    sessionName: {
+        fontWeight: 'bold'
     },
     rootSessionPaper: {
         marginTop: '1rem'

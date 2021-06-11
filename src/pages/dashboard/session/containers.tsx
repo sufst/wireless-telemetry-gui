@@ -55,7 +55,7 @@ export const Session = () => {
 
     return (
         <Paper className={classes.rootSessionPaper}>
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Header name={sessionName}/>
                 </Grid>

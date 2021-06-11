@@ -36,7 +36,7 @@ export const Header = (props: { name: string }) => {
     return (
         <Paper className={classes.headerPaper}>
             <Typography variant="h6" gutterBottom>
-                {props.name}
+                <span className={classes.currentSessionText}>Current Session: </span><span className={classes.sessionName}>{props.name}</span>
             </Typography>
         </Paper>
     );
