@@ -19,6 +19,8 @@
 import { Box, Grid } from "@material-ui/core"
 import { useEffect } from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/store";
 import { Sensor, SensorData, SensorsState } from "redux/typing";
 import { useStyles } from "./styles"
 import { DashStatusItemColor, DashStatusItemText } from "./typing";
@@ -130,40 +132,40 @@ export const CurrentTime = () => {
     )
 }
 
-export const DashSensors = (props: { sensors: any }) => {
+export const DashSensorsItem = (props: { name: string }) => {
+    const classes = useStyles(); 
+
+    const sensorsSelector = (state: RootState) => state.sensors.sensors[props.name]; 
+    const sensor = useSelector(sensorsSelector); 
+
+    const data = sensor.data; 
+    const lastValue = data[data.length-1].value; 
+    
+    return (
+        <Grid item xs={2}>
+            <Box className={classes.sensorBox}>
+                <div>{sensor.meta.name}:<br/><span className={classes.sensorLastValue}>{lastValue} </span>{sensor.meta.units}</div>
+            </Box>
+        </Grid>
+    )
+}
+
+export const DashSensors = () => {
 
     const classes = useStyles(); 
-    const sensors = props.sensors; 
+
+    const names = ['rpm', 'water_temp_c', 'tps_perc', 'battery_mv', 'speed_kph', 'fuel_flow']
     
     return (
         <>
             <h2 className={classes.sensorsText}>Sensors</h2>
             <Grid container className={classes.gridContainer} spacing={2}>
-                <Grid item xs={2}>
-                    <Box className={classes.sensorBox}>
-                    </Box>
-                </Grid>
-                <Grid item xs={2}>
-                    <Box className={classes.sensorBox}>
-                    </Box>
-                </Grid>
-                <Grid item xs={2}>
-                    <Box className={classes.sensorBox}>
-                    </Box>
-                </Grid>
-                <Grid item xs={2}>
-                    <Box className={classes.sensorBox}>
-                    </Box>
-                </Grid>
-                <Grid item xs={2}>
-                    <Box className={classes.sensorBox}>
-                    </Box>
-                </Grid>
-                <Grid item xs={2}>
-                    <Box className={classes.sensorBox}>
-                        <span>TEMP: <span className={classes.status}>78</span></span>
-                    </Box>
-                </Grid>
+                <DashSensorsItem name={names[0]}/>
+                <DashSensorsItem name={names[1]}/>
+                <DashSensorsItem name={names[2]}/>
+                <DashSensorsItem name={names[3]}/>
+                <DashSensorsItem name={names[4]}/>
+                <DashSensorsItem name={names[5]}/>
             </Grid>
         </>
     )

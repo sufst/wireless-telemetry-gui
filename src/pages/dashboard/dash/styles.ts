@@ -60,6 +60,7 @@ export const useStyles = makeStyles((theme) => ({
         color: 'white',
         overflow: 'hidden',
         height: '120px',
+        textAlign: 'center',
         fontSize: '20px',
         borderRadius: '10px',
         backgroundColor: 'black',
@@ -75,4 +76,7 @@ export const useStyles = makeStyles((theme) => ({
         margin: '0',
         marginBottom: '0.5rem'
     },
+    sensorLastValue: {
+        fontWeight: 'bold'
+    }
 }));
