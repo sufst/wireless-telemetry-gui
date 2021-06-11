@@ -50,7 +50,7 @@ export const LoginFooter = () => {
     return (
        <>
           <Avatar className={classes.avatar}>
-             <LockOutlinedIcon />
+             <LockOutlinedIcon className={classes.lockIcon}/>
           </Avatar>
           <Typography component="h1" variant="h5">
              Please Login In
@@ -60,18 +60,20 @@ export const LoginFooter = () => {
  }
  
  export const UsernameField = () => {
-    return (
-       <TextField 
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="username"
-          label="Username"
-          autoComplete="root"
-          autoFocus
-       />
-    );
+   const classes = useStyles(); 
+
+   return (
+      <TextField 
+         variant="outlined"
+         margin="normal"
+         required
+         fullWidth
+         id="username"
+         label="Username"
+         autoComplete="root"
+         autoFocus
+      />
+   );
  }
  
  export const PasswordField = (props: { label: string, id: string }) => {

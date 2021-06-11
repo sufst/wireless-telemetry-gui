@@ -16,18 +16,19 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React from 'react';
 import { Provider } from 'react-redux';
 import store from 'redux/store';
-import {
-    AppContainer
-} from "./containers";
+import { AppContainer } from "./containers";
 
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from './theme';
 
 export const App = () => {   
     return (
         <Provider store={store}>
-            <AppContainer />
+            <ThemeProvider theme={theme}>
+                <AppContainer />
+            </ThemeProvider>
         </Provider>
     );
 } 

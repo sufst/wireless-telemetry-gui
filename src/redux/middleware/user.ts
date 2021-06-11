@@ -16,21 +16,23 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { loginUser } from "modules/api/login";
+// Module Imports
+import { Middleware } from "redux";
+
+// Redux Imports
 import { showAlert } from "../slices/alert";
 import { buildSensorsFromMeta, insertSensorsBulkData } from "../slices/sensors";
 import { SetUserAction } from "redux/typing";
-import { userGet } from "modules/api/user";
 import { setUser } from "../slices/user";
-import { Middleware } from "redux";
-import type {
-  SioOnMetaHander,
-  SioOnDataHandler,
-  UserGetResponse,
-} from "modules/api/typing";
-import { sioConnect } from "modules/api/sio";
+
+// Custom Imports
 import { createAlert } from "modules/alert/alert";
+import { loginUser } from "modules/api/login";
+import { userGet } from "modules/api/user";
+import { sioConnect } from "modules/api/sio";
 import { usersCreate } from "modules/api/users";
+import type { SioOnMetaHander, SioOnDataHandler, UserGetResponse } from "modules/api/typing";
+
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
 export const userMiddleware: Middleware<{}, any> =

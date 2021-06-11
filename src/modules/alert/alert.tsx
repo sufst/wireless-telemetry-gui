@@ -21,7 +21,7 @@ import AlertContainer from './containers';
 import { CreateAlert } from './typing';
 
 /**
- * Alert Types - (severity) - as specified from MUI Labs - Name of type to be specified
+ * Alert Levels - (severity) - as specified from MUI Labs - Name of type to be specified
  * 
  * "info": Blue Background in the Alert
  * "error": Red Background in the Alert 
@@ -35,6 +35,14 @@ const Alert = () => {
     )
 }
 
+/**
+ * Function to create a new Alert in the system
+ * 
+ * @param timeout the time in ms until the alert is dismissed
+ * @param level the level of the alert (info, error, success, warning)
+ * @param type the type of the alert (snack, alert)
+ * @param text the text to be shown in the alert
+ */
 export const createAlert: CreateAlert = (timeout, level, type, text) => {
     return {
         timeout, 

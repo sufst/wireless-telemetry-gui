@@ -28,6 +28,9 @@ export const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       backgroundColor: theme.palette.secondary.main,
     },
+    lockIcon: {
+      color: 'white'
+    },
     form: {
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),

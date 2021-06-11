@@ -72,7 +72,7 @@ const AccountContainer = (props: { user: UserState, onLogoutClick: () => void, o
                <CardContent className={classes.list}>
                   <List className={classes.list}>
                      <ListItemText>
-                        <span className={classes.deptTitle}>DEPARTMENT:</span> <span className={classes.dept}>{department}</span>
+                        <span>DEPARTMENT:</span> <span >{department}</span>
                      </ListItemText>
                      <ListItemText>
                         <Typography variant="body2" color="textSecondary" component="p">

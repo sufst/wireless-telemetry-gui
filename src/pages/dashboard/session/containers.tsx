@@ -28,6 +28,7 @@ import {
     NewSession,
     StartStop
 } from "./components";
+import { useStyles } from "./styles";
 
 export const Session = () => {
     // TODO: setName to be used later - disabled warning for now
@@ -35,27 +36,31 @@ export const Session = () => {
     const [name, setName] = useState(undefined);
     const [running, setRunning] = useState(false);
 
-    const headerName = name ?? "No Session";
+    const sessionName = name ?? "No Session";
     const startStopColour = running ? "secondary" : "primary";
-    const StartStopText = running ? "STOP" : "START";
+    const startStopText = running ? "STOP" : "START";
 
     const onStartStopClick = useCallback(() => {
         setRunning(!running);
     }, [running]);
 
     const onNewSubmit = useCallback((event) => {
-        console.log(event);
         event.preventDefault();
+        
+        const sessionName = event.target.sessionName.value; 
+        setName(sessionName); 
     }, []);
 
+    const classes = useStyles(); 
+
     return (
-        <Paper>
-            <Grid container spacing={3}>
+        <Paper className={classes.rootSessionPaper}>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Header name={headerName}/>
+                    <Header name={sessionName}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <StartStop colour={startStopColour} text={StartStopText} onClick={onStartStopClick}/>
+                    <StartStop colour={startStopColour} text={startStopText} onClick={onStartStopClick}/>
                 </Grid>
                 <Grid item xs={12}>
                     <NewSession onSubmit={onNewSubmit}/>

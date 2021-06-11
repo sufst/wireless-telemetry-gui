@@ -19,7 +19,7 @@
 import { makeStyles } from "@material-ui/core";
 
 // The width of the drawer when opened 
-const drawerWidth = 240;
+const DRAWER_WIDTH = 240;
 
 export const useStyles = makeStyles((theme) => ({
   navigationRoot: {
@@ -27,6 +27,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   title: {
    flexGrow: 1,
+   fontWeight: 'bold'
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -36,8 +37,8 @@ export const useStyles = makeStyles((theme) => ({
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: DRAWER_WIDTH,
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -46,16 +47,26 @@ export const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: 36,
   },
+  usernameLabel: {
+    color: 'white',
+    marginRight: '1rem'
+  },
+  loginButton: {
+    backgroundColor: 'green'
+  },
+  logoutButton: {
+    backgroundColor: 'red'
+  },
   hide: {
     display: 'none',
   },
   drawer: {
-    width: drawerWidth,
+    width: DRAWER_WIDTH,
     flexShrink: 0,
     whiteSpace: 'nowrap',
   },
   drawerOpen: {
-    width: drawerWidth,
+    width: DRAWER_WIDTH,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,

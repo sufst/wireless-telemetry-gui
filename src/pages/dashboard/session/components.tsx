@@ -31,10 +31,12 @@ import {
 } from "./styles";
 
 export const Header = (props: { name: string }) => {
+    const classes = useStyles(); 
+
     return (
-        <Paper>
+        <Paper className={classes.headerPaper}>
             <Typography variant="h6" gutterBottom>
-                {props.name}
+                <span className={classes.currentSessionText}>Current Session: </span><span className={classes.sessionName}>{props.name}</span>
             </Typography>
         </Paper>
     );
@@ -44,7 +46,7 @@ export const NewSession = (props: { onSubmit: (event: any) => void}) => {
     const classes = useStyles();
 
     return (
-        <Accordion>
+        <Accordion className={classes.newSessionWrapper}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
@@ -56,8 +58,8 @@ export const NewSession = (props: { onSubmit: (event: any) => void}) => {
             </AccordionSummary>
             <AccordionDetails>
                 <form className={classes.root} noValidate autoComplete="off" onSubmit={props.onSubmit}>
-                    <TextField id="standard-basic" label="Name"/>
-                    <Button type="submit" variant="contained" color="primary">
+                    <TextField id="sessionName" label="Name" className={classes.newSessionTextField}/>
+                    <Button type="submit" variant="contained" color="primary" className={classes.newSessionSubmitBtn}>
                         Submit
                     </Button>
                 </form>
@@ -67,10 +69,12 @@ export const NewSession = (props: { onSubmit: (event: any) => void}) => {
 }
 
 export const StartStop = (props: { onClick: () => void, colour: string, text: string }) => {
+    const classes = useStyles(); 
+
     return (
         // Seems typescript doesn't understand color
         // @ts-ignore
-        <Button variant="contained" color={props.colour} onClick={props.onClick}>
+        <Button variant="contained" color={props.colour} onClick={props.onClick} className={classes.startStopBtn}>
             {props.text}
         </Button>
     )

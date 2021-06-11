@@ -30,7 +30,8 @@ export const useStyles = makeStyles((theme) => ({
       minWidth: 120,
    },
    department_label: {
-      marginTop: '20px'
+      marginTop: '20px',
+      color: 'white'
    },
    department_select: {
       marginTop: '5px'
@@ -38,6 +39,7 @@ export const useStyles = makeStyles((theme) => ({
    avatar: {
       margin: theme.spacing(1),
       backgroundColor: theme.palette.secondary.main,
+      color: 'white'
    },
    form: {
       width: '100%', // Fix IE 11 issue.

@@ -28,7 +28,6 @@ import {
 }from "./styles";
 import { 
     Grid, 
-    Divider, 
     Paper
 } from '@material-ui/core';
 import { 
@@ -111,8 +110,10 @@ const SensorGraphContainer = (props: { name: string }) => {
     const dateEnd = new Date((date.valueOf() / 1000) + sensor.timeEndS);
     const timeXEnd = dateEnd.toTimeString().split(" ")[0] + ":" + dateEnd.getMilliseconds();
 
+    const classes = useStyles();
+
     return (
-        <Grid container alignItems="center" key={v4()} spacing={1}>
+        <Grid container alignItems="center" key={v4()} spacing={1} className={classes.sensorGraphContainerRoot}>
             <Grid item key={v4()} xs={2}>
                 {graphData.length > 0 ? <LiveValue key={v4()} value={Math.round(graphData[graphData.length - 1].value)}/> : <></>}
             </Grid>
@@ -143,7 +144,7 @@ const SensorPaperContainer = (props: { name: string }) => {
             <Grid container alignItems="center" key={v4()} spacing={1}>
                 <Grid item key={v4()} xs={12}>
                     <SensorPaperHeaderContainer key={v4()} name={props.name}/>
-                    <Divider light />
+                    {/* <Divider light /> */}
                 </Grid>
                 <Grid item key={v4()} xs={12}>
                     {sensor.isDisplay ? <SensorGraphContainer key={v4()} name={props.name}/> : <></>}

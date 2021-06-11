@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) SUFST
+    Copyright (C) 2021 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,14 +15,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-    },
-    heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightRegular,
-    },
-}));
+import { createMuiTheme } from "@material-ui/core";
+import { blue } from "@material-ui/core/colors";
+
+const theme = createMuiTheme({
+   palette: {
+      type: 'dark',
+      primary: blue
+   }
+})
+
+export default theme; 

@@ -16,27 +16,29 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React, { useEffect } from 'react';
-import {
-    BrowserRouter as Router, 
-    Route, 
-    Switch, 
-    Redirect 
-} from "react-router-dom";
-import { Paper } from '@material-ui/core';
+// Module Imports
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
+// Material UI Imports
+import { Paper } from '@material-ui/core';
+
+// Component Imports
 import { Dashboard } from "pages/dashboard/index";
 import Account from 'pages/account/';
 import { SignIn } from "pages/signin/index";
 import AppNavigation from "modules/navigation/navigation";
-import { useStyles } from "./styles";
+import { Register } from 'pages/registration';
 import Alert from 'modules/alert/alert';
+
+// Styles
+import { useStyles } from "./styles";
+
+// Redux Imports
 import { loginUser } from 'redux/slices/user';
 import type { RootState } from 'redux/store';
-import { Register } from 'pages/registration';
-
 
 const AppRouterSwitch = () => {
     const classes = useStyles();
@@ -59,24 +61,24 @@ const AppRouterSwitch = () => {
             <Route path="/" exact>
                 <Redirect to="/dashboard"/>
             </Route>
-            <Route path="/login">
+            <Route path="/login" exact>
                 <Paper className={classes.viewPaper} >
                     <SignIn />
                 </Paper>
             </Route>
-            <Route path="/register">
+            <Route path="/register" exact>
                 <Paper className={classes.viewPaper} >
                     <Alert /> 
                     <Register />
                 </Paper>
             </Route>
-            <Route path={"/dashboard"} exact>
+            <Route path="/dashboard" exact>
                 <Paper className={classes.viewPaper}>
                     <Alert /> 
                     <Dashboard/>
                 </Paper> 
             </Route>
-            <Route path={"/account"} exact>
+            <Route path="/account" exact>
                 <Paper className={classes.viewPaper}>
                     <Alert /> 
                     {user.username === undefined || user.username === 'anonymous' ? <SignIn /> : <Account/> }

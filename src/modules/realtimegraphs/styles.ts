@@ -23,34 +23,38 @@ export const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    sensorPaperHeader: {
-
+    sensorGraphContainerRoot: {
+        paddingBottom: '25px',
+        backgroundColor: '#292929'
     },
     sensorPaperHeaderButton: {
-        color: 'black',
+        color: 'white',
         width: "10%"
     },
     sensorPaperHeaderTitle: {
         textAlign: "left",
-        color: '#002472',
+        color: 'white',
         width: "90%",
+        fontWeight: 'bold',
         fontSize: 23,
         margin: "0% 0% 0% 5%"
     },
     sensorGraph: {
-        fontSize: 23
+        fontSize: 28,
+        color: 'white',
+        fill: 'white'
     },
     sensorLiveValue: {
         textAlign: "left",
-        color: '#002472',
+        color: 'white',
         width: "90%",
         margin: "0% 0% 0% 10%"
     },
     sensorPaper: {
         textAlign: "center",
-        background: "white",
+        background: "#292929",
         width: "100%",
-        margin: "1% 0% .1% 0%"
+        margin: "1% 0% 1% 0%"
     },
     groupPaperHeaderButton: {
         color: '#002472',
@@ -58,17 +62,17 @@ export const useStyles = makeStyles((theme) => ({
     },
     groupPaperHeaderTitle: {
         textAlign: "center",
-        color: '#002472',
+        color: 'white',
         width: "90%",
         fontSize: 33
     },
     groupPaperHeader: {
-        background: "#d0d0d2",
+        background: "#292929",
         textAlign: "center",
         margin: "1% 0% 1% 0%"
     },
     groupPaper: {
         width: "99.9%",
-        background: '#003366',
+        background: '#292929',
     }
 }));

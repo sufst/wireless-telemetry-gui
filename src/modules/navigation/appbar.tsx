@@ -17,23 +17,50 @@
 */
 
 // Module Imports 
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 
 // Material UI Imports 
-import { AppBar, Badge, CssBaseline, IconButton, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Button, CssBaseline, IconButton, Toolbar, Typography } from '@material-ui/core'
 
 // Material UI Icon Imports
 import MenuIcon from '@material-ui/icons/Menu';
-import LockIcon from '@material-ui/icons/Lock';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 
+// Styles
 import { useStyles } from './styles';
 
-const AppNavigationBar = (props: { handleDrawerOpen: () => void , open: boolean }) =>  {
+// Redux Imports
+import { UserState } from 'redux/typing';
+import { logoutUser } from 'redux/slices/user';
+
+/**
+ * A Component that holds the top navigation bar of the application.
+ */
+const AppNavigationBar = (props: { handleDrawerOpen: () => void , open: boolean, onAccountClick: () => void, user: UserState }) =>  {
    const classes = useStyles(); 
+   const history = useHistory(); 
+   const dispatch = useDispatch(); 
+
+   const username = props.user.username;
+
+   const loginLogoutButtonText = useCallback(() =>{
+      if (username === 'anonymous' || username === undefined) {
+         return 'Login'
+      } 
+
+      return 'Logout'
+   }, [username])
+
+   const onLoginLogoutButtonClick = useCallback(() => {
+      if (username === 'anonymous' || username === undefined) {
+         history.push('/login');
+      } 
+      else {
+         dispatch(logoutUser())
+      }
+   }, [username, history, dispatch])
 
    return (
       <div>
@@ -59,26 +86,10 @@ const AppNavigationBar = (props: { handleDrawerOpen: () => void , open: boolean 
                <Typography variant="h6" noWrap className={classes.title}>
                   SUFST Wireless GUI
                </Typography>
-               <IconButton aria-label="" color="inherit">
-                  <Badge color="secondary">
-                     <NotificationsIcon />
-                  </Badge>
-               </IconButton>
-               <IconButton aria-label="" color="inherit">
-                  <Badge color="secondary">
-                     <NotificationsActiveIcon />
-                  </Badge>
-               </IconButton>
-               <IconButton aria-label="" color="inherit">
-                  <Badge color="secondary">
-                     <NotificationsNoneIcon />
-                  </Badge>
-               </IconButton>
-               <IconButton aria-label="login" color="inherit">
-                  <Badge color="secondary">
-                     <LockIcon />
-                  </Badge>
-               </IconButton>
+               <Typography className={classes.usernameLabel} variant='h6'>
+                  {username === 'anonymous' ? '' : username} 
+               </Typography>
+               <Button variant='contained' disableElevation color="secondary"  onClick={onLoginLogoutButtonClick} className={username === 'anonymous' ? classes.loginButton : classes.logoutButton}>{loginLogoutButtonText()}</Button>
             </Toolbar>
          </AppBar>
       </div>
