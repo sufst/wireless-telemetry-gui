@@ -19,7 +19,7 @@
 import { Box, Grid } from "@material-ui/core"
 import { useEffect } from "react";
 import { useState } from "react";
-import { SensorData } from "redux/typing";
+import { Sensor, SensorData, SensorsState } from "redux/typing";
 import { useStyles } from "./styles"
 import { DashStatusItemColor, DashStatusItemText } from "./typing";
 
@@ -127,5 +127,44 @@ export const CurrentTime = () => {
 
     return (
         <p className={classes.currentTimeText}>Current Time: <span className={classes.time}>{time.toLocaleTimeString()}</span></p>
+    )
+}
+
+export const DashSensors = (props: { sensors: any }) => {
+
+    const classes = useStyles(); 
+    const sensors = props.sensors; 
+    
+    return (
+        <>
+            <h2 className={classes.sensorsText}>Sensors</h2>
+            <Grid container className={classes.gridContainer} spacing={2}>
+                <Grid item xs={2}>
+                    <Box className={classes.sensorBox}>
+                    </Box>
+                </Grid>
+                <Grid item xs={2}>
+                    <Box className={classes.sensorBox}>
+                    </Box>
+                </Grid>
+                <Grid item xs={2}>
+                    <Box className={classes.sensorBox}>
+                    </Box>
+                </Grid>
+                <Grid item xs={2}>
+                    <Box className={classes.sensorBox}>
+                    </Box>
+                </Grid>
+                <Grid item xs={2}>
+                    <Box className={classes.sensorBox}>
+                    </Box>
+                </Grid>
+                <Grid item xs={2}>
+                    <Box className={classes.sensorBox}>
+                        <span>TEMP: <span className={classes.status}>78</span></span>
+                    </Box>
+                </Grid>
+            </Grid>
+        </>
     )
 }

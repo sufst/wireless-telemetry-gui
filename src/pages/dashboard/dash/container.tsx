@@ -19,7 +19,7 @@
 import { Grid, Paper } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
-import { DashStatusItem, CurrentTime } from "./components";
+import { DashStatusItem, CurrentTime, DashSensors } from "./components";
 import { useStyles } from "./styles";
 
 
@@ -43,16 +43,24 @@ const Dash = () => {
     const loggingSelector = (state: RootState) => state.sensors.sensors[_log]?.data;
     const loggingSensorData = useSelector(loggingSelector);
 
+    const sensorsSelector = (state: RootState) => state.sensors.sensors; 
+    const sensors = useSelector(sensorsSelector); 
+
     return (
-        <Paper className={classes.rootPaper}>
-            <CurrentTime />
-            <Grid container spacing={3} className={classes.gridContainer}>
-                <DashStatusItem name="ECU" data={ecuSensorData}/>
-                <DashStatusItem name="ENGINE" data={engineSensorData}/>
-                <DashStatusItem name="BATTERY" data={batterySensorData}/>
-                <DashStatusItem name="LOGGING" data={loggingSensorData}/>
-            </Grid>
-        </Paper>
+        <>
+            <Paper className={classes.rootPaper}>
+                <CurrentTime />
+                <Grid container spacing={3} className={classes.gridContainer}>
+                    <DashStatusItem name="ECU" data={ecuSensorData}/>
+                    <DashStatusItem name="ENGINE" data={engineSensorData}/>
+                    <DashStatusItem name="BATTERY" data={batterySensorData}/>
+                    <DashStatusItem name="LOGGING" data={loggingSensorData}/>
+                </Grid>
+            </Paper>
+            <Paper className={classes.rootPaper}>
+                <DashSensors sensors={sensors} />
+            </Paper>
+        </>
     )
 }
 

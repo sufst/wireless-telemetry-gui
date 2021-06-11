@@ -55,5 +55,24 @@ export const useStyles = makeStyles((theme) => ({
     }, 
     time: {
         fontWeight: 'bold'
-    }
+    }, 
+    sensorBox: {
+        color: 'white',
+        overflow: 'hidden',
+        height: '120px',
+        fontSize: '20px',
+        borderRadius: '10px',
+        backgroundColor: 'black',
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+    }, 
+    sensorsText: {
+        margin: '0',
+        marginBottom: '0.5rem'
+    },
 }));
