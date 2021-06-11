@@ -27,7 +27,6 @@ export const useStyles = makeStyles((theme) => ({
         background: '#292929'
     }, 
     gridContainer: {
-        marginTop: '0.5rem',
         marginBottom: '0.5rem'
     },
     item: {
@@ -49,6 +48,12 @@ export const useStyles = makeStyles((theme) => ({
         bottom: 0,
     },
     status: {
+        fontWeight: 'bold'
+    }, 
+    currentTimeText: {
+        fontSize: '20px'
+    }, 
+    time: {
         fontWeight: 'bold'
     }
 }));

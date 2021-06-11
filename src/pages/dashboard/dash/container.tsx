@@ -16,10 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Box, Grid, Paper } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
-import { DashStatusItem } from "./components";
+import { DashStatusItem, CurrentTime } from "./components";
 import { useStyles } from "./styles";
 
 
@@ -31,20 +31,21 @@ const Dash = () => {
 
     const classes = useStyles(); 
 
-    const ecuSelector = (state: RootState) => state.sensors.sensors[_ecu].data;
+    const ecuSelector = (state: RootState) => state.sensors.sensors[_ecu]?.data;
     const ecuSensorData = useSelector(ecuSelector);
 
-    const engineSelector = (state: RootState) => state.sensors.sensors[_engine].data;
+    const engineSelector = (state: RootState) => state.sensors.sensors[_engine]?.data;
     const engineSensorData = useSelector(engineSelector);
 
-    const batterySelector = (state: RootState) => state.sensors.sensors[_battery].data;
+    const batterySelector = (state: RootState) => state.sensors.sensors[_battery]?.data;
     const batterySensorData = useSelector(batterySelector);
 
-    const loggingSelector = (state: RootState) => state.sensors.sensors[_log].data;
+    const loggingSelector = (state: RootState) => state.sensors.sensors[_log]?.data;
     const loggingSensorData = useSelector(loggingSelector);
 
     return (
         <Paper className={classes.rootPaper}>
+            <CurrentTime />
             <Grid container spacing={3} className={classes.gridContainer}>
                 <DashStatusItem name="ECU" data={ecuSensorData}/>
                 <DashStatusItem name="ENGINE" data={engineSensorData}/>

@@ -17,6 +17,8 @@
 */
 
 import { Box, Grid } from "@material-ui/core"
+import { useEffect } from "react";
+import { useState } from "react";
 import { SensorData } from "redux/typing";
 import { useStyles } from "./styles"
 import { DashStatusItemColor, DashStatusItemText } from "./typing";
@@ -24,11 +26,13 @@ import { DashStatusItemColor, DashStatusItemText } from "./typing";
 export const DashStatusItem = (props: { name: string, data: SensorData[] }) => {
     const classes = useStyles(); 
 
-    const { name, data } = props; 
-    const lastValue = data[data.length-1].value; 
+    const name = props.name; 
+    const data = props.data ?? [];
+    
+    const lastValue = data[data?.length-1]?.value; 
 
-    let background: DashStatusItemColor = 'grey'; 
-    let text: DashStatusItemText = 'INACTIVE'; 
+    let background: DashStatusItemColor = 'rgba(0, 0, 0, 0.5)'
+    let text: DashStatusItemText = ' '; 
 
     const checkECU = () => {
         if (lastValue === 1) {
@@ -103,5 +107,25 @@ export const DashStatusItem = (props: { name: string, data: SensorData[] }) => {
                 <span>{props.name}: <span className={classes.status}>{text}</span></span>
             </Box>
         </Grid>
+    )
+}
+
+export const CurrentTime = () => {
+
+    let [time, setTime] = useState(new Date()); 
+
+    const classes = useStyles(); 
+
+    useEffect(() => {
+        let timer = setInterval(() => setTime(new Date()), 1000)
+        
+        return function cleanup() {
+            clearInterval(timer);
+        }
+    })
+
+
+    return (
+        <p className={classes.currentTimeText}>Current Time: <span className={classes.time}>{time.toLocaleTimeString()}</span></p>
     )
 }
