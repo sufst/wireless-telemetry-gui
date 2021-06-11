@@ -17,13 +17,9 @@
 */
 
 import { Box, Grid } from "@material-ui/core"
-import { CheckCircleOutline } from "@material-ui/icons";
-import { useCallback, useEffect, useRef } from "react";
 import { SensorData } from "redux/typing";
 import { useStyles } from "./styles"
-
-export type DashStatusItemColor = 'grey' | 'red' | 'green' | 'orange'
-export type DashStatusItemText = 'IDLE' | 'INACTIVE' | 'ACTIVE' | 'CONNECTED' | 'DISCONNECTED' | 'LOW' | 'HEALTHY'
+import { DashStatusItemColor, DashStatusItemText } from "./typing";
 
 export const DashStatusItem = (props: { name: string, data: SensorData[] }) => {
     const classes = useStyles(); 
@@ -100,11 +96,11 @@ export const DashStatusItem = (props: { name: string, data: SensorData[] }) => {
     }
     
     return (
-        <Grid item xs={3} className={classes.item}>
+        <Grid item lg={3} xs={12} sm={6} className={classes.item}>
             <Box className={classes.box} style={{
                 backgroundColor: background
             }}>
-                <span>{props.name}: {text}</span>
+                <span>{props.name}: <span className={classes.status}>{text}</span></span>
             </Box>
         </Grid>
     )

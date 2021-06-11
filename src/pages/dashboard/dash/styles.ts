@@ -37,7 +37,6 @@ export const useStyles = makeStyles((theme) => ({
         color: 'white',
         overflow: 'hidden',
         height: '120px',
-        fontWeight: 'bold',
         fontSize: '20px',
         borderRadius: '10px',
         backgroundColor: 'green',
@@ -48,5 +47,8 @@ export const useStyles = makeStyles((theme) => ({
         left: 0,
         right: 0,
         bottom: 0,
+    },
+    status: {
+        fontWeight: 'bold'
     }
 }));
