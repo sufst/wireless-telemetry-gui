@@ -138,13 +138,13 @@ export const DashSensorsItem = (props: { name: string }) => {
     const sensorsSelector = (state: RootState) => state.sensors.sensors[props.name]; 
     const sensor = useSelector(sensorsSelector); 
 
-    const data = sensor.data; 
-    const lastValue = data[data.length-1].value; 
+    const data = sensor?.data ?? []; 
+    const lastValue = data[data?.length-1]?.value;  
     
     return (
         <Grid item xs={2}>
             <Box className={classes.sensorBox}>
-                <div>{sensor.meta.name}:<br/><span className={classes.sensorLastValue}>{lastValue} </span>{sensor.meta.units}</div>
+                <div>{sensor?.meta?.name}:<br/><span className={classes.sensorLastValue}>{lastValue} </span>{sensor?.meta?.units}</div>
             </Box>
         </Grid>
     )
