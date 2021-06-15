@@ -19,7 +19,6 @@
 import { Grid, Paper } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
-import { Sensor } from "redux/typing";
 import { DashStatusItem, CurrentTime, DashSensors } from "./components";
 import { useStyles } from "./styles";
 
@@ -43,9 +42,6 @@ const Dash = () => {
 
     const loggingSelector = (state: RootState) => state.sensors.sensors[_log]?.data;
     const loggingSensorData = useSelector(loggingSelector);
-
-    const sensorsSelector = (state: RootState) => state.sensors.sensors; 
-    const sensors = useSelector(sensorsSelector); 
 
     return (
         <>

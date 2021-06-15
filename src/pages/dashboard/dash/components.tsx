@@ -21,7 +21,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
-import { Sensor, SensorData, SensorsState } from "redux/typing";
+import { SensorData  } from "redux/typing";
 import { useStyles } from "./styles"
 import { DashStatusItemColor, DashStatusItemText } from "./typing";
 
@@ -124,7 +124,7 @@ export const CurrentTime = () => {
         return function cleanup() {
             clearInterval(timer);
         }
-    })
+    }, [time])
 
 
     return (
@@ -158,7 +158,7 @@ export const DashSensors = () => {
     
     return (
         <>
-            <h2 className={classes.sensorsText}>Sensors</h2>
+            <p className={classes.sensorsText}>Sensors</p>
             <Grid container className={classes.gridContainer} spacing={2}>
                 <DashSensorsItem name={names[0]}/>
                 <DashSensorsItem name={names[1]}/>

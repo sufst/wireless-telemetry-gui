@@ -51,7 +51,10 @@ export const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold'
     }, 
     currentTimeText: {
-        fontSize: '20px'
+        fontSize: '20px',
+        margin: '0',
+        marginBottom: '0.5rem',
+        padding: '0'
     }, 
     time: {
         fontWeight: 'bold'
@@ -74,7 +77,8 @@ export const useStyles = makeStyles((theme) => ({
     }, 
     sensorsText: {
         margin: '0',
-        marginBottom: '0.5rem'
+        marginBottom: '0.5rem',
+        fontSize: '20px'
     },
     sensorLastValue: {
         fontWeight: 'bold'

@@ -31,8 +31,14 @@ import { RootState } from "redux/store";
 import Dash from '../dash/container';
 
 export const DashboardHeader = () => {
-    const viewTabs = React.useRef([[<Session key={v4()} />, <Tab key={v4()} label = "Session"/>], [<Dash key={v4()} />, <Tab key={v4()} label = "Dash"/>]]);
-    const tabNames = React.useRef(["Session", "Dash"]);  
+
+    // Tabs 
+    const viewTabs = React.useRef([
+        [<Dash key={v4()} />, <Tab key={v4()} label = "Dash"/>], 
+        [<Session key={v4()} />, <Tab key={v4()} label = "Session"/>]
+    ]);
+
+    const tabNames = React.useRef(["Dash", "Session"]);  
 
     const selectGroups = (state: RootState) => state.sensors.groups;
     const groups = useSelector(selectGroups); 
