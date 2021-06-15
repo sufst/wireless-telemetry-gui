@@ -1,7 +1,11 @@
 {
-  "name": "my-app",
+  "name": "sufst-wireless-telemetry-gui",
   "version": "0.1.0",
+  "description": "A Wireless Telemetry Application used for monitoring car sensor data for Southampton University's Formula Student Team - SUFST",
+  "author": "Electronics Department - SUFST",
+  "license": "GPL-3.0-or-later",
   "private": true,
+  "homepage": "https://github.com/sufst/wireless-telemetry-gui",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",

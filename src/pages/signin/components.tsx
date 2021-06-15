@@ -60,8 +60,6 @@ export const LoginFooter = () => {
  }
  
  export const UsernameField = () => {
-   const classes = useStyles(); 
-
    return (
       <TextField 
          variant="outlined"

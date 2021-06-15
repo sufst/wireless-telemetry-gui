@@ -84,7 +84,7 @@ const AppNavigationBar = (props: { handleDrawerOpen: () => void , open: boolean,
                   <MenuIcon />
                </IconButton>
                <Typography variant="h6" noWrap className={classes.title}>
-                  SUFST Wireless GUI
+                  SUFST Telemetry
                </Typography>
                <Typography className={classes.usernameLabel} variant='h6'>
                   {username === 'anonymous' ? '' : username} 

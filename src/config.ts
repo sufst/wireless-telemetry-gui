@@ -16,5 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// YOUR IP HERE 
-export const url: string = '192.168.1.17:5000';
+/**
+ * BACK-END SERVER IP HERE 
+ * 
+ * FORMAT: '<ip>:5000'
+ * EXAMPLE: '192.168.1.26:5000'
+ */
+export const url: string = '192.168.1.35:5000';
