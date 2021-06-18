@@ -16,13 +16,38 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import { url } from "config";
+
 import {
     LoginUser
 } from "./typing";
 
-export const loginUser: LoginUser = (username, password) => {    
-    return new Promise((resolve, reject) => 
-    fetch(`http://${url}/login/${username}`, {
+// export const loginUser: LoginUser = (username, password) => {    
+//     return new Promise((resolve, reject) => 
+    // fetch(`http://${url}/login/${username}`, {
+    //     method: "POST",
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //         password: password
+    //     })
+    // })
+//     .then((response) => {    
+//         if (!response.ok) {
+//             throw response.statusText;
+//         }
+//         return response.json();
+//     })
+//     .then((data: { access_token: string}) => {     
+//         resolve(data.access_token)
+//     })
+//     .catch((error: Error) => {
+//         reject(error)
+//     }));
+// }
+
+export const loginUser: LoginUser = async (username, password) => {
+    const response = await fetch(`http://${url}/login/${username}`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -31,16 +56,7 @@ export const loginUser: LoginUser = (username, password) => {
             password: password
         })
     })
-    .then((response) => {    
-        if (!response.ok) {
-            throw response.statusText;
-        }
-        return response.json();
-    })
-    .then((data: { access_token: string}) => {     
-        resolve(data.access_token)
-    })
-    .catch((error: Error) => {
-        reject(error)
-    }));
+    
+    const data = await response.json(); 
+    return data; 
 }
