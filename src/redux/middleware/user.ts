@@ -28,81 +28,54 @@ import { setUser } from "../slices/user";
 // Custom Imports
 import { createAlert } from "modules/alert/alert";
 import { loginUser } from "modules/api/login";
-import { userGet } from "modules/api/user";
+import { getUser } from "modules/api/user";
 import { sioConnect } from "modules/api/sio";
 import { usersCreate } from "modules/api/users";
 import type { SioOnMetaHander, SioOnDataHandler, UserGetResponse } from "modules/api/typing";
 
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
-export const userMiddleware: Middleware<{}, any> =
-  (storeAPI) => (next) => (action) => {
+export const userMiddleware: Middleware<{}, any> = 
+  (storeAPI) => (next) => async (action) => {
     if (action.type === "user/loginUser") {
       const { username, password } = action.payload;
 
-      loginUser(username, password)
-        .then((accessToken: string) => {
+      const accessToken = await loginUser(username, password); 
 
-          const successAlert = createAlert(3000, "success", "snack", `Login Success! ${username} successfully logged in!`); 
-
-          storeAPI.dispatch(showAlert(successAlert));
-
-          const onMeta: SioOnMetaHander = (meta) => {
-            storeAPI.dispatch(buildSensorsFromMeta(meta));
-          };
-
-          const onData: SioOnDataHandler = (data) => {
-            storeAPI.dispatch(insertSensorsBulkData(data));
-          };
-
-          sioConnect(
-            accessToken,
-            (meta) => onMeta(meta),
-            (data) => onData(data)
-          );
-
-          if (username !== "anonymous") {
-            userGet(accessToken)
-            .then((data: UserGetResponse) => {      
-              const user: SetUserAction = {
-                username: data.username,
-                accessToken: accessToken,
-                creation: data.creation,
-                department: data.department,
-                privilege: data.privilege,
-                meta: JSON.parse(data.meta),
-              };
-
-              storeAPI.dispatch(setUser(user));
-            })
-            .catch((error: Error) => {
-              const getFailedAlert = createAlert(3000, "error", "snack", `Failed to get user details :(`); 
-
-              storeAPI.dispatch(showAlert(getFailedAlert));
-
-              console.error(error);
-            });
-          } else {
-            const user: SetUserAction = {
-                username,
-                accessToken,
-                creation: new Date().valueOf() / 1000,
-                privilege: "Anon",
-                department: "NON SPECIFIED",
-                meta: {},
-            };
-
-            storeAPI.dispatch(setUser(user));
-          }
-        })
-        .catch((error: Error) => {
-          console.log(error);
-        
-          const loginFailedAlert = createAlert(3000, "error", "alert", "Login Failed :( Make sure your credentials are correct!"); 
-
-          storeAPI.dispatch(showAlert(loginFailedAlert));
-        });
+      if (accessToken === undefined) {
+        const loginFailedAlert = createAlert(3000, "error", "alert", "Login Failed :( Make sure your credentials are correct!"); 
+        storeAPI.dispatch(showAlert(loginFailedAlert));
+        return next(action);
+      } 
       
+      const successAlert = createAlert(3000, "success", "snack", `Login Success! ${username} successfully logged in!`); 
+
+      storeAPI.dispatch(showAlert(successAlert));
+
+      const onMeta: SioOnMetaHander = (meta) => {
+        storeAPI.dispatch(buildSensorsFromMeta(meta));
+      };
+
+      const onData: SioOnDataHandler = (data) => {
+        storeAPI.dispatch(insertSensorsBulkData(data));
+      };
+
+      sioConnect(
+        accessToken,
+        (meta) => onMeta(meta),
+        (data) => onData(data)
+      );
+
+      const user = await getUser(username, accessToken);
+      
+      if(user == null) {
+        const getFailedAlert = createAlert(3000, "error", "snack", `Failed to get user details :(`); 
+        storeAPI.dispatch(showAlert(getFailedAlert));
+      }  
+      else {
+        storeAPI.dispatch(setUser(user))
+      }
+
       return next(action);
     } 
 
