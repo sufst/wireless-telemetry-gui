@@ -15,26 +15,34 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 import { url } from "config";
 import type { SessionsGet, SessionsGetResponse } from "./typing";
 
-export const sessionsGet: SessionsGet = () => {
-  return new Promise((resolve, reject) =>
-    fetch(`http://${url}/sessions`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw response.statusText;
-        }
-        return response.json();
-      })
-      .then((data: SessionsGetResponse) => {
-        resolve(data);
-      })
-      .catch((error: Error) => reject(error))
-  );
+const handleSessionsGet = async () => {
+  const response = await fetch(`http://${url}/sessions`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+
+  if(!response.ok) {
+    throw response.statusText; 
+  }
+
+  const data = await response.json(); 
+  return data;
+}
+
+export const sessionsGet: SessionsGet = async () => {
+
+  try {
+    const sessionResponse = await handleSessionsGet(); 
+    return sessionResponse; 
+  } 
+  catch (statusText) {
+    console.log('Error in Sessions GET: ', statusText);
+    return null;
+  }
 };

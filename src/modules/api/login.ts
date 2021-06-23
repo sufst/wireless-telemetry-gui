@@ -15,14 +15,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { url } from "config";
-import {
-    LoginUser
-} from "./typing";
 
-export const loginUser: LoginUser = (username, password) => {    
-    return new Promise((resolve, reject) => 
-    fetch(`http://${url}/login/${username}`, {
+import { url } from "config";
+import { LoginUser } from "./typing";
+
+const handleLoginUser: LoginUser = async (username, password) => {
+    const response = await fetch(`http://${url}/login/${username}`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -31,16 +29,26 @@ export const loginUser: LoginUser = (username, password) => {
             password: password
         })
     })
-    .then((response) => {    
-        if (!response.ok) {
-            throw response.statusText;
-        }
-        return response.json();
-    })
-    .then((data: { access_token: string}) => {     
-        resolve(data.access_token)
-    })
-    .catch((error: Error) => {
-        reject(error)
-    }));
+
+    if(!response.ok) {
+        throw response.statusText; 
+    } 
+
+    const data = await response.json(); 
+    return data;
+}
+
+export const loginUser = async (username: string, password: string) => {
+
+    let token = undefined; 
+    
+    try {
+        const data = await handleLoginUser(username, password); 
+        token = data.access_token
+    } 
+    catch(statusCode) {
+        console.error('Error Logging in:', statusCode);
+    }
+    
+    return token; 
 }

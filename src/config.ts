@@ -22,4 +22,4 @@
  * FORMAT: '<ip>:5000'
  * EXAMPLE: '192.168.1.26:5000'
  */
-export const url: string = '192.168.1.35:5000';
+export const url: string = '192.168.1.24:5000';
