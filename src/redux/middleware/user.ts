@@ -22,8 +22,7 @@ import { Middleware } from "redux";
 // Redux Imports
 import { showAlert } from "../slices/alert";
 import { buildSensorsFromMeta, insertSensorsBulkData } from "../slices/sensors";
-import { SetUserAction } from "redux/typing";
-import user, { setUser } from "../slices/user";
+import { setUser } from "../slices/user";
 
 // Custom Imports
 import { createAlert } from "modules/alert/alert";
@@ -31,8 +30,7 @@ import { loginUser } from "modules/api/login";
 import { getUser } from "modules/api/user";
 import { sioConnect } from "modules/api/sio";
 import { usersCreate } from "modules/api/users";
-import type { SioOnMetaHander, SioOnDataHandler, UserGetResponse } from "modules/api/typing";
-
+import type { SioOnMetaHander, SioOnDataHandler } from "modules/api/typing";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
 export const userMiddleware: Middleware<{}, any> = 
