@@ -23,7 +23,7 @@ import { Middleware } from "redux";
 import { showAlert } from "../slices/alert";
 import { buildSensorsFromMeta, insertSensorsBulkData } from "../slices/sensors";
 import { SetUserAction } from "redux/typing";
-import { setUser } from "../slices/user";
+import user, { setUser } from "../slices/user";
 
 // Custom Imports
 import { createAlert } from "modules/alert/alert";
@@ -80,25 +80,20 @@ export const userMiddleware: Middleware<{}, any> =
     } 
 
     if (action.type === "user/registerNewUser") {
-      console.log('Catching From MiddleWare');
-
       const { username, password, privilege, department } = action.payload; 
       const accessToken = storeAPI.getState().user.accessToken; 
-    
-      usersCreate(username, password, privilege, department, {}, accessToken)
-        .then((response: any) => {
-          console.log(response);
 
-          const registerSuccessAlert = createAlert(3000, "success", "alert", "Success!! You can logout and login again with the new account."); 
+      const success = await usersCreate(username, password, privilege, department, {}, accessToken); 
 
-          storeAPI.dispatch(showAlert(registerSuccessAlert));
-        })
-        .catch((error: Error) => {
-          console.log('REGISTER ERROR: ', error); 
-          const registerFailedAlert = createAlert(3000, "error", "alert", "Something went wrong when creating a new user :("); 
+      if (success) {
+        const registerSuccessAlert = createAlert(3000, "success", "alert", "Success!! You can logout and login again with the new account."); 
 
-          storeAPI.dispatch(showAlert(registerFailedAlert));
-        })
+        storeAPI.dispatch(showAlert(registerSuccessAlert));
+      } else {
+        const registerFailedAlert = createAlert(3000, "error", "alert", "Something went wrong when creating a new user :("); 
+
+        storeAPI.dispatch(showAlert(registerFailedAlert))
+      }
     }
 
     return next(action);

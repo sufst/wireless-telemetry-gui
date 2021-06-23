@@ -15,12 +15,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { url } from "config";
-import { userMiddleware } from "redux/middleware/user";
-import { SetUserAction, UserState } from "redux/typing";
-import { UserGet, UserGetResponse, UserPatch } from "./typing";
 
-export const handleGetUser: UserGet = async (accessToken) => {
+import { url } from "config";
+import { SetUserAction } from "redux/typing";
+import { UserGet, UserPatch } from "./typing";
+
+const handleGetUser: UserGet = async (accessToken) => {
   const response = await fetch(`http://${url}/user`, {
     method: "GET",
     headers: {
@@ -54,8 +54,7 @@ export const getUser = async (username: string, accessToken: string) => {
 
   try {
     const data = await handleGetUser(accessToken); 
-    console.log(data);
-    
+        
     user.username = data.username
     user.creation = data.creation
     user.privilege = data.privilege
@@ -70,23 +69,35 @@ export const getUser = async (username: string, accessToken: string) => {
   return user; 
 }
 
-export const userPatch: UserPatch = (accessToken, fields) => {
-  return new Promise((resolve, reject) => {
-    fetch(`http://${url}/user`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + accessToken,
-      },
-      body: JSON.stringify(fields),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw response.statusText;
-        } else {
-          resolve(null);
-        }
-      })
-      .catch((error: Error) => reject(error));
-  });
-};
+const handleUserPatch: UserPatch = async (accessToken, fields) => {
+  const response = await fetch(`http://${url}/user`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+    body: JSON.stringify(fields),
+  })
+
+  if (!response.ok) {
+    throw response.statusText; 
+  }
+
+  return response; 
+}
+
+export const userPatch: UserPatch = async (accessToken, fields) => {
+  try {
+    const response = await handleUserPatch(accessToken, fields); 
+
+    if (response.status === 200) {
+      return true; 
+    } 
+
+    return false; 
+  } 
+  catch(statusText) {
+    console.log('Error in User Patch: ', statusText);
+    return false; 
+  } 
+}; 

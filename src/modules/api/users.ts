@@ -15,10 +15,45 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 import { url } from "config";
 import { UsersCreate, UsersGet, UsersGetResponse, UsersPatch } from "./typing";
 
-export const usersCreate: UsersCreate = (
+/**
+ * 
+ * UsersCreate Request
+ * 
+ */
+const handleCreateUsers: UsersCreate = async (
+  username, 
+  password, 
+  privilege, 
+  department, 
+  meta, 
+  accessToken
+) => {
+  const response = await fetch(`http://${url}/users/${username}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+    body: JSON.stringify({
+      password,
+      privilege,
+      department, 
+      meta,
+    })
+  })
+
+  if (!response.ok) {
+    throw response.statusText; 
+  }
+
+  return response; 
+}
+
+export const usersCreate: UsersCreate = async (
   username,
   password,
   privilege,
@@ -26,70 +61,91 @@ export const usersCreate: UsersCreate = (
   meta,
   accessToken
 ) => {
-  return new Promise((resolve, reject) =>
-    fetch(`http://${url}/users/${username}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + accessToken,
-      },
-      body: JSON.stringify({
-        password,
-        privilege,
-        department, 
-        meta,
-      }),
-    })
-    .then((response) => {
-      if(!response.ok) {
-        throw response.statusText; 
-      }
 
-      resolve(response) 
-    })
-    .catch((error: Error) => reject(error))
-  );
+  try {
+    const response = await handleCreateUsers(username, password, privilege, department, meta, accessToken); 
+    
+    if (response.status === 200) {
+      return true; 
+    }
+
+    return false; 
+  } 
+  catch(statusText) {
+    console.log('Error Creating User: ', statusText);
+    return false; 
+  }
+
 };
 
-export const usersGet: UsersGet = (username, accessToken) => {
-  return new Promise((resolve, reject) =>
-    fetch(`http://${url}/users/${username}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + accessToken,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw response.statusText;
-        }
-        return response.json();
-      })
-      .then((data: UsersGetResponse) => {
-        resolve(data);
-      })
-      .catch((error: Error) => reject(error))
-  );
+/**
+ * 
+ * UsersGet Request
+ * 
+ */
+
+const handleUsersGet: UsersGet = async (username, accessToken) => {
+  const response = await fetch(`http://${url}/users/${username}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+  })
+
+  if (!response.ok) {
+    throw response.statusText;
+  }
+
+  const data = await response.json();
+  return data;  
+}
+ 
+export const usersGet: UsersGet = async (username, accessToken) => {
+  try {
+    const userResponse: UsersGetResponse = await handleUsersGet(username, accessToken); 
+    return userResponse; 
+  }
+  catch(statusText) {
+    console.log('Error in UsersGet: ', statusText);
+    return null; 
+  }
 };
 
-export const usersPatch: UsersPatch = (username, accessToken, fields) => {
-  return new Promise((resolve, reject) => {
-    fetch(`http://${url}/users/${username}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + accessToken,
-      },
-      body: JSON.stringify(fields),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw response.statusText;
-        } else {
-          resolve(null);
-        }
-      })
-      .catch((error: Error) => reject(error));
-  });
+
+/**
+ * 
+ * UsersPatch Request
+ */
+const handleUsersPatch: UsersPatch = async (username, accessToken, fields) => {
+  const response = await fetch(`http://${url}/users/${username}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+    body: JSON.stringify(fields),
+  })
+
+  if (!response.ok) {
+    throw response.statusText; 
+  }
+
+  return response;
+}
+
+export const usersPatch: UsersPatch = async (username, accessToken, fields) => {
+  try {
+    const response = await handleUsersPatch(username, accessToken, fields); 
+
+    if (response.status === 200) {
+      return true; 
+    }
+
+    return false; 
+  } 
+  catch(statusText) {
+    console.log('Error in UsersPatch: ', statusText);
+    return false; 
+  }
 };
