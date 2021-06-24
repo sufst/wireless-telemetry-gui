@@ -155,7 +155,7 @@ export const usersPatch: UsersPatch = async (username, accessToken, fields) => {
  * 
  */
 const handleGetAllUsers = async (accessToken: string) => {
-  const response = await fetch(`http://${url}/users/`, {
+  const response = await fetch(`http://${url}/users`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -174,7 +174,7 @@ const handleGetAllUsers = async (accessToken: string) => {
 export const fetchAllUsers = async (accessToken: string) => {
   try {
     const result = await handleGetAllUsers(accessToken); 
-    console.log('Result: ', result);
+    return result;
   }
   catch(statusText) {
     console.log('Error Fetching all users: ', statusText);

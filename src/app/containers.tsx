@@ -27,6 +27,7 @@ import { Paper } from '@material-ui/core';
 
 // Component Imports
 import { Dashboard } from "pages/dashboard/index";
+import Admin from "pages/admin/index";
 import Account from 'pages/account/';
 import { SignIn } from "pages/signin/index";
 import AppNavigation from "modules/navigation/navigation";
@@ -82,6 +83,12 @@ const AppRouterSwitch = () => {
                 <Paper className={classes.viewPaper}>
                     <Alert /> 
                     {user.username === undefined || user.username === 'anonymous' ? <SignIn /> : <Account/> }
+                </Paper> 
+            </Route>
+            <Route path="/admin" exact>
+                <Paper className={classes.viewPaper}>
+                    <Alert /> 
+                    <Admin />
                 </Paper> 
             </Route>
             <Route path="*">
