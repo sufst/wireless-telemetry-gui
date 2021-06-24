@@ -28,6 +28,7 @@ import {
    TableContainer,
    TableHead,
    TableRow,
+   TableFooter,
    Paper,
    Avatar,
    Grid,
