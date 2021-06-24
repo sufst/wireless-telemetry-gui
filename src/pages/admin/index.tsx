@@ -17,11 +17,14 @@
 */
 
 import { fetchAllUsers } from 'modules/api/users';
+import { useCallback } from 'react';
+import { useState } from 'react';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getAllUsers } from 'redux/slices/user';
 import { RootState } from 'redux/store';
+import { UserState } from 'redux/typing';
+import { AdminPanelContainer } from './containers';
 
 const Admin = () => {
    const history = useHistory(); 
@@ -29,14 +32,17 @@ const Admin = () => {
    const selectUser = (state: RootState) => state.user;
    const user = useSelector(selectUser);
 
+   const [users, setUsers] = useState<UserState[]>([]);
+
    const privilege = user.privilege; 
    const token = user.accessToken; 
 
-   const fetchUsers = async () => {      
+   const fetchUsers = useCallback( async () => {
       // TODO: Remove Force-Unwrap here 
       const users = await fetchAllUsers(token!!);
-      console.log(users);
-   }
+      // console.log(users['users']);
+      setUsers(users['users']);
+   }, [token])
 
    useEffect(() => {
       if (privilege === 'Anon' || privilege === 'Basic') {
@@ -45,12 +51,10 @@ const Admin = () => {
       }
 
       fetchUsers(); 
-   }, [history, privilege])
+   }, [history, privilege, fetchUsers])
 
    return (
-      <div>
-         <h2>Admin Panel</h2>
-      </div>
+      <AdminPanelContainer users={users} />
    )
 }
 
