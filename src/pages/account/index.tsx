@@ -17,7 +17,7 @@
 */
 
 // Module Imports
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect} from 'react'
 
 // Container
 import AccountContainer from './container'
@@ -35,6 +35,7 @@ const Account = () => {
 
    const selectUser = (state: RootState) => state.user;
    const user = useSelector(selectUser);
+   const { username } = user
   
    const onLogoutClick = useCallback(() => {
       dispatch(logoutUser()); 
@@ -43,6 +44,14 @@ const Account = () => {
    const onRegisterNewUser = useCallback(() => {
       history.push('/register'); 
    }, [history]); 
+
+   useEffect(() => {
+      if (username === undefined || username === 'anonymous') {
+         history.push('/')
+         return; 
+      }
+
+   }, [history])
 
    return (
       <>

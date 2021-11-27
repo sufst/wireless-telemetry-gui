@@ -49,6 +49,8 @@ const AppRouterSwitch = () => {
     const user = useSelector(selectUser); 
 
     useEffect(() => {
+        console.log('user changed...');
+        
         if (user.username === undefined) {
             const username = "anonymous"
             const password = "anonymous"
@@ -82,7 +84,7 @@ const AppRouterSwitch = () => {
             <Route path="/account" exact>
                 <Paper className={classes.viewPaper}>
                     <Alert /> 
-                    {user.username === undefined || user.username === 'anonymous' ? <SignIn /> : <Account/> }
+                    <Account /> 
                 </Paper> 
             </Route>
             <Route path="/admin" exact>

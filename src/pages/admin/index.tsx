@@ -37,11 +37,14 @@ const Admin = () => {
    const privilege = user.privilege; 
    const token = user.accessToken; 
 
-   const fetchUsers = useCallback( async () => {
-      // TODO: Remove Force-Unwrap here 
-      const users = await fetchAllUsers(token!!);
-      // console.log(users['users']);
+   const fetchUsers = useCallback(async () => {
+      if (token === undefined) {
+         return
+      }
+      
+      const users = await fetchAllUsers(token);
       setUsers(users['users']);
+      
    }, [token])
 
    useEffect(() => {
