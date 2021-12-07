@@ -17,7 +17,7 @@
 */
 
 import { url } from "config";
-import type { SessionCreate, SessionsGet } from "./typing";
+import type { SessionCreate, SessionsGet, SessionStop } from "./typing";
 
 const handleSessionsGet = async () => {
   const response = await fetch(`http://${url}/sessions`, {
@@ -59,12 +59,30 @@ const handleSessionsPost: SessionCreate = async (
   return response; 
 }
 
+const handleSessionPatch: SessionStop = async (
+  accessToken,
+  name
+) => {
+  const response = await fetch(`http://${url}/sessions/${name}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken
+    }
+  })
+
+  if (!response.ok) {
+    throw response.statusText; 
+  }
+
+  return response; 
+}
+
 export const sessionCreate: SessionCreate = async (
   accessToken,
   sensors,
   meta
 ) => {
-
   try {
     const response = await handleSessionsPost(accessToken, sensors, meta) 
     
@@ -89,5 +107,24 @@ export const sessionsGet: SessionsGet = async () => {
   catch (statusText) {
     console.log('Error in Sessions GET: ', statusText);
     return null;
+  }
+};
+
+export const sessionStop: SessionStop = async (
+  accessToken,
+  name
+) => {
+  try {
+    const response = await handleSessionPatch(accessToken, name); 
+    
+    if (response.status === 200) {
+      return true; 
+    }
+
+    return false; 
+  } 
+  catch(statusText) {
+    console.log('Error Stopping Session: ', statusText);
+    return false; 
   }
 };

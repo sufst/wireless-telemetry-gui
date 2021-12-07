@@ -29,8 +29,10 @@ import {
     StartStop
 } from "./components";
 import { useStyles } from "./styles";
-import { sessionCreate } from "modules/api/sessions";
+import { sessionCreate, sessionStop } from "modules/api/sessions";
+import { useDispatch } from "react-redux";
 import { createAlert } from "modules/alert/alert";
+import { showAlert } from "redux/slices/alert";
 import store from "../../../redux/store";
 
 export const Session = () => {
@@ -42,27 +44,34 @@ export const Session = () => {
     const sessionName = name ?? "No Session";
     const startStopColour = running ? "secondary" : "primary";
     const startStopText = running ? "STOP" : "START";
+    const dispatch = useDispatch()
 
     const onStartStopClick = useCallback(() => {
+        if(running === true) {
+            const accessToken = store.getState().user.accessToken;
+            sessionStop(accessToken, name)
+        }
         setRunning(!running);
-    }, [running]);
+    }, [running, name]);
 
-    const onNewSubmit = useCallback((event) => {
+    const onNewSubmit = useCallback( async (event) => {
         event.preventDefault();
         
         const name = event.target.sessionName.value; 
         // const sessionSensors = event.target.sessionSensors.value;
         setName(name);
-        const accessToken = store.getState().user.accessToken; 
-        const success = sessionCreate(accessToken, [''], { name });
+        const accessToken = store.getState().user.accessToken;
+        
+        const success = await sessionCreate(accessToken, [''], { name })
 
         if(success) {
-            createAlert(3000, "success", "snack", `Success! ${name} session successfully created!`); 
+            dispatch(showAlert(createAlert(3000, "success", "snack", `Success! ${name} session successfully created!`))); 
+            setRunning(!running)
         }
         else {
-            createAlert(3000, "error", "snack", `Error! ${name} session not created!`); 
+            dispatch(showAlert(createAlert(3000, "error", "snack", `Error! ${name} session not created!`))); 
         }
-    }, []);
+    }, [dispatch, running]);
 
     const classes = useStyles(); 
 

@@ -100,10 +100,16 @@ export type SessionsGetResponse = {
     }
 };
 
+//TODO Make New session only accessible to right privilege type so accessToken doesn't need to be optional
 export type SessionCreate = (
   accessToken?: string,
   sensor: [string],
   meta: {
     name: string
   }
+) => Promise; 
+
+export type SessionStop = (
+  accessToken?: string,
+  name? : string
 ) => Promise; 
