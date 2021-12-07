@@ -99,3 +99,11 @@ export type SessionsGetResponse = {
         sensors: [string]
     }
 };
+
+export type SessionCreate = (
+  accessToken?: string,
+  sensor: [string],
+  meta: {
+    name: string
+  }
+) => Promise; 

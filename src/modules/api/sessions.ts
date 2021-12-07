@@ -17,7 +17,7 @@
 */
 
 import { url } from "config";
-import type { SessionsGet, SessionsGetResponse } from "./typing";
+import type { SessionCreate, SessionsGet } from "./typing";
 
 const handleSessionsGet = async () => {
   const response = await fetch(`http://${url}/sessions`, {
@@ -34,6 +34,51 @@ const handleSessionsGet = async () => {
   const data = await response.json(); 
   return data;
 }
+
+const handleSessionsPost: SessionCreate = async (
+  accessToken,
+  sensors,
+  meta
+) => {
+  const response = await fetch(`http://${url}/sessions/${meta.name}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken
+    },
+    body: JSON.stringify({
+      sensors,
+      meta
+    })
+  })
+
+  if (!response.ok) {
+    throw response.statusText; 
+  }
+
+  return response; 
+}
+
+export const sessionCreate: SessionCreate = async (
+  accessToken,
+  sensors,
+  meta
+) => {
+
+  try {
+    const response = await handleSessionsPost(accessToken, sensors, meta) 
+    
+    if (response.status === 200) {
+      return true; 
+    }
+
+    return false; 
+  } 
+  catch(statusText) {
+    console.log('Error Creating Session: ', statusText);
+    return false; 
+  }  
+};
 
 export const sessionsGet: SessionsGet = async () => {
 

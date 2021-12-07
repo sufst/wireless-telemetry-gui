@@ -29,6 +29,9 @@ import {
     StartStop
 } from "./components";
 import { useStyles } from "./styles";
+import { sessionCreate } from "modules/api/sessions";
+import { createAlert } from "modules/alert/alert";
+import store from "../../../redux/store";
 
 export const Session = () => {
     // TODO: setName to be used later - disabled warning for now
@@ -47,8 +50,18 @@ export const Session = () => {
     const onNewSubmit = useCallback((event) => {
         event.preventDefault();
         
-        const sessionName = event.target.sessionName.value; 
-        setName(sessionName); 
+        const name = event.target.sessionName.value; 
+        // const sessionSensors = event.target.sessionSensors.value;
+        setName(name);
+        const accessToken = store.getState().user.accessToken; 
+        const success = sessionCreate(accessToken, [''], { name });
+
+        if(success) {
+            createAlert(3000, "success", "snack", `Success! ${name} session successfully created!`); 
+        }
+        else {
+            createAlert(3000, "error", "snack", `Error! ${name} session not created!`); 
+        }
     }, []);
 
     const classes = useStyles(); 
