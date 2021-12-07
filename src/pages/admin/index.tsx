@@ -16,48 +16,49 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Module Imports
-import React, { useCallback, useEffect} from 'react'
+import { fetchAllUsers } from 'modules/api/users';
+import { useCallback } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { RootState } from 'redux/store';
+import { UserState } from 'redux/typing';
+import { AdminPanelContainer } from './containers';
 
-// Container
-import AccountContainer from './container'
-
-// Context
-import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from "redux/store";
-
-import { logoutUser } from 'redux/slices/user';
-import { useHistory } from 'react-router';
-
-const Account = () => {
-   const dispatch = useDispatch(); 
+const Admin = () => {
    const history = useHistory(); 
 
    const selectUser = (state: RootState) => state.user;
    const user = useSelector(selectUser);
-   const { username } = user
-  
-   const onLogoutClick = useCallback(() => {
-      dispatch(logoutUser()); 
-   }, [dispatch]); 
 
-   const onRegisterNewUser = useCallback(() => {
-      history.push('/register'); 
-   }, [history]); 
+   const [users, setUsers] = useState<UserState[]>([]);
+
+   const privilege = user.privilege; 
+   const token = user.accessToken; 
+
+   const fetchUsers = useCallback(async () => {
+      if (token === undefined) {
+         return
+      }
+      
+      const users = await fetchAllUsers(token);
+      setUsers(users['users']);
+      
+   }, [token])
 
    useEffect(() => {
-      if (username === undefined || username === 'anonymous') {
+      if (privilege === 'Anon' || privilege === 'Basic') {
          history.push('/')
          return; 
       }
 
-   }, [history, username])
+      fetchUsers(); 
+   }, [history, privilege, fetchUsers])
 
    return (
-      <>
-          <AccountContainer user={user} onLogoutClick={onLogoutClick} onRegisterNewUser={onRegisterNewUser}/>
-      </>
+      <AdminPanelContainer users={users} />
    )
 }
 
-export default Account
+export default Admin;

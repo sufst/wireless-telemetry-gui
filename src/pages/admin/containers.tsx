@@ -16,10 +16,18 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-/**
- * BACK-END SERVER IP HERE 
- * 
- * FORMAT: '<ip>:5000'
- * EXAMPLE: '192.168.1.26:5000'
- */
-export const url: string = '192.168.5.34:5000';
+import { UserState } from "redux/typing";
+import { AdminPanelTable } from './components';
+import { useStyles } from "./styles";
+
+export const AdminPanelContainer = (props: { users: UserState[]}) => {
+   const classes = useStyles(); 
+
+   return (
+      <div className={classes.adminPanelContainer}>
+         <h2>Admin Panel</h2>
+         <AdminPanelTable users={props.users}/> 
+      </div>
+   )
+}
+
