@@ -76,15 +76,15 @@ const AdminPanelTableRow = (props: { user: UserState }) => {
          </TableCell>
 
          <TableCell>
-            <Typography color="primary" variant="subtitle2">{user.department}</Typography>
+            <Typography className={classes.department} color="primary" variant="subtitle2">{user.department}</Typography>
          </TableCell>
 
          <TableCell>
-            {user.privilege}
+            <div>{user.privilege}</div>
          </TableCell>
 
          <TableCell>
-            {createdAt}
+            <div className={classes.createdAt}>{createdAt}</div>
          </TableCell>
       </TableRow>
    )

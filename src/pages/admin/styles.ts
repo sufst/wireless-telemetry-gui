@@ -45,7 +45,13 @@ export const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         marginLeft: '1.2rem',
         paddingTop: '0.5rem',
-        color: theme.palette.secondary.main
+        color: 'white'
+    },
+    department: {
+        color: 'lightGray'
+    },
+    createdAt: {
+        color: 'lightGray'
     },
     status: {
         fontWeight: 'bold',

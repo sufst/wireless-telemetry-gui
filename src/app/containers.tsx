@@ -66,6 +66,7 @@ const AppRouterSwitch = () => {
             </Route>
             <Route path="/login" exact>
                 <Paper className={classes.viewPaper} >
+                    <Alert /> 
                     <SignIn />
                 </Paper>
             </Route>

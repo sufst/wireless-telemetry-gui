@@ -51,7 +51,7 @@ const Account = () => {
          return; 
       }
 
-   }, [history])
+   }, [history, username])
 
    return (
       <>
