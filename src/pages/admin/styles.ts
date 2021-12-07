@@ -17,6 +17,23 @@
 */
 
 import { makeStyles } from "@material-ui/core";
+import { UserPrivilege } from "redux/typing";
+
+export const getColorForPrivelege = (privilege: UserPrivilege) => {
+    switch (privilege) {
+       case 'Admin':
+          return 'red'
+          break;
+       case 'Anon': 
+          return 'blue'
+       case 'Basic':
+          return '#3399FF'
+       case 'Developer':
+          return 'yellow'
+       default:
+          break;
+    }
+ }
 
 export const useStyles = makeStyles((theme) => ({
     adminPanelContainer: {

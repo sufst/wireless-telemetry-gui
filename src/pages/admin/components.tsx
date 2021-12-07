@@ -17,8 +17,7 @@
 */
 
 import { UserState } from "redux/typing";
-import { useStyles } from "./styles";
-
+import { useStyles, getColorForPrivelege } from "./styles";
 import { v4 }from 'uuid';
 
 import { 
@@ -80,7 +79,10 @@ const AdminPanelTableRow = (props: { user: UserState }) => {
          </TableCell>
 
          <TableCell>
-            <div>{user.privilege}</div>
+            <div style={{
+               color: getColorForPrivelege(user.privilege!!),
+               fontWeight: 'bold'
+            }}>{user.privilege}</div>
          </TableCell>
 
          <TableCell>
