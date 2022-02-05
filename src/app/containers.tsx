@@ -18,7 +18,7 @@
 
 // Module Imports
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -43,21 +43,22 @@ import type { RootState } from 'redux/store';
 
 const AppRouterSwitch = () => {
     const classes = useStyles();
-
     const dispatch = useDispatch();
+    const history = useHistory(); 
+
     const selectUser = (state: RootState) => state.user;
     const user = useSelector(selectUser); 
 
     useEffect(() => {
-        console.log('user changed...');
-        
         if (user.username === undefined) {
             const username = "anonymous"
             const password = "anonymous"
         
             dispatch(loginUser( { username, password } ))
+        } else {
+            history.push('/')
         }
-    }, [user, dispatch])
+    }, [user, dispatch, history])
 
     return (
         <Switch>
