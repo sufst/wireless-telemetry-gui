@@ -16,8 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// 127.0.0.1
-
+/**
+ * For Docker Implementation on macOS. 
+ * 127.0.0.1
+ */
 
 /**
  * BACK-END SERVER IP HERE 

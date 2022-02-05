@@ -59,6 +59,9 @@ export const useStyles = makeStyles((theme) => ({
     time: {
         fontWeight: 'bold'
     }, 
+    startSessionBtn: {
+        color: 'red'
+    },
     sensorBox: {
         color: 'white',
         overflow: 'hidden',
@@ -74,6 +77,48 @@ export const useStyles = makeStyles((theme) => ({
         left: 0,
         right: 0,
         bottom: 0,
+    }, 
+    sessionButtonStartBox: {
+        color: 'white',
+        overflow: 'hidden',
+        height: '63px',
+        textAlign: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        borderRadius: '10px',
+        backgroundColor: 'green',
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+
+        "&:hover": {
+            cursor: 'pointer'
+        }
+    }, 
+    sessionButtonStopBox: {
+        color: 'white',
+        overflow: 'hidden',
+        height: '63px',
+        textAlign: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        borderRadius: '10px',
+        backgroundColor: 'darkOrange',
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0, 
+
+        "&:hover": {
+            cursor: 'pointer'
+        }
     }, 
     sensorsText: {
         margin: '0',

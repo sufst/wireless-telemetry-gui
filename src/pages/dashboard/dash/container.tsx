@@ -17,9 +17,10 @@
 */
 
 import { Grid, Paper } from "@material-ui/core";
+import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
-import { DashStatusItem, CurrentTime, DashSensors } from "./components";
+import { DashStatusItem, CurrentTime, DashSensors, DashSession } from "./components";
 import { useStyles } from "./styles";
 
 
@@ -43,6 +44,14 @@ const Dash = () => {
     const loggingSelector = (state: RootState) => state.sensors.sensors[_log]?.data;
     const loggingSensorData = useSelector(loggingSelector);
 
+    const handleStopSession = useCallback(() => {
+        console.log("Stop Session Clicked...")
+    }, [])
+
+    const handleStartSession = useCallback(() => {
+        console.log("Start Session Clicked...")
+    }, [])
+
     return (
         <>
             <Paper className={classes.rootPaper}>
@@ -56,6 +65,9 @@ const Dash = () => {
             </Paper>
             <Paper className={classes.rootPaper}>
                 <DashSensors />
+            </Paper>
+            <Paper className={classes.rootPaper}>
+                <DashSession handleStart={handleStartSession} handleStop={handleStopSession}/>
             </Paper>
         </>
     )

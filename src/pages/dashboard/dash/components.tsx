@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Box, Grid } from "@material-ui/core"
+import { Box, Button, Grid } from "@material-ui/core"
 import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -166,6 +166,28 @@ export const DashSensors = () => {
                 <DashSensorsItem name={names[3]}/>
                 <DashSensorsItem name={names[4]}/>
                 <DashSensorsItem name={names[5]}/>
+            </Grid>
+        </>
+    )
+}
+
+export const DashSession = (props: { handleStart: (event: any) => void, handleStop: (event: any) => void }) => {
+    const classes = useStyles(); 
+
+    return (
+        <>
+            <p className={classes.sensorsText}>Session</p>
+            <Grid container className={classes.gridContainer} spacing={3}>
+                <Grid item xs={3} onClick={props.handleStart}>
+                    <Box className={classes.sessionButtonStartBox}>
+                        <p>Start Session</p>
+                    </Box>
+                </Grid>
+                <Grid item xs={3} onClick={props.handleStop}>
+                    <Box className={classes.sessionButtonStopBox}>
+                        Stop Session
+                    </Box>
+                </Grid>
             </Grid>
         </>
     )
