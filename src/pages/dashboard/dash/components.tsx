@@ -17,7 +17,7 @@
 */
 
 import { Box, Button, Grid } from "@material-ui/core"
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/store";
@@ -174,21 +174,97 @@ export const DashSensors = () => {
 export const DashSession = (props: { handleStart: (event: any) => void, handleStop: (event: any) => void }) => {
     const classes = useStyles(); 
 
+    const [sessionName, setSessionName] = useState("NOT RUNNING"); 
+    const [isSessionRunning, setIsSessionRunning] = useState(false); 
+
+    const buildSessionName = () => {
+        const date = new Date();
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const year = date.getFullYear();
+        const hour = date.getHours(); 
+        const minute = date.getMinutes(); 
+
+        const name = `${year}${month}${day}-${hour}${minute}`
+        return name; 
+    }
+
+    const startPressed = useCallback((e) => {
+        if (isSessionRunning) {
+            console.log('Session is already running...');
+            return; 
+        }
+        const name = buildSessionName(); 
+        
+        setIsSessionRunning(true); 
+        setSessionName(name); 
+        
+        props.handleStart(e); 
+    }, [isSessionRunning, props])
+
+    const stopPressed = useCallback((e) => {
+        setSessionName("NOT RUNNING");
+        setIsSessionRunning(false); 
+
+        props.handleStop(e); 
+    }, [props])
+
+    const startButtonClasses = () => {
+        if (!isSessionRunning) {
+            return classes.sessionButtonStartBox
+        } else {
+            return classes.sessionButtonStartBoxDisabled
+        }
+    }
+
+    const stopButtonClasses = () => {
+        if (!isSessionRunning) {
+            return classes.sessionButtonStopBoxDisabled
+        } else {
+            return classes.sessionButtonStopBox
+        }
+    }
+
     return (
         <>
             <p className={classes.sensorsText}>Session</p>
             <Grid container className={classes.gridContainer} spacing={3}>
-                <Grid item xs={3} onClick={props.handleStart}>
-                    <Box className={classes.sessionButtonStartBox}>
-                        <p>Start Session</p>
+                <Grid item xs={3}>
+                    <CurrentSessionBox currentSessionName={sessionName}/>
+                </Grid>
+                <Grid item xs={3} onClick={startPressed}>
+                    <Box className={startButtonClasses()}>
+                        Start Session
                     </Box>
                 </Grid>
-                <Grid item xs={3} onClick={props.handleStop}>
-                    <Box className={classes.sessionButtonStopBox}>
+                <Grid item xs={3} onClick={stopPressed}>
+                    <Box className={stopButtonClasses()}>
                         Stop Session
                     </Box>
                 </Grid>
             </Grid>
         </>
+    )
+}
+
+const CurrentSessionBox = (props: { currentSessionName: string }) => {
+    const classes = useStyles(); 
+
+    const { currentSessionName } = props; 
+   
+    let backgroundColor: string = 'grey'
+
+    if (currentSessionName === "NOT RUNNING") {
+        backgroundColor = 'grey'
+    } else {
+        backgroundColor = 'darkBlue'
+    }
+
+    return (
+        <Box className={classes.currentSessionBox} style={{
+            backgroundColor: backgroundColor
+        }}>
+            <p>Current: <br/>{currentSessionName}</p>
+        </Box>
     )
 }

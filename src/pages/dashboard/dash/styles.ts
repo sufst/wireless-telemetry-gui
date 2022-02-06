@@ -81,7 +81,7 @@ export const useStyles = makeStyles((theme) => ({
     sessionButtonStartBox: {
         color: 'white',
         overflow: 'hidden',
-        height: '63px',
+        height: '80px',
         textAlign: 'center',
         fontSize: '20px',
         fontWeight: 'bold',
@@ -96,13 +96,32 @@ export const useStyles = makeStyles((theme) => ({
         bottom: 0,
 
         "&:hover": {
-            cursor: 'pointer'
+            cursor: 'pointer', 
+            filter: 'brightness(125%)'
         }
+    }, 
+    sessionButtonStartBoxDisabled: {
+        color: 'white',
+        overflow: 'hidden',
+        height: '80px',
+        textAlign: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        borderRadius: '10px',
+        backgroundColor: 'darkGray',
+        opacity: '60%',
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
     }, 
     sessionButtonStopBox: {
         color: 'white',
         overflow: 'hidden',
-        height: '63px',
+        height: '80px',
         textAlign: 'center',
         fontSize: '20px',
         fontWeight: 'bold',
@@ -117,8 +136,50 @@ export const useStyles = makeStyles((theme) => ({
         bottom: 0, 
 
         "&:hover": {
-            cursor: 'pointer'
+            cursor: 'pointer', 
+            filter: 'brightness(125%)'
         }
+    }, 
+    sessionButtonStopBoxDisabled: {
+        color: 'white',
+        overflow: 'hidden',
+        height: '80px',
+        textAlign: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        borderRadius: '10px',
+        backgroundColor: 'darkGray',
+        opacity: '60%',
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0, 
+    }, 
+    currentSessionBox: {
+        color: 'white',
+        overflow: 'hidden',
+        height: '80px',
+        textAlign: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        borderRadius: '10px',
+        backgroundColor: 'gray',
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    }, 
+    sessionStatusText: {
+        color: 'red',
+        fontWeight: 'bold',
+        margin: '0.5rem 0',
+        fontSize: '20px'
     }, 
     sensorsText: {
         margin: '0',
