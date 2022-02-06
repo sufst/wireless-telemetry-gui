@@ -221,6 +221,12 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
             return; 
         }
 
+        if (user.privilege != 'Admin' && user.privilege != 'Developer') {
+            const createSessionFailedAlert = createAlert(3000, "error", "snack", "Log in to stop a running session."); 
+            dispatch(showAlert(createSessionFailedAlert))
+            return; 
+        }
+
         setSessionName("NOT RUNNING");
         setIsSessionRunning(false); 
 

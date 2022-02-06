@@ -18,7 +18,7 @@
 
 // Module Imports
 import { createAlert } from "modules/alert/alert";
-import { createSession } from "modules/api/sessions";
+import { createSession, stopSession } from "modules/api/sessions";
 import { Middleware } from "redux";
 import { showAlert } from "redux/slices/alert";
 
@@ -32,8 +32,6 @@ export const sessionMiddleware: Middleware<{}, any> =
         const accessToken = storeAPI.getState().user.accessToken; 
         const sessionSensors = storeAPI.getState().sensors.sensorMetadata; 
         
-        console.log(sessionSensors);
-        
         const response = await createSession(accessToken, name, {}, sessionSensors)
 
         if (response) {
@@ -46,6 +44,25 @@ export const sessionMiddleware: Middleware<{}, any> =
 
         return next(action);
     } 
+
+    if (action.type === "session/stopSession") {
+        console.log('Stopping session from middleware: ', action.payload.name);
+
+        const { name } = action.payload; 
+        const accessToken = storeAPI.getState().user.accessToken; 
+
+        const response = await stopSession(name, accessToken); 
+
+        if (response) {
+            const stopSessionOkayAlert = createAlert(3000, "success", "alert", "Session Stopped."); 
+            storeAPI.dispatch(showAlert(stopSessionOkayAlert));
+          } else {
+            const stopSessionFailedAlert = createAlert(3000, "error", "alert", "Can't stop session..."); 
+            storeAPI.dispatch(showAlert(stopSessionFailedAlert))
+        }
+
+        return next(action);
+    }
 
     return next(action);
   };

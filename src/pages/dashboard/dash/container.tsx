@@ -21,7 +21,7 @@ import { createAlert } from "modules/alert/alert";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "redux/slices/alert";
-import { startSession } from "redux/slices/sessions";
+import { startSession, stopSession } from "redux/slices/sessions";
 import { RootState } from "redux/store";
 import { DashStatusItem, CurrentTime, DashSensors, DashSession } from "./components";
 import { useStyles } from "./styles";
@@ -53,6 +53,7 @@ const Dash = () => {
 
     const handleStopSession = useCallback((e, name) => {
         console.log("Stopping from Component: ", name)
+        dispatch(stopSession({ name }))
     }, [dispatch])
 
     const handleStartSession = useCallback((e, name) => {

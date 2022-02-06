@@ -72,7 +72,7 @@ const handleSessionStop = async (name: string, accessToken: string) => {
   const response = await fetch(`http://${url}/sessions/${name}`, {
     method: "PATCH", 
     headers: {
-      "Context-Type": "application/json", 
+      "Content-Type": "application/json", 
       Authorization: "Bearer " + accessToken,
     }, 
     body: JSON.stringify({

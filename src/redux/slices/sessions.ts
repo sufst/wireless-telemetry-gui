@@ -32,7 +32,8 @@ export const sessionSlice = createSlice({
     startSession: (state: SessionState, action: PayloadAction<StartStopSessionAction>) => {      
       state.sessionName = action.payload.name
     },
-    stopSession: () => {
+    stopSession: (state: SessionState, action: PayloadAction<StartStopSessionAction>) => {
+      state.sessionName = "NOT RUNNING"
     }
   },
 });
