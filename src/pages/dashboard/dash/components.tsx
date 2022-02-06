@@ -17,9 +17,11 @@
 */
 
 import { Box, Button, Grid } from "@material-ui/core"
+import { createAlert } from "modules/alert/alert";
 import { useCallback, useEffect } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { showAlert } from "redux/slices/alert";
 import { RootState } from "redux/store";
 import { SensorData  } from "redux/typing";
 import { useStyles } from "./styles"
@@ -171,11 +173,15 @@ export const DashSensors = () => {
     )
 }
 
-export const DashSession = (props: { handleStart: (event: any) => void, handleStop: (event: any) => void }) => {
+export const DashSession = (props: { handleStart: (event: any, name: string) => void, handleStop: (event: any, name: string) => void }) => {
     const classes = useStyles(); 
+    const dispatch = useDispatch(); 
 
     const [sessionName, setSessionName] = useState("NOT RUNNING"); 
     const [isSessionRunning, setIsSessionRunning] = useState(false); 
+
+    const selectUser = (state: RootState) => state.user;
+    const user = useSelector(selectUser); 
 
     const buildSessionName = () => {
         const date = new Date();
@@ -185,7 +191,7 @@ export const DashSession = (props: { handleStart: (event: any) => void, handleSt
         const hour = date.getHours(); 
         const minute = date.getMinutes(); 
 
-        const name = `${year}${month}${day}-${hour}${minute}`
+        const name = `${year}${month}${day}--${hour}${minute}`
         return name; 
     }
 
@@ -194,19 +200,31 @@ export const DashSession = (props: { handleStart: (event: any) => void, handleSt
             console.log('Session is already running...');
             return; 
         }
+
+        if (user.privilege != 'Admin' && user.privilege != 'Developer') {
+            const createSessionFailedAlert = createAlert(3000, "error", "snack", "Login to start a new session."); 
+            dispatch(showAlert(createSessionFailedAlert))
+            return; 
+        }
+
         const name = buildSessionName(); 
         
         setIsSessionRunning(true); 
         setSessionName(name); 
         
-        props.handleStart(e); 
+        props.handleStart(e, name); 
     }, [isSessionRunning, props])
 
     const stopPressed = useCallback((e) => {
+        if (!isSessionRunning) {
+            console.log('No active session...');
+            return; 
+        }
+
         setSessionName("NOT RUNNING");
         setIsSessionRunning(false); 
 
-        props.handleStop(e); 
+        props.handleStop(e, sessionName); 
     }, [props])
 
     const startButtonClasses = () => {
@@ -229,15 +247,15 @@ export const DashSession = (props: { handleStart: (event: any) => void, handleSt
         <>
             <p className={classes.sensorsText}>Session</p>
             <Grid container className={classes.gridContainer} spacing={3}>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                     <CurrentSessionBox currentSessionName={sessionName}/>
                 </Grid>
-                <Grid item xs={3} onClick={startPressed}>
+                <Grid item xs={4} onClick={startPressed}>
                     <Box className={startButtonClasses()}>
                         Start Session
                     </Box>
                 </Grid>
-                <Grid item xs={3} onClick={stopPressed}>
+                <Grid item xs={4} onClick={stopPressed}>
                     <Box className={stopButtonClasses()}>
                         Stop Session
                     </Box>

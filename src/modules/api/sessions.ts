@@ -29,7 +29,7 @@ const handleCreateSession: SessionCreate = async (accessToken, name, fields) => 
   const response = await fetch(`http://${url}/sessions/${name}`, {
     method: "POST", 
     headers: {
-      "Context-Type": "application/json", 
+      "Content-Type": "application/json", 
       Authorization: "Bearer " + accessToken,
     }, 
     body: JSON.stringify({

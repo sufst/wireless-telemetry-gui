@@ -26,7 +26,8 @@ import type {
 
 const initialState: SensorsState = {
     sensors: {},
-    groups: {}
+    groups: {},
+    sensorMetadata: {},
 };
 
 export const sensorsSlice = createSlice({
@@ -35,6 +36,7 @@ export const sensorsSlice = createSlice({
    reducers: {
     buildSensorsFromMeta: (state: SensorsState, action: PayloadAction<BuildSensorsFromMetaAction>) => {
         const meta: SensorsMeta = action.payload;
+        state.sensorMetadata = meta; 
         for (const sensor in meta) {
             // Set a default graph cut off of 2 seconds
             state.sensors[sensor] = {
