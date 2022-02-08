@@ -105,7 +105,9 @@ export type SessionCreate = (
   accessToken?: string,
   sensor: [string],
   meta: {
-    name: string
+    name?: string,
+    driver?: string,
+    conditions?: [string]
   }
 ) => Promise; 
 
