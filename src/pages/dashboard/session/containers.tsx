@@ -39,12 +39,21 @@ export const Session = () => {
     // TODO: setName to be used later - disabled warning for now
     // eslint-disable-next-line
     const [name, setName] = useState(undefined);
+    // const [driver, setDriver] = useState(undefined);
+    // const [conditions, setConditions] = useState(undefined);
     const [running, setRunning] = useState(false);
+    const [sensors, setSensors] = useState<Array<string>>([])
+    const [error, setError] = useState(false)
 
     const sessionName = name ?? "No Session";
     const startStopColour = running ? "secondary" : "primary";
     const startStopText = running ? "STOP" : "START";
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+    const onSensorChangeCallback = (newSensors:[string]) => {
+        const distinctSensors: string[] = newSensors.filter((sensor:string) => !sensors.includes(sensor))
+        setSensors(sensors.concat(distinctSensors));
+    };
 
     const onStartStopClick = useCallback(() => {
         if(running === true) {
@@ -58,11 +67,15 @@ export const Session = () => {
         event.preventDefault();
         
         const name = event.target.sessionName.value; 
+        const driver = event.target.sessionDriver.value; 
+        const conditions = event.target.sessionConditions.value;
         // const sessionSensors = event.target.sessionSensors.value;
         setName(name);
         const accessToken = store.getState().user.accessToken;
-        
-        const success = await sessionCreate(accessToken, [''], { name })
+
+        const invalidNameRegex = new RegExp('^ *$');
+        setError(invalidNameRegex.test(name) && !(sensors.length>0))
+        const success = await sessionCreate(accessToken, [''], { name, driver, conditions })
 
         if(success) {
             dispatch(showAlert(createAlert(3000, "success", "snack", `Success! ${name} session successfully created!`))); 
@@ -85,7 +98,7 @@ export const Session = () => {
                     <StartStop colour={startStopColour} text={startStopText} onClick={onStartStopClick}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <NewSession onSubmit={onNewSubmit}/>
+                    <NewSession onSubmit={onNewSubmit} onSensorUpdate={onSensorChangeCallback} error={error}/>
                 </Grid>
             </Grid>
         </Paper>

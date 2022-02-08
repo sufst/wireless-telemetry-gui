@@ -23,12 +23,21 @@ import {
     AccordionSummary,
     AccordionDetails,
     TextField,
-    Button
+    Button,
+    Box,
+    FormLabel,
+    FormControl,
+    FormGroup,
+    FormControlLabel,
+    FormHelperText,
+    Checkbox 
 } from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
     useStyles
 } from "./styles";
+import { useSelector } from 'react-redux';
+import { RootState } from "redux/store";
 
 export const Header = (props: { name: string }) => {
     const classes = useStyles(); 
@@ -42,7 +51,7 @@ export const Header = (props: { name: string }) => {
     );
 }
 
-export const NewSession = (props: { onSubmit: (event: any) => void}) => {
+export const NewSession = (props: { error: boolean, onSensorUpdate: (sensor : [string]) => void, onSubmit: (event: any) => void}) => {
     const classes = useStyles();
 
     return (
@@ -58,10 +67,20 @@ export const NewSession = (props: { onSubmit: (event: any) => void}) => {
             </AccordionSummary>
             <AccordionDetails>
                 <form className={classes.root} noValidate autoComplete="off" onSubmit={props.onSubmit}>
-                    <TextField id="sessionName" label="Name" className={classes.newSessionTextField}/>
-                    <Button type="submit" variant="contained" color="primary" className={classes.newSessionSubmitBtn}>
-                        Submit
-                    </Button>
+                    <FormControl
+                        error={props.error}
+                    >
+                        <Box sx={{ display: 'flex' }}>
+                            <TextField id="sessionName" label="Name" className={classes.newSessionTextField}/>
+                            <TextField id="sessionDriver" label="Driver" className={classes.newSessionTextField}/>
+                            <TextField id="sessionConditions" label="Conditions" className={classes.newSessionTextField}/>
+                        </Box>
+                        <SensorChooser/>
+                        <Button type="submit" variant="contained" color="primary" className={classes.newSessionSubmitBtn}>
+                            Submit
+                        </Button>
+                        {props.error && <FormHelperText>Choose at least one sensor</FormHelperText>}
+                    </FormControl>
                 </form>
             </AccordionDetails>
         </Accordion>
@@ -77,5 +96,25 @@ export const StartStop = (props: { onClick: () => void, colour: string, text: st
         <Button variant="contained" color={props.colour} onClick={props.onClick} className={classes.startStopBtn}>
             {props.text}
         </Button>
+    )
+}
+
+export const SensorChooser = () => {
+    const selectGroups = (state: RootState) => state.sensors.groups;
+    const groups = useSelector(selectGroups);
+    const groupNames = Object.keys(groups);
+    const checkboxes = groupNames.map(groupName => {
+        return <FormControlLabel control={<Checkbox/>} label={groupName} />
+    })
+
+    return (
+        <Box sx={{ display: 'flex' }}>
+            
+            <FormLabel component="legend">Sensors</FormLabel>
+            <FormGroup>
+                {checkboxes}
+            </FormGroup>
+            
+        </Box>
     )
 }
