@@ -110,7 +110,8 @@ export type UserState = {
 };
 
 export type SessionState = {
-    sessionName: string
+    sessionName: string,
+    isRunning: boolean
 }
 
 export type StartStopSessionAction = {

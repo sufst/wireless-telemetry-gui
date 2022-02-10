@@ -17,10 +17,8 @@
 */
 
 import { Grid, Paper } from "@material-ui/core";
-import { createAlert } from "modules/alert/alert";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { showAlert } from "redux/slices/alert";
 import { startSession, stopSession } from "redux/slices/sessions";
 import { RootState } from "redux/store";
 import { DashStatusItem, CurrentTime, DashSensors, DashSession } from "./components";
@@ -47,9 +45,6 @@ const Dash = () => {
 
     const loggingSelector = (state: RootState) => state.sensors.sensors[_log]?.data;
     const loggingSensorData = useSelector(loggingSelector);
-
-    const selectUser = (state: RootState) => state.user;
-    const user = useSelector(selectUser); 
 
     const handleStopSession = useCallback((e, name) => {
         console.log("Stopping from Component: ", name)

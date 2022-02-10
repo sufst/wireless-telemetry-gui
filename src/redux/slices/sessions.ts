@@ -21,6 +21,7 @@ import type { SessionState, StartStopSessionAction } from "redux/typing";
 
 const initialState: SessionState = {
     sessionName: "",
+    isRunning: false, 
 }
 
 export const sessionSlice = createSlice({
@@ -31,9 +32,11 @@ export const sessionSlice = createSlice({
     },
     startSession: (state: SessionState, action: PayloadAction<StartStopSessionAction>) => {      
       state.sessionName = action.payload.name
+      state.isRunning = true
     },
     stopSession: (state: SessionState, action: PayloadAction<StartStopSessionAction>) => {
       state.sessionName = "NOT RUNNING"
+      state.isRunning = false
     }
   },
 });

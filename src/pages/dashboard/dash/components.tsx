@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Box, Button, Grid } from "@material-ui/core"
+import { Box, Grid } from "@material-ui/core"
 import { createAlert } from "modules/alert/alert";
 import { useCallback, useEffect } from "react";
 import { useState } from "react";
@@ -183,6 +183,8 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
     const selectUser = (state: RootState) => state.user;
     const user = useSelector(selectUser); 
 
+    const { privilege } = user; 
+
     const buildSessionName = () => {
         const date = new Date();
         const day = String(date.getDate()).padStart(2, '0');
@@ -201,7 +203,7 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
             return; 
         }
 
-        if (user.privilege != 'Admin' && user.privilege != 'Developer') {
+        if (privilege !== 'Admin' && privilege !== 'Developer') {
             const createSessionFailedAlert = createAlert(3000, "error", "snack", "Login to start a new session."); 
             dispatch(showAlert(createSessionFailedAlert))
             return; 
@@ -213,7 +215,7 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
         setSessionName(name); 
         
         props.handleStart(e, name); 
-    }, [isSessionRunning, props])
+    }, [isSessionRunning, props, dispatch, privilege])
 
     const stopPressed = useCallback((e) => {
         if (!isSessionRunning) {
@@ -221,7 +223,7 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
             return; 
         }
 
-        if (user.privilege != 'Admin' && user.privilege != 'Developer') {
+        if (privilege !== 'Admin' && privilege !== 'Developer') {
             const createSessionFailedAlert = createAlert(3000, "error", "snack", "Log in to stop a running session."); 
             dispatch(showAlert(createSessionFailedAlert))
             return; 
@@ -231,7 +233,7 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
         setIsSessionRunning(false); 
 
         props.handleStop(e, sessionName); 
-    }, [props])
+    }, [isSessionRunning, props, dispatch, privilege, sessionName])
 
     const startButtonClasses = () => {
         if (!isSessionRunning) {

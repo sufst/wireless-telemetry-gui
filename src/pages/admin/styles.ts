@@ -23,7 +23,6 @@ export const getColorForPrivelege = (privilege: UserPrivilege) => {
     switch (privilege) {
        case 'Admin':
           return 'red'
-          break;
        case 'Anon': 
           return 'blue'
        case 'Basic':
