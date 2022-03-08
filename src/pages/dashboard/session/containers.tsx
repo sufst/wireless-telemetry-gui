@@ -30,10 +30,10 @@ import {
 } from "./components";
 import { useStyles } from "./styles";
 import { sessionCreate, sessionStop } from "modules/api/sessions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createAlert } from "modules/alert/alert";
 import { showAlert } from "redux/slices/alert";
-import store from "../../../redux/store";
+import store, {RootState} from "../../../redux/store";
 
 export const Session = () => {
     // TODO: setName to be used later - disabled warning for now
@@ -42,17 +42,25 @@ export const Session = () => {
     // const [driver, setDriver] = useState(undefined);
     // const [conditions, setConditions] = useState(undefined);
     const [running, setRunning] = useState(false);
-    const [sensors, setSensors] = useState<Array<string>>([])
+    const [sensorGroups, setSensorGroups] = useState<Array<string>>([])
     const [error, setError] = useState(false)
 
     const sessionName = name ?? "No Session";
     const startStopColour = running ? "secondary" : "primary";
     const startStopText = running ? "STOP" : "START";
     const dispatch = useDispatch();
+    const selectGroups = (state: RootState) => state.sensors.groups;
+    const groups = useSelector(selectGroups);
+    const sensorGroupNames = Object.keys(groups);
 
-    const onSensorChangeCallback = (newSensors:[string]) => {
-        const distinctSensors: string[] = newSensors.filter((sensor:string) => !sensors.includes(sensor))
-        setSensors(sensors.concat(distinctSensors));
+    const onSensorChange = (newSensorGroup:string) => {
+        if(sensorGroups.includes(newSensorGroup)){
+            setSensorGroups(sensorGroups.filter(sensorGroup => sensorGroup!==newSensorGroup))
+        }
+        else{
+            const newSensors = sensorGroups.concat(newSensorGroup)
+            setSensorGroups(newSensors);
+        }
     };
 
     const onStartStopClick = useCallback(() => {
@@ -69,22 +77,33 @@ export const Session = () => {
         const name = event.target.sessionName.value; 
         const driver = event.target.sessionDriver.value; 
         const conditions = event.target.sessionConditions.value;
-        // const sessionSensors = event.target.sessionSensors.value;
+
         setName(name);
         const accessToken = store.getState().user.accessToken;
 
         const invalidNameRegex = new RegExp('^ *$');
-        setError(invalidNameRegex.test(name) && !(sensors.length>0))
-        const success = await sessionCreate(accessToken, [''], { name, driver, conditions })
+        if(invalidNameRegex.test(name) || !(sensorGroups.length>0)){
+            setError(true);
+            dispatch(showAlert(createAlert(3000, "error", "snack", `Error! ${name} session not created!`))); 
+            return;
+        }
 
+        setError(false)
+        
+        console.log(sensorGroups);
+
+        const sensors = Object.entries(groups).filter((group: [key: string, value: string[]]) => sensorGroups.includes(group[0])).map((group: [key: string, value: string[]]) => (group[1])).flat();
+        
+        const success = await sessionCreate(accessToken, sensors as [string], { name, driver, conditions })
+        
         if(success) {
             dispatch(showAlert(createAlert(3000, "success", "snack", `Success! ${name} session successfully created!`))); 
-            setRunning(!running)
+            setRunning(!running);
         }
         else {
             dispatch(showAlert(createAlert(3000, "error", "snack", `Error! ${name} session not created!`))); 
         }
-    }, [dispatch, running]);
+    }, [dispatch, running, sensorGroups]);
 
     const classes = useStyles(); 
 
@@ -93,12 +112,10 @@ export const Session = () => {
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Header name={sessionName}/>
-                </Grid>
-                <Grid item xs={12}>
                     <StartStop colour={startStopColour} text={startStopText} onClick={onStartStopClick}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <NewSession onSubmit={onNewSubmit} onSensorUpdate={onSensorChangeCallback} error={error}/>
+                    <NewSession sensorGroups={sensorGroupNames} onSubmit={onNewSubmit} onSensorChangeCallback={onSensorChange} error={error}/>
                 </Grid>
             </Grid>
         </Paper>

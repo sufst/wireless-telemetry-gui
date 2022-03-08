@@ -36,8 +36,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
     useStyles
 } from "./styles";
-import { useSelector } from 'react-redux';
-import { RootState } from "redux/store";
+
 
 export const Header = (props: { name: string }) => {
     const classes = useStyles(); 
@@ -51,7 +50,7 @@ export const Header = (props: { name: string }) => {
     );
 }
 
-export const NewSession = (props: { error: boolean, onSensorUpdate: (sensor : [string]) => void, onSubmit: (event: any) => void}) => {
+export const NewSession = (props: { error: boolean, onSensorChangeCallback: (sensor : string) => void, onSubmit: (event: any) => void, sensorGroups: string[]}) => {
     const classes = useStyles();
 
     return (
@@ -75,7 +74,7 @@ export const NewSession = (props: { error: boolean, onSensorUpdate: (sensor : [s
                             <TextField id="sessionDriver" label="Driver" className={classes.newSessionTextField}/>
                             <TextField id="sessionConditions" label="Conditions" className={classes.newSessionTextField}/>
                         </Box>
-                        <SensorChooser/>
+                        <SensorChooser sensorGroups={props.sensorGroups} onSensorChangeCallback={props.onSensorChangeCallback}/>
                         <Button type="submit" variant="contained" color="primary" className={classes.newSessionSubmitBtn}>
                             Submit
                         </Button>
@@ -99,22 +98,17 @@ export const StartStop = (props: { onClick: () => void, colour: string, text: st
     )
 }
 
-export const SensorChooser = () => {
-    const selectGroups = (state: RootState) => state.sensors.groups;
-    const groups = useSelector(selectGroups);
-    const groupNames = Object.keys(groups);
-    const checkboxes = groupNames.map(groupName => {
-        return <FormControlLabel control={<Checkbox/>} label={groupName} />
+export const SensorChooser = (props: { sensorGroups: string[], onSensorChangeCallback: (sensor : string) => void}) => {
+    const checkboxes = props.sensorGroups.map(groupName => {
+        return <FormControlLabel control={<Checkbox id={groupName} onChange={() => props.onSensorChangeCallback(groupName)}/>} label={groupName} />
     })
 
     return (
         <Box sx={{ display: 'flex' }}>
-            
             <FormLabel component="legend">Sensors</FormLabel>
             <FormGroup>
                 {checkboxes}
-            </FormGroup>
-            
+            </FormGroup> 
         </Box>
     )
 }
