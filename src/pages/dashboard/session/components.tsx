@@ -30,9 +30,18 @@ import {
     FormGroup,
     FormControlLabel,
     FormHelperText,
+    IconButton,
+    Table,
+    TableBody,
+    TableContainer,
+    TableCell,
+    TableHead,
+    TableRow,
     Checkbox 
 } from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import { SessionsGetResponse } from "modules/api/typing";
 import {
     useStyles
 } from "./styles";
@@ -78,7 +87,7 @@ export const NewSession = (props: { error: boolean, onSensorChangeCallback: (sen
                         <Button type="submit" variant="contained" color="primary" className={classes.newSessionSubmitBtn}>
                             Submit
                         </Button>
-                        {props.error && <FormHelperText>Choose at least one sensor</FormHelperText>}
+                        {props.error && <FormHelperText>Set a name and choose at least one sensor</FormHelperText>}
                     </FormControl>
                 </form>
             </AccordionDetails>
@@ -110,5 +119,52 @@ export const SensorChooser = (props: { sensorGroups: string[], onSensorChangeCal
                 {checkboxes}
             </FormGroup> 
         </Box>
+    )
+}
+
+export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
+    const sessionEntries = Object.entries(props.sessionData);
+    const info = sessionEntries.map(sessionEntry => {
+        const name = sessionEntry[0]
+        const sessionInfo = sessionEntry[1]
+        return {
+            name,
+            status: sessionInfo.status,
+            created: (new Date(sessionInfo.creation)).toString(),
+            actions: <>
+            {/* TODO Add callback to download data and add button to stop session */}
+            <IconButton color="primary" aria-label="upload picture" component="span">
+                <GetAppIcon />
+            </IconButton>
+          </>
+        }
+    });
+    return (
+        <div>
+            <TableContainer component={Paper}>
+                <Table aria-label="customized table">
+                    <TableHead>
+                    <TableRow>
+                        <TableCell>Name</TableCell>
+                        <TableCell align="right">Status</TableCell>
+                        <TableCell align="right">Creation Date</TableCell>
+                        <TableCell align="right">Actions</TableCell>
+                    </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    {info.map((sessionEntry) => (
+                        <TableRow key={sessionEntry.name}>
+                        <TableCell component="th" scope="row">
+                            {sessionEntry.name}
+                        </TableCell>
+                        <TableCell align="right">{sessionEntry.status}</TableCell>
+                        <TableCell align="right">{sessionEntry.created}</TableCell>
+                        <TableCell align="right">{sessionEntry.actions}</TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>           
+        </div>
     )
 }

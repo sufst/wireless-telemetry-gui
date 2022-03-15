@@ -17,23 +17,27 @@
 */
 import {
     useCallback,
+    useEffect,
     useState
 } from "react";
 import { 
     Grid, 
-    Paper 
+    Paper,
+    LinearProgress 
 } from "@material-ui/core";
 import {
     Header,
     NewSession,
+    SessionTable,
     StartStop
 } from "./components";
 import { useStyles } from "./styles";
-import { sessionCreate, sessionStop } from "modules/api/sessions";
+import { sessionCreate, sessionsGet, sessionStop } from "modules/api/sessions";
 import { useDispatch, useSelector } from "react-redux";
 import { createAlert } from "modules/alert/alert";
 import { showAlert } from "redux/slices/alert";
 import store, {RootState} from "../../../redux/store";
+import { SessionsGetResponse } from "modules/api/typing";
 
 export const Session = () => {
     // TODO: setName to be used later - disabled warning for now
@@ -45,6 +49,11 @@ export const Session = () => {
     const [sensorGroups, setSensorGroups] = useState<Array<string>>([])
     const [error, setError] = useState(false)
 
+    const [sessionData, setSessionData] = useState({})
+    const [isLoading, setIsLoading] = useState({
+        sessions: true
+    })
+
     const sessionName = name ?? "No Session";
     const startStopColour = running ? "secondary" : "primary";
     const startStopText = running ? "STOP" : "START";
@@ -52,6 +61,19 @@ export const Session = () => {
     const selectGroups = (state: RootState) => state.sensors.groups;
     const groups = useSelector(selectGroups);
     const sensorGroupNames = Object.keys(groups);
+
+    useEffect(() => {
+        async function load() {
+            const sessionData = await sessionsGet().then((result : SessionsGetResponse) => result)
+            console.log(JSON.stringify(sessionData))
+            setSessionData(sessionData)
+            setIsLoading({
+                ...isLoading,
+                sessions: false
+            })
+        }
+        load()
+    }, [])
 
     const onSensorChange = (newSensorGroup:string) => {
         if(sensorGroups.includes(newSensorGroup)){
@@ -89,8 +111,6 @@ export const Session = () => {
         }
 
         setError(false)
-        
-        console.log(sensorGroups);
 
         const sensors = Object.entries(groups).filter((group: [key: string, value: string[]]) => sensorGroups.includes(group[0])).map((group: [key: string, value: string[]]) => (group[1])).flat();
         
@@ -103,10 +123,9 @@ export const Session = () => {
         else {
             dispatch(showAlert(createAlert(3000, "error", "snack", `Error! ${name} session not created!`))); 
         }
-    }, [dispatch, running, sensorGroups]);
+    }, [dispatch, running, sensorGroups, groups]);
 
     const classes = useStyles(); 
-
     return (
         <Paper className={classes.rootSessionPaper}>
             <Grid container spacing={2}>
@@ -116,6 +135,13 @@ export const Session = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <NewSession sensorGroups={sensorGroupNames} onSubmit={onNewSubmit} onSensorChangeCallback={onSensorChange} error={error}/>
+                </Grid>
+                <Grid item xs={12}>
+                    {!isLoading.sessions && (
+                    <SessionTable sessionData={sessionData}/>
+                    ) || (
+                        <LinearProgress />
+                    )}
                 </Grid>
             </Grid>
         </Paper>
