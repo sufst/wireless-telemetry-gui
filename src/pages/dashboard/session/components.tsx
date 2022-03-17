@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) SUFST
+    Copyright (C) 2022 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -46,7 +46,6 @@ import {
     useStyles
 } from "./styles";
 
-
 export const Header = (props: { name: string }) => {
     const classes = useStyles(); 
 
@@ -78,7 +77,7 @@ export const NewSession = (props: { error: boolean, onSensorChangeCallback: (sen
                     <FormControl
                         error={props.error}
                     >
-                        <Box sx={{ display: 'flex' }}>
+                        <Box style={{ display: 'flex' }}>
                             <TextField id="sessionName" label="Name" className={classes.newSessionTextField}/>
                             <TextField id="sessionDriver" label="Driver" className={classes.newSessionTextField}/>
                             <TextField id="sessionConditions" label="Conditions" className={classes.newSessionTextField}/>
@@ -113,7 +112,7 @@ export const SensorChooser = (props: { sensorGroups: string[], onSensorChangeCal
     })
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box style={{ display: 'flex' }}>
             <FormLabel component="legend">Sensors</FormLabel>
             <FormGroup>
                 {checkboxes}

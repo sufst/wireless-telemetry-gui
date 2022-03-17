@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) SUFST
+    Copyright (C) 2022 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,40 +15,25 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import {
-    useCallback,
-    useEffect,
-    useState
-} from "react";
-import { 
-    Grid, 
-    Paper,
-    LinearProgress 
-} from "@material-ui/core";
-import {
-    Header,
-    NewSession,
-    SessionTable,
-    StartStop
-} from "./components";
+
+import { useCallback, useEffect, useState } from "react";
+import { Grid, Paper, LinearProgress } from "@material-ui/core";
+
 import { useStyles } from "./styles";
-import { sessionCreate, sessionsGet, sessionStop } from "modules/api/sessions";
+import { createSession, getAllSessions, stopSession } from "modules/api/sessions";
 import { useDispatch, useSelector } from "react-redux";
 import { createAlert } from "modules/alert/alert";
 import { showAlert } from "redux/slices/alert";
 import store, {RootState} from "../../../redux/store";
 import { SessionsGetResponse } from "modules/api/typing";
+import { Header, NewSession, SessionTable, StartStop } from "./components";
 
-export const Session = () => {
-    // TODO: setName to be used later - disabled warning for now
-    // eslint-disable-next-line
+export const SessionContainer = () => {
+
     const [name, setName] = useState(undefined);
-    // const [driver, setDriver] = useState(undefined);
-    // const [conditions, setConditions] = useState(undefined);
     const [running, setRunning] = useState(false);
     const [sensorGroups, setSensorGroups] = useState<Array<string>>([])
     const [error, setError] = useState(false)
-
     const [sessionData, setSessionData] = useState({})
     const [isLoading, setIsLoading] = useState({
         sessions: true
@@ -62,18 +47,14 @@ export const Session = () => {
     const groups = useSelector(selectGroups);
     const sensorGroupNames = Object.keys(groups);
 
+    const fetchAllSessions = useCallback(async () => {
+        const sessions = await getAllSessions();
+        setSessionData(sessions); 
+     }, [])
+
     useEffect(() => {
-        async function load() {
-            const sessionData = await sessionsGet().then((result : SessionsGetResponse) => result)
-            console.log(JSON.stringify(sessionData))
-            setSessionData(sessionData)
-            setIsLoading({
-                ...isLoading,
-                sessions: false
-            })
-        }
-        load()
-    }, [])
+        fetchAllSessions(); 
+    },[fetchAllSessions])
 
     const onSensorChange = (newSensorGroup:string) => {
         if(sensorGroups.includes(newSensorGroup)){
@@ -88,7 +69,7 @@ export const Session = () => {
     const onStartStopClick = useCallback(() => {
         if(running === true) {
             const accessToken = store.getState().user.accessToken;
-            sessionStop(accessToken, name)
+            stopSession(accessToken!, name!)
         }
         setRunning(!running);
     }, [running, name]);
@@ -114,7 +95,7 @@ export const Session = () => {
 
         const sensors = Object.entries(groups).filter((group: [key: string, value: string[]]) => sensorGroups.includes(group[0])).map((group: [key: string, value: string[]]) => (group[1])).flat();
         
-        const success = await sessionCreate(accessToken, sensors as [string], { name, driver, conditions })
+        const success = await createSession(accessToken!, name, {}, sensors)
         
         if(success) {
             dispatch(showAlert(createAlert(3000, "success", "snack", `Success! ${name} session successfully created!`))); 
