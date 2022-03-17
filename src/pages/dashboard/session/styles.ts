@@ -23,15 +23,24 @@ export const useStyles = makeStyles((theme) => ({
         width: '100%',
         margin: '0'
     },
+    rootPaper: {
+        flexGrow: 1,
+        padding: '1rem',
+        marginBottom: '1rem',
+        marginTop: '1rem',
+        background: '#292929'
+    }, 
+    newSessionText: {
+        margin: '0',
+        marginBottom: '0.5rem',
+        fontSize: '20px'
+    },
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
-    headerPaper: {
-        margin: '1rem 1rem 0 1rem',
-        padding: '0.5rem',
+    currentSessionTypo: {
         textAlign: 'center',
-        backgroundColor: '#292929',
     },
     currentSessionText: { 
         color: '#eee'
@@ -47,12 +56,69 @@ export const useStyles = makeStyles((theme) => ({
         marginLeft: '0.5rem',
     }, 
     newSessionTextField: {
-        width: '40%'
+        marginBottom: '1rem',
+        width: '200px'
+    },
+    newSessionTextFieldMargin: {
+        marginLeft: '1rem',
+        marginBottom: '1rem',
+        width: '200px'
     },
     sessionName: {
         fontWeight: 'bold'
     },
     rootSessionPaper: {
         marginTop: '1rem'
+    }, 
+    sessionButtonStopBox: {
+        color: 'white',
+        overflow: 'hidden',
+        height: '80px',
+        textAlign: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        borderRadius: '10px',
+        backgroundColor: 'darkOrange',
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0, 
+
+        "&:hover": {
+            cursor: 'pointer', 
+            filter: 'brightness(125%)'
+        }
+    }, 
+    sessionButtonStartBox: {
+        color: 'white',
+        overflow: 'hidden',
+        height: '80px',
+        textAlign: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        borderRadius: '10px',
+        backgroundColor: 'green',
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+
+        "&:hover": {
+            cursor: 'pointer', 
+            filter: 'brightness(125%)'
+        }
+    }, 
+    gridContainer: {
+        marginBottom: '0.5rem'
+    },
+    formLabel: {
+       paddingTop: '0.7rem',
+       marginRight: '1rem'
     }
 }));

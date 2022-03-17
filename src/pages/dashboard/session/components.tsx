@@ -37,61 +37,117 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    Checkbox 
+    Checkbox, 
+    Grid
 } from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { SessionsGetResponse } from "modules/api/typing";
+import sessions from "redux/slices/sessions";
 import {
     useStyles
 } from "./styles";
 
-export const Header = (props: { name: string }) => {
+export const CurrentSessionHeader = (props: { name: string }) => {
     const classes = useStyles(); 
 
     return (
-        <Paper className={classes.headerPaper}>
-            <Typography variant="h6" gutterBottom>
-                <span className={classes.currentSessionText}>Current Session: </span><span className={classes.sessionName}>{props.name}</span>
-            </Typography>
-        </Paper>
+        <Typography variant="h6" className={classes.currentSessionTypo}>
+            <span className={classes.currentSessionText}>Current Session: </span><span className={classes.sessionName}>{props.name}</span>
+        </Typography>
     );
 }
 
-export const NewSession = (props: { error: boolean, onSensorChangeCallback: (sensor : string) => void, onSubmit: (event: any) => void, sensorGroups: string[]}) => {
+export const SessionPaper = () => {
     const classes = useStyles();
+    
+    return (
+        <Paper className={classes.rootPaper}>
+            <p className={classes.newSessionText}>Session</p>
+        </Paper>
+    )
+}
+
+export const NewSessionForm = (props: { error: boolean, onSensorChangeCallback: (sensor : string) => void, onSubmit: (event: any) => void, sensorGroups: string[]}) => {
+    const classes = useStyles(); 
+
+    const startButtonClasses = () => {
+        return classes.sessionButtonStartBox;
+    }
+
+    const stopButtonClasses = () => {
+        return classes.sessionButtonStopBox; 
+    }
+
+    const startPressed = (event: any) => {
+        props.onSubmit(event); 
+    }
+
+    const stopPressed = () => {
+
+    }
 
     return (
-        <Accordion className={classes.newSessionWrapper}>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-            >
-                <Typography className={classes.heading}>
-                    New Session
-                </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                <form className={classes.root} noValidate autoComplete="off" onSubmit={props.onSubmit}>
-                    <FormControl
-                        error={props.error}
-                    >
-                        <Box style={{ display: 'flex' }}>
-                            <TextField id="sessionName" label="Name" className={classes.newSessionTextField}/>
-                            <TextField id="sessionDriver" label="Driver" className={classes.newSessionTextField}/>
-                            <TextField id="sessionConditions" label="Conditions" className={classes.newSessionTextField}/>
-                        </Box>
-                        <SensorChooser sensorGroups={props.sensorGroups} onSensorChangeCallback={props.onSensorChangeCallback}/>
-                        <Button type="submit" variant="contained" color="primary" className={classes.newSessionSubmitBtn}>
-                            Submit
-                        </Button>
-                        {props.error && <FormHelperText>Set a name and choose at least one sensor</FormHelperText>}
-                    </FormControl>
-                </form>
-            </AccordionDetails>
-        </Accordion>
-    );
+        <FormControl error={props.error} >
+            <Box>
+                <TextField id="sessionName" label="Session Name" className={classes.newSessionTextField}/>
+                <TextField id="sessionDriver" label="Driver" className={classes.newSessionTextFieldMargin}/>
+                <TextField id="sessionConditions" label="Conditions" className={classes.newSessionTextFieldMargin}/>
+            </Box>
+            <SensorChooser 
+                sensorGroups={props.sensorGroups} 
+                onSensorChangeCallback={props.onSensorChangeCallback}
+            />
+            {
+            props.error && 
+                <FormHelperText>Set a name and choose at least one sensor</FormHelperText>
+            }
+            <Grid container className={classes.gridContainer} spacing={3}>
+                <Grid item xs={4} onClick={startPressed}>
+                    <Box className={startButtonClasses()}>
+                        Start Session
+                    </Box>
+                </Grid>
+                <Grid item xs={4} onClick={stopPressed}>
+                    <Box className={stopButtonClasses()}>
+                        Stop Session
+                    </Box>
+                </Grid>
+            </Grid>
+        </FormControl>
+    )
+}
+
+export const NewSessionContainer = (props: { error: boolean, onSensorChangeCallback: (sensor : string) => void, onSubmit: (event: any) => void, sensorGroups: string[]}) => {
+    const classes = useStyles();
+
+    const startButtonClasses = () => {
+        return classes.sessionButtonStartBox;
+    }
+
+    const stopButtonClasses = () => {
+        return classes.sessionButtonStopBox; 
+    }
+
+    const startPressed = () => {
+
+    }
+
+    const stopPressed = () => {
+
+    }
+
+    return (
+        <>
+            <p className={classes.newSessionText}>New Session</p>
+            <NewSessionForm 
+                    error={props.error} 
+                    onSensorChangeCallback={props.onSensorChangeCallback} 
+                    onSubmit={props.onSubmit}
+                    sensorGroups={props.sensorGroups}
+            />
+        </>
+    )
 }
 
 export const StartStop = (props: { onClick: () => void, colour: string, text: string }) => {
@@ -107,21 +163,28 @@ export const StartStop = (props: { onClick: () => void, colour: string, text: st
 }
 
 export const SensorChooser = (props: { sensorGroups: string[], onSensorChangeCallback: (sensor : string) => void}) => {
+    
     const checkboxes = props.sensorGroups.map(groupName => {
-        return <FormControlLabel control={<Checkbox id={groupName} onChange={() => props.onSensorChangeCallback(groupName)}/>} label={groupName} />
+        return <FormControlLabel control={<Checkbox id={groupName} onChange={() => props.onSensorChangeCallback(groupName)} style={{color: 'lightBlue'}}/>} label={groupName} />
     })
 
+    const classes = useStyles(); 
+
     return (
-        <Box style={{ display: 'flex' }}>
-            <FormLabel component="legend">Sensors</FormLabel>
-            <FormGroup>
-                {checkboxes}
-            </FormGroup> 
+        <Box style={{
+            marginBottom: '1rem',
+            display: 'flex', 
+            flexDirection: 'row'
+        }}>
+            <FormLabel component="legend" className={classes.formLabel}>Sensors</FormLabel>
+            {checkboxes}
         </Box>
     )
 }
 
 export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
+    const classes = useStyles(); 
+
     const sessionEntries = Object.entries(props.sessionData);
     const info = sessionEntries.map(sessionEntry => {
         const name = sessionEntry[0]
@@ -140,6 +203,7 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
     });
     return (
         <div>
+            <p className={classes.newSessionText}>All Sessions</p>
             <TableContainer component={Paper}>
                 <Table aria-label="customized table">
                     <TableHead>
@@ -151,16 +215,16 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {info.map((sessionEntry) => (
-                        <TableRow key={sessionEntry.name}>
-                        <TableCell component="th" scope="row">
-                            {sessionEntry.name}
-                        </TableCell>
-                        <TableCell align="right">{sessionEntry.status}</TableCell>
-                        <TableCell align="right">{sessionEntry.created}</TableCell>
-                        <TableCell align="right">{sessionEntry.actions}</TableCell>
-                        </TableRow>
-                    ))}
+                        {info.map((sessionEntry) => (
+                            <TableRow key={sessionEntry.name}>
+                            <TableCell component="th" scope="row">
+                                {sessionEntry.name}
+                            </TableCell>
+                            <TableCell align="right">{sessionEntry.status}</TableCell>
+                            <TableCell align="right">{sessionEntry.created}</TableCell>
+                            <TableCell align="right">{sessionEntry.actions}</TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
             </TableContainer>           

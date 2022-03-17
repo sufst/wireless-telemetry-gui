@@ -26,7 +26,7 @@ import { createAlert } from "modules/alert/alert";
 import { showAlert } from "redux/slices/alert";
 import store, {RootState} from "../../../redux/store";
 import { SessionsGetResponse } from "modules/api/typing";
-import { Header, NewSession, SessionTable, StartStop } from "./components";
+import { CurrentSessionHeader, NewSessionContainer, SessionPaper, SessionTable, StartStop } from "./components";
 
 export const SessionContainer = () => {
 
@@ -108,23 +108,29 @@ export const SessionContainer = () => {
 
     const classes = useStyles(); 
     return (
-        <Paper className={classes.rootSessionPaper}>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Header name={sessionName}/>
-                    <StartStop colour={startStopColour} text={startStopText} onClick={onStartStopClick}/>
-                </Grid>
-                <Grid item xs={12}>
-                    <NewSession sensorGroups={sensorGroupNames} onSubmit={onNewSubmit} onSensorChangeCallback={onSensorChange} error={error}/>
-                </Grid>
-                <Grid item xs={12}>
+        <>
+            <Paper className={classes.rootPaper}>
+                <CurrentSessionHeader name={sessionName}/>
+            </Paper>
+            <Paper className={classes.rootPaper}>
+                <NewSessionContainer 
+                    error={error} 
+                    onSensorChangeCallback={onSensorChange} 
+                    onSubmit={onNewSubmit}
+                    sensorGroups={sensorGroupNames}
+                />
+            </Paper>
+            <Paper className={classes.rootPaper}>
+                {/* TODO: Loading logic needs to go back in */}
+                {/* <>
                     {!isLoading.sessions && (
-                    <SessionTable sessionData={sessionData}/>
+                        <SessionTable sessionData={sessionData}/>
                     ) || (
                         <LinearProgress />
                     )}
-                </Grid>
-            </Grid>
-        </Paper>
-    );
+                </> */}
+                <SessionTable sessionData={sessionData} />
+            </Paper>
+        </>
+    )
 }
