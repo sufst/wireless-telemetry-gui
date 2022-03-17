@@ -17,9 +17,11 @@
 */
 
 import { Grid, Paper } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { startSession, stopSession } from "redux/slices/sessions";
 import { RootState } from "redux/store";
-import { DashStatusItem, CurrentTime, DashSensors } from "./components";
+import { DashStatusItem, CurrentTime, DashSensors, DashSession } from "./components";
 import { useStyles } from "./styles";
 
 
@@ -29,6 +31,7 @@ const Dash = () => {
     const _battery = 'status_battery';
     const _log = 'status_logging';
 
+    const dispatch = useDispatch(); 
     const classes = useStyles(); 
 
     const ecuSelector = (state: RootState) => state.sensors.sensors[_ecu]?.data;
@@ -43,6 +46,16 @@ const Dash = () => {
     const loggingSelector = (state: RootState) => state.sensors.sensors[_log]?.data;
     const loggingSensorData = useSelector(loggingSelector);
 
+    const handleStopSession = useCallback((e, name) => {
+        console.log("Stopping from Component: ", name)
+        dispatch(stopSession({ name }))
+    }, [dispatch])
+
+    const handleStartSession = useCallback((e, name) => {
+        console.log("Starting From Component: ", name)
+        dispatch(startSession( { name }))
+    }, [dispatch])
+
     return (
         <>
             <Paper className={classes.rootPaper}>
@@ -56,6 +69,9 @@ const Dash = () => {
             </Paper>
             <Paper className={classes.rootPaper}>
                 <DashSensors />
+            </Paper>
+            <Paper className={classes.rootPaper}>
+                <DashSession handleStart={handleStartSession} handleStop={handleStopSession}/>
             </Paper>
         </>
     )

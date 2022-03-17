@@ -94,5 +94,10 @@ export const userMiddleware: Middleware<{}, any> =
       }
     }
 
+    if(action.type === "user/getAllUsers") {
+      const accessToken = storeAPI.getState().user.accessToken; 
+      console.log('Getting ALL users...', accessToken);
+    }
+
     return next(action);
   };

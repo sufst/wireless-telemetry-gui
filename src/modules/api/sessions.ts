@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 Nathan Rowley-Smith
+    Copyright (C) 2022 SUFST 
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,9 +17,92 @@
 */
 
 import { url } from "config";
-import type { SessionCreate, SessionsGet, SessionStop } from "./typing";
+import type { SessionsGet, SessionCreate, SessionCreateFields, SessionStop } from "./typing";
 
-const handleSessionsGet = async () => {
+/**
+ * Creating new sessions 
+ * @param accessToken JWT authentication token 
+ * @param name Name for new session
+ * @param fields Object housing the session metadata and sensors to be saved. 
+ */
+const handleCreateSession: SessionCreate = async (accessToken, name, fields) => {
+  const response = await fetch(`http://${url}/sessions/${name}`, {
+    method: "POST", 
+    headers: {
+      "Content-Type": "application/json", 
+      Authorization: "Bearer " + accessToken,
+    }, 
+    body: JSON.stringify({
+      meta: fields.sessionMetadata, 
+      sensors: fields.sessionSensors
+    })
+  })
+
+  if (!response.ok) {
+    throw response.statusText; 
+  }
+
+  const data = await response.json(); 
+  return data; 
+}
+
+export const createSession = async (accessToken: string, name: string, sessionMeta: object, sessionSensors: object) => {
+
+  const fields: SessionCreateFields = {
+    sessionMetadata: sessionMeta, 
+    sessionSensors: sessionSensors
+  };
+
+  try {
+    const response = await handleCreateSession(accessToken, name, fields); 
+    return response;
+  } 
+  catch (statusText) {
+    console.log('Error creating new session: ', statusText);
+    return null;
+  }
+}
+
+/**
+ * Stopping a currently alive session 
+ * @param name Name of session to be stopped. 
+ * @param accessToken JWT authentication token 
+ */
+const handleSessionStop = async (name: string, accessToken: string) => {
+  const response = await fetch(`http://${url}/sessions/${name}`, {
+    method: "PATCH", 
+    headers: {
+      "Content-Type": "application/json", 
+      Authorization: "Bearer " + accessToken,
+    }, 
+    body: JSON.stringify({
+      status: 'dead'
+    })
+  })
+
+  if(!response.ok) {
+    throw response.statusText; 
+  }
+
+  const data = await response.json(); 
+  return data;
+}
+
+export const stopSession: SessionStop = async (name, token) => {
+  try {
+    const response = await handleSessionStop(name, token); 
+    return response; 
+  } 
+  catch (statusText) {
+    console.log('Error Stopping session: ', statusText);
+    return null;
+  }
+}
+
+/**
+ * Getting all the sessions in the database 
+ */
+const handleGetAllSessions = async () => {
   const response = await fetch(`http://${url}/sessions`, {
     method: "GET",
     headers: {
@@ -35,76 +118,9 @@ const handleSessionsGet = async () => {
   return data;
 }
 
-const handleSessionsPost: SessionCreate = async (
-  accessToken,
-  sensors,
-  meta
-) => {
-  const response = await fetch(`http://${url}/sessions/${meta.name}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken
-    },
-    body: JSON.stringify({
-      sensors,
-      meta
-    })
-  })
-
-  if (!response.ok) {
-    throw response.statusText; 
-  }
-
-  return response; 
-}
-
-const handleSessionPatch: SessionStop = async (
-  accessToken,
-  name
-) => {
-  const response = await fetch(`http://${url}/sessions/${name}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken
-    },
-    body: JSON.stringify({
-      status: 'dead'
-    })
-  })
-
-  if (!response.ok) {
-    throw response.statusText; 
-  }
-
-  return response; 
-}
-
-export const sessionCreate: SessionCreate = async (
-  accessToken,
-  sensors,
-  meta
-) => {
+export const getAllSessions: SessionsGet = async () => {
   try {
-    const response = await handleSessionsPost(accessToken, sensors, meta) 
-    
-    if (response.status === 200) {
-      return true; 
-    }
-
-    return false; 
-  } 
-  catch(statusText) {
-    console.log('Error Creating Session: ', statusText);
-    return false; 
-  }  
-};
-
-export const sessionsGet: SessionsGet = async () => {
-
-  try {
-    const sessionResponse = await handleSessionsGet(); 
+    const sessionResponse = await handleGetAllSessions(); 
     return sessionResponse; 
   } 
   catch (statusText) {

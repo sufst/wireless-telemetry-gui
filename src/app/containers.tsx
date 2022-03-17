@@ -18,7 +18,7 @@
 
 // Module Imports
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -27,6 +27,7 @@ import { Paper } from '@material-ui/core';
 
 // Component Imports
 import { Dashboard } from "pages/dashboard/index";
+import Admin from "pages/admin/index";
 import Account from 'pages/account/';
 import { SignIn } from "pages/signin/index";
 import AppNavigation from "modules/navigation/navigation";
@@ -42,8 +43,9 @@ import type { RootState } from 'redux/store';
 
 const AppRouterSwitch = () => {
     const classes = useStyles();
-
     const dispatch = useDispatch();
+    const history = useHistory(); 
+
     const selectUser = (state: RootState) => state.user;
     const user = useSelector(selectUser); 
 
@@ -53,8 +55,10 @@ const AppRouterSwitch = () => {
             const password = "anonymous"
         
             dispatch(loginUser( { username, password } ))
+        } else {
+            history.push('/')
         }
-    }, [user, dispatch])
+    }, [user, dispatch, history])
 
     return (
         <Switch>
@@ -63,6 +67,7 @@ const AppRouterSwitch = () => {
             </Route>
             <Route path="/login" exact>
                 <Paper className={classes.viewPaper} >
+                    <Alert /> 
                     <SignIn />
                 </Paper>
             </Route>
@@ -81,7 +86,13 @@ const AppRouterSwitch = () => {
             <Route path="/account" exact>
                 <Paper className={classes.viewPaper}>
                     <Alert /> 
-                    {user.username === undefined || user.username === 'anonymous' ? <SignIn /> : <Account/> }
+                    <Account /> 
+                </Paper> 
+            </Route>
+            <Route path="/admin" exact>
+                <Paper className={classes.viewPaper}>
+                    <Alert /> 
+                    <Admin />
                 </Paper> 
             </Route>
             <Route path="*">

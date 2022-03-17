@@ -83,7 +83,6 @@ export const usersCreate: UsersCreate = async (
  * UsersGet Request
  * 
  */
-
 const handleUsersGet: UsersGet = async (username, accessToken) => {
   const response = await fetch(`http://${url}/users/${username}`, {
     method: "GET",
@@ -149,3 +148,36 @@ export const usersPatch: UsersPatch = async (username, accessToken, fields) => {
     return false; 
   }
 };
+
+/**
+ * 
+ * GetAllUsers
+ * 
+ */
+const handleGetAllUsers = async (accessToken: string) => {
+  const response = await fetch(`http://${url}/users`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
+  })
+
+  if(!response.ok) {
+    throw response.statusText; 
+  }
+
+  const data = await response.json(); 
+  return data; 
+}
+
+export const fetchAllUsers = async (accessToken: string) => {
+  try {
+    const result = await handleGetAllUsers(accessToken); 
+    return result;
+  }
+  catch(statusText) {
+    console.log('Error Fetching all users: ', statusText);
+    return null; 
+  }
+}

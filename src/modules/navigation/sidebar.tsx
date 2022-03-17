@@ -81,7 +81,7 @@ const AppSideBar = (props: { handleDrawerClose: () => void , open: boolean }) =>
         () => history.push('/account'),
         () =>  history.push('/dashboard'),
         () =>  history.push('/dashboard'),
-        () =>  history.push('/dashboard'),
+        () =>  history.push('/admin'),
         () =>  history.push('/dashboard'),
         () =>  history.push('/dashboard'),
         () =>  history.push('/dashboard'),
