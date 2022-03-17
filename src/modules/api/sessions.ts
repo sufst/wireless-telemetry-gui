@@ -128,3 +128,22 @@ export const getAllSessions: SessionsGet = async () => {
     return null;
   }
 };
+
+export const sessionStop: SessionStop = async (
+  accessToken,
+  name
+) => {
+  try {
+    const response = await handleSessionPatch(accessToken, name); 
+    
+    if (response.status === 200) {
+      return true; 
+    }
+
+    return false; 
+  } 
+  catch(statusText) {
+    console.log('Error Stopping Session: ', statusText);
+    return false; 
+  }
+};

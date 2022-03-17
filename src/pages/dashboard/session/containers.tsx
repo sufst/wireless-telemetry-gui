@@ -17,53 +17,131 @@
 */
 import {
     useCallback,
+    useEffect,
     useState
 } from "react";
 import { 
     Grid, 
-    Paper 
+    Paper,
+    LinearProgress 
 } from "@material-ui/core";
 import {
     Header,
     NewSession,
+    SessionTable,
     StartStop
 } from "./components";
 import { useStyles } from "./styles";
+import { sessionCreate, sessionsGet, sessionStop } from "modules/api/sessions";
+import { useDispatch, useSelector } from "react-redux";
+import { createAlert } from "modules/alert/alert";
+import { showAlert } from "redux/slices/alert";
+import store, {RootState} from "../../../redux/store";
+import { SessionsGetResponse } from "modules/api/typing";
 
 export const Session = () => {
     // TODO: setName to be used later - disabled warning for now
     // eslint-disable-next-line
     const [name, setName] = useState(undefined);
+    // const [driver, setDriver] = useState(undefined);
+    // const [conditions, setConditions] = useState(undefined);
     const [running, setRunning] = useState(false);
+    const [sensorGroups, setSensorGroups] = useState<Array<string>>([])
+    const [error, setError] = useState(false)
+
+    const [sessionData, setSessionData] = useState({})
+    const [isLoading, setIsLoading] = useState({
+        sessions: true
+    })
 
     const sessionName = name ?? "No Session";
     const startStopColour = running ? "secondary" : "primary";
     const startStopText = running ? "STOP" : "START";
+    const dispatch = useDispatch();
+    const selectGroups = (state: RootState) => state.sensors.groups;
+    const groups = useSelector(selectGroups);
+    const sensorGroupNames = Object.keys(groups);
+
+    useEffect(() => {
+        async function load() {
+            const sessionData = await sessionsGet().then((result : SessionsGetResponse) => result)
+            console.log(JSON.stringify(sessionData))
+            setSessionData(sessionData)
+            setIsLoading({
+                ...isLoading,
+                sessions: false
+            })
+        }
+        load()
+    }, [])
+
+    const onSensorChange = (newSensorGroup:string) => {
+        if(sensorGroups.includes(newSensorGroup)){
+            setSensorGroups(sensorGroups.filter(sensorGroup => sensorGroup!==newSensorGroup))
+        }
+        else{
+            const newSensors = sensorGroups.concat(newSensorGroup)
+            setSensorGroups(newSensors);
+        }
+    };
 
     const onStartStopClick = useCallback(() => {
+        if(running === true) {
+            const accessToken = store.getState().user.accessToken;
+            sessionStop(accessToken, name)
+        }
         setRunning(!running);
-    }, [running]);
+    }, [running, name]);
 
-    const onNewSubmit = useCallback((event) => {
+    const onNewSubmit = useCallback( async (event) => {
         event.preventDefault();
         
-        const sessionName = event.target.sessionName.value; 
-        setName(sessionName); 
-    }, []);
+        const name = event.target.sessionName.value; 
+        const driver = event.target.sessionDriver.value; 
+        const conditions = event.target.sessionConditions.value;
+
+        setName(name);
+        const accessToken = store.getState().user.accessToken;
+
+        const invalidNameRegex = new RegExp('^ *$');
+        if(invalidNameRegex.test(name) || !(sensorGroups.length>0)){
+            setError(true);
+            dispatch(showAlert(createAlert(3000, "error", "snack", `Error! ${name} session not created!`))); 
+            return;
+        }
+
+        setError(false)
+
+        const sensors = Object.entries(groups).filter((group: [key: string, value: string[]]) => sensorGroups.includes(group[0])).map((group: [key: string, value: string[]]) => (group[1])).flat();
+        
+        const success = await sessionCreate(accessToken, sensors as [string], { name, driver, conditions })
+        
+        if(success) {
+            dispatch(showAlert(createAlert(3000, "success", "snack", `Success! ${name} session successfully created!`))); 
+            setRunning(!running);
+        }
+        else {
+            dispatch(showAlert(createAlert(3000, "error", "snack", `Error! ${name} session not created!`))); 
+        }
+    }, [dispatch, running, sensorGroups, groups]);
 
     const classes = useStyles(); 
-
     return (
         <Paper className={classes.rootSessionPaper}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Header name={sessionName}/>
-                </Grid>
-                <Grid item xs={12}>
                     <StartStop colour={startStopColour} text={startStopText} onClick={onStartStopClick}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <NewSession onSubmit={onNewSubmit}/>
+                    <NewSession sensorGroups={sensorGroupNames} onSubmit={onNewSubmit} onSensorChangeCallback={onSensorChange} error={error}/>
+                </Grid>
+                <Grid item xs={12}>
+                    {!isLoading.sessions && (
+                    <SessionTable sessionData={sessionData}/>
+                    ) || (
+                        <LinearProgress />
+                    )}
                 </Grid>
             </Grid>
         </Paper>

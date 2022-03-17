@@ -100,7 +100,6 @@ export type SessionsGetResponse = {
         sensors: [string]
     }
 };
-
 export type SessionCreate = (
   accessToken: String, 
   name: string, 
@@ -116,3 +115,4 @@ export type SessionStop = (
   name: string, 
   accessToken: string
 ) => Promise;
+
