@@ -30,7 +30,10 @@ import { CurrentSessionHeader, NewSessionContainer, SessionPaper, SessionTable, 
 
 export const SessionContainer = () => {
 
-    const [name, setName] = useState(undefined);
+    const [name, setName] = useState(""); 
+    const [driver, setDriver] = useState(""); 
+    const [condition, setCondition] = useState(""); 
+
     const [running, setRunning] = useState(false);
     const [sensorGroups, setSensorGroups] = useState<Array<string>>([])
     const [error, setError] = useState(false)
@@ -74,6 +77,10 @@ export const SessionContainer = () => {
         setRunning(!running);
     }, [running, name]);
 
+    const onStartClicked = useCallback((e) => {
+        console.log('Clicked start...');
+    }, [])
+
     const onNewSubmit = useCallback( async (event) => {
         event.preventDefault();
         
@@ -115,8 +122,8 @@ export const SessionContainer = () => {
             <Paper className={classes.rootPaper}>
                 <NewSessionContainer 
                     error={error} 
-                    onSensorChangeCallback={onSensorChange} 
-                    onSubmit={onNewSubmit}
+
+                    onSubmit={onStartClicked}
                     sensorGroups={sensorGroupNames}
                 />
             </Paper>

@@ -17,17 +17,14 @@
 */
 
 import { 
-    Accordion,
+
     Paper, 
     Typography,
-    AccordionSummary,
-    AccordionDetails,
     TextField,
     Button,
     Box,
     FormLabel,
     FormControl,
-    FormGroup,
     FormControlLabel,
     FormHelperText,
     IconButton,
@@ -40,10 +37,10 @@ import {
     Checkbox, 
     Grid
 } from "@material-ui/core";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { SessionsGetResponse } from "modules/api/typing";
-import sessions from "redux/slices/sessions";
+import { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
 import {
     useStyles
 } from "./styles";
@@ -68,35 +65,68 @@ export const SessionPaper = () => {
     )
 }
 
-export const NewSessionForm = (props: { error: boolean, onSensorChangeCallback: (sensor : string) => void, onSubmit: (event: any) => void, sensorGroups: string[]}) => {
+export const NewSessionForm = (props: { error: boolean, onSubmit: (event: any) => void, sensorGroups: string[]}) => {
+    
+    const dispatch = useDispatch(); 
     const classes = useStyles(); 
 
-    const startButtonClasses = () => {
-        return classes.sessionButtonStartBox;
-    }
+    const [name, setName] = useState(""); 
+    const [driver, setDriver] = useState(""); 
+    const [condition, setCondition] = useState(""); 
+    const [sensorGroups, setSensorGroups] = useState<string[]>([]); 
+ 
+    const startPressed = useCallback(() => {
+        if (name === "" || sensorGroups.length === 0) {
+            console.log('Session Information error');
+            return; 
+        }    
+        console.log('Starting: ', name, driver, condition, sensorGroups);
+        
+        //dispatch(setSessionInformation({ name, driver, condition, sensors: sensorGroups }))
+    }, [name, driver, condition, sensorGroups])
 
-    const stopButtonClasses = () => {
-        return classes.sessionButtonStopBox; 
-    }
+    const stopPressed = useCallback(() => {
+        console.log('Stopping session...');
+    }, [])
 
-    const startPressed = (event: any) => {
-        props.onSubmit(event); 
-    }
-
-    const stopPressed = () => {
-
-    }
+    const onSensorChange = useCallback((newSensorGroup: string) => {
+        if (sensorGroups.includes(newSensorGroup)) {
+            setSensorGroups(sensorGroups.filter(sensorGroup => sensorGroup !== newSensorGroup))
+        }
+        else {
+            const newSensors = sensorGroups.concat(newSensorGroup)
+            setSensorGroups(newSensors);
+        }
+    }, [sensorGroups])
 
     return (
         <FormControl error={props.error} >
             <Box>
-                <TextField id="sessionName" label="Session Name" className={classes.newSessionTextField}/>
-                <TextField id="sessionDriver" label="Driver" className={classes.newSessionTextFieldMargin}/>
-                <TextField id="sessionConditions" label="Conditions" className={classes.newSessionTextFieldMargin}/>
+                <TextField label="Session Name" 
+                           className={classes.newSessionTextField} 
+                           value={name} 
+                           onChange={e => {
+                               setName(e.target.value);
+                           }}
+                />
+                <TextField label="Driver" 
+                           className={classes.newSessionTextFieldMargin}
+                           value={driver}
+                           onChange={e => {
+                               setDriver(e.target.value); 
+                           }}
+                />
+                <TextField label="Conditions" 
+                           className={classes.newSessionTextFieldMargin}
+                           value={condition}
+                           onChange={e => {
+                               setCondition(e.target.value);
+                           }}
+                />
             </Box>
             <SensorChooser 
                 sensorGroups={props.sensorGroups} 
-                onSensorChangeCallback={props.onSensorChangeCallback}
+                onSensorChangeCallback={onSensorChange}
             />
             {
             props.error && 
@@ -104,12 +134,12 @@ export const NewSessionForm = (props: { error: boolean, onSensorChangeCallback: 
             }
             <Grid container className={classes.gridContainer} spacing={3}>
                 <Grid item xs={4} onClick={startPressed}>
-                    <Box className={startButtonClasses()}>
+                    <Box className={classes.sessionButtonStartBox}>
                         Start Session
                     </Box>
                 </Grid>
                 <Grid item xs={4} onClick={stopPressed}>
-                    <Box className={stopButtonClasses()}>
+                    <Box className={classes.sessionButtonStopBox}>
                         Stop Session
                     </Box>
                 </Grid>
@@ -118,31 +148,14 @@ export const NewSessionForm = (props: { error: boolean, onSensorChangeCallback: 
     )
 }
 
-export const NewSessionContainer = (props: { error: boolean, onSensorChangeCallback: (sensor : string) => void, onSubmit: (event: any) => void, sensorGroups: string[]}) => {
+export const NewSessionContainer = (props: { error: boolean, onSubmit: (event: any) => void, sensorGroups: string[]}) => {
     const classes = useStyles();
-
-    const startButtonClasses = () => {
-        return classes.sessionButtonStartBox;
-    }
-
-    const stopButtonClasses = () => {
-        return classes.sessionButtonStopBox; 
-    }
-
-    const startPressed = () => {
-
-    }
-
-    const stopPressed = () => {
-
-    }
 
     return (
         <>
             <p className={classes.newSessionText}>New Session</p>
             <NewSessionForm 
-                    error={props.error} 
-                    onSensorChangeCallback={props.onSensorChangeCallback} 
+                    error={props.error}
                     onSubmit={props.onSubmit}
                     sensorGroups={props.sensorGroups}
             />
@@ -165,7 +178,14 @@ export const StartStop = (props: { onClick: () => void, colour: string, text: st
 export const SensorChooser = (props: { sensorGroups: string[], onSensorChangeCallback: (sensor : string) => void}) => {
     
     const checkboxes = props.sensorGroups.map(groupName => {
-        return <FormControlLabel control={<Checkbox id={groupName} onChange={() => props.onSensorChangeCallback(groupName)} style={{color: 'lightBlue'}}/>} label={groupName} />
+        return (
+            <FormControlLabel 
+                control = { <Checkbox id={groupName} 
+                                      onChange={() => props.onSensorChangeCallback(groupName)} 
+                                      style={{ color: 'lightBlue' }} 
+                          /> } 
+                label={ groupName } />
+        )
     })
 
     const classes = useStyles(); 

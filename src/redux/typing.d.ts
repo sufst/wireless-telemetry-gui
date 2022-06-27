@@ -111,9 +111,19 @@ export type UserState = {
 
 export type SessionState = {
     sessionName: string,
-    isRunning: boolean
+    sessionDriver: string, 
+    sessionConditions: string,
+    sessionSensors: Array<string>,
+    isRunning: boolean,
 }
 
 export type StartStopSessionAction = {
     name: string
+}
+
+export type SetSessionInfoAction = {
+    name: string, 
+    driver: string, 
+    condition: string, 
+    sensors: Array<string>
 }
