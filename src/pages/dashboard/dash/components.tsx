@@ -180,6 +180,11 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
     const [sessionName, setSessionName] = useState("NOT RUNNING"); 
     const [isSessionRunning, setIsSessionRunning] = useState(false); 
 
+    // Session Name from Redux
+    const selectSessionName = (state: RootState) => state.session.sessionName; 
+    const sName = useSelector(selectSessionName); 
+    const sessionNameLabelText: string = sName === "" ? "NOT RUNNING" : sName;
+
     const selectUser = (state: RootState) => state.user;
     const user = useSelector(selectUser); 
 
@@ -256,7 +261,7 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
             <p className={classes.sensorsText}>Session</p>
             <Grid container className={classes.gridContainer} spacing={3}>
                 <Grid item xs={4}>
-                    <CurrentSessionBox currentSessionName={sessionName}/>
+                    <CurrentSessionBox currentSessionName={sessionNameLabelText}/>
                 </Grid>
                 <Grid item xs={4} onClick={startPressed}>
                     <Box className={startButtonClasses()}>

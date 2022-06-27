@@ -24,14 +24,21 @@ import { useDispatch, useSelector } from "react-redux";
 import store, {RootState} from "../../../redux/store";
 import { SessionsGetResponse } from "modules/api/typing";
 import { CurrentSessionHeader, NewSessionContainer, SessionTable } from "./components";
+import { showAlert } from "redux/slices/alert";
+import { createAlert } from "modules/alert/alert";
 
 export const SessionContainer = () => {
+
+    const dispatch = useDispatch(); 
 
     // Session Name from Redux
     const selectSessionName = (state: RootState) => state.session.sessionName; 
     const sessionName = useSelector(selectSessionName); 
 
-    const [error, setError] = useState(false)
+    // Session Groups from Redux
+    const selectSessionGroups = (state: RootState) => state.session.sessionSensors; 
+    const sessionGroups = useSelector(selectSessionGroups); 
+
     const [sessionData, setSessionData] = useState({})
 
     // Sensor Groups from Redux
@@ -51,9 +58,33 @@ export const SessionContainer = () => {
     },[fetchAllSessions])
 
   
-    const onStartClicked = useCallback(() => {
-        console.log('Clicked start...');
-    }, [])
+    const onStartClicked = useCallback(async () => {
+        // Fetching token, name and group sessions from Redux 
+        const accessToken = store.getState().user.accessToken;  
+        const sessionSensorGroups = store.getState().session.sessionSensors; 
+        const name = store.getState().session.sessionName; 
+
+        // TODO: Metadata for session. Things like driver, condition and track can go here.  
+        const sessionMeta = { }; 
+
+        // Creates an array of all the names of the sensors to be saved in the session. 
+        const groupsForSession = Object.entries(groups).filter((group: [key: string, value: string[]]) => sessionSensorGroups.includes(group[0]))
+        const sensors = groupsForSession.map((group: [key: string, value: string[]]) => (group[1])).flat();
+
+        console.log('Creating session with:', name, sensors);
+        
+        const createSuccess = await createSession(accessToken!, name, sessionMeta, sensors); 
+
+        if (createSuccess) {
+            dispatch(showAlert(createAlert(3000, "success", "snack", `Success! ${name} session successfully created!`))); 
+
+            // TODO: Handle running flag for session. 
+        }
+        else {
+            dispatch(showAlert(createAlert(3000, "error", "snack", `Error! ${name} session not created!`))); 
+        }
+        
+    }, [dispatch, groups])
 
     // const onNewSubmit = useCallback( async (event) => {
     //     event.preventDefault();
