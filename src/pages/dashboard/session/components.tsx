@@ -41,6 +41,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import { SessionsGetResponse } from "modules/api/typing";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
+import { setSessionInformation } from "redux/slices/sessions";
 import {
     useStyles
 } from "./styles";
@@ -65,7 +66,7 @@ export const SessionPaper = () => {
     )
 }
 
-export const NewSessionForm = (props: { error: boolean, onSubmit: (event: any) => void, sensorGroups: string[]}) => {
+export const NewSessionContainer = (props: { onSubmit: () => void, sensorGroups: string[]}) => {
     
     const dispatch = useDispatch(); 
     const classes = useStyles(); 
@@ -74,15 +75,18 @@ export const NewSessionForm = (props: { error: boolean, onSubmit: (event: any) =
     const [driver, setDriver] = useState(""); 
     const [condition, setCondition] = useState(""); 
     const [sensorGroups, setSensorGroups] = useState<string[]>([]); 
+
+    const [error, setError] = useState(false);
  
     const startPressed = useCallback(() => {
         if (name === "" || sensorGroups.length === 0) {
-            console.log('Session Information error');
+            setError(true)
             return; 
         }    
         console.log('Starting: ', name, driver, condition, sensorGroups);
         
-        //dispatch(setSessionInformation({ name, driver, condition, sensors: sensorGroups }))
+        dispatch(setSessionInformation({ name, driver, condition, sensors: sensorGroups }))
+        props.onSubmit(); 
     }, [name, driver, condition, sensorGroups])
 
     const stopPressed = useCallback(() => {
@@ -100,78 +104,54 @@ export const NewSessionForm = (props: { error: boolean, onSubmit: (event: any) =
     }, [sensorGroups])
 
     return (
-        <FormControl error={props.error} >
-            <Box>
-                <TextField label="Session Name" 
-                           className={classes.newSessionTextField} 
-                           value={name} 
-                           onChange={e => {
-                               setName(e.target.value);
-                           }}
-                />
-                <TextField label="Driver" 
-                           className={classes.newSessionTextFieldMargin}
-                           value={driver}
-                           onChange={e => {
-                               setDriver(e.target.value); 
-                           }}
-                />
-                <TextField label="Conditions" 
-                           className={classes.newSessionTextFieldMargin}
-                           value={condition}
-                           onChange={e => {
-                               setCondition(e.target.value);
-                           }}
-                />
-            </Box>
-            <SensorChooser 
-                sensorGroups={props.sensorGroups} 
-                onSensorChangeCallback={onSensorChange}
-            />
-            {
-            props.error && 
-                <FormHelperText>Set a name and choose at least one sensor</FormHelperText>
-            }
-            <Grid container className={classes.gridContainer} spacing={3}>
-                <Grid item xs={4} onClick={startPressed}>
-                    <Box className={classes.sessionButtonStartBox}>
-                        Start Session
-                    </Box>
-                </Grid>
-                <Grid item xs={4} onClick={stopPressed}>
-                    <Box className={classes.sessionButtonStopBox}>
-                        Stop Session
-                    </Box>
-                </Grid>
-            </Grid>
-        </FormControl>
-    )
-}
-
-export const NewSessionContainer = (props: { error: boolean, onSubmit: (event: any) => void, sensorGroups: string[]}) => {
-    const classes = useStyles();
-
-    return (
         <>
             <p className={classes.newSessionText}>New Session</p>
-            <NewSessionForm 
-                    error={props.error}
-                    onSubmit={props.onSubmit}
-                    sensorGroups={props.sensorGroups}
-            />
+            <FormControl error={error} >
+                <Box>
+                    <TextField label="Session Name" 
+                            className={classes.newSessionTextField} 
+                            value={name} 
+                            onChange={e => {
+                                setName(e.target.value);
+                            }}
+                    />
+                    <TextField label="Driver" 
+                            className={classes.newSessionTextFieldMargin}
+                            value={driver}
+                            onChange={e => {
+                                setDriver(e.target.value); 
+                            }}
+                    />
+                    <TextField label="Conditions" 
+                            className={classes.newSessionTextFieldMargin}
+                            value={condition}
+                            onChange={e => {
+                                setCondition(e.target.value);
+                            }}
+                    />
+                </Box>
+                <SensorChooser 
+                    sensorGroups={props.sensorGroups} 
+                    onSensorChangeCallback={onSensorChange}
+                />
+                {
+                error && 
+                    <FormHelperText>Set a name and choose at least one sensor</FormHelperText>
+                }
+                <Grid container className={classes.gridContainer} spacing={3}>
+                    <Grid item xs={4} onClick={startPressed}>
+                        <Box className={classes.sessionButtonStartBox}>
+                            Start Session
+                        </Box>
+                    </Grid>
+                    <Grid item xs={4} onClick={stopPressed}>
+                        <Box className={classes.sessionButtonStopBox}>
+                            Stop Session
+                        </Box>
+                    </Grid>
+                </Grid>
+            </FormControl>
         </>
-    )
-}
-
-export const StartStop = (props: { onClick: () => void, colour: string, text: string }) => {
-    const classes = useStyles(); 
-
-    return (
-        // Seems typescript doesn't understand color
-        // @ts-ignore
-        <Button variant="contained" color={props.colour} onClick={props.onClick} className={classes.startStopBtn}>
-            {props.text}
-        </Button>
     )
 }
 
