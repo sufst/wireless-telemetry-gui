@@ -42,6 +42,7 @@ import { SessionsGetResponse } from "modules/api/typing";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSessionInformation } from "redux/slices/sessions";
+import { v4 } from "uuid";
 import {
     useStyles
 } from "./styles";
@@ -164,7 +165,7 @@ export const SensorChooser = (props: { sensorGroups: string[], onSensorChangeCal
     
     const checkboxes = props.sensorGroups.map(groupName => {
         return (
-            <FormControlLabel 
+            <FormControlLabel key={v4()}
                 control = { <Checkbox id={groupName} 
                                       onChange={() => props.onSensorChangeCallback(groupName)} 
                                       style={{ color: 'lightBlue' }} 

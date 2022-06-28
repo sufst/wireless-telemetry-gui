@@ -47,7 +47,7 @@ export const sessionSlice = createSlice({
       state.isRunning = true
     },
     stopSession: (state: SessionState) => {
-      state.sessionName = "NOT RUNNING"
+      state.sessionName = ""
       state.isRunning = false
     }
   },

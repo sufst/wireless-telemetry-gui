@@ -44,7 +44,7 @@ export const SessionContainer = () => {
     const groups = useSelector(selectGroups);
     const sensorGroupNames = Object.keys(groups);
 
-    const sessionNameLabelText: string = sessionName === "" ? "Not Running" : sessionName;
+    const sessionNameLabelText: string = sessionName === "" ? "NOT RUNNING" : sessionName;
 
     // Current Logged in User from Redux
     const selectUser = (state: RootState) => state.user;

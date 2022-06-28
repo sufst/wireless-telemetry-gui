@@ -174,31 +174,36 @@ export const DashSensors = () => {
 }
 
 export const DashSession = (props: { handleStart: (event: any, name: string) => void, handleStop: (event: any, name: string) => void }) => {
+    
     const classes = useStyles(); 
     const dispatch = useDispatch(); 
 
-    const [sessionName, setSessionName] = useState("NOT RUNNING"); 
-    const [isSessionRunning, setIsSessionRunning] = useState(false); 
+    // isRunning status from Redux
+    const selectIsRunning = (state: RootState) => state.session.isRunning; 
+    const isSessionRunning = useSelector(selectIsRunning); 
 
     // Session Name from Redux
     const selectSessionName = (state: RootState) => state.session.sessionName; 
-    const sName = useSelector(selectSessionName); 
-    const sessionNameLabelText: string = sName === "" ? "NOT RUNNING" : sName;
+    const sessionName = useSelector(selectSessionName); 
+    const sessionNameLabelText: string = sessionName === "" ? "NOT RUNNING" : sessionName;
 
+    // Current User from Redux 
     const selectUser = (state: RootState) => state.user;
     const user = useSelector(selectUser); 
 
     const { privilege } = user; 
 
+    // Builds a name for the session based on the current date & time.
     const buildSessionName = () => {
         const date = new Date();
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-        const year = date.getFullYear();
+        const year = date.getFullYear() - 2000;
         const hour = date.getHours(); 
         const minute = date.getMinutes(); 
+        const second = date.getSeconds(); 
 
-        const name = `${year}${month}${day}--${hour}${minute}`
+        const name = `${year}${month}${day}--${hour}${minute}${second}`
         return name; 
     }
 
@@ -215,10 +220,6 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
         }
 
         const name = buildSessionName(); 
-        
-        setIsSessionRunning(true); 
-        setSessionName(name); 
-        
         props.handleStart(e, name); 
     }, [isSessionRunning, props, dispatch, privilege])
 
@@ -234,27 +235,24 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
             return; 
         }
 
-        setSessionName("NOT RUNNING");
-        setIsSessionRunning(false); 
-
         props.handleStop(e, sessionName); 
     }, [isSessionRunning, props, dispatch, privilege, sessionName])
 
-    const startButtonClasses = () => {
+    const startButtonClasses = useCallback(() => {
         if (!isSessionRunning) {
             return classes.sessionButtonStartBox
         } else {
             return classes.sessionButtonStartBoxDisabled
         }
-    }
+    }, [isSessionRunning])
 
-    const stopButtonClasses = () => {
+    const stopButtonClasses = useCallback(() => {
         if (!isSessionRunning) {
             return classes.sessionButtonStopBoxDisabled
         } else {
             return classes.sessionButtonStopBox
         }
-    }
+    }, [isSessionRunning])
 
     return (
         <>
@@ -274,6 +272,9 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
                     </Box>
                 </Grid>
             </Grid>
+            <span style={{
+                opacity: '0.3',
+            }}>Starting a session from here will provide a default name and enable all sensors.</span>
         </>
     )
 }
