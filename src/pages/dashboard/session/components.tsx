@@ -45,6 +45,7 @@ import { setSessionInformation } from "redux/slices/sessions";
 import {
     useStyles
 } from "./styles";
+import { StartSessionButtonAction } from "./typing";
 
 export const CurrentSessionHeader = (props: { name: string }) => {
     const classes = useStyles(); 
@@ -66,7 +67,7 @@ export const SessionPaper = () => {
     )
 }
 
-export const NewSessionContainer = (props: { onSubmit: () => void, sensorGroups: string[]}) => {
+export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction, onStop: () => void, sensorGroups: string[]}) => {
     
     const dispatch = useDispatch(); 
     const classes = useStyles(); 
@@ -76,6 +77,7 @@ export const NewSessionContainer = (props: { onSubmit: () => void, sensorGroups:
     const [condition, setCondition] = useState(""); 
     const [sensorGroups, setSensorGroups] = useState<string[]>([]); 
 
+    // Error state for the MUI FormControl 
     const [error, setError] = useState(false);
  
     const startPressed = useCallback(() => {
@@ -85,14 +87,17 @@ export const NewSessionContainer = (props: { onSubmit: () => void, sensorGroups:
         }    
         console.log('Starting: ', name, driver, condition, sensorGroups);
         
-        dispatch(setSessionInformation({ name, driver, condition, sensors: sensorGroups }))
-        props.onSubmit(); 
+        // dispatch(setSessionInformation({ name, driver, condition, sensors: sensorGroups }))
+        props.onSubmit(name, driver, condition, sensorGroups); 
     }, [name, driver, condition, sensorGroups])
 
     const stopPressed = useCallback(() => {
-        console.log('Stopping session...');
-    }, [])
+        props.onStop();
+    }, [props])
 
+    
+    // Called when one of the checkboxes is clicked. 
+    // Sets the sensorGroups state array with the new values. 
     const onSensorChange = useCallback((newSensorGroup: string) => {
         if (sensorGroups.includes(newSensorGroup)) {
             setSensorGroups(sensorGroups.filter(sensorGroup => sensorGroup !== newSensorGroup))

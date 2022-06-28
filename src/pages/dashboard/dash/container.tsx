@@ -47,13 +47,14 @@ const Dash = () => {
     const loggingSensorData = useSelector(loggingSelector);
 
     const handleStopSession = useCallback((e, name) => {
-        console.log("Stopping from Component: ", name)
-        dispatch(stopSession({ name }))
+        dispatch(stopSession())
     }, [dispatch])
 
     const handleStartSession = useCallback((e, name) => {
         console.log("Starting From Component: ", name)
-        dispatch(startSession( { name }))
+        const driver: string = "", condition: string = ""; 
+        const sensors: string[] = []
+        dispatch(startSession( { name, driver, condition, sensors }))
     }, [dispatch])
 
     return (

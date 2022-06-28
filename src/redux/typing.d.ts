@@ -117,8 +117,11 @@ export type SessionState = {
     isRunning: boolean,
 }
 
-export type StartStopSessionAction = {
-    name: string
+export type StartSessionAction = {
+    name: string,
+    driver: string, 
+    condition: string, 
+    sensors: string[]
 }
 
 export type SetSessionInfoAction = {

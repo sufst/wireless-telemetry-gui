@@ -46,7 +46,7 @@ const handleCreateSession: SessionCreate = async (accessToken, name, fields) => 
   return data; 
 }
 
-export const createSession = async (accessToken: string, name: string, sessionMeta: object, sessionSensors: object) => {
+export const createSession = async (accessToken: string, name: string, sessionMeta: object, sessionSensors: Array<string>) => {
 
   const fields: SessionCreateFields = {
     sessionMetadata: sessionMeta, 
@@ -83,9 +83,8 @@ const handleSessionStop = async (name: string, accessToken: string) => {
   if(!response.ok) {
     throw response.statusText; 
   }
-
-  const data = await response.json(); 
-  return data;
+  
+  return response;
 }
 
 export const stopSession: SessionStop = async (name, token) => {

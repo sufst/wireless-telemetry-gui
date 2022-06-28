@@ -26,18 +26,29 @@ import { showAlert } from "redux/slices/alert";
 export const sessionMiddleware: Middleware<{}, any> = 
   (storeAPI) => (next) => async (action) => {
     if (action.type === "session/startSession") {
-        console.log('Starting session from middleware: ', action.payload.name);
 
-        const { name } = action.payload; 
-        const accessToken = storeAPI.getState().user.accessToken; 
-        const sessionSensors = storeAPI.getState().sensors.sensorMetadata; 
+        const { name, driver, condition } = action.payload;
+        const sensors: string[] = action.payload.sensors;
         
-        const response = await createSession(accessToken, name, {}, sessionSensors)
+        const accessToken = storeAPI.getState().user.accessToken; 
+        const allSensors: string[] = Object.keys(storeAPI.getState().sensors.sensorMetadata); 
+
+        let sessionSensors: string[] = sensors.length === 0 ? allSensors : sensors;
+
+        console.log('Starting session from middleware: ', name, driver, condition, sessionSensors);
+
+        const sessionMeta = {
+            driver: driver, 
+            condition: condition
+        }
+        
+        const response = await createSession(accessToken, name, sessionMeta, sessionSensors)
 
         if (response) {
             const createSessionOkayAlert = createAlert(3000, "success", "alert", "New session created."); 
             storeAPI.dispatch(showAlert(createSessionOkayAlert));
-          } else {
+        } 
+        else {
             const createSessionFailedAlert = createAlert(3000, "error", "alert", "Can't create a new session..."); 
             storeAPI.dispatch(showAlert(createSessionFailedAlert))
         }
@@ -46,17 +57,18 @@ export const sessionMiddleware: Middleware<{}, any> =
     } 
 
     if (action.type === "session/stopSession") {
-        console.log('Stopping session from middleware: ', action.payload.name);
-
-        const { name } = action.payload; 
         const accessToken = storeAPI.getState().user.accessToken; 
+        const name = storeAPI.getState().session.sessionName; 
+
+        console.log('Stopping session from middleware: ', name);
 
         const response = await stopSession(name, accessToken); 
 
         if (response) {
             const stopSessionOkayAlert = createAlert(3000, "success", "alert", "Session Stopped."); 
             storeAPI.dispatch(showAlert(stopSessionOkayAlert));
-          } else {
+        } 
+        else {
             const stopSessionFailedAlert = createAlert(3000, "error", "alert", "Can't stop session..."); 
             storeAPI.dispatch(showAlert(stopSessionFailedAlert))
         }

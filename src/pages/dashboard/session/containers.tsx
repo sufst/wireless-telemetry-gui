@@ -19,13 +19,15 @@
 import { useCallback, useEffect, useState } from "react";
 import { Paper } from "@material-ui/core";
 import { useStyles } from "./styles";
-import { createSession, getAllSessions, stopSession } from "modules/api/sessions";
+import { createSession, getAllSessions } from "modules/api/sessions";
 import { useDispatch, useSelector } from "react-redux";
 import store, {RootState} from "../../../redux/store";
 import { SessionsGetResponse } from "modules/api/typing";
 import { CurrentSessionHeader, NewSessionContainer, SessionTable } from "./components";
 import { showAlert } from "redux/slices/alert";
 import { createAlert } from "modules/alert/alert";
+import { startSession, stopSession } from "redux/slices/sessions";
+import { StartSessionButtonAction } from "./typing";
 
 export const SessionContainer = () => {
 
@@ -34,11 +36,7 @@ export const SessionContainer = () => {
     // Session Name from Redux
     const selectSessionName = (state: RootState) => state.session.sessionName; 
     const sessionName = useSelector(selectSessionName); 
-
-    // Session Groups from Redux
-    const selectSessionGroups = (state: RootState) => state.session.sessionSensors; 
-    const sessionGroups = useSelector(selectSessionGroups); 
-
+    
     const [sessionData, setSessionData] = useState({})
 
     // Sensor Groups from Redux
@@ -47,6 +45,13 @@ export const SessionContainer = () => {
     const sensorGroupNames = Object.keys(groups);
 
     const sessionNameLabelText: string = sessionName === "" ? "Not Running" : sessionName;
+
+    // Current Logged in User from Redux
+    const selectUser = (state: RootState) => state.user;
+    const user = useSelector(selectUser); 
+
+    const { privilege } = user; 
+
 
     const fetchAllSessions = useCallback(async () => {
         const sessions = await getAllSessions();
@@ -57,66 +62,30 @@ export const SessionContainer = () => {
         fetchAllSessions(); 
     },[fetchAllSessions])
 
-  
-    const onStartClicked = useCallback(async () => {
-        // Fetching token, name and group sessions from Redux 
-        const accessToken = store.getState().user.accessToken;  
-        const sessionSensorGroups = store.getState().session.sessionSensors; 
-        const name = store.getState().session.sessionName; 
 
-        // TODO: Metadata for session. Things like driver, condition and track can go here.  
-        const sessionMeta = { }; 
+    const handleStartSession: StartSessionButtonAction = useCallback((name, driver, condition, sessionSensorGroups) => {
 
         // Creates an array of all the names of the sensors to be saved in the session. 
         const groupsForSession = Object.entries(groups).filter((group: [key: string, value: string[]]) => sessionSensorGroups.includes(group[0]))
         const sensors = groupsForSession.map((group: [key: string, value: string[]]) => (group[1])).flat();
-
-        console.log('Creating session with:', name, sensors);
         
-        const createSuccess = await createSession(accessToken!, name, sessionMeta, sensors); 
+        dispatch(startSession( { name, driver, condition, sensors }))
+    }, [])
 
-        if (createSuccess) {
-            dispatch(showAlert(createAlert(3000, "success", "snack", `Success! ${name} session successfully created!`))); 
-
-            // TODO: Handle running flag for session. 
+    const onStartClicked: StartSessionButtonAction = useCallback((name, driver, condition, sensors) => {
+        if (privilege !== 'Admin' && privilege !== 'Developer') {
+            const createSessionFailedAlert = createAlert(3000, "error", "snack", "Login to start a new session."); 
+            dispatch(showAlert(createSessionFailedAlert));
+            return; 
         }
-        else {
-            dispatch(showAlert(createAlert(3000, "error", "snack", `Error! ${name} session not created!`))); 
-        }
-        
-    }, [dispatch, groups])
 
-    // const onNewSubmit = useCallback( async (event) => {
-    //     event.preventDefault();
-        
-    //     const name = event.target.sessionName.value; 
-    //     const driver = event.target.sessionDriver.value; 
-    //     const conditions = event.target.sessionConditions.value;
+        handleStartSession(name, driver, condition, sensors);
+    }, [privilege])
 
-    //     setName(name);
-    //     const accessToken = store.getState().user.accessToken;
-
-    //     const invalidNameRegex = new RegExp('^ *$');
-    //     if(invalidNameRegex.test(name) || !(sensorGroups.length>0)){
-    //         setError(true);
-    //         dispatch(showAlert(createAlert(3000, "error", "snack", `Error! ${name} session not created!`))); 
-    //         return;
-    //     }
-
-    //     setError(false)
-
-    //     const sensors = Object.entries(groups).filter((group: [key: string, value: string[]]) => sensorGroups.includes(group[0])).map((group: [key: string, value: string[]]) => (group[1])).flat();
-        
-    //     const success = await createSession(accessToken!, name, {}, sensors)
-        
-    //     if(success) {
-    //         dispatch(showAlert(createAlert(3000, "success", "snack", `Success! ${name} session successfully created!`))); 
-    //         setRunning(!running);
-    //     }
-    //     else {
-    //         dispatch(showAlert(createAlert(3000, "error", "snack", `Error! ${name} session not created!`))); 
-    //     }
-    // }, [dispatch, running, sensorGroups, groups]);
+    const onStopClicked = useCallback(() => {
+        console.log('Stopping Session.');
+        dispatch(stopSession()); 
+    }, [])
 
     const classes = useStyles(); 
     return (
@@ -127,6 +96,7 @@ export const SessionContainer = () => {
             <Paper className={classes.rootPaper}>
                 <NewSessionContainer 
                     onSubmit={onStartClicked}
+                    onStop={onStopClicked}
                     sensorGroups={sensorGroupNames}
                 />
             </Paper>

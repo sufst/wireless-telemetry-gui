@@ -17,7 +17,7 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { SessionState, SetSessionInfoAction, StartStopSessionAction } from "redux/typing";
+import type { SessionState, SetSessionInfoAction, StartSessionAction } from "redux/typing";
 
 const initialState: SessionState = {
     sessionName: "",
@@ -39,11 +39,14 @@ export const sessionSlice = createSlice({
       state.sessionConditions = action.payload.condition
       state.sessionSensors = action.payload.sensors
     }, 
-    startSession: (state: SessionState, action: PayloadAction<StartStopSessionAction>) => {      
+    startSession: (state: SessionState, action: PayloadAction<StartSessionAction>) => {      
       state.sessionName = action.payload.name
+      state.sessionDriver = action.payload.driver
+      state.sessionConditions = action.payload.condition
+      state.sessionSensors = action.payload.sensors
       state.isRunning = true
     },
-    stopSession: (state: SessionState, action: PayloadAction<StartStopSessionAction>) => {
+    stopSession: (state: SessionState) => {
       state.sessionName = "NOT RUNNING"
       state.isRunning = false
     }
