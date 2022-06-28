@@ -40,8 +40,9 @@ import {
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { SessionsGetResponse } from "modules/api/typing";
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSessionInformation } from "redux/slices/sessions";
+import { RootState } from "redux/store";
 import { v4 } from "uuid";
 import {
     useStyles
@@ -77,6 +78,10 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
     const [driver, setDriver] = useState(""); 
     const [condition, setCondition] = useState(""); 
     const [sensorGroups, setSensorGroups] = useState<string[]>([]); 
+
+    // Session isRunning from Redux 
+    const selectIsRunning = (state: RootState) => state.session.isRunning; 
+    const isSessionRunning = useSelector(selectIsRunning);
 
     // Error state for the MUI FormControl 
     const [error, setError] = useState(false);
@@ -117,6 +122,7 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
                     <TextField label="Session Name" 
                             className={classes.newSessionTextField} 
                             value={name} 
+                            disabled={isSessionRunning}
                             onChange={e => {
                                 setName(e.target.value);
                             }}
@@ -124,6 +130,7 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
                     <TextField label="Driver" 
                             className={classes.newSessionTextFieldMargin}
                             value={driver}
+                            disabled={isSessionRunning}
                             onChange={e => {
                                 setDriver(e.target.value); 
                             }}
@@ -131,6 +138,7 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
                     <TextField label="Conditions" 
                             className={classes.newSessionTextFieldMargin}
                             value={condition}
+                            disabled={isSessionRunning}
                             onChange={e => {
                                 setCondition(e.target.value);
                             }}
@@ -139,6 +147,7 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
                 <SensorChooser 
                     sensorGroups={props.sensorGroups} 
                     onSensorChangeCallback={onSensorChange}
+                    disabled={isSessionRunning}
                 />
                 {
                 error && 
@@ -161,16 +170,17 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
     )
 }
 
-export const SensorChooser = (props: { sensorGroups: string[], onSensorChangeCallback: (sensor : string) => void}) => {
+export const SensorChooser = (props: { sensorGroups: string[], onSensorChangeCallback: (sensor : string) => void, disabled: boolean }) => {
     
     const checkboxes = props.sensorGroups.map(groupName => {
         return (
-            <FormControlLabel key={v4()}
+            <FormControlLabel
                 control = { <Checkbox id={groupName} 
                                       onChange={() => props.onSensorChangeCallback(groupName)} 
                                       style={{ color: 'lightBlue' }} 
                           /> } 
-                label={ groupName } />
+                label={ groupName }
+                disabled={props.disabled} />
         )
     })
 

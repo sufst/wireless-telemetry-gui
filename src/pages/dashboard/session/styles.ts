@@ -30,6 +30,13 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: '1rem',
         background: '#292929'
     }, 
+    rootPaperRunningSession: {
+        flexGrow: 1,
+        padding: '1rem',
+        marginBottom: '1rem',
+        marginTop: '1rem',
+        background: 'green'
+    }, 
     newSessionText: {
         margin: '0',
         marginBottom: '0.5rem',

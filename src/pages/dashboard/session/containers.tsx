@@ -33,9 +33,15 @@ export const SessionContainer = () => {
 
     const dispatch = useDispatch(); 
 
+    const classes = useStyles(); 
+
     // Session Name from Redux
     const selectSessionName = (state: RootState) => state.session.sessionName; 
     const sessionName = useSelector(selectSessionName); 
+
+    // Session isRunning from Redux 
+    const selectIsRunning = (state: RootState) => state.session.isRunning; 
+    const isSessionRunning = useSelector(selectIsRunning);
     
     const [sessionData, setSessionData] = useState({})
 
@@ -87,10 +93,13 @@ export const SessionContainer = () => {
         dispatch(stopSession()); 
     }, [])
 
-    const classes = useStyles(); 
+    const currentSessionStyles = useCallback(() => {
+        return isSessionRunning ? classes.rootPaperRunningSession : classes.rootPaper; 
+    }, [isSessionRunning])
+
     return (
         <>
-            <Paper className={classes.rootPaper}>
+            <Paper className={currentSessionStyles()}>
                 <CurrentSessionHeader name={sessionNameLabelText}/>
             </Paper>
             <Paper className={classes.rootPaper}>
