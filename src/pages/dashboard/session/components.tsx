@@ -69,9 +69,8 @@ export const SessionPaper = () => {
     )
 }
 
-export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction, onStop: () => void, sensorGroups: string[]}) => {
+export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction, onStop: () => void, sensorGroups: string[], isRunning: boolean }) => {
     
-    const dispatch = useDispatch(); 
     const classes = useStyles(); 
 
     const [name, setName] = useState(""); 
@@ -79,12 +78,10 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
     const [condition, setCondition] = useState(""); 
     const [sensorGroups, setSensorGroups] = useState<string[]>([]); 
 
-    // Session isRunning from Redux 
-    const selectIsRunning = (state: RootState) => state.session.isRunning; 
-    const isSessionRunning = useSelector(selectIsRunning);
-
     // Error state for the MUI FormControl 
     const [error, setError] = useState(false);
+
+    const isSessionRunning = props.isRunning; 
  
     const startPressed = useCallback(() => {
         if (name === "" || sensorGroups.length === 0) {
@@ -120,28 +117,29 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
             <FormControl error={error} >
                 <Box>
                     <TextField label="Session Name" 
-                            className={classes.newSessionTextField} 
-                            value={name} 
-                            disabled={isSessionRunning}
-                            onChange={e => {
-                                setName(e.target.value);
-                            }}
+                        className={classes.newSessionTextField} 
+                        value={name} 
+                        disabled={isSessionRunning}
+                        helperText={isSessionRunning ? "Session is already running" : null}
+                        onChange={e => {
+                            setName(e.target.value);
+                        }}
                     />
                     <TextField label="Driver" 
-                            className={classes.newSessionTextFieldMargin}
-                            value={driver}
-                            disabled={isSessionRunning}
-                            onChange={e => {
-                                setDriver(e.target.value); 
-                            }}
+                        className={classes.newSessionTextFieldMargin}
+                        value={driver}
+                        disabled={isSessionRunning}
+                        onChange={e => {
+                            setDriver(e.target.value); 
+                        }}
                     />
                     <TextField label="Conditions" 
-                            className={classes.newSessionTextFieldMargin}
-                            value={condition}
-                            disabled={isSessionRunning}
-                            onChange={e => {
-                                setCondition(e.target.value);
-                            }}
+                        className={classes.newSessionTextFieldMargin}
+                        value={condition}
+                        disabled={isSessionRunning}
+                        onChange={e => {
+                            setCondition(e.target.value);
+                        }}
                     />
                 </Box>
                 <SensorChooser 

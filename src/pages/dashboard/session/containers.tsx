@@ -107,6 +107,7 @@ export const SessionContainer = () => {
                     onSubmit={onStartClicked}
                     onStop={onStopClicked}
                     sensorGroups={sensorGroupNames}
+                    isRunning={isSessionRunning}
                 />
             </Paper>
             <Paper className={classes.rootPaper}>

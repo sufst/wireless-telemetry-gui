@@ -35,7 +35,7 @@ export const useStyles = makeStyles((theme) => ({
         padding: '1rem',
         marginBottom: '1rem',
         marginTop: '1rem',
-        background: 'green'
+        background: 'darkBlue'
     }, 
     newSessionText: {
         margin: '0',
