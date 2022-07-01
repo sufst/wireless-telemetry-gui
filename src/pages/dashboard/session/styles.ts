@@ -130,11 +130,49 @@ export const useStyles = makeStyles((theme) => ({
     },
     sessionAlreadyRunningText: {
         marginTop: '-10px',
-        fontWeight: 'bold'
+        fontWeight: 'bold', 
+        color: 'red', 
+        opacity: '70%'
     }, 
     sensorChooserBox: {
         marginBottom: '1rem',
         display: 'flex', 
         flexDirection: 'row'
-    }
+    }, 
+    sessionButtonStartBoxDisabled: {
+        color: 'white',
+        overflow: 'hidden',
+        height: '80px',
+        textAlign: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        borderRadius: '10px',
+        backgroundColor: 'darkGray',
+        opacity: '60%',
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    }, 
+    sessionButtonStopBoxDisabled: {
+        color: 'white',
+        overflow: 'hidden',
+        height: '80px',
+        textAlign: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        borderRadius: '10px',
+        backgroundColor: 'darkGray',
+        opacity: '60%',
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0, 
+    }, 
 }));

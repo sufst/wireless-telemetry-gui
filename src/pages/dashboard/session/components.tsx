@@ -74,6 +74,22 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
     const [error, setError] = useState(false);
 
     const isSessionRunning = props.isRunning; 
+
+    const startButtonClasses = useCallback(() => {
+        if (!isSessionRunning) {
+            return classes.sessionButtonStartBox
+        } else {
+            return classes.sessionButtonStartBoxDisabled
+        }
+    }, [isSessionRunning])
+
+    const stopButtonClasses = useCallback(() => {
+        if (!isSessionRunning) {
+            return classes.sessionButtonStopBoxDisabled
+        } else {
+            return classes.sessionButtonStopBox
+        }
+    }, [isSessionRunning])
  
     const startPressed = useCallback(() => {
         if (name === "" || sensorGroups.length === 0) {
@@ -152,12 +168,12 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
                 }
                 <Grid container className={classes.gridContainer} spacing={3}>
                     <Grid item xs={4} onClick={startPressed}>
-                        <Box className={classes.sessionButtonStartBox}>
+                        <Box className={startButtonClasses()}>
                             Start Session
                         </Box>
                     </Grid>
                     <Grid item xs={4} onClick={stopPressed}>
-                        <Box className={classes.sessionButtonStopBox}>
+                        <Box className={stopButtonClasses()}>
                             Stop Session
                         </Box>
                     </Grid>
