@@ -127,5 +127,14 @@ export const useStyles = makeStyles((theme) => ({
     formLabel: {
        paddingTop: '0.7rem',
        marginRight: '1rem'
+    },
+    sessionAlreadyRunningText: {
+        marginTop: '-10px',
+        fontWeight: 'bold'
+    }, 
+    sensorChooserBox: {
+        marginBottom: '1rem',
+        display: 'flex', 
+        flexDirection: 'row'
     }
 }));

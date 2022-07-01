@@ -17,11 +17,9 @@
 */
 
 import { 
-
     Paper, 
     Typography,
     TextField,
-    Button,
     Box,
     FormLabel,
     FormControl,
@@ -40,13 +38,7 @@ import {
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { SessionsGetResponse } from "modules/api/typing";
 import { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setSessionInformation } from "redux/slices/sessions";
-import { RootState } from "redux/store";
-import { v4 } from "uuid";
-import {
-    useStyles
-} from "./styles";
+import { useStyles } from "./styles";
 import { StartSessionButtonAction } from "./typing";
 
 export const CurrentSessionHeader = (props: { name: string }) => {
@@ -90,7 +82,6 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
         }    
         console.log('Starting: ', name, driver, condition, sensorGroups);
         
-        // dispatch(setSessionInformation({ name, driver, condition, sensors: sensorGroups }))
         props.onSubmit(name, driver, condition, sensorGroups); 
     }, [name, driver, condition, sensorGroups])
 
@@ -148,8 +139,16 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
                     disabled={isSessionRunning}
                 />
                 {
+                    isSessionRunning && 
+                        <p className={classes.sessionAlreadyRunningText}>
+                            Session is already running. You can't edit these now. 
+                        </p>
+                }
+                {
                 error && 
-                    <FormHelperText>Set a name and choose at least one sensor</FormHelperText>
+                    <FormHelperText>
+                        Set a name and choose at least one sensor
+                    </FormHelperText>
                 }
                 <Grid container className={classes.gridContainer} spacing={3}>
                     <Grid item xs={4} onClick={startPressed}>
@@ -185,11 +184,7 @@ export const SensorChooser = (props: { sensorGroups: string[], onSensorChangeCal
     const classes = useStyles(); 
 
     return (
-        <Box style={{
-            marginBottom: '1rem',
-            display: 'flex', 
-            flexDirection: 'row'
-        }}>
+        <Box className={classes.sensorChooserBox}>
             <FormLabel component="legend" className={classes.formLabel}>Sensors</FormLabel>
             {checkboxes}
         </Box>
@@ -208,7 +203,7 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
             status: sessionInfo.status,
             created: (new Date(sessionInfo.creation)).toString(),
             actions: <>
-            {/* TODO Add callback to download data and add button to stop session */}
+            {/* TODO: Add callback to download data and add button to stop session */}
             <IconButton color="primary" aria-label="upload picture" component="span">
                 <GetAppIcon />
             </IconButton>
