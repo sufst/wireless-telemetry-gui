@@ -34,6 +34,16 @@ const Dash = () => {
     const dispatch = useDispatch(); 
     const classes = useStyles(); 
 
+    // All Sensor Groups from Redux
+    const selectGroups = (state: RootState) => state.sensors.groups;
+    const groups = useSelector(selectGroups);
+    const sensorGroupNames = Object.keys(groups);
+
+    // All Sensors from Redux 
+    const selectAllSensors = (state: RootState) => state.sensors.sensorMetadata;
+    const allSensorMeta = useSelector(selectAllSensors);
+    const allSensors = Object.keys(allSensorMeta);
+
     const ecuSelector = (state: RootState) => state.sensors.sensors[_ecu]?.data;
     const ecuSensorData = useSelector(ecuSelector);
 
@@ -53,10 +63,10 @@ const Dash = () => {
     const handleStartSession = useCallback((e, name) => {
         console.log("Starting From Component: ", name)
         const driver: string = "", condition: string = ""; 
-        const sensors: string[] = []
-        const groups: string[] = []
+        const sensors: string[] = allSensors;
+        const groups: string[] = sensorGroupNames;
         dispatch(startSession( { name, driver, condition, sensors, groups }))
-    }, [dispatch])
+    }, [dispatch, allSensors, sensorGroupNames])
 
     return (
         <>

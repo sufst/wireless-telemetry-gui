@@ -29,13 +29,11 @@ export const sessionMiddleware: Middleware<{}, any> =
 
         const { name, driver, condition } = action.payload;
         const sensors: string[] = action.payload.sensors;
+        const groups: string[] = action.payload.groups;
         
         const accessToken = storeAPI.getState().user.accessToken; 
-        const allSensors: string[] = Object.keys(storeAPI.getState().sensors.sensorMetadata); 
 
-        let sessionSensors: string[] = sensors.length === 0 ? allSensors : sensors;
-
-        console.log('Starting session from middleware: ', name, driver, condition, sessionSensors);
+        console.log('Starting session from middleware: ', name, driver, condition, sensors, groups);
 
         const sessionMeta = {
             driver: driver, 
