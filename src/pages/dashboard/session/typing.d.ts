@@ -20,5 +20,6 @@ export type StartSessionButtonAction = (
     name: string, 
     driver: string, 
     condition: string, 
-    sensors: Array<string>
+    sensors: Array<string>,
+    groups: Array<string>
 ) => void;

@@ -24,6 +24,7 @@ const initialState: SessionState = {
     sessionDriver: "", 
     sessionConditions: "",
     sessionSensors: [],
+    sessionSensorGroups: [],
     isRunning: false, 
 }
 
@@ -33,26 +34,25 @@ export const sessionSlice = createSlice({
   reducers: {
     getAllSessions: () => {
     },
-    setSessionInformation: (state: SessionState, action: PayloadAction<SetSessionInfoAction>) => {
-      state.sessionName = action.payload.name
-      state.sessionDriver = action.payload.driver
-      state.sessionConditions = action.payload.condition
-      state.sessionSensors = action.payload.sensors
-    }, 
     startSession: (state: SessionState, action: PayloadAction<StartSessionAction>) => {      
       state.sessionName = action.payload.name
       state.sessionDriver = action.payload.driver
       state.sessionConditions = action.payload.condition
       state.sessionSensors = action.payload.sensors
+      state.sessionSensorGroups = action.payload.groups
       state.isRunning = true
     },
     stopSession: (state: SessionState) => {
       state.sessionName = ""
+      state.sessionDriver = ""
+      state.sessionConditions = ""
+      state.sessionSensors = []
+      state.sessionSensorGroups = []
       state.isRunning = false
     }
   },
 });
 
-export const { getAllSessions, setSessionInformation, startSession, stopSession } = sessionSlice.actions;
+export const { getAllSessions, startSession, stopSession } = sessionSlice.actions;
 
 export default sessionSlice.reducer;

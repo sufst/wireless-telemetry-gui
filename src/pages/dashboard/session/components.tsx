@@ -61,14 +61,14 @@ export const SessionPaper = () => {
     )
 }
 
-export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction, onStop: () => void, sensorGroups: string[], isRunning: boolean }) => {
+export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, sensorGroups: string[], isRunning: boolean, sessionMeta: { name: string, driver: string, conditions: string, sensorGroups: string[]} }) => {
     
     const classes = useStyles(); 
 
-    const [name, setName] = useState(""); 
-    const [driver, setDriver] = useState(""); 
-    const [condition, setCondition] = useState(""); 
-    const [sensorGroups, setSensorGroups] = useState<string[]>([]); 
+    const [name, setName] = useState<string>(props.sessionMeta.name); 
+    const [driver, setDriver] = useState(props.sessionMeta.driver); 
+    const [condition, setCondition] = useState(props.sessionMeta.conditions); 
+    const [sensorGroups, setSensorGroups] = useState<string[]>(props.sessionMeta.sensorGroups); 
 
     // Error state for the MUI FormControl 
     const [error, setError] = useState(false);
@@ -103,6 +103,10 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
 
     const stopPressed = useCallback(() => {
         props.onStop();
+        setCondition(""); 
+        setDriver("");
+        setName(""); 
+        setSensorGroups([]);
     }, [props])
 
     
@@ -150,7 +154,8 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
                     />
                 </Box>
                 <SensorChooser 
-                    sensorGroups={props.sensorGroups} 
+                    allGroups={props.sensorGroups} 
+                    selectedGroups={sensorGroups}
                     onSensorChangeCallback={onSensorChange}
                     disabled={isSessionRunning}
                 />
@@ -183,12 +188,13 @@ export const NewSessionContainer = (props: { onSubmit: StartSessionButtonAction,
     )
 }
 
-export const SensorChooser = (props: { sensorGroups: string[], onSensorChangeCallback: (sensor : string) => void, disabled: boolean }) => {
+export const SensorChooser = (props: { allGroups: string[], selectedGroups: string[], onSensorChangeCallback: (sensor : string) => void, disabled: boolean }) => {
     
-    const checkboxes = props.sensorGroups.map(groupName => {
+    const checkboxes = props.allGroups.map(groupName => {
         return (
             <FormControlLabel
                 control = { <Checkbox id={groupName} 
+                                      checked={props.selectedGroups.includes(groupName)}
                                       onChange={() => props.onSensorChangeCallback(groupName)} 
                                       style={{ color: 'lightBlue' }} 
                           /> } 

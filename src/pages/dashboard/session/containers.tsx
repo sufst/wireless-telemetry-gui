@@ -39,13 +39,25 @@ export const SessionContainer = () => {
     const selectSessionName = (state: RootState) => state.session.sessionName; 
     const sessionName = useSelector(selectSessionName); 
 
+    // Session Driver from Redux
+    const selectSessionDriver = (state: RootState) => state.session.sessionDriver; 
+    const sessionDriver = useSelector(selectSessionDriver); 
+
+    // Session Name from Redux
+    const selectSessionConds = (state: RootState) => state.session.sessionConditions; 
+    const sessionConditions = useSelector(selectSessionConds); 
+
+    // Session Sensors from Redux
+    const selectSessionGrps = (state: RootState) => state.session.sessionSensorGroups; 
+    const sessionGroups = useSelector(selectSessionGrps); 
+
     // Session isRunning from Redux 
     const selectIsRunning = (state: RootState) => state.session.isRunning; 
     const isSessionRunning = useSelector(selectIsRunning);
     
     const [sessionData, setSessionData] = useState({})
 
-    // Sensor Groups from Redux
+    // All Sensor Groups from Redux
     const selectGroups = (state: RootState) => state.sensors.groups;
     const groups = useSelector(selectGroups);
     const sensorGroupNames = Object.keys(groups);
@@ -58,7 +70,6 @@ export const SessionContainer = () => {
 
     const { privilege } = user; 
 
-
     const fetchAllSessions = useCallback(async () => {
         const sessions = await getAllSessions();
         setSessionData(sessions); 
@@ -70,22 +81,23 @@ export const SessionContainer = () => {
 
 
     const handleStartSession: StartSessionButtonAction = useCallback((name, driver, condition, sessionSensorGroups) => {
-
         // Creates an array of all the names of the sensors to be saved in the session. 
         const groupsForSession = Object.entries(groups).filter((group: [key: string, value: string[]]) => sessionSensorGroups.includes(group[0]))
         const sensors = groupsForSession.map((group: [key: string, value: string[]]) => (group[1])).flat();
+
+        console.log(sessionSensorGroups);
         
-        dispatch(startSession( { name, driver, condition, sensors }))
+         dispatch(startSession( { name, driver, condition, sensors, groups: sessionSensorGroups }))
     }, [])
 
-    const onStartClicked: StartSessionButtonAction = useCallback((name, driver, condition, sensors) => {
+    const onStartClicked: StartSessionButtonAction = useCallback((name, driver, condition, sensors, groups) => {
         if (privilege !== 'Admin' && privilege !== 'Developer') {
             const createSessionFailedAlert = createAlert(3000, "error", "snack", "Login to start a new session."); 
             dispatch(showAlert(createSessionFailedAlert));
             return; 
         }
 
-        handleStartSession(name, driver, condition, sensors);
+        handleStartSession(name, driver, condition, sensors, groups);
     }, [privilege])
 
     const onStopClicked = useCallback(() => {
@@ -96,6 +108,15 @@ export const SessionContainer = () => {
     const currentSessionStyles = useCallback(() => {
         return isSessionRunning ? classes.rootPaperRunningSession : classes.rootPaper; 
     }, [isSessionRunning])
+
+    const sessionMeta = useCallback(() => {
+        return { 
+            name: sessionName, 
+            driver: sessionDriver,
+            conditions: sessionConditions, 
+            sensorGroups: sessionGroups
+        }
+    }, [sessionName, sessionDriver, sessionConditions, sessionGroups])
 
     return (
         <>
@@ -108,6 +129,7 @@ export const SessionContainer = () => {
                     onStop={onStopClicked}
                     sensorGroups={sensorGroupNames}
                     isRunning={isSessionRunning}
+                    sessionMeta={sessionMeta()}
                 />
             </Paper>
             <Paper className={classes.rootPaper}>

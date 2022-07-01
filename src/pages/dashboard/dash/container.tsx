@@ -54,7 +54,8 @@ const Dash = () => {
         console.log("Starting From Component: ", name)
         const driver: string = "", condition: string = ""; 
         const sensors: string[] = []
-        dispatch(startSession( { name, driver, condition, sensors }))
+        const groups: string[] = []
+        dispatch(startSession( { name, driver, condition, sensors, groups }))
     }, [dispatch])
 
     return (

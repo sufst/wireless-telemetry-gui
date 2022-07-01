@@ -114,6 +114,7 @@ export type SessionState = {
     sessionDriver: string, 
     sessionConditions: string,
     sessionSensors: Array<string>,
+    sessionSensorGroups: Array<string>,
     isRunning: boolean,
 }
 
@@ -121,7 +122,8 @@ export type StartSessionAction = {
     name: string,
     driver: string, 
     condition: string, 
-    sensors: string[]
+    sensors: string[],
+    groups: string[],
 }
 
 export type SetSessionInfoAction = {
