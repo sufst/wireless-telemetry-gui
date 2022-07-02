@@ -23,7 +23,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "redux/slices/alert";
 import { RootState } from "redux/store";
-import { SensorData  } from "redux/typing";
+import { SensorData } from "types/redux/sensor";
 import { useStyles } from "./styles"
 import { DashStatusItemColor, DashStatusItemText } from "./typing";
 

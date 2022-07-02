@@ -47,11 +47,9 @@ import type {
     RootState
 } from "redux/store";
 import type {
-    SensorData
-} from "redux/typing";
-import type {
     GraphData
 } from "./typing";
+import { SensorData } from 'types/redux/sensor';
 
 
 const SensorPaperHeaderContainer = (props: { name: string }) => {

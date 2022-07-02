@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 Nathan Rowley-Smith
+    Copyright (C) 2022 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,44 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import type { Alert, AlertLevel, AlertText, AlertTimeout, AlertType } from "modules/alert/typing";
-
-export type SensorData = {
-    epoch: number,
-    value: number
-};
-
-export type SensorMeta = { 
-    [entry: string ]: any 
-};
-
-export type Sensor = {
-    meta: SensorMeta,
-    data: Array<SensorData>,
-    isDisplay: boolean
-};
-
-export type SensorsState = {
-    sensors: {
-        [sensor: string]: Sensor
-    },
-    groups: {
-        [sensor: string]: Array<string>
-    }, 
-    sensorMetadata: SensorMeta
-};
-
-export type SensorsMeta = {
-    [sensor: string]: SensorMeta
-};
-
-export type BuildSensorsFromMetaAction = SensorsMeta;
-
-export type InsertSensorsBulkDataAction = {
-    [sensor: string]: Array<SensorData>
-};
-
-
 export type SessionState = {
     sessionName: string,
     sessionDriver: string, 
@@ -62,4 +24,3 @@ export type SessionState = {
     sessionSensorGroups: Array<string>,
     isRunning: boolean,
 }
-

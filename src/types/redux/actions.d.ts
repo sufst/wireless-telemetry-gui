@@ -68,6 +68,13 @@ export type UpdateSensorsMetaAction = {
     value: any
 };
 
+export type BuildSensorsFromMetaAction = SensorsMeta;
+
+export type InsertSensorsBulkDataAction = {
+    [sensor: string]: Array<SensorData>
+};
+
+
 
 
 //
