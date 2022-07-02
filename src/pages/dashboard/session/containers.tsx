@@ -19,10 +19,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { Paper } from "@material-ui/core";
 import { useStyles } from "./styles";
-import { createSession, getAllSessions } from "modules/api/sessions";
+import { getAllSessions } from "modules/api/sessions";
 import { useDispatch, useSelector } from "react-redux";
-import store, {RootState} from "../../../redux/store";
-import { SessionsGetResponse } from "modules/api/typing";
+import { RootState } from "../../../redux/store";
 import { CurrentSessionHeader, NewSessionContainer, SessionTable } from "./components";
 import { showAlert } from "redux/slices/alert";
 import { createAlert } from "modules/alert/alert";
@@ -88,7 +87,7 @@ export const SessionContainer = () => {
         console.log(sessionSensorGroups);
         
          dispatch(startSession( { name, driver, condition, sensors, groups: sessionSensorGroups }))
-    }, [])
+    }, [dispatch, groups])
 
     const onStartClicked: StartSessionButtonAction = useCallback((name, driver, condition, sensors, groups) => {
         if (privilege !== 'Admin' && privilege !== 'Developer') {
@@ -98,16 +97,16 @@ export const SessionContainer = () => {
         }
 
         handleStartSession(name, driver, condition, sensors, groups);
-    }, [privilege])
+    }, [privilege, dispatch, handleStartSession])
 
     const onStopClicked = useCallback(() => {
         console.log('Stopping Session.');
         dispatch(stopSession()); 
-    }, [])
+    }, [dispatch])
 
     const currentSessionStyles = useCallback(() => {
         return isSessionRunning ? classes.rootPaperRunningSession : classes.rootPaper; 
-    }, [isSessionRunning])
+    }, [isSessionRunning, classes.rootPaper, classes.rootPaperRunningSession])
 
     const sessionMeta = useCallback(() => {
         return { 

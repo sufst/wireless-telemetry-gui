@@ -125,10 +125,3 @@ export type StartSessionAction = {
     sensors: string[],
     groups: string[],
 }
-
-export type SetSessionInfoAction = {
-    name: string, 
-    driver: string, 
-    condition: string, 
-    sensors: Array<string>
-}

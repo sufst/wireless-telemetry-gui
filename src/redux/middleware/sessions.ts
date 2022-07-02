@@ -38,18 +38,18 @@ export const sessionMiddleware: Middleware<{}, any> =
         const sessionMeta = {
             driver: driver, 
             condition: condition
-        }
+        }; 
         
-        // const response = await createSession(accessToken, name, sessionMeta, sessionSensors)
+        const response = await createSession(accessToken, name, sessionMeta, sensors); 
 
-        // if (response) {
-        //     const createSessionOkayAlert = createAlert(3000, "success", "alert", "New session created."); 
-        //     storeAPI.dispatch(showAlert(createSessionOkayAlert));
-        // } 
-        // else {
-        //     const createSessionFailedAlert = createAlert(3000, "error", "alert", "Can't create a new session..."); 
-        //     storeAPI.dispatch(showAlert(createSessionFailedAlert))
-        // }
+        if (response) {
+            const createSessionOkayAlert = createAlert(3000, "success", "alert", "New session created."); 
+            storeAPI.dispatch(showAlert(createSessionOkayAlert));
+        } 
+        else {
+            const createSessionFailedAlert = createAlert(3000, "error", "alert", "Can't create a new session..."); 
+            storeAPI.dispatch(showAlert(createSessionFailedAlert))
+        }
 
         return next(action);
     } 
@@ -60,16 +60,16 @@ export const sessionMiddleware: Middleware<{}, any> =
 
         console.log('Stopping session from middleware: ', name);
 
-        // const response = await stopSession(name, accessToken); 
+        const response = await stopSession(name, accessToken); 
 
-        // if (response) {
-        //     const stopSessionOkayAlert = createAlert(3000, "success", "alert", "Session Stopped."); 
-        //     storeAPI.dispatch(showAlert(stopSessionOkayAlert));
-        // } 
-        // else {
-        //     const stopSessionFailedAlert = createAlert(3000, "error", "alert", "Can't stop session..."); 
-        //     storeAPI.dispatch(showAlert(stopSessionFailedAlert))
-        // }
+        if (response) {
+            const stopSessionOkayAlert = createAlert(3000, "success", "alert", "Session Stopped."); 
+            storeAPI.dispatch(showAlert(stopSessionOkayAlert));
+        } 
+        else {
+            const stopSessionFailedAlert = createAlert(3000, "error", "alert", "Can't stop session..."); 
+            storeAPI.dispatch(showAlert(stopSessionFailedAlert));
+        }
 
         return next(action);
     }

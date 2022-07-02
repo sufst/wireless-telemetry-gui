@@ -39,7 +39,6 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import { SessionsGetResponse } from "modules/api/typing";
 import { useCallback, useState } from "react";
 import { useStyles } from "./styles";
-import { StartSessionButtonAction } from "./typing";
 
 export const CurrentSessionHeader = (props: { name: string }) => {
     const classes = useStyles(); 
@@ -81,7 +80,7 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
         } else {
             return classes.sessionButtonStartBoxDisabled
         }
-    }, [isSessionRunning])
+    }, [isSessionRunning, classes.sessionButtonStartBox, classes.sessionButtonStartBoxDisabled])
 
     const stopButtonClasses = useCallback(() => {
         if (!isSessionRunning) {
@@ -89,7 +88,7 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
         } else {
             return classes.sessionButtonStopBox
         }
-    }, [isSessionRunning])
+    }, [isSessionRunning, classes.sessionButtonStopBox, classes.sessionButtonStopBoxDisabled])
  
     const startPressed = useCallback(() => {
         if (name === "" || sensorGroups.length === 0) {
@@ -99,7 +98,7 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
         console.log('Starting: ', name, driver, condition, sensorGroups);
         
         props.onSubmit(name, driver, condition, sensorGroups); 
-    }, [name, driver, condition, sensorGroups])
+    }, [name, driver, condition, sensorGroups, props])
 
     const stopPressed = useCallback(() => {
         props.onStop();

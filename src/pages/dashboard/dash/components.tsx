@@ -244,7 +244,7 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
         } else {
             return classes.sessionButtonStartBoxDisabled
         }
-    }, [isSessionRunning])
+    }, [isSessionRunning, classes.sessionButtonStartBox, classes.sessionButtonStartBoxDisabled])
 
     const stopButtonClasses = useCallback(() => {
         if (!isSessionRunning) {
@@ -252,7 +252,7 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
         } else {
             return classes.sessionButtonStopBox
         }
-    }, [isSessionRunning])
+    }, [isSessionRunning, classes.sessionButtonStopBox, classes.sessionButtonStopBoxDisabled])
 
     return (
         <>

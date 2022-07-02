@@ -51,8 +51,8 @@ const AppRouterSwitch = () => {
 
     useEffect(() => {
         if (user.username === undefined) {
-            const username = "admin"
-            const password = "admin"
+            const username = "anonymous"
+            const password = "anonymous"
         
             dispatch(loginUser( { username, password } ))
         } else {

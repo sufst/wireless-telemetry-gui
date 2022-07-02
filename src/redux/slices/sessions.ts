@@ -17,7 +17,7 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { SessionState, SetSessionInfoAction, StartSessionAction } from "redux/typing";
+import type { SessionState, StartSessionAction } from "redux/typing";
 
 const initialState: SessionState = {
     sessionName: "",
