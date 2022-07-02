@@ -36,8 +36,8 @@ import {
     Grid
 } from "@material-ui/core";
 import GetAppIcon from '@material-ui/icons/GetApp';
-import { SessionsGetResponse } from "modules/api/typing";
 import { useCallback, useState } from "react";
+import { SessionsGetResponse } from "types/api/api";
 import { useStyles } from "./styles";
 
 export const CurrentSessionHeader = (props: { name: string }) => {

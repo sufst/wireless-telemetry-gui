@@ -38,11 +38,17 @@ export type RegisterUserAction = {
     department: UserDepartment,
 }
 
+export type UserRegister = (
+    username: string,
+    password: string,
+    privilege: UserPrivilege,
+    department: UserDepartment,
+) => void;
+
 export type LoginUserAction = {
     username: string,
     password: string
 };
-
 
 
 // 
@@ -56,7 +62,13 @@ export type StartSessionAction = {
     groups: string[],
 }
 
-
+export type StartSessionButtonAction = (
+    name: string, 
+    driver: string, 
+    condition: string, 
+    sensors: Array<string>,
+    groups: Array<string>
+) => void;
 
 
 //

@@ -16,13 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import { url } from "config";
-import { 
-    io, 
-    Socket 
-} from "socket.io-client";
-import type {
-    SioConnect
-} from "./typing";
+import {  io, Socket } from "socket.io-client";
+import { SioConnect } from "types/api/api";
 
 let sio: Socket;
 

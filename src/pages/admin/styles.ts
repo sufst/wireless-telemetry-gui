@@ -17,7 +17,7 @@
 */
 
 import { makeStyles } from "@material-ui/core";
-import { UserPrivilege } from "types/redux/user";
+import { UserPrivilege } from "types/models/user";
 
 export const getColorForPrivelege = (privilege: UserPrivilege) => {
     switch (privilege) {

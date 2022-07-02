@@ -16,10 +16,29 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export type StartSessionButtonAction = (
-    name: string, 
-    driver: string, 
-    condition: string, 
-    sensors: Array<string>,
-    groups: Array<string>
-) => void;
+//
+// DASHBOARD
+// 
+export type DashStatusItemColor = 'grey' | 'red' | 'green' | 'orange' | 'rgba(0, 0, 0, 0.5)'
+
+export type DashStatusItemText = 'IDLE' | 'INACTIVE' | 'ACTIVE' | 'CONNECTED' | 'DISCONNECTED' | 'LOW' | 'HEALTHY' | ' '
+
+
+// 
+// User Privilege UI
+//
+export type PrivilegeColor = 'red' | 'gray' | 'green';
+
+// TODO: Fix this here...
+export type PrivilegeToColors = {
+   [privilege: string]: PrivilegeColor
+}; 
+
+
+//
+// GRAPHS 
+//
+export type GraphData = {
+    time: string,
+    value: number
+};

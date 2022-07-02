@@ -17,7 +17,7 @@
 */
 
 
-import { AlertState, AlertLevel, AlertText, AlertTimeout, AlertType } from 'types/redux/alert';
+import { AlertState, AlertLevel, AlertText, AlertTimeout, AlertType } from 'types/models/alert';
 import AlertContainer from './containers';
 
 /**

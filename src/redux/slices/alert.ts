@@ -17,8 +17,8 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ShowAlertAction } from "types/redux/actions";
-import { AlertState } from "types/redux/alert";
+import { ShowAlertAction } from "types/models/actions";
+import { AlertState } from "types/models/alert";
 
 const initialState: AlertState = {
     timeout: undefined,

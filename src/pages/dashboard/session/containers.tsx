@@ -26,7 +26,7 @@ import { CurrentSessionHeader, NewSessionContainer, SessionTable } from "./compo
 import { showAlert } from "redux/slices/alert";
 import { createAlert } from "modules/alert/alert";
 import { startSession, stopSession } from "redux/slices/sessions";
-import { StartSessionButtonAction } from "./typing";
+import { StartSessionButtonAction } from "types/models/actions";
 
 export const SessionContainer = () => {
 

@@ -30,7 +30,7 @@ import { loginUser } from "modules/api/login";
 import { getUser } from "modules/api/user";
 import { sioConnect } from "modules/api/sio";
 import { usersCreate } from "modules/api/users";
-import type { SioOnMetaHander, SioOnDataHandler } from "modules/api/typing";
+import { SioOnDataHandler, SioOnMetaHander } from "types/api/api";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
 export const userMiddleware: Middleware<{}, any> = 

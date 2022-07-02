@@ -17,7 +17,7 @@
 */
 
 import { url } from "config";
-import { LoginUser } from "./typing";
+import { LoginUser } from "types/api/api";
 
 const handleLoginUser: LoginUser = async (username, password) => {
     const response = await fetch(`http://${url}/login/${username}`, {

@@ -15,41 +15,19 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React, {
-    useCallback,
-    memo, 
-    useMemo 
-} from 'react';
-import {
-    v4 
-}from 'uuid';
-import {
-    useStyles 
-}from "./styles";
-import { 
-    Grid, 
-    Paper
-} from '@material-ui/core';
-import { 
-    SensorPaperHeaderHideButton, 
-    SensorPaperHeaderTitle, 
-    SensorGraph, 
-    SensorLiveValue
+
+import {useCallback, memo, useMemo } from 'react';
+import { v4 }from 'uuid';
+import { useStyles }from "./styles";
+import {  Grid, Paper } from '@material-ui/core';
+import {  SensorPaperHeaderHideButton,  SensorPaperHeaderTitle, SensorGraph, SensorLiveValue
 } from "./components";
 import { useSelector } from 'react-redux';
-import {
-    updateSensorsMeta
-} from "redux/slices/sensors";
-import { 
-    useDispatch 
-} from 'react-redux';
-import type {
-    RootState
-} from "redux/store";
-import type {
-    GraphData
-} from "./typing";
-import { SensorData } from 'types/redux/sensor';
+import { updateSensorsMeta } from "redux/slices/sensors";
+import {  useDispatch } from 'react-redux';
+import type { RootState} from "redux/store";
+import { SensorData } from 'types/models/sensor';
+import { GraphData } from 'types/models/ui-types';
 
 
 const SensorPaperHeaderContainer = (props: { name: string }) => {

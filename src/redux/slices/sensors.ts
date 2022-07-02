@@ -17,8 +17,8 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BuildSensorsFromMetaAction, InsertSensorsBulkDataAction, UpdateSensorsMetaAction } from "types/redux/actions";
-import { SensorsMeta, SensorsState } from "types/redux/sensor";
+import { BuildSensorsFromMetaAction, InsertSensorsBulkDataAction, UpdateSensorsMetaAction } from "types/models/actions";
+import { SensorsMeta, SensorsState } from "types/models/sensor";
 
 const initialState: SensorsState = {
     sensors: {},
