@@ -17,7 +17,7 @@
 */
 
 import { url } from "config";
-import type { SessionsGet, SessionCreate, SessionCreateFields, SessionStop } from "./typing";
+import { SessionCreate, SessionCreateFields, SessionsGet, SessionStop } from "types/api/api";
 
 /**
  * Creating new sessions 

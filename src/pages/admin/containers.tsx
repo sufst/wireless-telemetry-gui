@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { UserState } from "redux/typing";
+import { UserState } from 'types/models/user';
 import { AdminPanelTable } from './components';
 import { useStyles } from "./styles";
 

@@ -17,8 +17,8 @@
 */
 
 
+import { AlertState, AlertLevel, AlertText, AlertTimeout, AlertType } from 'types/models/alert';
 import AlertContainer from './containers';
-import { CreateAlert } from './typing';
 
 /**
  * Alert Levels - (severity) - as specified from MUI Labs - Name of type to be specified
@@ -51,5 +51,7 @@ export const createAlert: CreateAlert = (timeout, level, type, text) => {
         text
     }
 }
+
+type CreateAlert = (timeout: AlertTimeout, level: AlertLevel, type: AlertType, text: AlertText) => AlertState;
 
 export default Alert; 

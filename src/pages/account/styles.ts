@@ -18,8 +18,8 @@
 
 // Material UI Imports
 import { makeStyles } from '@material-ui/core/styles';
-import { UserPrivilege } from 'redux/typing';
-import { PrivilegeColor, PrivilegeToColors } from './typing';
+import { PrivilegeColor, PrivilegeToColors } from 'types/models/ui-types';
+import { UserPrivilege } from 'types/models/user';
 
 const privilegeToColors: PrivilegeToColors = {
   Anon: 'gray',

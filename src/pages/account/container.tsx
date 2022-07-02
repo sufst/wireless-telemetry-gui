@@ -27,7 +27,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { Button, Divider, List, ListItemText } from '@material-ui/core';
-import type { UserState } from "redux/typing";
+import { UserState } from 'types/models/user';
 
 // Styles 
 import { avatarStyle, subheaderStyle, useStyles } from './styles';

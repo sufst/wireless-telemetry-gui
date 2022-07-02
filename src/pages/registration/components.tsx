@@ -18,7 +18,7 @@
 
 import { Avatar, Box, Typography, Link, InputLabel, Select } from "@material-ui/core";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { UserDepartment, UserPrivilege } from "redux/typing";
+import { UserDepartment, UserPrivilege } from "types/models/user";
 import { useStyles } from "./styles";
 
 export const DepartmentSelect = (props: { department: UserDepartment, handleDepartmentChange: (event: any) => void }) => {

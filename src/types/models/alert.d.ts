@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 SUFST
+    Copyright (C) 2022 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,20 +16,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import type { Color } from "@material-ui/lab/Alert"
-import { AlertState } from "redux/typing";
+import { Color } from "@material-ui/lab/Alert";
 
 export type AlertTimeout = number;
 export type AlertLevel = Color;
 export type AlertType = "snack" | "alert";
 export type AlertText = string;
 
-
-export type Alert = {
-   timeout: AlertTimeout,
-    level: AlertLevel,
-    type: AlertType,
-    text: AlertText
-}
-
-export type CreateAlert = (timeout: AlertTimeout, level: AlertLevel, type: AlertType, text: AlertText) => Alert;
+export type AlertState = {
+    timeout?: AlertTimeout,
+    level?: AlertLevel,
+    type?: AlertType,
+    text?: AlertText
+};

@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 SUFST
+    Copyright (C) 2022 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,6 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export type DashStatusItemColor = 'grey' | 'red' | 'green' | 'orange' | 'rgba(0, 0, 0, 0.5)'
-
-export type DashStatusItemText = 'IDLE' | 'INACTIVE' | 'ACTIVE' | 'CONNECTED' | 'DISCONNECTED' | 'LOW' | 'HEALTHY' | ' '
+export type SessionState = {
+    sessionName: string,
+    sessionDriver: string, 
+    sessionConditions: string,
+    sessionSensors: Array<string>,
+    sessionSensorGroups: Array<string>,
+    isRunning: boolean,
+}

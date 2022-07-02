@@ -23,9 +23,9 @@ import { useHistory } from "react-router";
 import { showAlert } from "redux/slices/alert";
 import { RootState } from "redux/store";
 import { RegisterContainer } from "./containers";
-import { UserRegister } from "./typing";
 
 import { registerNewUser } from 'redux/slices/user';
+import { UserRegister } from "types/models/actions";
 
 
 export const Register = () => {

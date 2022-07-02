@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 SUFST
+    Copyright (C) 2022 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,12 +16,31 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { UserDepartment, UserPrivilege } from "redux/typing";
+export type SensorData = {
+    epoch: number,
+    value: number
+};
 
-export type UserRegister = (
-   username: string,
-   password: string,
-   privilege: UserPrivilege,
-   department: UserDepartment,
- ) => void;
+export type SensorMeta = { 
+    [entry: string ]: any 
+};
 
+export type Sensor = {
+    meta: SensorMeta,
+    data: Array<SensorData>,
+    isDisplay: boolean
+};
+
+export type SensorsState = {
+    sensors: {
+        [sensor: string]: Sensor
+    },
+    groups: {
+        [sensor: string]: Array<string>
+    }, 
+    sensorMetadata: SensorMeta
+};
+
+export type SensorsMeta = {
+    [sensor: string]: SensorMeta
+};

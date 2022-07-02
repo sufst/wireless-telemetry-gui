@@ -22,10 +22,10 @@ import { LoginButton, PasswordField, UsernameField } from "pages/signin/componen
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { showAlert } from "redux/slices/alert";
-import { UserDepartment, UserPrivilege } from "redux/typing";
+import { UserRegister } from "types/models/actions";
+import { UserDepartment, UserPrivilege } from "types/models/user";
 import { DepartmentSelect, PrivilegeSelect, RegisterFooter, RegisterHeader } from "./components";
 import { useStyles } from "./styles"
-import { UserRegister } from "./typing";
 
 export const RegisterContainer = (props: { registerUser: UserRegister }) => {
    const classes = useStyles(); 

@@ -17,8 +17,8 @@
 */
 
 import { url } from "config";
-import { SetUserAction } from "redux/typing";
-import { UserGet, UserPatch } from "./typing";
+import { UserGet, UserPatch } from "types/api/api";
+import { SetUserAction } from "types/models/actions";
 
 const handleGetUser: UserGet = async (accessToken) => {
   const response = await fetch(`http://${url}/user`, {

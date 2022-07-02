@@ -32,8 +32,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { useStyles } from './styles';
 
 // Redux Imports
-import { UserState } from 'redux/typing';
 import { logoutUser } from 'redux/slices/user';
+import { UserState } from 'types/models/user';
 
 /**
  * A Component that holds the top navigation bar of the application.

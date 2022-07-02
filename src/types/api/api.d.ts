@@ -16,34 +16,37 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import type {
-  SensorsMeta,
-  SensorData,
-  UserPrivilege,
-  UserMeta,
-  UserDepartment,
-} from "redux/typing";
-
+//
+// LOGIN
+//
 export type LoginUser = (username: string, password: string) => Promise;
 
+//
+// SocketIO
+//
 export type SioConnect = (
-  accessToken: string,
-  onMeta: SioOnMetaHander,
-  onData: SioOnDataHandler
+    accessToken: string,
+    onMeta: SioOnMetaHander,
+    onData: SioOnDataHandler
 ) => void;
+
 export type SioOnMetaHander = (meta: SensorsMeta) => void;
+
 export type SioOnDataHandler = (data: {
-  [sensor: string]: Array<SensorData>;
+    [sensor: string]: Array<SensorData>;
 }) => void;
 
+//
+// USER(S)
+//
 export type UsersCreate = (
-  username: string,
-  password: string,
-  privilege: UserPrivilege,
-  department: UserDepartment,
-  meta: object,
-  accessToken: string
-) => Promise;
+    username: string,
+    password: string,
+    privilege: UserPrivilege,
+    department: UserDepartment,
+    meta: object,
+    accessToken: string
+  ) => Promise;
 
 export type UsersGet = (username: string, accessToken: string) => Promise;
 
@@ -92,7 +95,11 @@ export type UserPatch = (
   fields: UserPatchRequest
 ) => Promise;
 
+//
+// SESSIONS
+//
 export type SessionsGet = () => Promise;
+
 export type SessionsGetResponse = {
     [name: string]: {
         creation: number,
@@ -100,6 +107,7 @@ export type SessionsGetResponse = {
         sensors: [string]
     }
 };
+
 export type SessionCreate = (
   accessToken: String, 
   name: string, 
@@ -115,4 +123,3 @@ export type SessionStop = (
   name: string, 
   accessToken: string
 ) => Promise;
-

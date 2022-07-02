@@ -17,7 +17,7 @@
 */
 
 import { url } from "config";
-import { UsersCreate, UsersGet, UsersGetResponse, UsersPatch } from "./typing";
+import { UsersCreate, UsersGet, UsersGetResponse, UsersPatch } from "types/api/api";
 
 /**
  * 

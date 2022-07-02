@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 Nathan Rowley-Smith
+    Copyright (C) 2022 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,11 +16,29 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { UserPrivilege } from "redux/typing";
+//
+// DASHBOARD
+// 
+export type DashStatusItemColor = 'grey' | 'red' | 'green' | 'orange' | 'rgba(0, 0, 0, 0.5)'
 
+export type DashStatusItemText = 'IDLE' | 'INACTIVE' | 'ACTIVE' | 'CONNECTED' | 'DISCONNECTED' | 'LOW' | 'HEALTHY' | ' '
+
+
+// 
+// User Privilege UI
+//
 export type PrivilegeColor = 'red' | 'gray' | 'green';
 
 // TODO: Fix this here...
 export type PrivilegeToColors = {
    [privilege: string]: PrivilegeColor
 }; 
+
+
+//
+// GRAPHS 
+//
+export type GraphData = {
+    time: string,
+    value: number
+};

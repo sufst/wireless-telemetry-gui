@@ -23,9 +23,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "redux/slices/alert";
 import { RootState } from "redux/store";
-import { SensorData  } from "redux/typing";
+import { SensorData } from "types/models/sensor";
+import { DashStatusItemColor, DashStatusItemText } from "types/models/ui-types";
 import { useStyles } from "./styles"
-import { DashStatusItemColor, DashStatusItemText } from "./typing";
 
 export const DashStatusItem = (props: { name: string, data: SensorData[] }) => {
     const classes = useStyles(); 
