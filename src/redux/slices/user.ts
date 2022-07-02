@@ -17,7 +17,8 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { UserState, LoginUserAction, SetUserAction, UserMeta, RegisterUserAction } from "redux/typing";
+import { LoginUserAction, RegisterUserAction, SetUserAction } from "types/redux/actions";
+import { UserMeta, UserState } from "types/redux/user";
 
 const initialMetaState: UserMeta = {
   dept: undefined,

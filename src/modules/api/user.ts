@@ -17,7 +17,7 @@
 */
 
 import { url } from "config";
-import { SetUserAction } from "redux/typing";
+import { SetUserAction } from "types/redux/actions";
 import { UserGet, UserPatch } from "./typing";
 
 const handleGetUser: UserGet = async (accessToken) => {

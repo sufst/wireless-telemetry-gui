@@ -22,7 +22,7 @@ import { LoginButton, PasswordField, UsernameField } from "pages/signin/componen
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { showAlert } from "redux/slices/alert";
-import { UserDepartment, UserPrivilege } from "redux/typing";
+import { UserDepartment, UserPrivilege } from "types/redux/user";
 import { DepartmentSelect, PrivilegeSelect, RegisterFooter, RegisterHeader } from "./components";
 import { useStyles } from "./styles"
 import { UserRegister } from "./typing";

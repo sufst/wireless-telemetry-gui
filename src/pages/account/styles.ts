@@ -18,7 +18,7 @@
 
 // Material UI Imports
 import { makeStyles } from '@material-ui/core/styles';
-import { UserPrivilege } from 'redux/typing';
+import { UserPrivilege } from 'types/redux/user';
 import { PrivilegeColor, PrivilegeToColors } from './typing';
 
 const privilegeToColors: PrivilegeToColors = {

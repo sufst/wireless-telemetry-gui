@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { UserState } from "redux/typing";
+import { UserState } from 'types/redux/user';
 import { useStyles, getColorForPrivelege } from "./styles";
 import { v4 }from 'uuid';
 

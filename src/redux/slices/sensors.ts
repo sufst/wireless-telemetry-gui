@@ -22,8 +22,8 @@ import type {
     SensorsState, 
     BuildSensorsFromMetaAction, 
     InsertSensorsBulkDataAction, 
-    UpdateSensorsMetaAction
 } from "redux/typing";
+import { UpdateSensorsMetaAction } from "types/redux/actions";
 
 const initialState: SensorsState = {
     sensors: {},
