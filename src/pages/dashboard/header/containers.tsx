@@ -20,7 +20,7 @@ import Tabs from '@material-ui/core/Tabs';
 import React, { useCallback } from 'react';
 import Tab from '@material-ui/core/Tab';
 import {
-    Session
+    SessionContainer
 } from "../session/containers"
 import RealtimeSensorsGroupContainer from 'modules/realtimegraphs/realtimegraphs';
 import {
@@ -35,7 +35,7 @@ export const DashboardHeader = () => {
     // Tabs 
     const viewTabs = React.useRef([
         [<Dash key={v4()} />, <Tab key={v4()} label = "Dash"/>], 
-        [<Session key={v4()} />, <Tab key={v4()} label = "Session"/>]
+        [<SessionContainer key={v4()} />, <Tab key={v4()} label = "Session"/>]
     ]);
 
     const tabNames = React.useRef(["Dash", "Session"]);  

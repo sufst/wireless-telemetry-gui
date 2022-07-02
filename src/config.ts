@@ -16,8 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// 127.0.0.1
-
+/**
+ * For Docker Implementation on macOS. 
+ * 127.0.0.1
+ */
 
 /**
  * BACK-END SERVER IP HERE 
@@ -26,3 +28,4 @@
  * EXAMPLE: '192.168.1.26:5000'
  */
 export const url: string = 'localhost:5000';
+

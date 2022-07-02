@@ -39,7 +39,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     getAllUsers: () => {
-
     },
     registerNewUser: (state: UserState, action: PayloadAction<RegisterUserAction>) => {
     },

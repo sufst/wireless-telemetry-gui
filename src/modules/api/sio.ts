@@ -45,15 +45,11 @@ export const sioConnect: SioConnect = (accessToken, onMeta, onData) => {
 
     sio.on("meta", (message: string) => {
         const meta = JSON.parse(message);
-        console.log('netaa');
-        
-        console.log(meta);
         onMeta(meta);
      });
 
      sio.on("data", (message: string) => {
         const data = JSON.parse(message);
-        //console.log(data);
         onData(data)
      });
 }

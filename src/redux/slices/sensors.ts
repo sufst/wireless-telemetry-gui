@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 Nathan Rowley-Smith
+    Copyright (C) 2021 Nathan Rowley-Smith & SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { 
     SensorsMeta,
@@ -26,7 +27,8 @@ import type {
 
 const initialState: SensorsState = {
     sensors: {},
-    groups: {}
+    groups: {},
+    sensorMetadata: {},
 };
 
 export const sensorsSlice = createSlice({
@@ -35,6 +37,7 @@ export const sensorsSlice = createSlice({
    reducers: {
     buildSensorsFromMeta: (state: SensorsState, action: PayloadAction<BuildSensorsFromMetaAction>) => {
         const meta: SensorsMeta = action.payload;
+        state.sensorMetadata = meta; 
         for (const sensor in meta) {
             // Set a default graph cut off of 2 seconds
             state.sensors[sensor] = {

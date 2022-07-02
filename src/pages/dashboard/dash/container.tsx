@@ -17,9 +17,11 @@
 */
 
 import { Grid, Paper } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { startSession, stopSession } from "redux/slices/sessions";
 import { RootState } from "redux/store";
-import { DashStatusItem, CurrentTime, DashSensors } from "./components";
+import { DashStatusItem, CurrentTime, DashSensors, DashSession } from "./components";
 import { useStyles } from "./styles";
 
 
@@ -29,7 +31,18 @@ const Dash = () => {
     const _battery = 'status_battery';
     const _log = 'status_logging';
 
+    const dispatch = useDispatch(); 
     const classes = useStyles(); 
+
+    // All Sensor Groups from Redux
+    const selectGroups = (state: RootState) => state.sensors.groups;
+    const groups = useSelector(selectGroups);
+    const sensorGroupNames = Object.keys(groups);
+
+    // All Sensors from Redux 
+    const selectAllSensors = (state: RootState) => state.sensors.sensorMetadata;
+    const allSensorMeta = useSelector(selectAllSensors);
+    const allSensors = Object.keys(allSensorMeta);
 
     const ecuSelector = (state: RootState) => state.sensors.sensors[_ecu]?.data;
     const ecuSensorData = useSelector(ecuSelector);
@@ -42,6 +55,18 @@ const Dash = () => {
 
     const loggingSelector = (state: RootState) => state.sensors.sensors[_log]?.data;
     const loggingSensorData = useSelector(loggingSelector);
+
+    const handleStopSession = useCallback((e, name) => {
+        dispatch(stopSession())
+    }, [dispatch])
+
+    const handleStartSession = useCallback((e, name) => {
+        console.log("Starting From Component: ", name)
+        const driver: string = "", condition: string = ""; 
+        const sensors: string[] = allSensors;
+        const groups: string[] = sensorGroupNames;
+        dispatch(startSession( { name, driver, condition, sensors, groups }))
+    }, [dispatch, allSensors, sensorGroupNames])
 
     return (
         <>
@@ -56,6 +81,9 @@ const Dash = () => {
             </Paper>
             <Paper className={classes.rootPaper}>
                 <DashSensors />
+            </Paper>
+            <Paper className={classes.rootPaper}>
+                <DashSession handleStart={handleStartSession} handleStop={handleStopSession}/>
             </Paper>
         </>
     )

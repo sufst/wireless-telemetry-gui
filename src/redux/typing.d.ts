@@ -49,7 +49,8 @@ export type SensorsState = {
     },
     groups: {
         [sensor: string]: Array<string>
-    }
+    }, 
+    sensorMetadata: SensorMeta
 };
 
 export type SensorsMeta = {
@@ -107,3 +108,20 @@ export type UserState = {
     department: UserDepartment,
     meta: UserMeta
 };
+
+export type SessionState = {
+    sessionName: string,
+    sessionDriver: string, 
+    sessionConditions: string,
+    sessionSensors: Array<string>,
+    sessionSensorGroups: Array<string>,
+    isRunning: boolean,
+}
+
+export type StartSessionAction = {
+    name: string,
+    driver: string, 
+    condition: string, 
+    sensors: string[],
+    groups: string[],
+}
