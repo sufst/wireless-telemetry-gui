@@ -215,7 +215,8 @@ export const SensorChooser = (props: { allGroups: string[], selectedGroups: stri
 export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
     const classes = useStyles(); 
 
-    const sessionEntries = Object.entries(props.sessionData);
+    let sessionEntries = Object.entries(props.sessionData);
+    sessionEntries = sessionEntries.sort((a, b) => (b[1].creation - a[1].creation)).slice(0, 10);
     const info = sessionEntries.map(sessionEntry => {
         const name = sessionEntry[0]
         const sessionInfo = sessionEntry[1]
