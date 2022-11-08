@@ -25,7 +25,8 @@
 
         // Exact same thing for indentation
         "indent": "off",
-        "@typescript-eslint/indent": ["error", "tab"]
+        "@typescript-eslint/indent": ["error", "tab"],
+        "no-tabs": 0
     },
     "settings": {
         "react": {

@@ -17,7 +17,6 @@
 */
 
 // Module Imports
-import { useEffect } from 'react';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,7 +48,7 @@ const AppRouterSwitch = () => {
 	const selectUser = (state: RootState) => state.user;
 	const user = useSelector(selectUser);
 
-	useEffect(() => {
+	React.useEffect(() => {
 		if (user.username === undefined) {
 			const username = 'anonymous';
 			const password = 'anonymous';
