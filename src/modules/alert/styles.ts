@@ -20,7 +20,7 @@
 import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme) => ({
-  alert: {
-    marginBottom: '2rem'
-  }
+	alert: {
+		marginBottom: '2rem'
+	}
 }));

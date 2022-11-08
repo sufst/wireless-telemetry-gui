@@ -24,8 +24,8 @@ export type AlertType = 'snack' | 'alert';
 export type AlertText = string;
 
 export interface AlertState {
-  timeout?: AlertTimeout
-  level?: AlertLevel
-  type?: AlertType
-  text?: AlertText
+	timeout?: AlertTimeout
+	level?: AlertLevel
+	type?: AlertType
+	text?: AlertText
 }

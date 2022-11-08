@@ -39,60 +39,60 @@ import { UserState } from 'types/models/user';
  * A Component that holds the top navigation bar of the application.
  */
 const AppNavigationBar = (props: { handleDrawerOpen: () => void, open: boolean, onAccountClick: () => void, user: UserState }) => {
-  const classes = useStyles();
-  const history = useHistory();
-  const dispatch = useDispatch();
+	const classes = useStyles();
+	const history = useHistory();
+	const dispatch = useDispatch();
 
-  const username = props.user.username;
+	const username = props.user.username;
 
-  const loginLogoutButtonText = useCallback(() => {
-    if (username === 'anonymous' || username === undefined) {
-      return 'Login';
-    }
+	const loginLogoutButtonText = useCallback(() => {
+		if (username === 'anonymous' || username === undefined) {
+			return 'Login';
+		}
 
-    return 'Logout';
-  }, [username]);
+		return 'Logout';
+	}, [username]);
 
-  const onLoginLogoutButtonClick = useCallback(() => {
-    if (username === 'anonymous' || username === undefined) {
-      history.push('/login');
-    } else {
-      dispatch(logoutUser());
-    }
-  }, [username, history, dispatch]);
+	const onLoginLogoutButtonClick = useCallback(() => {
+		if (username === 'anonymous' || username === undefined) {
+			history.push('/login');
+		} else {
+			dispatch(logoutUser());
+		}
+	}, [username, history, dispatch]);
 
-  return (
-      <div>
-         <CssBaseline />
-         <AppBar
-            position="fixed"
-            className={clsx(classes.appBar, {
-              [classes.appBarShift]: props.open
-            })}
-         >
-            <Toolbar>
-               <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={props.handleDrawerOpen}
-                  edge="start"
-                  className={clsx(classes.menuButton, {
-                    [classes.hide]: props.open
-                  })}
-               >
-                  <MenuIcon />
-               </IconButton>
-               <Typography variant="h6" noWrap className={classes.title}>
+	return (
+		<div>
+			<CssBaseline />
+			<AppBar
+				position="fixed"
+				className={clsx(classes.appBar, {
+				  [classes.appBarShift]: props.open
+				})}
+			>
+				<Toolbar>
+					<IconButton
+						color="inherit"
+						aria-label="open drawer"
+						onClick={props.handleDrawerOpen}
+						edge="start"
+						className={clsx(classes.menuButton, {
+						  [classes.hide]: props.open
+						})}
+					>
+						<MenuIcon />
+					</IconButton>
+					<Typography variant="h6" noWrap className={classes.title}>
                   SUFST Telemetry
-               </Typography>
-               <Typography className={classes.usernameLabel} variant='h6'>
-                  {username === 'anonymous' ? '' : username}
-               </Typography>
-               <Button variant='contained' disableElevation color="secondary" onClick={onLoginLogoutButtonClick} className={username === 'anonymous' ? classes.loginButton : classes.logoutButton}>{loginLogoutButtonText()}</Button>
-            </Toolbar>
-         </AppBar>
-      </div>
-  );
+					</Typography>
+					<Typography className={classes.usernameLabel} variant='h6'>
+						{username === 'anonymous' ? '' : username}
+					</Typography>
+					<Button variant='contained' disableElevation color="secondary" onClick={onLoginLogoutButtonClick} className={username === 'anonymous' ? classes.loginButton : classes.logoutButton}>{loginLogoutButtonText()}</Button>
+				</Toolbar>
+			</AppBar>
+		</div>
+	);
 };
 
 export default AppNavigationBar;

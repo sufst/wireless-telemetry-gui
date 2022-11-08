@@ -48,114 +48,114 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
 const AppSideBar = (props: { handleDrawerClose: () => void, open: boolean }) => {
-  const classes = useStyles();
-  const theme = useTheme();
+	const classes = useStyles();
+	const theme = useTheme();
 
-  const history = useHistory();
+	const history = useHistory();
 
-  const actionTitles = ['Account', 'Dashboard', 'Session', 'Admin', 'Database', 'Feed', 'Settings'];
+	const actionTitles = ['Account', 'Dashboard', 'Session', 'Admin', 'Database', 'Feed', 'Settings'];
 
-  const socialTitles = ['Instagram', 'Twitter', 'GitHub'];
+	const socialTitles = ['Instagram', 'Twitter', 'GitHub'];
 
-  const actionIcons = useMemo(() => {
-    return [
-            <AccountCircleIcon />,
-            <SpeedIcon />,
-            <AccessTimeIcon />,
-            <SupervisorAccountIcon />,
-            <StorageIcon />,
-            <RssFeedIcon />,
-            <SettingsIcon />
-    ];
-  }, []);
+	const actionIcons = useMemo(() => {
+		return [
+			<AccountCircleIcon />,
+			<SpeedIcon />,
+			<AccessTimeIcon />,
+			<SupervisorAccountIcon />,
+			<StorageIcon />,
+			<RssFeedIcon />,
+			<SettingsIcon />
+		];
+	}, []);
 
-  const socialIcons = useMemo(() => {
-    return [
-            <InstagramIcon/>,
-            <TwitterIcon />,
-            <GitHubIcon />
-    ];
-  }, []);
+	const socialIcons = useMemo(() => {
+		return [
+			<InstagramIcon/>,
+			<TwitterIcon />,
+			<GitHubIcon />
+		];
+	}, []);
 
-  const handleActionIconClicked = useMemo(() => [
-    () => history.push('/account'),
-    () => history.push('/dashboard'),
-    () => history.push('/dashboard'),
-    () => history.push('/admin'),
-    () => history.push('/dashboard'),
-    () => history.push('/dashboard'),
-    () => history.push('/dashboard')
+	const handleActionIconClicked = useMemo(() => [
+		() => history.push('/account'),
+		() => history.push('/dashboard'),
+		() => history.push('/dashboard'),
+		() => history.push('/admin'),
+		() => history.push('/dashboard'),
+		() => history.push('/dashboard'),
+		() => history.push('/dashboard')
 
-  ], [history]);
+	], [history]);
 
-  const handleSocialIconClicked = useMemo(() => [
-    () => openSocial('https://www.instagram.com/sufst'),
-    () => openSocial('https://twitter.com/sufst'),
-    () => openSocial('https://github.com/orgs/sufst')
-  ], []);
+	const handleSocialIconClicked = useMemo(() => [
+		() => openSocial('https://www.instagram.com/sufst'),
+		() => openSocial('https://twitter.com/sufst'),
+		() => openSocial('https://github.com/orgs/sufst')
+	], []);
 
-  const onIconClick = useCallback((index) => {
-    if (index < handleActionIconClicked.length) {
-      handleActionIconClicked[index]();
-    }
-  }, [handleActionIconClicked]);
+	const onIconClick = useCallback((index) => {
+		if (index < handleActionIconClicked.length) {
+			handleActionIconClicked[index]();
+		}
+	}, [handleActionIconClicked]);
 
-  const onSocialClick = useCallback((index) => {
-    if (index < handleSocialIconClicked.length) {
-      handleSocialIconClicked[index]();
-    }
-  }, [handleSocialIconClicked]);
+	const onSocialClick = useCallback((index) => {
+		if (index < handleSocialIconClicked.length) {
+			handleSocialIconClicked[index]();
+		}
+	}, [handleSocialIconClicked]);
 
-  const openSocial = (url: string) => {
-    const win = window.open(url, '_blank');
-    win?.focus();
-  };
+	const openSocial = (url: string) => {
+		const win = window.open(url, '_blank');
+		win?.focus();
+	};
 
-  return (
-      <div>
-         <Drawer
-            variant="permanent"
-            className={clsx(classes.drawer, {
-              [classes.drawerOpen]: props.open,
-              [classes.drawerClose]: !props.open
-            })}
-            classes={{
-              paper: clsx({
-                [classes.drawerOpen]: props.open,
-                [classes.drawerClose]: !props.open
-              })
-            }}
-         >
-            <div className={classes.toolbar}>
-            <IconButton onClick={props.handleDrawerClose}>
-               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            </IconButton>
-            </div>
-            <Divider />
-            <List>
-                {actionTitles.map((text, index) => (
-                <ListItem button key={text} onClick={() => onIconClick(index)}>
-                    <ListItemIcon >
-                            {actionIcons[index]}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                </ListItem>
-                ))}
-            </List>
-            <Divider />
-            <List>
-                {socialTitles.map((text, index) => (
-                <ListItem button key={text} onClick={() => onSocialClick(index)}>
-                    <ListItemIcon >
-                        {socialIcons[index]}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                </ListItem>
-                ))}
-            </List>
-         </Drawer>
-      </div>
-  );
+	return (
+		<div>
+			<Drawer
+				variant="permanent"
+				className={clsx(classes.drawer, {
+				  [classes.drawerOpen]: props.open,
+				  [classes.drawerClose]: !props.open
+				})}
+				classes={{
+				  paper: clsx({
+				    [classes.drawerOpen]: props.open,
+				    [classes.drawerClose]: !props.open
+				  })
+				}}
+			>
+				<div className={classes.toolbar}>
+					<IconButton onClick={props.handleDrawerClose}>
+						{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+					</IconButton>
+				</div>
+				<Divider />
+				<List>
+					{actionTitles.map((text, index) => (
+						<ListItem button key={text} onClick={() => onIconClick(index)}>
+							<ListItemIcon >
+								{actionIcons[index]}
+							</ListItemIcon>
+							<ListItemText primary={text} />
+						</ListItem>
+					))}
+				</List>
+				<Divider />
+				<List>
+					{socialTitles.map((text, index) => (
+						<ListItem button key={text} onClick={() => onSocialClick(index)}>
+							<ListItemIcon >
+								{socialIcons[index]}
+							</ListItemIcon>
+							<ListItemText primary={text} />
+						</ListItem>
+					))}
+				</List>
+			</Drawer>
+		</div>
+	);
 };
 
 export default AppSideBar;

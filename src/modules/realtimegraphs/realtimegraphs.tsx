@@ -28,125 +28,125 @@ import { SensorData } from 'types/models/sensor';
 import { GraphData } from 'types/models/ui-types';
 
 const SensorPaperHeaderContainer = (props: { name: string }) => {
-  const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
-  const sensor = useSelector(selectSensorMeta);
+	const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
+	const sensor = useSelector(selectSensorMeta);
 
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  const onChange = useCallback((event) => {
-    event.preventDefault();
-    dispatch(updateSensorsMeta({ sensor: props.name, key: 'isDisplay', value: !sensor.isDisplay }));
-  }, [dispatch, props.name, sensor.isDisplay]);
+	const onChange = useCallback((event) => {
+		event.preventDefault();
+		dispatch(updateSensorsMeta({ sensor: props.name, key: 'isDisplay', value: !sensor.isDisplay }));
+	}, [dispatch, props.name, sensor.isDisplay]);
 
-  const HeaderTitle = memo(SensorPaperHeaderTitle);
-  const HeaderButton = memo(SensorPaperHeaderHideButton);
+	const HeaderTitle = memo(SensorPaperHeaderTitle);
+	const HeaderButton = memo(SensorPaperHeaderHideButton);
 
-  return (
-        <Grid container alignItems="center" key={v4()} spacing={1}>
-            <Grid item key={v4()} xs={6}>
-                <HeaderTitle name={sensor.name} />
-            </Grid>
-            <Grid item key={v4()} xs={6}>
-                <HeaderButton onChange={onChange} checked={sensor.isDisplay}/>
-            </Grid>
-        </Grid>
-  );
+	return (
+		<Grid container alignItems="center" key={v4()} spacing={1}>
+			<Grid item key={v4()} xs={6}>
+				<HeaderTitle name={sensor.name} />
+			</Grid>
+			<Grid item key={v4()} xs={6}>
+				<HeaderButton onChange={onChange} checked={sensor.isDisplay}/>
+			</Grid>
+		</Grid>
+	);
 };
 
 const trimData: (data: SensorData[], expiredS: number) => SensorData[] = (data, expiredS) => {
-  const epoch = data[data.length - 1].epoch;
+	const epoch = data[data.length - 1].epoch;
 
-  return data.filter(x => x.epoch > epoch + expiredS);
+	return data.filter(x => x.epoch > epoch + expiredS);
 };
 
 const convertDataToGraphData: (data: SensorData[]) => GraphData[] = (data) => {
-  return data.map(x => {
-    const date = (new Date(x.epoch * 1000));
-    const time = date.toTimeString().split(' ')[0] + ':' + date.getMilliseconds();
-    return { time, value: x.value };
-  });
+	return data.map(x => {
+		const date = (new Date(x.epoch * 1000));
+		const time = date.toTimeString().split(' ')[0] + ':' + date.getMilliseconds();
+		return { time, value: x.value };
+	});
 };
 
 const SensorGraphContainer = (props: { name: string }) => {
-  const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
-  const selectSensorData = (state: RootState) => state.sensors.sensors[props.name].data;
+	const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
+	const selectSensorData = (state: RootState) => state.sensors.sensors[props.name].data;
 
-  const sensor = useSelector(selectSensorMeta);
-  const inData = useSelector(selectSensorData);
+	const sensor = useSelector(selectSensorMeta);
+	const inData = useSelector(selectSensorData);
 
-  const graphData = convertDataToGraphData(trimData(inData, sensor.timeEndS));
+	const graphData = convertDataToGraphData(trimData(inData, sensor.timeEndS));
 
-  const LiveValue = memo(SensorLiveValue);
-  const Graph = memo(SensorGraph);
-  const date = new Date();
-  const timeXStart = date.toTimeString().split(' ')[0] + ':' + date.getMilliseconds();
-  const dateEnd = new Date((date.valueOf() / 1000) + sensor.timeEndS);
-  const timeXEnd = dateEnd.toTimeString().split(' ')[0] + ':' + dateEnd.getMilliseconds();
+	const LiveValue = memo(SensorLiveValue);
+	const Graph = memo(SensorGraph);
+	const date = new Date();
+	const timeXStart = date.toTimeString().split(' ')[0] + ':' + date.getMilliseconds();
+	const dateEnd = new Date((date.valueOf() / 1000) + sensor.timeEndS);
+	const timeXEnd = dateEnd.toTimeString().split(' ')[0] + ':' + dateEnd.getMilliseconds();
 
-  const classes = useStyles();
+	const classes = useStyles();
 
-  return (
-        <Grid container alignItems="center" key={v4()} spacing={1} className={classes.sensorGraphContainerRoot}>
-            <Grid item key={v4()} xs={2}>
-                {graphData.length > 0 ? <LiveValue key={v4()} value={Math.round(graphData[graphData.length - 1].value)}/> : <></>}
-            </Grid>
-            <Grid item key={v4()} xs={10}>
-                <Graph
-                    data={graphData}
-                    width={700}
-                    xAxisDomainMin={timeXStart}
-                    xAxisDomainMax={timeXEnd}
-                    yAxisDomainMin={sensor.min}
-                    yAxisDomainMax={sensor.max}
-                    yAxisLabel={sensor.units}
-                />
-            </Grid>
-        </Grid>
+	return (
+		<Grid container alignItems="center" key={v4()} spacing={1} className={classes.sensorGraphContainerRoot}>
+			<Grid item key={v4()} xs={2}>
+				{graphData.length > 0 ? <LiveValue key={v4()} value={Math.round(graphData[graphData.length - 1].value)}/> : <></>}
+			</Grid>
+			<Grid item key={v4()} xs={10}>
+				<Graph
+					data={graphData}
+					width={700}
+					xAxisDomainMin={timeXStart}
+					xAxisDomainMax={timeXEnd}
+					yAxisDomainMin={sensor.min}
+					yAxisDomainMax={sensor.max}
+					yAxisLabel={sensor.units}
+				/>
+			</Grid>
+		</Grid>
 
-  );
+	);
 };
 
 const SensorPaperContainer = (props: { name: string }) => {
-  const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
-  const sensor = useSelector(selectSensorMeta);
+	const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
+	const sensor = useSelector(selectSensorMeta);
 
-  const classes = useStyles();
+	const classes = useStyles();
 
-  return (
-        <Paper className={classes.sensorPaper}>
-            <Grid container alignItems="center" key={v4()} spacing={1}>
-                <Grid item key={v4()} xs={12}>
-                    <SensorPaperHeaderContainer key={v4()} name={props.name}/>
-                    {/* <Divider light /> */}
-                </Grid>
-                <Grid item key={v4()} xs={12}>
-                    {sensor.isDisplay ? <SensorGraphContainer key={v4()} name={props.name}/> : <></>}
-                </Grid>
-            </Grid>
-        </Paper>
-  );
+	return (
+		<Paper className={classes.sensorPaper}>
+			<Grid container alignItems="center" key={v4()} spacing={1}>
+				<Grid item key={v4()} xs={12}>
+					<SensorPaperHeaderContainer key={v4()} name={props.name}/>
+					{/* <Divider light /> */}
+				</Grid>
+				<Grid item key={v4()} xs={12}>
+					{sensor.isDisplay ? <SensorGraphContainer key={v4()} name={props.name}/> : <></>}
+				</Grid>
+			</Grid>
+		</Paper>
+	);
 };
 
 const RealtimeSensorsGroupContainer = (props: { name: string }) => {
-  const selectSensors = (state: RootState) => state.sensors.groups[props.name];
-  const sensors = useSelector(selectSensors);
+	const selectSensors = (state: RootState) => state.sensors.groups[props.name];
+	const sensors = useSelector(selectSensors);
 
-  // See modules index.js for explaination of why useMemo is used.
-  const sensorContainers = useMemo(() => {
-    const containers = sensors.map((x: string) => {
-      return (<Grid item key={v4()} xs={12}>
-                    <SensorPaperContainer key={v4()} name={x}/>
-                    </Grid>
-      );
-    });
-    return containers;
-  }, [sensors]);
+	// See modules index.js for explaination of why useMemo is used.
+	const sensorContainers = useMemo(() => {
+		const containers = sensors.map((x: string) => {
+			return (<Grid item key={v4()} xs={12}>
+				<SensorPaperContainer key={v4()} name={x}/>
+			</Grid>
+			);
+		});
+		return containers;
+	}, [sensors]);
 
-  return (
-        <Grid container alignItems="center" key={v4()}>
-            {sensorContainers}
-        </Grid>
-  );
+	return (
+		<Grid container alignItems="center" key={v4()}>
+			{sensorContainers}
+		</Grid>
+	);
 };
 
 export default RealtimeSensorsGroupContainer;

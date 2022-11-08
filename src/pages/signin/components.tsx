@@ -17,90 +17,90 @@
 */
 
 import {
-  Avatar,
-  Button,
-  TextField,
-  Link,
-  Box,
-  Typography
+	Avatar,
+	Button,
+	TextField,
+	Link,
+	Box,
+	Typography
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
-  useStyles
+	useStyles
 } from './styles';
 
 export const LoginFooter = () => {
-  return (
-       <Box mt={4} >
-          <Typography variant="body2" color="textSecondary" align="center">
-             {'Copyright © '}
-             <Link color="inherit" href="https://sufst.co.uk/">
+	return (
+		<Box mt={4} >
+			<Typography variant="body2" color="textSecondary" align="center">
+				{'Copyright © '}
+				<Link color="inherit" href="https://sufst.co.uk/">
              SUFST
-             </Link>{' '}
-             {new Date().getFullYear()}
-             {'.'}
-          </Typography>
-       </Box>
-  );
+				</Link>{' '}
+				{new Date().getFullYear()}
+				{'.'}
+			</Typography>
+		</Box>
+	);
 };
 
 export const LoginHeader = () => {
-  const classes = useStyles();
+	const classes = useStyles();
 
-  return (
-       <>
-          <Avatar className={classes.avatar}>
-             <LockOutlinedIcon className={classes.lockIcon}/>
-          </Avatar>
-          <Typography component="h1" variant="h5">
+	return (
+		<>
+			<Avatar className={classes.avatar}>
+				<LockOutlinedIcon className={classes.lockIcon}/>
+			</Avatar>
+			<Typography component="h1" variant="h5">
              Please Login In
-          </Typography>
-       </>
-  );
+			</Typography>
+		</>
+	);
 };
 
 export const UsernameField = () => {
-  return (
-      <TextField
-         variant="outlined"
-         margin="normal"
-         required
-         fullWidth
-         id="username"
-         label="Username"
-         autoComplete="root"
-         autoFocus
-      />
-  );
+	return (
+		<TextField
+			variant="outlined"
+			margin="normal"
+			required
+			fullWidth
+			id="username"
+			label="Username"
+			autoComplete="root"
+			autoFocus
+		/>
+	);
 };
 
 export const PasswordField = (props: { label: string, id: string }) => {
-  return (
-       <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          label={props.label}
-          type="password"
-          id={props.id}
-          autoComplete="current-password"
-       />
-  );
+	return (
+		<TextField
+			variant="outlined"
+			margin="normal"
+			required
+			fullWidth
+			label={props.label}
+			type="password"
+			id={props.id}
+			autoComplete="current-password"
+		/>
+	);
 };
 
 export const LoginButton = (props: { text: string }) => {
-  const classes = useStyles();
+	const classes = useStyles();
 
-  return (
-      <Button
-         type="submit"
-         fullWidth
-         variant="contained"
-         color="primary"
-         className={classes.submit}
-      >
-         {props.text}
-      </Button>
-  );
+	return (
+		<Button
+			type="submit"
+			fullWidth
+			variant="contained"
+			color="primary"
+			className={classes.submit}
+		>
+			{props.text}
+		</Button>
+	);
 };

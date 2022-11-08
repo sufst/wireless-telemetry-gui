@@ -30,13 +30,13 @@ export type PrivilegeColor = 'red' | 'gray' | 'green';
 
 // TODO: Fix this here...
 export interface PrivilegeToColors {
-  [privilege: string]: PrivilegeColor
+	[privilege: string]: PrivilegeColor
 }
 
 //
 // GRAPHS
 //
 export interface GraphData {
-  time: string
-  value: number
+	time: string
+	value: number
 }

@@ -21,29 +21,29 @@ import { ShowAlertAction } from 'types/models/actions';
 import { AlertState } from 'types/models/alert';
 
 const initialState: AlertState = {
-  timeout: undefined,
-  level: undefined,
-  type: undefined,
-  text: undefined
+	timeout: undefined,
+	level: undefined,
+	type: undefined,
+	text: undefined
 };
 
 const alertSlice = createSlice({
-  name: 'alert',
-  initialState,
-  reducers: {
-    showAlert: (state: AlertState, action: PayloadAction<ShowAlertAction>) => {
-      state.timeout = action.payload.timeout;
-      state.level = action.payload.level;
-      state.type = action.payload.type;
-      state.text = action.payload.text;
-    },
-    removeAlert: (state: AlertState) => {
-      state.timeout = undefined;
-      state.level = undefined;
-      state.type = undefined;
-      state.text = undefined;
-    }
-  }
+	name: 'alert',
+	initialState,
+	reducers: {
+		showAlert: (state: AlertState, action: PayloadAction<ShowAlertAction>) => {
+			state.timeout = action.payload.timeout;
+			state.level = action.payload.level;
+			state.type = action.payload.type;
+			state.text = action.payload.text;
+		},
+		removeAlert: (state: AlertState) => {
+			state.timeout = undefined;
+			state.level = undefined;
+			state.type = undefined;
+			state.text = undefined;
+		}
+	}
 });
 
 export const { showAlert, removeAlert } = alertSlice.actions;

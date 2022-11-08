@@ -28,16 +28,16 @@ export type UserDepartment = 'Electronics'
 | 'NON SPECIFIED';
 
 export interface UserMeta {
-  dept?: string
-  lastLogin?: string
-  createdAt?: string
+	dept?: string
+	lastLogin?: string
+	createdAt?: string
 }
 
 export interface UserState {
-  username?: string
-  accessToken?: string
-  privilege?: UserPrivilege
-  creation?: number
-  department: UserDepartment
-  meta: UserMeta
+	username?: string
+	accessToken?: string
+	privilege?: UserPrivilege
+	creation?: number
+	department: UserDepartment
+	meta: UserMeta
 }

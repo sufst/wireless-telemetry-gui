@@ -17,10 +17,10 @@
 */
 
 export interface SessionState {
-  sessionName: string
-  sessionDriver: string
-  sessionConditions: string
-  sessionSensors: string[]
-  sessionSensorGroups: string[]
-  isRunning: boolean
+	sessionName: string
+	sessionDriver: string
+	sessionConditions: string
+	sessionSensors: string[]
+	sessionSensorGroups: string[]
+	isRunning: boolean
 }

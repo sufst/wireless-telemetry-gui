@@ -28,28 +28,28 @@ import { useStyles } from './styles';
 import type { RootState } from 'redux/store';
 
 const AlertContainer = () => {
-  const classes = useStyles();
+	const classes = useStyles();
 
-  const selectAlert = (state: RootState) => state.alert;
-  const { text, type, timeout, level } = useSelector(selectAlert);
+	const selectAlert = (state: RootState) => state.alert;
+	const { text, type, timeout, level } = useSelector(selectAlert);
 
-  if (type === undefined) {
-    return null;
-  }
+	if (type === undefined) {
+		return null;
+	}
 
-  return type === 'snack'
-    ? (
-        <Snackbar open={ type === 'snack' } autoHideDuration={timeout}>
-            <MuiAlert elevation={6} variant="filled" className={classes.alert} severity={level}>
-                {text ?? ''}
-            </MuiAlert>
-        </Snackbar>
-      )
-    : (
-        <MuiAlert elevation={6} variant="filled" className={classes.alert} severity={level}>
-            {text ?? ''}
-        </MuiAlert>
-      );
+	return type === 'snack'
+		? (
+			<Snackbar open={ type === 'snack' } autoHideDuration={timeout}>
+				<MuiAlert elevation={6} variant="filled" className={classes.alert} severity={level}>
+					{text ?? ''}
+				</MuiAlert>
+			</Snackbar>
+		)
+		: (
+			<MuiAlert elevation={6} variant="filled" className={classes.alert} severity={level}>
+				{text ?? ''}
+			</MuiAlert>
+		);
 };
 
 export default AlertContainer;

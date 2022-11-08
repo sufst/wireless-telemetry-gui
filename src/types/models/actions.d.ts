@@ -23,65 +23,65 @@ import { UserDepartment, UserMeta, UserPrivilege } from './user';
 // USER
 //
 export interface SetUserAction {
-  username: string
-  accessToken: string
-  creation: number
-  privilege: UserPrivilege
-  department: UserDepartment
-  meta: UserMeta
+	username: string
+	accessToken: string
+	creation: number
+	privilege: UserPrivilege
+	department: UserDepartment
+	meta: UserMeta
 }
 
 export interface RegisterUserAction {
-  username: string
-  password: string
-  privilege: UserPrivilege
-  department: UserDepartment
+	username: string
+	password: string
+	privilege: UserPrivilege
+	department: UserDepartment
 }
 
 export type UserRegister = (
-  username: string,
-  password: string,
-  privilege: UserPrivilege,
-  department: UserDepartment,
+	username: string,
+	password: string,
+	privilege: UserPrivilege,
+	department: UserDepartment,
 ) => void;
 
 export interface LoginUserAction {
-  username: string
-  password: string
+	username: string
+	password: string
 }
 
 //
 // SESSION
 //
 export interface StartSessionAction {
-  name: string
-  driver: string
-  condition: string
-  sensors: string[]
-  groups: string[]
+	name: string
+	driver: string
+	condition: string
+	sensors: string[]
+	groups: string[]
 }
 
 export type StartSessionButtonAction = (
-  name: string,
-  driver: string,
-  condition: string,
-  sensors: string[],
-  groups: string[]
+	name: string,
+	driver: string,
+	condition: string,
+	sensors: string[],
+	groups: string[]
 ) => void;
 
 //
 // SENSORS
 //
 export interface UpdateSensorsMetaAction {
-  sensor: string
-  key: string
-  value: any
+	sensor: string
+	key: string
+	value: any
 }
 
 export type BuildSensorsFromMetaAction = SensorsMeta;
 
 export interface InsertSensorsBulkDataAction {
-  [sensor: string]: SensorData[]
+	[sensor: string]: SensorData[]
 }
 
 //

@@ -21,87 +21,87 @@ import { useStyles, getColorForPrivelege } from './styles';
 import { v4 } from 'uuid';
 
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Avatar,
-  Grid,
-  Typography
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Paper,
+	Avatar,
+	Grid,
+	Typography
 } from '@material-ui/core';
 
 export const AdminPanelTable = (props: { users: UserState[] }) => {
-  const classes = useStyles();
+	const classes = useStyles();
 
-  const users = props.users;
+	const users = props.users;
 
-  return (
-      <TableContainer component={Paper} className={classes.tableContainer}>
-         <Table className={classes.table} aria-label="simple table">
-            <AdminPanelTableHead />
-            <TableBody>
-               {users.map((user) => (
-                  <AdminPanelTableRow user={user} key={v4()}/>
-               ))}
-            </TableBody>
-         </Table>
-      </TableContainer>
-  );
+	return (
+		<TableContainer component={Paper} className={classes.tableContainer}>
+			<Table className={classes.table} aria-label="simple table">
+				<AdminPanelTableHead />
+				<TableBody>
+					{users.map((user) => (
+						<AdminPanelTableRow user={user} key={v4()}/>
+					))}
+				</TableBody>
+			</Table>
+		</TableContainer>
+	);
 };
 
 const AdminPanelTableRow = (props: { user: UserState }) => {
-  const classes = useStyles();
+	const classes = useStyles();
 
-  const user = props.user;
+	const user = props.user;
 
-  // TODO: Remove force unwrapping here. Make it safer.
-  const createdAt = new Date(user.creation! * 1000).toLocaleString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
+	// TODO: Remove force unwrapping here. Make it safer.
+	const createdAt = new Date(user.creation! * 1000).toLocaleString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
 
-  return (
-      <TableRow>
-         <TableCell>
-            <Grid container>
-                  <Grid item lg={2}>
-                     <Avatar alt={user.username} src='.' className={classes.avatar}/>
-                  </Grid>
-                  <Grid item lg={10}>
-                     <Typography className={classes.name}>{user.username}</Typography>
-                  </Grid>
-            </Grid>
-         </TableCell>
+	return (
+		<TableRow>
+			<TableCell>
+				<Grid container>
+					<Grid item lg={2}>
+						<Avatar alt={user.username} src='.' className={classes.avatar}/>
+					</Grid>
+					<Grid item lg={10}>
+						<Typography className={classes.name}>{user.username}</Typography>
+					</Grid>
+				</Grid>
+			</TableCell>
 
-         <TableCell>
-            <Typography className={classes.department} color="primary" variant="subtitle2">{user.department}</Typography>
-         </TableCell>
+			<TableCell>
+				<Typography className={classes.department} color="primary" variant="subtitle2">{user.department}</Typography>
+			</TableCell>
 
-         <TableCell>
-            <div style={{
-              color: getColorForPrivelege(user.privilege!),
-              fontWeight: 'bold'
-            }}>{user.privilege}</div>
-         </TableCell>
+			<TableCell>
+				<div style={{
+				  color: getColorForPrivelege(user.privilege!),
+				  fontWeight: 'bold'
+				}}>{user.privilege}</div>
+			</TableCell>
 
-         <TableCell>
-            <div className={classes.createdAt}>{createdAt}</div>
-         </TableCell>
-      </TableRow>
-  );
+			<TableCell>
+				<div className={classes.createdAt}>{createdAt}</div>
+			</TableCell>
+		</TableRow>
+	);
 };
 
 const AdminPanelTableHead = () => {
-  const classes = useStyles();
+	const classes = useStyles();
 
-  return (
-      <TableHead>
-         <TableRow>
-            <TableCell className={classes.tableHeaderCell}>Username</TableCell>
-            <TableCell className={classes.tableHeaderCell}>Department</TableCell>
-            <TableCell className={classes.tableHeaderCell}>Privilege</TableCell>
-            <TableCell className={classes.tableHeaderCell}>Created At</TableCell>
-         </TableRow>
-      </TableHead>
-  );
+	return (
+		<TableHead>
+			<TableRow>
+				<TableCell className={classes.tableHeaderCell}>Username</TableCell>
+				<TableCell className={classes.tableHeaderCell}>Department</TableCell>
+				<TableCell className={classes.tableHeaderCell}>Privilege</TableCell>
+				<TableCell className={classes.tableHeaderCell}>Created At</TableCell>
+			</TableRow>
+		</TableHead>
+	);
 };

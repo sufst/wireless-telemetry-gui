@@ -22,29 +22,29 @@ import { SioConnect } from 'types/api/api';
 let sio: Socket;
 
 export const sioConnect: SioConnect = (accessToken, onMeta, onData) => {
-  sio?.disconnect();
-  sio?.off('connnect');
-  sio?.off('meta');
-  sio?.off('data');
+	sio?.disconnect();
+	sio?.off('connnect');
+	sio?.off('meta');
+	sio?.off('data');
 
-  sio = io(`ws://${url}/car`, {
-    reconnectionDelayMax: 10000,
-    extraHeaders: {
-      Authorization: 'Bearer ' + accessToken
-    }
-  });
+	sio = io(`ws://${url}/car`, {
+		reconnectionDelayMax: 10000,
+		extraHeaders: {
+			Authorization: 'Bearer ' + accessToken
+		}
+	});
 
-  sio.on('connect', () => {
-    console.log('Sio connected');
-  });
+	sio.on('connect', () => {
+		console.log('Sio connected');
+	});
 
-  sio.on('meta', (message: string) => {
-    const meta = JSON.parse(message);
-    onMeta(meta);
-  });
+	sio.on('meta', (message: string) => {
+		const meta = JSON.parse(message);
+		onMeta(meta);
+	});
 
-  sio.on('data', (message: string) => {
-    const data = JSON.parse(message);
-    onData(data);
-  });
+	sio.on('data', (message: string) => {
+		const data = JSON.parse(message);
+		onData(data);
+	});
 };

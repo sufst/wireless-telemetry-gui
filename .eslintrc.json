@@ -21,7 +21,11 @@
     "rules": {
         // Enforces the semi-colon rule, #Warning - Do not enable "semi", since the typescript version should enforce instead
         "semi": "off",
-        "@typescript-eslint/semi": ["error", "always"]
+        "@typescript-eslint/semi": ["error", "always"],
+
+        // Exact same thing for indentation
+        "indent": "off",
+        "@typescript-eslint/indent": ["error", "tab"]
     },
     "settings": {
         "react": {

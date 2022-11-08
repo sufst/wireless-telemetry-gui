@@ -19,7 +19,7 @@
 import LoginContainer from './containers';
 
 export const SignIn = () => {
-  return (
-        <LoginContainer />
-  );
+	return (
+		<LoginContainer />
+	);
 };

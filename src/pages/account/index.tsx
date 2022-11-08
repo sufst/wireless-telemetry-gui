@@ -30,32 +30,32 @@ import { logoutUser } from 'redux/slices/user';
 import { useHistory } from 'react-router';
 
 const Account = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
+	const dispatch = useDispatch();
+	const history = useHistory();
 
-  const selectUser = (state: RootState) => state.user;
-  const user = useSelector(selectUser);
-  const { username } = user;
+	const selectUser = (state: RootState) => state.user;
+	const user = useSelector(selectUser);
+	const { username } = user;
 
-  const onLogoutClick = useCallback(() => {
-    dispatch(logoutUser());
-  }, [dispatch]);
+	const onLogoutClick = useCallback(() => {
+		dispatch(logoutUser());
+	}, [dispatch]);
 
-  const onRegisterNewUser = useCallback(() => {
-    history.push('/register');
-  }, [history]);
+	const onRegisterNewUser = useCallback(() => {
+		history.push('/register');
+	}, [history]);
 
-  useEffect(() => {
-    if (username === undefined || username === 'anonymous') {
-      history.push('/');
-    }
-  }, [history, username]);
+	useEffect(() => {
+		if (username === undefined || username === 'anonymous') {
+			history.push('/');
+		}
+	}, [history, username]);
 
-  return (
-      <>
-          <AccountContainer user={user} onLogoutClick={onLogoutClick} onRegisterNewUser={onRegisterNewUser}/>
-      </>
-  );
+	return (
+		<>
+			<AccountContainer user={user} onLogoutClick={onLogoutClick} onRegisterNewUser={onRegisterNewUser}/>
+		</>
+	);
 };
 
 export default Account;

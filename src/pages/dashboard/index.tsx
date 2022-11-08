@@ -19,7 +19,7 @@
 import { DashboardHeader } from './header/containers';
 
 export const Dashboard = () => {
-  return (
-        <DashboardHeader/>
-  );
+	return (
+		<DashboardHeader/>
+	);
 };
