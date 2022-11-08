@@ -18,7 +18,13 @@
 
 // Module Imports
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch,
+	Redirect,
+	useHistory
+} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // Material UI Imports
@@ -40,7 +46,7 @@ import { useStyles } from './styles';
 import { loginUser } from 'redux/slices/user';
 import type { RootState } from 'redux/store';
 
-const AppRouterSwitch = () => {
+const AppRouterSwitch: React.FC = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -62,16 +68,16 @@ const AppRouterSwitch = () => {
 	return (
 		<Switch>
 			<Route path="/" exact>
-				<Redirect to="/dashboard"/>
+				<Redirect to="/dashboard" />
 			</Route>
 			<Route path="/login" exact>
-				<Paper className={classes.viewPaper} >
+				<Paper className={classes.viewPaper}>
 					<Alert />
 					<SignIn />
 				</Paper>
 			</Route>
 			<Route path="/register" exact>
-				<Paper className={classes.viewPaper} >
+				<Paper className={classes.viewPaper}>
 					<Alert />
 					<Register />
 				</Paper>
@@ -79,7 +85,7 @@ const AppRouterSwitch = () => {
 			<Route path="/dashboard" exact>
 				<Paper className={classes.viewPaper}>
 					<Alert />
-					<Dashboard/>
+					<Dashboard />
 				</Paper>
 			</Route>
 			<Route path="/account" exact>
@@ -101,7 +107,7 @@ const AppRouterSwitch = () => {
 	);
 };
 
-export const AppContainer = () => {
+export const AppContainer : React.FC = () => {
 	return (
 		<Router>
 			<AppNavigation />

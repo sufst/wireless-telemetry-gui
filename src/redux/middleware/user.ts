@@ -34,69 +34,102 @@ import { SioOnDataHandler, SioOnMetaHander } from 'types/api/api';
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
 export const userMiddleware: Middleware<{}, any> =
-  (storeAPI) => (next) => async (action) => {
-  	if (action.type === 'user/loginUser') {
-  		const { username, password } = action.payload;
+	(storeAPI) => (next) => async (action) => {
+		if (action.type === 'user/loginUser') {
+			const { username, password } = action.payload;
 
-  		const accessToken = await loginUser(username, password);
+			const accessToken = await loginUser(username, password);
 
-  		if (accessToken === undefined) {
-  			const loginFailedAlert = createAlert(3000, 'error', 'alert', 'Login Failed :( Make sure your credentials are correct!');
-  			storeAPI.dispatch(showAlert(loginFailedAlert));
-  			return next(action);
-  		}
+			if (accessToken === undefined) {
+				const loginFailedAlert = createAlert(
+					3000,
+					'error',
+					'alert',
+					'Login Failed :( Make sure your credentials are correct!'
+				);
+				storeAPI.dispatch(showAlert(loginFailedAlert));
+				return next(action);
+			}
 
-  		const successAlert = createAlert(3000, 'success', 'snack', `Login Success! ${username} successfully logged in!`);
+			const successAlert = createAlert(
+				3000,
+				'success',
+				'snack',
+				`Login Success! ${username} successfully logged in!`
+			);
 
-  		storeAPI.dispatch(showAlert(successAlert));
+			storeAPI.dispatch(showAlert(successAlert));
 
-  		const onMeta: SioOnMetaHander = (meta) => {
-  			storeAPI.dispatch(buildSensorsFromMeta(meta));
-  		};
+			const onMeta: SioOnMetaHander = (meta) => {
+				storeAPI.dispatch(buildSensorsFromMeta(meta));
+			};
 
-  		const onData: SioOnDataHandler = (data) => {
-  			storeAPI.dispatch(insertSensorsBulkData(data));
-  		};
+			const onData: SioOnDataHandler = (data) => {
+				storeAPI.dispatch(insertSensorsBulkData(data));
+			};
 
-  		sioConnect(
-  			accessToken,
-  			(meta) => onMeta(meta),
-  			(data) => onData(data)
-  		);
+			sioConnect(
+				accessToken,
+				(meta) => onMeta(meta),
+				(data) => onData(data)
+			);
 
-  		const user = await getUser(username, accessToken);
+			const user = await getUser(username, accessToken);
 
-  		if (user == null) {
-  			const getFailedAlert = createAlert(3000, 'error', 'snack', 'Failed to get user details :(');
-  			storeAPI.dispatch(showAlert(getFailedAlert));
-  		} else {
-  			storeAPI.dispatch(setUser(user));
-  		}
+			if (user == null) {
+				const getFailedAlert = createAlert(
+					3000,
+					'error',
+					'snack',
+					'Failed to get user details :('
+				);
+				storeAPI.dispatch(showAlert(getFailedAlert));
+			} else {
+				storeAPI.dispatch(setUser(user));
+			}
 
-  		return next(action);
-  	}
+			return next(action);
+		}
 
-  	if (action.type === 'user/registerNewUser') {
-  		const { username, password, privilege, department } = action.payload;
-  		const accessToken = storeAPI.getState().user.accessToken;
+		if (action.type === 'user/registerNewUser') {
+			const { username, password, privilege, department } =
+				action.payload;
+			const accessToken = storeAPI.getState().user.accessToken;
 
-  		const success = await usersCreate(username, password, privilege, department, {}, accessToken);
+			const success = await usersCreate(
+				username,
+				password,
+				privilege,
+				department,
+				{},
+				accessToken
+			);
 
-  		if (success) {
-  			const registerSuccessAlert = createAlert(3000, 'success', 'alert', 'Success!! You can logout and login again with the new account.');
+			if (success) {
+				const registerSuccessAlert = createAlert(
+					3000,
+					'success',
+					'alert',
+					'Success!! You can logout and login again with the new account.'
+				);
 
-  			storeAPI.dispatch(showAlert(registerSuccessAlert));
-  		} else {
-  			const registerFailedAlert = createAlert(3000, 'error', 'alert', 'Something went wrong when creating a new user :(');
+				storeAPI.dispatch(showAlert(registerSuccessAlert));
+			} else {
+				const registerFailedAlert = createAlert(
+					3000,
+					'error',
+					'alert',
+					'Something went wrong when creating a new user :('
+				);
 
-  			storeAPI.dispatch(showAlert(registerFailedAlert));
-  		}
-  	}
+				storeAPI.dispatch(showAlert(registerFailedAlert));
+			}
+		}
 
-  	if (action.type === 'user/getAllUsers') {
-  		const accessToken = storeAPI.getState().user.accessToken;
-  		console.log('Getting ALL users...', accessToken);
-  	}
+		if (action.type === 'user/getAllUsers') {
+			const accessToken = storeAPI.getState().user.accessToken;
+			console.log('Getting ALL users...', accessToken);
+		}
 
-  	return next(action);
-  };
+		return next(action);
+	};
