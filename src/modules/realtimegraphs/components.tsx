@@ -15,65 +15,65 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { useStyles } from "./styles"
-import {  Switch, FormControlLabel, Typography } from '@material-ui/core';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Label } from "recharts";
-import { GraphData } from "types/models/ui-types";
+import { useStyles } from './styles';
+import { Switch, FormControlLabel, Typography } from '@material-ui/core';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Label } from 'recharts';
+import { GraphData } from 'types/models/ui-types';
 
 export const SensorPaperHeaderHideButton = (props: { onChange: (event: any) => void, checked: boolean }) => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    return (
+  return (
         <FormControlLabel control={
             <Switch checked={props.checked} onChange={props.onChange} color="primary"/>
-        }             
+        }
         label="Show"
         className={classes.sensorPaperHeaderButton}
         />
-    );
-}
+  );
+};
 
 export const SensorPaperHeaderTitle = (props: { name: string }) => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    return (
+  return (
         <Typography variant="h6" className={classes.sensorPaperHeaderTitle}>
             {props.name}
         </Typography >
-    );
-}
+  );
+};
 
 export const SensorLiveValue = (props: { value: number }) => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    return (
+  return (
         <Typography variant="h3" className={classes.sensorLiveValue}>
             {props.value}
         </Typography >
-    );
-}
+  );
+};
 
-export const SensorGraph = (props: { 
-    width: number, 
-    data: Array<GraphData>,
-    xAxisDomainMin: string, 
-    xAxisDomainMax: string, 
-    yAxisDomainMin: number,
-    yAxisDomainMax: number,
-    yAxisLabel: string
- }) => {
-    const classes = useStyles();
+export const SensorGraph = (props: {
+  width: number
+  data: GraphData[]
+  xAxisDomainMin: string
+  xAxisDomainMax: string
+  yAxisDomainMin: number
+  yAxisDomainMax: number
+  yAxisLabel: string
+}) => {
+  const classes = useStyles();
 
-    return (
+  return (
         <LineChart
             width={props.width}
             height={400}
             data={props.data}
             margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 30
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 30
             }}
             >
             <CartesianGrid strokeDasharray="4 4 4 " />
@@ -92,5 +92,5 @@ export const SensorGraph = (props: {
                 dot={false}
             />
         </LineChart>
-    );
-}
+  );
+};

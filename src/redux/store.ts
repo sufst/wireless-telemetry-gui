@@ -16,34 +16,33 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
 
 import alertReducer from './slices/alert';
 import sensorsReducer from './slices/sensors';
 import userReducer from './slices/user';
-import sessionReducer from './slices/sessions'
+import sessionReducer from './slices/sessions';
 
 import { alertMiddleware } from './middleware/alert';
 import { userMiddleware } from './middleware/user';
 import { sessionMiddleware } from './middleware/sessions';
 
-
 const store = configureStore({
   reducer: {
-     alert: alertReducer, 
-     sensors : sensorsReducer,
-     user: userReducer, 
-     session: sessionReducer
+    alert: alertReducer,
+    sensors: sensorsReducer,
+    user: userReducer,
+    session: sessionReducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
-        .prepend(
-            alertMiddleware, 
-            userMiddleware,
-            sessionMiddleware
-        )
-})
+      .prepend(
+        alertMiddleware,
+        userMiddleware,
+        sessionMiddleware
+      )
+});
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 
-export default store; 
+export default store;

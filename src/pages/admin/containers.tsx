@@ -18,16 +18,15 @@
 
 import { UserState } from 'types/models/user';
 import { AdminPanelTable } from './components';
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
-export const AdminPanelContainer = (props: { users: UserState[]}) => {
-   const classes = useStyles(); 
+export const AdminPanelContainer = (props: { users: UserState[] }) => {
+  const classes = useStyles();
 
-   return (
+  return (
       <div className={classes.adminPanelContainer}>
          <h2>Admin Panel</h2>
-         <AdminPanelTable users={props.users}/> 
+         <AdminPanelTable users={props.users}/>
       </div>
-   )
-}
-
+  );
+};

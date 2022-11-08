@@ -17,15 +17,14 @@
 */
 
 /**
- * For Docker Implementation on macOS. 
+ * For Docker Implementation on macOS.
  * 127.0.0.1
  */
 
 /**
- * BACK-END SERVER IP HERE 
- * 
+ * BACK-END SERVER IP HERE
+ *
  * FORMAT: '<ip>:5000'
  * EXAMPLE: '192.168.1.26:5000'
  */
 export const url: string = '172.17.0.2:5000';
-

@@ -16,50 +16,50 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// React - Redux Imports 
-import React, { useCallback } from 'react'
+// React - Redux Imports
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { RootState } from 'redux/store';
 
-// Components Impors 
+// Components Impors
 import AppNavigationBar from './appbar';
 import AppSideBar from './sidebar';
 
-// Material UI Imports 
-import { useStyles } from './styles'
+// Material UI Imports
+import { useStyles } from './styles';
 
 /**
- * A Container that holds all the logic & views for the main AppBar and the AppSideBar 
+ * A Container that holds all the logic & views for the main AppBar and the AppSideBar
  */
 const AppNav = () => {
-   const classes = useStyles(); 
-   const history = useHistory(); 
+  const classes = useStyles();
+  const history = useHistory();
 
-   const selectUser = (state: RootState) => state.user;
-   const user = useSelector(selectUser); 
+  const selectUser = (state: RootState) => state.user;
+  const user = useSelector(selectUser);
 
-   const [open, setOpen] = React.useState(false);
-  
-   const handleDrawerOpen = useCallback(() => {
-      setOpen(true);
-   }, [])
+  const [open, setOpen] = React.useState(false);
 
-   const handleDrawerClose = useCallback(() => {
-      setOpen(false);
-   }, [])
+  const handleDrawerOpen = useCallback(() => {
+    setOpen(true);
+  }, []);
 
-   const handleAccountClick = useCallback(() => {
-      history.push('/account');
-   }, [history])
+  const handleDrawerClose = useCallback(() => {
+    setOpen(false);
+  }, []);
 
-   return (
+  const handleAccountClick = useCallback(() => {
+    history.push('/account');
+  }, [history]);
+
+  return (
       <div className={classes.navigationRoot}>
          <AppNavigationBar open={open} handleDrawerOpen={handleDrawerOpen} onAccountClick={handleAccountClick} user={user}/>
          SideBar
          <AppSideBar open={open} handleDrawerClose={handleDrawerClose} />
       </div>
-   )
-}
+  );
+};
 
-export default AppNav
+export default AppNav;

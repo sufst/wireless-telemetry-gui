@@ -19,35 +19,37 @@
 // Module Imports
 import { Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
-import { useSelector } from 'react-redux' 
+import { useSelector } from 'react-redux';
 
-// Styles 
-import { useStyles } from "./styles";
+// Styles
+import { useStyles } from './styles';
 
 // Redux Imports
 import type { RootState } from 'redux/store';
 
 const AlertContainer = () => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const selectAlert = (state: RootState) => state.alert;
-    const { text, type, timeout, level } = useSelector(selectAlert); 
+  const selectAlert = (state: RootState) => state.alert;
+  const { text, type, timeout, level } = useSelector(selectAlert);
 
-    if (type === undefined) {
-        return null;
-    }
+  if (type === undefined) {
+    return null;
+  }
 
-    return type === 'snack' ? (
-        <Snackbar open={ type === "snack" } autoHideDuration={timeout}>
+  return type === 'snack'
+    ? (
+        <Snackbar open={ type === 'snack' } autoHideDuration={timeout}>
             <MuiAlert elevation={6} variant="filled" className={classes.alert} severity={level}>
                 {text ?? ''}
             </MuiAlert>
         </Snackbar>
-    ) : (
+      )
+    : (
         <MuiAlert elevation={6} variant="filled" className={classes.alert} severity={level}>
             {text ?? ''}
         </MuiAlert>
-    )
-}
+      );
+};
 
 export default AlertContainer;

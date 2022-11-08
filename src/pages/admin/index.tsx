@@ -17,9 +17,7 @@
 */
 
 import { fetchAllUsers } from 'modules/api/users';
-import { useCallback } from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RootState } from 'redux/store';
@@ -27,38 +25,37 @@ import { UserState } from 'types/models/user';
 import { AdminPanelContainer } from './containers';
 
 const Admin = () => {
-   const history = useHistory(); 
+  const history = useHistory();
 
-   const selectUser = (state: RootState) => state.user;
-   const user = useSelector(selectUser);
+  const selectUser = (state: RootState) => state.user;
+  const user = useSelector(selectUser);
 
-   const [users, setUsers] = useState<UserState[]>([]);
+  const [users, setUsers] = useState<UserState[]>([]);
 
-   const privilege = user.privilege; 
-   const token = user.accessToken; 
+  const privilege = user.privilege;
+  const token = user.accessToken;
 
-   const fetchUsers = useCallback(async () => {
-      if (token === undefined) {
-         return
-      }
-      
-      const users = await fetchAllUsers(token);
-      setUsers(users['users']);
-      
-   }, [token])
+  const fetchUsers = useCallback(async () => {
+    if (token === undefined) {
+      return;
+    }
 
-   useEffect(() => {
-      if (privilege === 'Anon' || privilege === 'Basic') {
-         history.push('/')
-         return; 
-      }
+    const users = await fetchAllUsers(token);
+    setUsers(users.users);
+  }, [token]);
 
-      fetchUsers(); 
-   }, [history, privilege, fetchUsers])
+  useEffect(() => {
+    if (privilege === 'Anon' || privilege === 'Basic') {
+      history.push('/');
+      return;
+    }
 
-   return (
+    fetchUsers();
+  }, [history, privilege, fetchUsers]);
+
+  return (
       <AdminPanelContainer users={users} />
-   )
-}
+  );
+};
 
 export default Admin;

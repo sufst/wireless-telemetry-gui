@@ -18,26 +18,26 @@
 
 export type UserPrivilege = 'Anon' | 'Basic' | 'Admin' | 'Developer';
 
-export type UserDepartment = 'Electronics' 
-                             | 'Operations' 
-                             | 'Power-train' 
-                             | 'Vehicle Performance' 
-                             | 'Race Engineering' 
-                             | 'Aerodynamics' 
-                             | 'Tier 1' 
-                             | 'NON SPECIFIED'
+export type UserDepartment = 'Electronics'
+| 'Operations'
+| 'Power-train'
+| 'Vehicle Performance'
+| 'Race Engineering'
+| 'Aerodynamics'
+| 'Tier 1'
+| 'NON SPECIFIED';
 
-export type UserMeta = {
-    dept?: string,
-    lastLogin?: string,
-    createdAt?: string    
-};
+export interface UserMeta {
+  dept?: string
+  lastLogin?: string
+  createdAt?: string
+}
 
-export type UserState = {
-    username?: string,
-    accessToken?: string,
-    privilege?: UserPrivilege,
-    creation?: number,
-    department: UserDepartment,
-    meta: UserMeta
-};
+export interface UserState {
+  username?: string
+  accessToken?: string
+  privilege?: UserPrivilege
+  creation?: number
+  department: UserDepartment
+  meta: UserMeta
+}

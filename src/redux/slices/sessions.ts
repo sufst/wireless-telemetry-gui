@@ -16,42 +16,42 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { StartSessionAction } from "types/models/actions";
-import { SessionState } from "types/models/session";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { StartSessionAction } from 'types/models/actions';
+import { SessionState } from 'types/models/session';
 
 const initialState: SessionState = {
-    sessionName: "",
-    sessionDriver: "", 
-    sessionConditions: "",
-    sessionSensors: [],
-    sessionSensorGroups: [],
-    isRunning: false, 
-}
+  sessionName: '',
+  sessionDriver: '',
+  sessionConditions: '',
+  sessionSensors: [],
+  sessionSensorGroups: [],
+  isRunning: false
+};
 
 export const sessionSlice = createSlice({
-  name: "session",
+  name: 'session',
   initialState,
   reducers: {
     getAllSessions: () => {
     },
-    startSession: (state: SessionState, action: PayloadAction<StartSessionAction>) => {      
-      state.sessionName = action.payload.name
-      state.sessionDriver = action.payload.driver
-      state.sessionConditions = action.payload.condition
-      state.sessionSensors = action.payload.sensors
-      state.sessionSensorGroups = action.payload.groups
-      state.isRunning = true
+    startSession: (state: SessionState, action: PayloadAction<StartSessionAction>) => {
+      state.sessionName = action.payload.name;
+      state.sessionDriver = action.payload.driver;
+      state.sessionConditions = action.payload.condition;
+      state.sessionSensors = action.payload.sensors;
+      state.sessionSensorGroups = action.payload.groups;
+      state.isRunning = true;
     },
     stopSession: (state: SessionState) => {
-      state.sessionName = ""
-      state.sessionDriver = ""
-      state.sessionConditions = ""
-      state.sessionSensors = []
-      state.sessionSensorGroups = []
-      state.isRunning = false
+      state.sessionName = '';
+      state.sessionDriver = '';
+      state.sessionConditions = '';
+      state.sessionSensors = [];
+      state.sessionSensorGroups = [];
+      state.isRunning = false;
     }
-  },
+  }
 });
 
 export const { getAllSessions, startSession, stopSession } = sessionSlice.actions;

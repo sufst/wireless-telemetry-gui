@@ -16,17 +16,17 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Avatar, Box, Typography, Link, InputLabel, Select } from "@material-ui/core";
+import { Avatar, Box, Typography, Link, InputLabel, Select } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { UserDepartment, UserPrivilege } from "types/models/user";
-import { useStyles } from "./styles";
+import { UserDepartment, UserPrivilege } from 'types/models/user';
+import { useStyles } from './styles';
 
 export const DepartmentSelect = (props: { department: UserDepartment, handleDepartmentChange: (event: any) => void }) => {
-   const classes = useStyles();
+  const classes = useStyles();
 
-   const { department, handleDepartmentChange } = props;
+  const { department, handleDepartmentChange } = props;
 
-   return (
+  return (
       <>
          <InputLabel htmlFor="department-select" className={classes.department_label}>Department</InputLabel>
          <Select
@@ -36,8 +36,8 @@ export const DepartmentSelect = (props: { department: UserDepartment, handleDepa
             className={classes.department_select}
             autoWidth={true}
             inputProps={{
-               name: 'department',
-               id: 'department-select',
+              name: 'department',
+              id: 'department-select'
             }}
          >
             <option value={'Electronics'}>Electronics</option>
@@ -48,15 +48,15 @@ export const DepartmentSelect = (props: { department: UserDepartment, handleDepa
             <option value={'Race Engineering'}>Race Engineering</option>
          </Select>
       </>
-   )
-}
+  );
+};
 
-export const PrivilegeSelect = (props: { privilege: UserPrivilege,  handlePrivilegeChange: (event: any) => void }) => {
-   const classes = useStyles(); 
+export const PrivilegeSelect = (props: { privilege: UserPrivilege, handlePrivilegeChange: (event: any) => void }) => {
+  const classes = useStyles();
 
-   const { privilege, handlePrivilegeChange } = props; 
+  const { privilege, handlePrivilegeChange } = props;
 
-   return (
+  return (
       <>
          <InputLabel htmlFor="privilege-select" className={classes.department_label}>Privilege Level</InputLabel>
          <Select
@@ -66,8 +66,8 @@ export const PrivilegeSelect = (props: { privilege: UserPrivilege,  handlePrivil
             className={classes.department_select}
             autoWidth={true}
             inputProps={{
-               name: 'privilege',
-               id: 'privilege-select',
+              name: 'privilege',
+              id: 'privilege-select'
             }}
          >
             <option value={'Admin'}>Admin</option>
@@ -75,14 +75,13 @@ export const PrivilegeSelect = (props: { privilege: UserPrivilege,  handlePrivil
             <option value={'Developer'}>Developer</option>
          </Select>
       </>
-   )
-}
-
+  );
+};
 
 export const RegisterHeader = () => {
-   const classes = useStyles();
+  const classes = useStyles();
 
-   return (
+  return (
       <>
          <Avatar className={classes.avatar}>
             <AccountCircleIcon />
@@ -91,11 +90,11 @@ export const RegisterHeader = () => {
             Please Enter the User Details
          </Typography>
       </>
-   )
-}
+  );
+};
 
 export const RegisterFooter = () => {
-   return (
+  return (
       <Box mt={4} >
          <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
@@ -106,5 +105,5 @@ export const RegisterFooter = () => {
             {'.'}
          </Typography>
       </Box>
-   );
-}
+  );
+};

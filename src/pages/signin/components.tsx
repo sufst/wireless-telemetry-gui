@@ -16,21 +16,21 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { 
-    Avatar,
-    Button,
-    TextField,
-    Link,
-    Box,
-    Typography
-} from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  TextField,
+  Link,
+  Box,
+  Typography
+} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {
-    useStyles 
-} from "./styles";
+  useStyles
+} from './styles';
 
 export const LoginFooter = () => {
-    return (
+  return (
        <Box mt={4} >
           <Typography variant="body2" color="textSecondary" align="center">
              {'Copyright © '}
@@ -41,13 +41,13 @@ export const LoginFooter = () => {
              {'.'}
           </Typography>
        </Box>
-    );
- }
- 
- export const LoginHeader = () => {
-    const classes = useStyles();
- 
-    return (
+  );
+};
+
+export const LoginHeader = () => {
+  const classes = useStyles();
+
+  return (
        <>
           <Avatar className={classes.avatar}>
              <LockOutlinedIcon className={classes.lockIcon}/>
@@ -56,12 +56,12 @@ export const LoginFooter = () => {
              Please Login In
           </Typography>
        </>
-    )
- }
- 
- export const UsernameField = () => {
-   return (
-      <TextField 
+  );
+};
+
+export const UsernameField = () => {
+  return (
+      <TextField
          variant="outlined"
          margin="normal"
          required
@@ -71,12 +71,12 @@ export const LoginFooter = () => {
          autoComplete="root"
          autoFocus
       />
-   );
- }
- 
- export const PasswordField = (props: { label: string, id: string }) => {
-    return (
-       <TextField 
+  );
+};
+
+export const PasswordField = (props: { label: string, id: string }) => {
+  return (
+       <TextField
           variant="outlined"
           margin="normal"
           required
@@ -86,14 +86,14 @@ export const LoginFooter = () => {
           id={props.id}
           autoComplete="current-password"
        />
-    );
- }
- 
-export const LoginButton = (props: { text: string }) => {
-   const classes = useStyles();
+  );
+};
 
-   return (
-      <Button 
+export const LoginButton = (props: { text: string }) => {
+  const classes = useStyles();
+
+  return (
+      <Button
          type="submit"
          fullWidth
          variant="contained"
@@ -102,5 +102,5 @@ export const LoginButton = (props: { text: string }) => {
       >
          {props.text}
       </Button>
-   );
-}
+  );
+};

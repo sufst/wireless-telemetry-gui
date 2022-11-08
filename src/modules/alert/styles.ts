@@ -16,11 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Styles 
-import { makeStyles } from "@material-ui/core";
+// Styles
+import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme) => ({
   alert: {
-    marginBottom: '2rem',
+    marginBottom: '2rem'
   }
 }));

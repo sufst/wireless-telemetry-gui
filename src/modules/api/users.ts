@@ -16,168 +16,161 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { url } from "config";
-import { UsersCreate, UsersGet, UsersGetResponse, UsersPatch } from "types/api/api";
+import { url } from 'config';
+import { UsersCreate, UsersGet, UsersGetResponse, UsersPatch } from 'types/api/api';
 
 /**
- * 
+ *
  * UsersCreate Request
- * 
+ *
  */
 const handleCreateUsers: UsersCreate = async (
-  username, 
-  password, 
-  privilege, 
-  department, 
-  meta, 
+  username,
+  password,
+  privilege,
+  department,
+  meta,
   accessToken
 ) => {
   const response = await fetch(`http://${url}/users/${username}`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken,
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + accessToken
     },
     body: JSON.stringify({
       password,
       privilege,
-      department, 
-      meta,
+      department,
+      meta
     })
-  })
+  });
 
   if (!response.ok) {
-    throw response.statusText; 
+    throw response.statusText;
   }
 
-  return response; 
-}
+  return response;
+};
 
 export const usersCreate: UsersCreate = async (
   username,
   password,
   privilege,
-  department, 
+  department,
   meta,
   accessToken
 ) => {
-
   try {
-    const response = await handleCreateUsers(username, password, privilege, department, meta, accessToken); 
-    
+    const response = await handleCreateUsers(username, password, privilege, department, meta, accessToken);
+
     if (response.status === 200) {
-      return true; 
+      return true;
     }
 
-    return false; 
-  } 
-  catch(statusText) {
+    return false;
+  } catch (statusText) {
     console.log('Error Creating User: ', statusText);
-    return false; 
+    return false;
   }
-
 };
 
 /**
- * 
+ *
  * UsersGet Request
- * 
+ *
  */
 const handleUsersGet: UsersGet = async (username, accessToken) => {
   const response = await fetch(`http://${url}/users/${username}`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken,
-    },
-  })
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + accessToken
+    }
+  });
 
   if (!response.ok) {
     throw response.statusText;
   }
 
   const data = await response.json();
-  return data;  
-}
- 
+  return data;
+};
+
 export const usersGet: UsersGet = async (username, accessToken) => {
   try {
-    const userResponse: UsersGetResponse = await handleUsersGet(username, accessToken); 
-    return userResponse; 
-  }
-  catch(statusText) {
+    const userResponse: UsersGetResponse = await handleUsersGet(username, accessToken);
+    return userResponse;
+  } catch (statusText) {
     console.log('Error in UsersGet: ', statusText);
-    return null; 
+    return null;
   }
 };
 
-
 /**
- * 
+ *
  * UsersPatch Request
  */
 const handleUsersPatch: UsersPatch = async (username, accessToken, fields) => {
   const response = await fetch(`http://${url}/users/${username}`, {
-    method: "PATCH",
+    method: 'PATCH',
     headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken,
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + accessToken
     },
-    body: JSON.stringify(fields),
-  })
+    body: JSON.stringify(fields)
+  });
 
   if (!response.ok) {
-    throw response.statusText; 
+    throw response.statusText;
   }
 
   return response;
-}
+};
 
 export const usersPatch: UsersPatch = async (username, accessToken, fields) => {
   try {
-    const response = await handleUsersPatch(username, accessToken, fields); 
+    const response = await handleUsersPatch(username, accessToken, fields);
 
     if (response.status === 200) {
-      return true; 
+      return true;
     }
 
-    return false; 
-  } 
-  catch(statusText) {
+    return false;
+  } catch (statusText) {
     console.log('Error in UsersPatch: ', statusText);
-    return false; 
+    return false;
   }
 };
 
 /**
- * 
+ *
  * GetAllUsers
- * 
+ *
  */
 const handleGetAllUsers = async (accessToken: string) => {
   const response = await fetch(`http://${url}/users`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken,
-    },
-  })
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + accessToken
+    }
+  });
 
-  if(!response.ok) {
-    throw response.statusText; 
+  if (!response.ok) {
+    throw response.statusText;
   }
 
-  const data = await response.json(); 
-  return data; 
-}
+  const data = await response.json();
+  return data;
+};
 
 export const fetchAllUsers = async (accessToken: string) => {
   try {
-    const result = await handleGetAllUsers(accessToken); 
+    const result = await handleGetAllUsers(accessToken);
     return result;
-  }
-  catch(statusText) {
+  } catch (statusText) {
     console.log('Error Fetching all users: ', statusText);
-    return null; 
+    return null;
   }
-}
+};

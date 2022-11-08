@@ -25,22 +25,22 @@ const privilegeToColors: PrivilegeToColors = {
   Anon: 'gray',
   Admin: 'red',
   Basic: 'gray',
-  Developer: 'green',
+  Developer: 'green'
 };
 
 const privilegeFont = (privilege?: UserPrivilege) => {
   if (privilege === 'Admin' || privilege === 'Developer') {
-    return 700; 
+    return 700;
   }
 
-  return 400; 
-}
+  return 400;
+};
 
 const getPrivilegeColor = (privilege?: UserPrivilege): PrivilegeColor => {
-  const priv: keyof PrivilegeToColors = privilege ?? 'Basic'; 
+  const priv: keyof PrivilegeToColors = privilege ?? 'Basic';
 
-  return privilegeToColors[priv]; 
-}
+  return privilegeToColors[priv];
+};
 
 export const subheaderStyle = (privilege?: UserPrivilege) => {
   return {
@@ -48,36 +48,36 @@ export const subheaderStyle = (privilege?: UserPrivilege) => {
       color: getPrivilegeColor(privilege),
       fontWeight: privilegeFont(privilege)
     }
-  }
-}
+  };
+};
 
 export const avatarStyle = (privilege?: UserPrivilege) => {
   return {
-    backgroundColor: getPrivilegeColor(privilege), 
+    backgroundColor: getPrivilegeColor(privilege),
     color: 'white'
-  }
-}
+  };
+};
 
 export const useStyles = makeStyles((theme) => ({
-   cardRoot: {
-     marginTop: '1em',
-     backgroundColor: '#292929'
-   },
-   btn: {
-      marginTop: '20px',
-      backgroundColor: 'red'
-   },
-   btn_register: {
-      marginTop: '20px',
-      marginLeft: '20px',
-      backgroundColor: 'green'
-   },
-   list: {
-     margin: '0px',
-     paddingBottom: '0px',
-     paddingTop: '0px'
-   },
-   line: {
-     marginTop: '20px'
-   },
+  cardRoot: {
+    marginTop: '1em',
+    backgroundColor: '#292929'
+  },
+  btn: {
+    marginTop: '20px',
+    backgroundColor: 'red'
+  },
+  btn_register: {
+    marginTop: '20px',
+    marginLeft: '20px',
+    backgroundColor: 'green'
+  },
+  list: {
+    margin: '0px',
+    paddingBottom: '0px',
+    paddingTop: '0px'
+  },
+  line: {
+    marginTop: '20px'
+  }
 }));

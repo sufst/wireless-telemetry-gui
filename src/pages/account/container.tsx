@@ -16,8 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Module Imports 
-import React from 'react'
+// Module Imports
+import React from 'react';
 
 // Material UI Imports
 import Card from '@material-ui/core/Card';
@@ -29,28 +29,28 @@ import Typography from '@material-ui/core/Typography';
 import { Button, Divider, List, ListItemText } from '@material-ui/core';
 import { UserState } from 'types/models/user';
 
-// Styles 
+// Styles
 import { avatarStyle, subheaderStyle, useStyles } from './styles';
 
-const AccountContainer = (props: { user: UserState, onLogoutClick: () => void, onRegisterNewUser: () => void}) => {
-   const classes = useStyles();
-   
-   const { onRegisterNewUser, onLogoutClick } = props;
+const AccountContainer = (props: { user: UserState, onLogoutClick: () => void, onRegisterNewUser: () => void }) => {
+  const classes = useStyles();
 
-   const user: UserState = props.user; 
+  const { onRegisterNewUser, onLogoutClick } = props;
 
-   const username = user.username; 
-   const privilege = user.privilege;
-   const department = user.department; 
-   const creation = user.creation; 
-   
-   // TODO: Remove force unwrapping here. Make it safer. 
-   const createdAt = new Date(creation!! * 1000).toLocaleString('en-GB', {day: 'numeric', month: 'numeric', year: 'numeric'});
+  const user: UserState = props.user;
 
-   const subheaderProps = subheaderStyle(privilege);
-   const avatarColorStyle = avatarStyle(privilege);
+  const username = user.username;
+  const privilege = user.privilege;
+  const department = user.department;
+  const creation = user.creation;
 
-   return (
+  // TODO: Remove force unwrapping here. Make it safer.
+  const createdAt = new Date(creation! * 1000).toLocaleString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
+
+  const subheaderProps = subheaderStyle(privilege);
+  const avatarColorStyle = avatarStyle(privilege);
+
+  return (
       <Grid
          container
          spacing={0}
@@ -89,9 +89,9 @@ const AccountContainer = (props: { user: UserState, onLogoutClick: () => void, o
                   </Button>
                </CardContent>
             </Card>
-         </Grid>      
+         </Grid>
       </Grid>
-   )
-}
+  );
+};
 
-export default AccountContainer
+export default AccountContainer;

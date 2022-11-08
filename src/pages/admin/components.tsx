@@ -17,31 +17,31 @@
 */
 
 import { UserState } from 'types/models/user';
-import { useStyles, getColorForPrivelege } from "./styles";
-import { v4 }from 'uuid';
+import { useStyles, getColorForPrivelege } from './styles';
+import { v4 } from 'uuid';
 
-import { 
-   Table,
-   TableBody,
-   TableCell,
-   TableContainer,
-   TableHead,
-   TableRow,
-   Paper,
-   Avatar,
-   Grid,
-   Typography,
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Avatar,
+  Grid,
+  Typography
 } from '@material-ui/core';
 
-export const AdminPanelTable = (props: { users: UserState[]}) => {
-   const classes = useStyles(); 
+export const AdminPanelTable = (props: { users: UserState[] }) => {
+  const classes = useStyles();
 
-   const users = props.users; 
-   
-   return (
+  const users = props.users;
+
+  return (
       <TableContainer component={Paper} className={classes.tableContainer}>
          <Table className={classes.table} aria-label="simple table">
-            <AdminPanelTableHead /> 
+            <AdminPanelTableHead />
             <TableBody>
                {users.map((user) => (
                   <AdminPanelTableRow user={user} key={v4()}/>
@@ -49,18 +49,18 @@ export const AdminPanelTable = (props: { users: UserState[]}) => {
             </TableBody>
          </Table>
       </TableContainer>
-   )
-}
+  );
+};
 
 const AdminPanelTableRow = (props: { user: UserState }) => {
-   const classes = useStyles(); 
+  const classes = useStyles();
 
-   const user = props.user; 
+  const user = props.user;
 
-   // TODO: Remove force unwrapping here. Make it safer. 
-   const createdAt = new Date(user.creation!! * 1000).toLocaleString('en-GB', {day: 'numeric', month: 'numeric', year: 'numeric'});
+  // TODO: Remove force unwrapping here. Make it safer.
+  const createdAt = new Date(user.creation! * 1000).toLocaleString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
 
-   return (
+  return (
       <TableRow>
          <TableCell>
             <Grid container>
@@ -79,8 +79,8 @@ const AdminPanelTableRow = (props: { user: UserState }) => {
 
          <TableCell>
             <div style={{
-               color: getColorForPrivelege(user.privilege!!),
-               fontWeight: 'bold'
+              color: getColorForPrivelege(user.privilege!),
+              fontWeight: 'bold'
             }}>{user.privilege}</div>
          </TableCell>
 
@@ -88,13 +88,13 @@ const AdminPanelTableRow = (props: { user: UserState }) => {
             <div className={classes.createdAt}>{createdAt}</div>
          </TableCell>
       </TableRow>
-   )
-}
+  );
+};
 
 const AdminPanelTableHead = () => {
-   const classes = useStyles(); 
+  const classes = useStyles();
 
-   return (
+  return (
       <TableHead>
          <TableRow>
             <TableCell className={classes.tableHeaderCell}>Username</TableCell>
@@ -103,5 +103,5 @@ const AdminPanelTableHead = () => {
             <TableCell className={classes.tableHeaderCell}>Created At</TableCell>
          </TableRow>
       </TableHead>
-   )
-}
+  );
+};

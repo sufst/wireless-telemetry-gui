@@ -25,38 +25,38 @@ import { useDispatch } from 'react-redux';
 import { loginUser } from 'redux/slices/user';
 import { LoginHeader, LoginFooter, LoginButton, UsernameField, PasswordField } from './components';
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
 const LoginContainer = () => {
-    const classes = useStyles();
- 
-    const dispatch = useDispatch(); 
- 
-    const onLoginSubmit = useCallback((event) => {
-       event.preventDefault();
- 
-       let username = event.target.username.value;
-       let password = event.target.password.value;
- 
-       dispatch(loginUser( { username, password } ));
-    }, [dispatch]);
- 
-    return (
+  const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  const onLoginSubmit = useCallback((event) => {
+    event.preventDefault();
+
+    const username = event.target.username.value;
+    const password = event.target.password.value;
+
+    dispatch(loginUser({ username, password }));
+  }, [dispatch]);
+
+  return (
       <Container component="main" maxWidth="xs">
          <CssBaseline />
          <div className={classes.paper}>
             <LoginHeader />
             <form className={classes.form} noValidate onSubmit={onLoginSubmit}>
-            <UsernameField /> 
+            <UsernameField />
             <PasswordField label={'Password'} id={'password'}/>
             <div className={classes.btnContainer}>
-               <LoginButton text='Login' /> 
+               <LoginButton text='Login' />
             </div>
             </form>
          </div>
          <LoginFooter />
       </Container>
-    );
- }
- 
- export default LoginContainer;
+  );
+};
+
+export default LoginContainer;

@@ -1,0 +1,549 @@
+
+> sufst-wireless-telemetry-gui@0.1.0 lint
+> eslint './src/**/*.{ts,tsx}' --fix
+
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/app/containers.tsx
+   43:25  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   48:22  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   63:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   64:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   65:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   67:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   68:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   69:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   70:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   73:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   74:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   75:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   76:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   79:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   80:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   81:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   82:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   85:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   86:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   87:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   88:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   91:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   92:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   93:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   94:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   97:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   98:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  104:29  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  106:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  107:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  108:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/app/index.tsx
+  26:20  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  28:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  29:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  30:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/modules/alert/alert.tsx
+  31:15  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  33:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/modules/alert/containers.tsx
+  30:24  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  33:23  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  42:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  43:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  49:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/modules/api/login.ts
+  34:11  error  Expected an error object to be thrown  @typescript-eslint/no-throw-literal
+  41:26  error  Missing return type on function        @typescript-eslint/explicit-function-return-type
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/modules/api/sessions.ts
+   33:22  error  Operands of '+' operation must either be both strings or both numbers. Consider using a template literal  @typescript-eslint/restrict-plus-operands
+   42:11  error  Expected an error object to be thrown                                                                     @typescript-eslint/no-throw-literal
+   49:30  error  Missing return type on function                                                                           @typescript-eslint/explicit-function-return-type
+   69:27  error  Missing return type on function                                                                           @typescript-eslint/explicit-function-return-type
+   82:11  error  Expected an error object to be thrown                                                                     @typescript-eslint/no-throw-literal
+  101:30  error  Missing return type on function                                                                           @typescript-eslint/explicit-function-return-type
+  110:11  error  Expected an error object to be thrown                                                                     @typescript-eslint/no-throw-literal
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/modules/api/user.ts
+  33:11  error  Expected an error object to be thrown  @typescript-eslint/no-throw-literal
+  40:24  error  Missing return type on function        @typescript-eslint/explicit-function-return-type
+  81:11  error  Expected an error object to be thrown  @typescript-eslint/no-throw-literal
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/modules/api/users.ts
+   50:11  error  Expected an error object to be thrown  @typescript-eslint/no-throw-literal
+   93:11  error  Expected an error object to be thrown  @typescript-eslint/no-throw-literal
+  125:11  error  Expected an error object to be thrown  @typescript-eslint/no-throw-literal
+  151:27  error  Missing return type on function        @typescript-eslint/explicit-function-return-type
+  161:11  error  Expected an error object to be thrown  @typescript-eslint/no-throw-literal
+  168:30  error  Missing return type on function        @typescript-eslint/explicit-function-return-type
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/modules/navigation/appbar.tsx
+  41:26  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/modules/navigation/navigation.tsx
+  35:16  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  39:22  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/modules/navigation/sidebar.tsx
+   50:20  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   62:13  error  Missing "key" prop for element in array  react/jsx-key
+   63:13  error  Missing "key" prop for element in array  react/jsx-key
+   64:13  error  Missing "key" prop for element in array  react/jsx-key
+   65:13  error  Missing "key" prop for element in array  react/jsx-key
+   66:13  error  Missing "key" prop for element in array  react/jsx-key
+   67:13  error  Missing "key" prop for element in array  react/jsx-key
+   68:13  error  Missing "key" prop for element in array  react/jsx-key
+   74:13  error  Missing "key" prop for element in array  react/jsx-key
+   75:13  error  Missing "key" prop for element in array  react/jsx-key
+   76:13  error  Missing "key" prop for element in array  react/jsx-key
+  109:22  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/modules/realtimegraphs/components.tsx
+  23:44  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  27:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  28:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  36:39  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  40:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  46:32  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  50:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  56:28  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  68:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  79:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  80:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  81:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  83:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  84:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  86:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/modules/realtimegraphs/realtimegraphs.tsx
+   30:36   error  Missing return type on function                                                                           @typescript-eslint/explicit-function-return-type
+   31:28   error  Missing return type on function                                                                           @typescript-eslint/explicit-function-return-type
+   38:80   error  Unexpected any value in conditional. An explicit comparison or type cast is required                      @typescript-eslint/strict-boolean-expressions
+   45:9    error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+   46:13   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+   47:17   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+   49:13   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+   50:17   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+   65:18   error  Operands of '+' operation must either be both strings or both numbers. Consider using a template literal  @typescript-eslint/restrict-plus-operands
+   70:30   error  Missing return type on function                                                                           @typescript-eslint/explicit-function-return-type
+   71:28   error  Missing return type on function                                                                           @typescript-eslint/explicit-function-return-type
+   72:28   error  Missing return type on function                                                                           @typescript-eslint/explicit-function-return-type
+   82:22   error  Operands of '+' operation must either be both strings or both numbers. Consider using a template literal  @typescript-eslint/restrict-plus-operands
+   83:28   error  Operands of '+' operation with any is possible only with string, number, bigint or any                    @typescript-eslint/restrict-plus-operands
+   84:20   error  Operands of '+' operation must either be both strings or both numbers. Consider using a template literal  @typescript-eslint/restrict-plus-operands
+   89:9    error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+   90:13   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+   91:41   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+   91:125  error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+   93:13   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+   94:17   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+  109:30   error  Missing return type on function                                                                           @typescript-eslint/explicit-function-return-type
+  110:28   error  Missing return type on function                                                                           @typescript-eslint/explicit-function-return-type
+  116:9    error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+  117:13   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+  118:17   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+  119:21   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+  122:17   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+  123:22   error  Unexpected any value in conditional. An explicit comparison or type cast is required                      @typescript-eslint/strict-boolean-expressions
+  123:41   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+  123:96   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+  130:39   error  Missing return type on function                                                                           @typescript-eslint/explicit-function-return-type
+  131:25   error  Missing return type on function                                                                           @typescript-eslint/explicit-function-return-type
+  137:15   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+  138:21   error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+  146:9    error  'React' must be in scope when using JSX                                                                   react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/account/container.tsx
+  35:26  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  48:30  error  Forbidden non-null assertion     @typescript-eslint/no-non-null-assertion
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/account/index.tsx
+  32:17  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  36:22  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/account/styles.ts
+  31:23  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  45:31  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  54:28  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/admin/components.tsx
+   36:32  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   42:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   43:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   44:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   45:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   47:19  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   55:28  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   61:30  error  Forbidden non-null assertion             @typescript-eslint/no-non-null-assertion
+   64:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   65:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   66:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   67:19  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   68:22  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   70:19  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   71:22  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   76:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   77:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   80:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   81:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   82:43  error  Forbidden non-null assertion             @typescript-eslint/no-non-null-assertion
+   87:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   88:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   94:29  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   98:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   99:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  100:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  101:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  102:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  103:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/admin/containers.tsx
+  23:36  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  27:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  28:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  29:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/admin/index.tsx
+  27:15  error  Missing return type on function                                                                                                                                     @typescript-eslint/explicit-function-return-type
+  30:22  error  Missing return type on function                                                                                                                                     @typescript-eslint/explicit-function-return-type
+  53:5   error  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  57:7   error  'React' must be in scope when using JSX                                                                                                                             react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/admin/styles.ts
+  22:37  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/dashboard/dash/components.tsx
+   29:31  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   40:20  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   50:23  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   63:24  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   76:24  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   97:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   98:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  101:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  101:37  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  107:28  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  121:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  121:62  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  125:32  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  128:27  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  135:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  136:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  137:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  137:43  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  137:48  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  143:28  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  149:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  150:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  151:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  152:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  153:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  154:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  155:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  156:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  157:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  163:28  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  168:27  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  172:29  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  177:22  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  183:28  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  244:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  245:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  246:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  247:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  248:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  250:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  251:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  255:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  256:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  261:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  268:27  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  282:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  285:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  285:25  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/dashboard/dash/container.tsx
+  27:14  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  37:24  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  42:28  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  46:23  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  49:26  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  52:27  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  55:27  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  71:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  72:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  73:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  74:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  75:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  76:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  77:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  78:21  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  81:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  82:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  84:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  85:17  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/dashboard/header/containers.tsx
+  33:32  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  42:24  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  66:18  error  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/dashboard/index.tsx
+  21:26  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  23:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/dashboard/session/components.tsx
+   43:37  error  Missing return type on function                                  @typescript-eslint/explicit-function-return-type
+   47:9   error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+   48:13  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+   48:82  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+   53:29  error  Missing return type on function                                  @typescript-eslint/explicit-function-return-type
+   57:9   error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+   58:13  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+   63:36  error  Missing return type on function                                  @typescript-eslint/explicit-function-return-type
+  122:9   error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  123:13  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  124:13  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  125:17  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  126:21  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  135:21  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  143:21  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  152:17  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  160:25  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  161:64  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  166:21  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  170:17  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  171:21  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  172:25  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  176:21  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  177:25  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  187:30  error  Missing return type on function                                  @typescript-eslint/explicit-function-return-type
+  190:13  error  Missing "key" prop for element in iterator                       react/jsx-key
+  190:13  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  191:29  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  204:9   error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  205:13  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  211:29  error  Missing return type on function                                  @typescript-eslint/explicit-function-return-type
+  223:16  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  225:13  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  226:17  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  232:9   error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  233:13  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  234:13  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  235:17  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  236:21  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  237:21  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  238:25  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  239:25  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  240:25  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  241:25  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  244:21  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  246:29  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  247:29  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  250:29  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  251:29  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+  252:29  error  'React' must be in scope when using JSX                          react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/dashboard/session/containers.tsx
+   31:33  error  Missing return type on function                                                                                                                                     @typescript-eslint/explicit-function-return-type
+   37:29  error  Missing return type on function                                                                                                                                     @typescript-eslint/explicit-function-return-type
+   41:31  error  Missing return type on function                                                                                                                                     @typescript-eslint/explicit-function-return-type
+   45:30  error  Missing return type on function                                                                                                                                     @typescript-eslint/explicit-function-return-type
+   49:29  error  Missing return type on function                                                                                                                                     @typescript-eslint/explicit-function-return-type
+   53:27  error  Missing return type on function                                                                                                                                     @typescript-eslint/explicit-function-return-type
+   59:24  error  Missing return type on function                                                                                                                                     @typescript-eslint/explicit-function-return-type
+   66:22  error  Missing return type on function                                                                                                                                     @typescript-eslint/explicit-function-return-type
+   77:5   error  Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator  @typescript-eslint/no-floating-promises
+  119:9   error  'React' must be in scope when using JSX                                                                                                                             react/react-in-jsx-scope
+  120:13  error  'React' must be in scope when using JSX                                                                                                                             react/react-in-jsx-scope
+  121:17  error  'React' must be in scope when using JSX                                                                                                                             react/react-in-jsx-scope
+  123:13  error  'React' must be in scope when using JSX                                                                                                                             react/react-in-jsx-scope
+  124:17  error  'React' must be in scope when using JSX                                                                                                                             react/react-in-jsx-scope
+  132:13  error  'React' must be in scope when using JSX                                                                                                                             react/react-in-jsx-scope
+  141:17  error  'React' must be in scope when using JSX                                                                                                                             react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/registration/components.tsx
+   24:33  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   30:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   31:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   32:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   43:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   44:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   45:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   46:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   47:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   48:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   54:32  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   60:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   61:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   62:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   73:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   74:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   75:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   81:31  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   85:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   86:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   87:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   89:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   96:31  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+   98:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+   99:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  101:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/registration/containers.tsx
+  30:34  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  72:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  73:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  74:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  75:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  76:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  77:16  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  78:16  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  79:16  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  80:16  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  81:16  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  82:16  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  83:19  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  87:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/registration/index.tsx
+  30:25  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  34:22  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  54:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  55:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/signin/components.tsx
+  32:28  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  34:8   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  35:11  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  37:14  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  47:28  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  51:8   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  52:11  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  53:14  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  55:11  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  62:30  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  64:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  77:30  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  79:8   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  92:28  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  96:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/signin/containers.tsx
+  30:24  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  45:7   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  46:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  47:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  48:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  49:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  50:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  51:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  52:13  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  53:16  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+  57:10  error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/pages/signin/index.tsx
+  21:23  error  Missing return type on function          @typescript-eslint/explicit-function-return-type
+  23:9   error  'React' must be in scope when using JSX  react/react-in-jsx-scope
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/react-app-env.d.ts
+  1:1  error  Do not use a triple slash reference for react-scripts, use `import` style instead  @typescript-eslint/triple-slash-reference
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/redux/middleware/sessions.ts
+  27:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  28:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  29:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  30:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  31:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  33:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  35:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  37:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  38:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  39:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  40:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  42:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  44:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  44:11  error  Unexpected any value in conditional. An explicit comparison or type cast is required  @typescript-eslint/strict-boolean-expressions
+  45:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  46:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  47:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  48:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  49:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  50:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  52:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  53:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  55:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  56:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  57:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  59:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  61:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  63:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  63:11  error  Unexpected any value in conditional. An explicit comparison or type cast is required  @typescript-eslint/strict-boolean-expressions
+  64:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  65:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  66:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  67:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  68:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  69:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  71:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  72:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  74:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  75:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+
+/home/ethanmanj/Dev/SUFST/wireless-telemetry-gui/src/redux/middleware/user.ts
+   37:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   38:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   39:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   41:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   43:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   44:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   45:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   46:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   47:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   49:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   49:84  error  Invalid type "any" of template literal expression                                     @typescript-eslint/restrict-template-expressions
+   51:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   53:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   54:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   55:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   57:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   58:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   59:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   61:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   62:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   63:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   64:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   65:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   67:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   69:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   70:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   71:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   72:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   73:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   74:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   76:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   77:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   79:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   80:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   81:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   83:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   85:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   85:11  error  Unexpected any value in conditional. An explicit comparison or type cast is required  @typescript-eslint/strict-boolean-expressions
+   86:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   88:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   89:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   90:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   92:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   93:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   94:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   96:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   97:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   98:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+   99:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  101:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+  102:1   error  Irregular whitespace not allowed                                                      no-irregular-whitespace
+
+✖ 472 problems (472 errors, 0 warnings)
+

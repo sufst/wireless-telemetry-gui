@@ -16,10 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { DashboardHeader } from "./header/containers"
+import { DashboardHeader } from './header/containers';
 
 export const Dashboard = () => {
-    return (
+  return (
         <DashboardHeader/>
-    );
-}
+  );
+};

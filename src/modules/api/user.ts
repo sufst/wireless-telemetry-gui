@@ -16,88 +16,85 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { url } from "config";
-import { UserGet, UserPatch } from "types/api/api";
-import { SetUserAction } from "types/models/actions";
+import { url } from 'config';
+import { UserGet, UserPatch } from 'types/api/api';
+import { SetUserAction } from 'types/models/actions';
 
 const handleGetUser: UserGet = async (accessToken) => {
   const response = await fetch(`http://${url}/user`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken,
-    },
-  })
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + accessToken
+    }
+  });
 
   if (!response.ok) {
-    throw response.statusText; 
+    throw response.statusText;
   }
 
-  const data = await response.json(); 
-  return data; 
-}
+  const data = await response.json();
+  return data;
+};
 
 export const getUser = async (username: string, accessToken: string) => {
-
   const user: SetUserAction = {
     username,
     accessToken,
     creation: new Date().valueOf() / 1000,
-    privilege: "Anon",
-    department: "NON SPECIFIED",
-    meta: {},
+    privilege: 'Anon',
+    department: 'NON SPECIFIED',
+    meta: {}
   };
 
   if (username === 'anonymous') {
-    return user; 
+    return user;
   }
 
   try {
-    const data = await handleGetUser(accessToken); 
-        
-    user.username = data.username
-    user.creation = data.creation
-    user.privilege = data.privilege
-    user.department = data.department
-    user.meta = JSON.parse(data.meta)
-  } 
-  catch(statusText) {
+    const data = await handleGetUser(accessToken);
+
+    user.username = data.username;
+    user.creation = data.creation;
+    user.privilege = data.privilege;
+    user.department = data.department;
+    user.meta = JSON.parse(data.meta);
+  } catch (statusText) {
     console.error('Error Getting User:', statusText);
-    return null; 
+    return null;
   }
 
-  return user; 
-}
+  return user;
+};
 
 const handleUserPatch: UserPatch = async (accessToken, fields) => {
   const response = await fetch(`http://${url}/user`, {
-    method: "PATCH",
+    method: 'PATCH',
     headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken,
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + accessToken
     },
-    body: JSON.stringify(fields),
-  })
+    body: JSON.stringify(fields)
+  });
 
   if (!response.ok) {
-    throw response.statusText; 
+    throw response.statusText;
   }
 
-  return response; 
-}
+  return response;
+};
 
 export const userPatch: UserPatch = async (accessToken, fields) => {
   try {
-    const response = await handleUserPatch(accessToken, fields); 
+    const response = await handleUserPatch(accessToken, fields);
 
     if (response.status === 200) {
-      return true; 
-    } 
+      return true;
+    }
 
-    return false; 
-  } 
-  catch(statusText) {
+    return false;
+  } catch (statusText) {
     console.log('Error in User Patch: ', statusText);
-    return false; 
-  } 
-}; 
+    return false;
+  }
+};

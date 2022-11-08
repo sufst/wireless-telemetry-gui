@@ -16,20 +16,18 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Middleware } from 'redux'
-import { removeAlert } from "../slices/alert";
+import { Middleware } from 'redux';
+import { removeAlert } from '../slices/alert';
 
-// any should be rootState but I can't work out how to fix the circular dependancy issue.... 
+// any should be rootState but I can't work out how to fix the circular dependancy issue....
 export const alertMiddleware: Middleware<{}, any> = storeAPI => next => action => {
+  if (action.type === 'alert/showAlert') {
+    setTimeout(() => {
+      storeAPI.dispatch(removeAlert());
+    }, action.payload.timeout);
 
-    if (action.type === 'alert/showAlert') {
-        
-        setTimeout(() => {
-            storeAPI.dispatch(removeAlert())
-        }, action.payload.timeout)
+    return next(action);
+  }
 
-        return next(action)
-    }
- 
-   return next(action)
- }
+  return next(action);
+};

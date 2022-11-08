@@ -17,11 +17,11 @@
 */
 
 // Module Imports
-import React, { useCallback, useMemo } from 'react'
-import { useHistory } from "react-router";
+import React, { useCallback, useMemo } from 'react';
+import { useHistory } from 'react-router';
 import clsx from 'clsx';
 
-// Material UI Imports 
+// Material UI Imports
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -33,9 +33,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import { useTheme } from '@material-ui/core/styles';
-import { useStyles } from './styles'
+import { useStyles } from './styles';
 
-// Material UI Icons Imports 
+// Material UI Icons Imports
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SpeedIcon from '@material-ui/icons/Speed';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -47,83 +47,83 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
-const AppSideBar = (props: { handleDrawerClose: () => void , open: boolean }) => {
-    const classes = useStyles();
-    const theme = useTheme();
+const AppSideBar = (props: { handleDrawerClose: () => void, open: boolean }) => {
+  const classes = useStyles();
+  const theme = useTheme();
 
-    const history = useHistory();
+  const history = useHistory();
 
-    const actionTitles = ['Account', 'Dashboard', 'Session', 'Admin', 'Database', 'Feed', 'Settings']
+  const actionTitles = ['Account', 'Dashboard', 'Session', 'Admin', 'Database', 'Feed', 'Settings'];
 
-    const socialTitles = ['Instagram', 'Twitter', 'GitHub'] 
+  const socialTitles = ['Instagram', 'Twitter', 'GitHub'];
 
-    const actionIcons = useMemo(() => {
-        return [
-            <AccountCircleIcon />, 
+  const actionIcons = useMemo(() => {
+    return [
+            <AccountCircleIcon />,
             <SpeedIcon />,
             <AccessTimeIcon />,
             <SupervisorAccountIcon />,
             <StorageIcon />,
             <RssFeedIcon />,
-            <SettingsIcon /> 
-        ]
-    }, []);
+            <SettingsIcon />
+    ];
+  }, []);
 
-    const socialIcons = useMemo(() => {
-        return [
+  const socialIcons = useMemo(() => {
+    return [
             <InstagramIcon/>,
             <TwitterIcon />,
-            <GitHubIcon />,
-        ]
-    }, []);
+            <GitHubIcon />
+    ];
+  }, []);
 
-    const handleActionIconClicked = useMemo(() => [
-        () => history.push('/account'),
-        () =>  history.push('/dashboard'),
-        () =>  history.push('/dashboard'),
-        () =>  history.push('/admin'),
-        () =>  history.push('/dashboard'),
-        () =>  history.push('/dashboard'),
-        () =>  history.push('/dashboard'),
-        
-    ], [history])
+  const handleActionIconClicked = useMemo(() => [
+    () => history.push('/account'),
+    () => history.push('/dashboard'),
+    () => history.push('/dashboard'),
+    () => history.push('/admin'),
+    () => history.push('/dashboard'),
+    () => history.push('/dashboard'),
+    () => history.push('/dashboard')
 
-    const handleSocialIconClicked = useMemo(() => [
-        () => openSocial('https://www.instagram.com/sufst'),
-        () => openSocial('https://twitter.com/sufst'),
-        () => openSocial('https://github.com/orgs/sufst')
-    ], [])
+  ], [history]);
 
-    const onIconClick = useCallback((index) => {
-        if (index < handleActionIconClicked.length ) {
-            handleActionIconClicked[index]()
-        }
-    }, [handleActionIconClicked])
+  const handleSocialIconClicked = useMemo(() => [
+    () => openSocial('https://www.instagram.com/sufst'),
+    () => openSocial('https://twitter.com/sufst'),
+    () => openSocial('https://github.com/orgs/sufst')
+  ], []);
 
-    const onSocialClick = useCallback((index) => {
-        if (index < handleSocialIconClicked.length ) {
-            handleSocialIconClicked[index]()
-        }
-    }, [handleSocialIconClicked])
-
-    const openSocial = (url: string) => {
-        const win = window.open(url, '_blank');
-        win?.focus(); 
+  const onIconClick = useCallback((index) => {
+    if (index < handleActionIconClicked.length) {
+      handleActionIconClicked[index]();
     }
+  }, [handleActionIconClicked]);
 
-    return (
+  const onSocialClick = useCallback((index) => {
+    if (index < handleSocialIconClicked.length) {
+      handleSocialIconClicked[index]();
+    }
+  }, [handleSocialIconClicked]);
+
+  const openSocial = (url: string) => {
+    const win = window.open(url, '_blank');
+    win?.focus();
+  };
+
+  return (
       <div>
          <Drawer
             variant="permanent"
             className={clsx(classes.drawer, {
-            [classes.drawerOpen]: props.open,
-            [classes.drawerClose]: !props.open,
+              [classes.drawerOpen]: props.open,
+              [classes.drawerClose]: !props.open
             })}
             classes={{
-            paper: clsx({
-               [classes.drawerOpen]: props.open,
-               [classes.drawerClose]: !props.open,
-            }),
+              paper: clsx({
+                [classes.drawerOpen]: props.open,
+                [classes.drawerClose]: !props.open
+              })
             }}
          >
             <div className={classes.toolbar}>
@@ -155,7 +155,7 @@ const AppSideBar = (props: { handleDrawerClose: () => void , open: boolean }) =>
             </List>
          </Drawer>
       </div>
-   )
-}
+  );
+};
 
-export default AppSideBar; 
+export default AppSideBar;

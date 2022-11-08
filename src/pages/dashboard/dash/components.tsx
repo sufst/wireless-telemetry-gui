@@ -16,149 +16,136 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Box, Grid } from "@material-ui/core"
-import { createAlert } from "modules/alert/alert";
-import { useCallback, useEffect } from "react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { showAlert } from "redux/slices/alert";
-import { RootState } from "redux/store";
-import { SensorData } from "types/models/sensor";
-import { DashStatusItemColor, DashStatusItemText } from "types/models/ui-types";
-import { useStyles } from "./styles"
+import { Box, Grid } from '@material-ui/core';
+import { createAlert } from 'modules/alert/alert';
+import { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { showAlert } from 'redux/slices/alert';
+import { RootState } from 'redux/store';
+import { SensorData } from 'types/models/sensor';
+import { DashStatusItemColor, DashStatusItemText } from 'types/models/ui-types';
+import { useStyles } from './styles';
 
 export const DashStatusItem = (props: { name: string, data: SensorData[] }) => {
-    const classes = useStyles(); 
+  const classes = useStyles();
 
-    const name = props.name; 
-    const data = props.data ?? [];
-    
-    const lastValue = data[data?.length-1]?.value; 
+  const name = props.name;
+  const data = props.data ?? [];
 
-    let background: DashStatusItemColor = 'rgba(0, 0, 0, 0.5)'
-    let text: DashStatusItemText = ' '; 
+  const lastValue = data[data?.length - 1]?.value;
 
-    const checkECU = () => {
-        if (lastValue === 1) {
-            text = 'CONNECTED';
-            background = 'green';
-        } 
-        else if (lastValue === 0) {
-            text = 'DISCONNECTED';
-            background = 'red';
-        }
-    };
+  let background: DashStatusItemColor = 'rgba(0, 0, 0, 0.5)';
+  let text: DashStatusItemText = ' ';
 
-    const checkEngine = () => {
-        if (lastValue === 1) {
-            text = 'INACTIVE';
-            background = 'red';
-        } 
-        else if (lastValue === 2) {
-            text = 'IDLE';
-            background = 'orange';
-        } 
-        else if (lastValue === 3) {
-            text = 'ACTIVE';
-            background = 'green';
-        }
+  const checkECU = () => {
+    if (lastValue === 1) {
+      text = 'CONNECTED';
+      background = 'green';
+    } else if (lastValue === 0) {
+      text = 'DISCONNECTED';
+      background = 'red';
     }
+  };
 
-    const checkBattery = () => {
-        if (lastValue === 1) {
-            text = 'DISCONNECTED';
-            background = 'grey';
-        } 
-        else if (lastValue === 2) {
-            text = 'LOW';
-            background = 'red';
-        } 
-        else if (lastValue === 3) {
-            text = 'HEALTHY';
-            background = 'green';
-        }
+  const checkEngine = () => {
+    if (lastValue === 1) {
+      text = 'INACTIVE';
+      background = 'red';
+    } else if (lastValue === 2) {
+      text = 'IDLE';
+      background = 'orange';
+    } else if (lastValue === 3) {
+      text = 'ACTIVE';
+      background = 'green';
     }
+  };
 
-    const checkLogging = () => {
-        if (lastValue === 0) {
-            text = 'INACTIVE';
-            background = 'red';
-        } 
-        else if (lastValue === 1) {
-            text = 'ACTIVE';
-            background = 'green';
-        }
+  const checkBattery = () => {
+    if (lastValue === 1) {
+      text = 'DISCONNECTED';
+      background = 'grey';
+    } else if (lastValue === 2) {
+      text = 'LOW';
+      background = 'red';
+    } else if (lastValue === 3) {
+      text = 'HEALTHY';
+      background = 'green';
     }
+  };
 
-    if (name === 'ECU') {
-        checkECU(); 
-    } 
-    else if (name === 'ENGINE') {
-        checkEngine(); 
+  const checkLogging = () => {
+    if (lastValue === 0) {
+      text = 'INACTIVE';
+      background = 'red';
+    } else if (lastValue === 1) {
+      text = 'ACTIVE';
+      background = 'green';
     }
-    else if (name === 'BATTERY') {
-        checkBattery(); 
-    }
-    else if (name === 'LOGGING') {
-        checkLogging(); 
-    }
-    
-    return (
+  };
+
+  if (name === 'ECU') {
+    checkECU();
+  } else if (name === 'ENGINE') {
+    checkEngine();
+  } else if (name === 'BATTERY') {
+    checkBattery();
+  } else if (name === 'LOGGING') {
+    checkLogging();
+  }
+
+  return (
         <Grid item lg={3} xs={12} sm={6} className={classes.item}>
             <Box className={classes.box} style={{
-                backgroundColor: background
+              backgroundColor: background
             }}>
                 <span>{props.name}: <span className={classes.status}>{text}</span></span>
             </Box>
         </Grid>
-    )
-}
+  );
+};
 
 export const CurrentTime = () => {
+  const [time, setTime] = useState(new Date());
 
-    let [time, setTime] = useState(new Date()); 
+  const classes = useStyles();
 
-    const classes = useStyles(); 
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000);
 
-    useEffect(() => {
-        let timer = setInterval(() => setTime(new Date()), 1000)
-        
-        return function cleanup() {
-            clearInterval(timer);
-        }
-    }, [time])
+    return function cleanup () {
+      clearInterval(timer);
+    };
+  }, [time]);
 
-
-    return (
+  return (
         <p className={classes.currentTimeText}>Current Time: <span className={classes.time}>{time.toLocaleTimeString()}</span></p>
-    )
-}
+  );
+};
 
 export const DashSensorsItem = (props: { name: string }) => {
-    const classes = useStyles(); 
+  const classes = useStyles();
 
-    const sensorsSelector = (state: RootState) => state.sensors.sensors[props.name]; 
-    const sensor = useSelector(sensorsSelector); 
+  const sensorsSelector = (state: RootState) => state.sensors.sensors[props.name];
+  const sensor = useSelector(sensorsSelector);
 
-    const data = sensor?.data ?? []; 
-    const lastValue = data[data?.length-1]?.value;  
-    
-    return (
+  const data = sensor?.data ?? [];
+  const lastValue = data[data?.length - 1]?.value;
+
+  return (
         <Grid item xs={2}>
             <Box className={classes.sensorBox}>
                 <div>{sensor?.meta?.name}:<br/><span className={classes.sensorLastValue}>{lastValue} </span>{sensor?.meta?.units}</div>
             </Box>
         </Grid>
-    )
-}
+  );
+};
 
 export const DashSensors = () => {
+  const classes = useStyles();
 
-    const classes = useStyles(); 
+  const names = ['rpm', 'water_temp_c', 'tps_perc', 'battery_mv', 'speed_kph', 'fuel_flow'];
 
-    const names = ['rpm', 'water_temp_c', 'tps_perc', 'battery_mv', 'speed_kph', 'fuel_flow']
-    
-    return (
+  return (
         <>
             <p className={classes.sensorsText}>Sensors</p>
             <Grid container className={classes.gridContainer} spacing={2}>
@@ -170,91 +157,90 @@ export const DashSensors = () => {
                 <DashSensorsItem name={names[5]}/>
             </Grid>
         </>
-    )
-}
+  );
+};
 
 export const DashSession = (props: { handleStart: (event: any, name: string) => void, handleStop: (event: any, name: string) => void }) => {
-    
-    const classes = useStyles(); 
-    const dispatch = useDispatch(); 
+  const classes = useStyles();
+  const dispatch = useDispatch();
 
-    // isRunning status from Redux
-    const selectIsRunning = (state: RootState) => state.session.isRunning; 
-    const isSessionRunning = useSelector(selectIsRunning); 
+  // isRunning status from Redux
+  const selectIsRunning = (state: RootState) => state.session.isRunning;
+  const isSessionRunning = useSelector(selectIsRunning);
 
-    // Session Name from Redux
-    const selectSessionName = (state: RootState) => state.session.sessionName; 
-    const sessionName = useSelector(selectSessionName); 
-    const sessionNameLabelText: string = sessionName === "" ? "NOT RUNNING" : sessionName;
+  // Session Name from Redux
+  const selectSessionName = (state: RootState) => state.session.sessionName;
+  const sessionName = useSelector(selectSessionName);
+  const sessionNameLabelText: string = sessionName === '' ? 'NOT RUNNING' : sessionName;
 
-    // Current User from Redux 
-    const selectUser = (state: RootState) => state.user;
-    const user = useSelector(selectUser); 
+  // Current User from Redux
+  const selectUser = (state: RootState) => state.user;
+  const user = useSelector(selectUser);
 
-    const { privilege } = user; 
+  const { privilege } = user;
 
-    // Builds a name for the session based on the current date & time.
-    const buildSessionName = () => {
-        const date = new Date();
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-        const year = date.getFullYear() - 2000;
-        const hour = date.getHours(); 
-        const minute = date.getMinutes(); 
-        const second = date.getSeconds(); 
+  // Builds a name for the session based on the current date & time.
+  const buildSessionName = () => {
+    const date = new Date();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const year = date.getFullYear() - 2000;
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const second = date.getSeconds();
 
-        const name = `${year}${month}${day}--${hour}${minute}${second}`
-        return name; 
+    const name = `${year}${month}${day}--${hour}${minute}${second}`;
+    return name;
+  };
+
+  const startPressed = useCallback((e) => {
+    if (isSessionRunning) {
+      console.log('Session is already running...');
+      return;
     }
 
-    const startPressed = useCallback((e) => {
-        if (isSessionRunning) {
-            console.log('Session is already running...');
-            return; 
-        }
+    if (privilege !== 'Admin' && privilege !== 'Developer') {
+      const createSessionFailedAlert = createAlert(3000, 'error', 'snack', 'Login to start a new session.');
+      dispatch(showAlert(createSessionFailedAlert));
+      return;
+    }
 
-        if (privilege !== 'Admin' && privilege !== 'Developer') {
-            const createSessionFailedAlert = createAlert(3000, "error", "snack", "Login to start a new session."); 
-            dispatch(showAlert(createSessionFailedAlert))
-            return; 
-        }
+    const name = buildSessionName();
+    props.handleStart(e, name);
+  }, [isSessionRunning, props, dispatch, privilege]);
 
-        const name = buildSessionName(); 
-        props.handleStart(e, name); 
-    }, [isSessionRunning, props, dispatch, privilege])
+  const stopPressed = useCallback((e) => {
+    if (!isSessionRunning) {
+      console.log('No active session...');
+      return;
+    }
 
-    const stopPressed = useCallback((e) => {
-        if (!isSessionRunning) {
-            console.log('No active session...');
-            return; 
-        }
+    if (privilege !== 'Admin' && privilege !== 'Developer') {
+      const createSessionFailedAlert = createAlert(3000, 'error', 'snack', 'Log in to stop a running session.');
+      dispatch(showAlert(createSessionFailedAlert));
+      return;
+    }
 
-        if (privilege !== 'Admin' && privilege !== 'Developer') {
-            const createSessionFailedAlert = createAlert(3000, "error", "snack", "Log in to stop a running session."); 
-            dispatch(showAlert(createSessionFailedAlert))
-            return; 
-        }
+    props.handleStop(e, sessionName);
+  }, [isSessionRunning, props, dispatch, privilege, sessionName]);
 
-        props.handleStop(e, sessionName); 
-    }, [isSessionRunning, props, dispatch, privilege, sessionName])
+  const startButtonClasses = useCallback(() => {
+    if (!isSessionRunning) {
+      return classes.sessionButtonStartBox;
+    } else {
+      return classes.sessionButtonStartBoxDisabled;
+    }
+  }, [isSessionRunning, classes.sessionButtonStartBox, classes.sessionButtonStartBoxDisabled]);
 
-    const startButtonClasses = useCallback(() => {
-        if (!isSessionRunning) {
-            return classes.sessionButtonStartBox
-        } else {
-            return classes.sessionButtonStartBoxDisabled
-        }
-    }, [isSessionRunning, classes.sessionButtonStartBox, classes.sessionButtonStartBoxDisabled])
+  const stopButtonClasses = useCallback(() => {
+    if (!isSessionRunning) {
+      return classes.sessionButtonStopBoxDisabled;
+    } else {
+      return classes.sessionButtonStopBox;
+    }
+  }, [isSessionRunning, classes.sessionButtonStopBox, classes.sessionButtonStopBoxDisabled]);
 
-    const stopButtonClasses = useCallback(() => {
-        if (!isSessionRunning) {
-            return classes.sessionButtonStopBoxDisabled
-        } else {
-            return classes.sessionButtonStopBox
-        }
-    }, [isSessionRunning, classes.sessionButtonStopBox, classes.sessionButtonStopBoxDisabled])
-
-    return (
+  return (
         <>
             <p className={classes.sensorsText}>Session</p>
             <Grid container className={classes.gridContainer} spacing={3}>
@@ -273,30 +259,30 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
                 </Grid>
             </Grid>
             <span style={{
-                opacity: '0.3',
+              opacity: '0.3'
             }}>Starting a session from here will provide a default name and enable all sensors.</span>
         </>
-    )
-}
+  );
+};
 
 const CurrentSessionBox = (props: { currentSessionName: string }) => {
-    const classes = useStyles(); 
+  const classes = useStyles();
 
-    const { currentSessionName } = props; 
-   
-    let backgroundColor: string = 'grey'
+  const { currentSessionName } = props;
 
-    if (currentSessionName === "NOT RUNNING") {
-        backgroundColor = 'grey'
-    } else {
-        backgroundColor = 'darkBlue'
-    }
+  let backgroundColor: string = 'grey';
 
-    return (
+  if (currentSessionName === 'NOT RUNNING') {
+    backgroundColor = 'grey';
+  } else {
+    backgroundColor = 'darkBlue';
+  }
+
+  return (
         <Box className={classes.currentSessionBox} style={{
-            backgroundColor: backgroundColor
+          backgroundColor
         }}>
             <p>Current: <br/>{currentSessionName}</p>
         </Box>
-    )
-}
+  );
+};

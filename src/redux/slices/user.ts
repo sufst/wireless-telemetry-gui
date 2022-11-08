@@ -16,27 +16,27 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LoginUserAction, RegisterUserAction, SetUserAction } from "types/models/actions";
-import { UserMeta, UserState } from "types/models/user";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { LoginUserAction, RegisterUserAction, SetUserAction } from 'types/models/actions';
+import { UserMeta, UserState } from 'types/models/user';
 
 const initialMetaState: UserMeta = {
   dept: undefined,
   lastLogin: undefined,
-  createdAt: undefined,
+  createdAt: undefined
 };
 
 const initialState: UserState = {
   username: undefined,
   accessToken: undefined,
-  department: "NON SPECIFIED",
+  department: 'NON SPECIFIED',
   privilege: undefined,
   creation: undefined,
-  meta: initialMetaState,
+  meta: initialMetaState
 };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     getAllUsers: () => {
@@ -52,11 +52,11 @@ export const userSlice = createSlice({
       state.meta = action.payload.meta;
       state.department = action.payload.department;
       state.creation = action.payload.creation;
-    }, 
-    logoutUser: (state: UserState) => {
-      state.username = undefined; 
     },
-  },
+    logoutUser: (state: UserState) => {
+      state.username = undefined;
+    }
+  }
 });
 
 export const { loginUser, setUser, logoutUser, registerNewUser, getAllUsers } = userSlice.actions;

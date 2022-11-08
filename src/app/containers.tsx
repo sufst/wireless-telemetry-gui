@@ -18,95 +18,94 @@
 
 // Module Imports
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Material UI Imports
 import { Paper } from '@material-ui/core';
 
 // Component Imports
-import { Dashboard } from "pages/dashboard/index";
-import Admin from "pages/admin/index";
+import { Dashboard } from 'pages/dashboard/index';
+import Admin from 'pages/admin/index';
 import Account from 'pages/account/';
-import { SignIn } from "pages/signin/index";
-import AppNavigation from "modules/navigation/navigation";
+import { SignIn } from 'pages/signin/index';
+import AppNavigation from 'modules/navigation/navigation';
 import { Register } from 'pages/registration';
 import Alert from 'modules/alert/alert';
 
 // Styles
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
 // Redux Imports
 import { loginUser } from 'redux/slices/user';
 import type { RootState } from 'redux/store';
 
 const AppRouterSwitch = () => {
-    const classes = useStyles();
-    const dispatch = useDispatch();
-    const history = useHistory(); 
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    const selectUser = (state: RootState) => state.user;
-    const user = useSelector(selectUser); 
+  const selectUser = (state: RootState) => state.user;
+  const user = useSelector(selectUser);
 
-    useEffect(() => {
-        if (user.username === undefined) {
-            const username = "anonymous"
-            const password = "anonymous"
-        
-            dispatch(loginUser( { username, password } ))
-        } else {
-            history.push('/')
-        }
-    }, [user, dispatch, history])
+  useEffect(() => {
+    if (user.username === undefined) {
+      const username = 'anonymous';
+      const password = 'anonymous';
 
-    return (
+      dispatch(loginUser({ username, password }));
+    } else {
+      history.push('/');
+    }
+  }, [user, dispatch, history]);
+
+  return (
         <Switch>
             <Route path="/" exact>
                 <Redirect to="/dashboard"/>
             </Route>
             <Route path="/login" exact>
                 <Paper className={classes.viewPaper} >
-                    <Alert /> 
+                    <Alert />
                     <SignIn />
                 </Paper>
             </Route>
             <Route path="/register" exact>
                 <Paper className={classes.viewPaper} >
-                    <Alert /> 
+                    <Alert />
                     <Register />
                 </Paper>
             </Route>
             <Route path="/dashboard" exact>
                 <Paper className={classes.viewPaper}>
-                    <Alert /> 
+                    <Alert />
                     <Dashboard/>
-                </Paper> 
+                </Paper>
             </Route>
             <Route path="/account" exact>
                 <Paper className={classes.viewPaper}>
-                    <Alert /> 
-                    <Account /> 
-                </Paper> 
+                    <Alert />
+                    <Account />
+                </Paper>
             </Route>
             <Route path="/admin" exact>
                 <Paper className={classes.viewPaper}>
-                    <Alert /> 
+                    <Alert />
                     <Admin />
-                </Paper> 
+                </Paper>
             </Route>
             <Route path="*">
                 <Redirect to="/" />
             </Route>
         </Switch>
-    )
-}
+  );
+};
 
-export const AppContainer = () => {    
-    return (
+export const AppContainer = () => {
+  return (
         <Router>
             <AppNavigation />
             <AppRouterSwitch />
         </Router>
-    );
-} 
+  );
+};
