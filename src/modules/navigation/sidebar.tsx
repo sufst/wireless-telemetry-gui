@@ -80,7 +80,7 @@ const AppSideBar = (props: { handleDrawerClose: () => void , open: boolean }) =>
     const handleActionIconClicked = useMemo(() => [
         () => history.push('/account'),
         () =>  history.push('/dashboard'),
-        () =>  history.push('/dashboard'),
+        () =>  history.push('/sessions'),
         () =>  history.push('/admin'),
         () =>  history.push('/dashboard'),
         () =>  history.push('/dashboard'),
