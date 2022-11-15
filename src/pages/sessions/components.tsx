@@ -16,15 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { 
-    Paper, 
-    Typography,
-    TextField,
+import {
+    Paper,
     Box,
     FormLabel,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
     IconButton,
     Table,
     TableBody,
@@ -32,18 +27,16 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    Checkbox, 
-    Grid
+    Grid,
 } from "@material-ui/core";
 import GetAppIcon from '@material-ui/icons/GetApp';
-import { useCallback, useState } from "react";
 import { SessionsGetResponse } from "types/api/api";
 import { useStyles } from "../dashboard/session/styles";
-import { saveAs } from 'file-saver';
+import download from 'downloadjs';
 
 export const SessionPaper = () => {
     const classes = useStyles();
-    
+
     return (
         <Paper className={classes.rootPaper}>
             <p className={classes.newSessionText}>Session</p>
@@ -51,35 +44,12 @@ export const SessionPaper = () => {
     )
 }
 
-export const SensorChooser = (props: { allGroups: string[], selectedGroups: string[], onSensorChangeCallback: (sensor : string) => void, disabled: boolean }) => {
-    
-    const checkboxes = props.allGroups.map(groupName => {
-        return (
-            <FormControlLabel
-                control = { <Checkbox id={groupName} 
-                                      checked={props.selectedGroups.includes(groupName)}
-                                      onChange={() => props.onSensorChangeCallback(groupName)} 
-                                      style={{ color: 'lightBlue' }} 
-                          /> } 
-                label={ groupName }
-                disabled={props.disabled} />
-        )
-    })
-
-    const classes = useStyles(); 
-
-    return (
-        <Box className={classes.sensorChooserBox}>
-            <FormLabel component="legend" className={classes.formLabel}>Sensors</FormLabel>
-            {checkboxes}
-        </Box>
-    )
-}
-
 export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
-    const classes = useStyles(); 
+    const classes = useStyles();
 
     const sessionEntries = Object.entries(props.sessionData);
+    console.log("sessionData",props.sessionData);
+    console.log("sessionEntries",sessionEntries);
     const info = sessionEntries.map(sessionEntry => {
         const name = sessionEntry[0]
         const sessionInfo = sessionEntry[1]
@@ -88,54 +58,70 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
             status: sessionInfo.status,
             created: (new Date(sessionInfo.creation)).toString(),
             actions: <>
-            <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => downloadSession(sessionEntry)}>
-                <GetAppIcon />
-            </IconButton>
-          </>
+                <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => downloadSession(sessionEntry)}>
+                    <GetAppIcon />
+                </IconButton>
+            </>
         }
     });
     return (
         <div>
             <p className={classes.newSessionText}>All Sessions</p>
+            <Box className={classes.sensorChooserBox}>
+            <FormLabel component="legend" className={classes.formLabel}>Sensors</FormLabel>
+            <Grid onClick={ () => saveCSV(sessionEntries) }>Download</Grid>
+        </Box>
             <TableContainer component={Paper}>
                 <Table aria-label="customized table">
                     <TableHead>
-                    <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell align="right">Status</TableCell>
-                        <TableCell align="right">Creation Date</TableCell>
-                        <TableCell align="right">Actions</TableCell>
-                    </TableRow>
+                        <TableRow>
+                            <TableCell>Name</TableCell>
+                            <TableCell align="right">Status</TableCell>
+                            <TableCell align="right">Creation Date</TableCell>
+                            <TableCell align="right">Actions</TableCell>
+                        </TableRow>
                     </TableHead>
                     <TableBody>
                         {info.map((sessionEntry) => (
                             <TableRow key={sessionEntry.name}>
-                            <TableCell component="th" scope="row">
-                                {sessionEntry.name}
-                            </TableCell>
-                            <TableCell align="right">{sessionEntry.status}</TableCell>
-                            <TableCell align="right">{sessionEntry.created}</TableCell>
-                            <TableCell align="right">{sessionEntry.actions}</TableCell>
+                                <TableCell component="th" scope="row">
+                                    {sessionEntry.name}
+                                </TableCell>
+                                <TableCell align="right">{sessionEntry.status}</TableCell>
+                                <TableCell align="right">{sessionEntry.created}</TableCell>
+                                <TableCell align="right">{sessionEntry.actions}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-            </TableContainer>           
+            </TableContainer>
         </div>
     )
 }
 
-const downloadSession = (sessionEntry: any) => {
-    alert("Downloading session...");
-    console.log(sessionEntry);
+/*const downloadSessions = (sessionData: SessionsGetResponse) => {
+    const sessionEntries = Object.entries(sessionData);
+    saveCSV([sessionEntries]);
+}*/
+
+const downloadSession = (sessionEntry: [string, {
+    creation: number;
+    status: string;
+    sensors: [string];
+}]) => {
     saveCSV([sessionEntry]);
 }
 
-const saveCSV = (sessionEntries: any) => {
-    let output = "";
-    for(let entry of sessionEntries) {
-        output += entry[0] + entry[1].name
+const saveCSV = (sessionEntries: [[string, {
+    creation: number;
+    status: string;
+    sensors: [string];
+}]]) => {
+    let output = "Name,Creation,Status,Sensors";
+    for (let entry of sessionEntries) {
+        const sensors = JSON.parse(entry[1].sensors.toString()).join(';');
+        console.log(sensors);
+        output += `\n${entry[0]},${entry[1].creation},${entry[1].status},${sensors}`;
     }
-    const myFile = new File([output], "sessions.csv", {type: "text/csv;charset=utf-8"});
-    saveAs(myFile);
+    download(output, "sessions.csv", "text/csv;charset=utf-8");
 }

@@ -20,7 +20,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Paper } from "@material-ui/core";
 import { useStyles } from "../dashboard/session/styles";
 import { getAllSessions } from "modules/api/sessions";
-import { SessionTable } from "./components";
+import { SessionTable, SessionPaper } from "./components";
 
 export const SessionContainer = () => {
 
@@ -48,6 +48,7 @@ export const SessionContainer = () => {
                         <LinearProgress />
                     )}
                 </> */}
+                <SessionPaper />
                 <SessionTable sessionData={sessionData} />
             </Paper>
         </>
