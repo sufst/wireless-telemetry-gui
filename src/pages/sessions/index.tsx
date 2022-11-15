@@ -1,8 +1,8 @@
-import SessionsContainer from './containers';
+import {SessionContainer} from './containers';
 
 const Sessions = () => {
     return (
-        <SessionsContainer/>
+        <SessionContainer/>
     );
 };
 

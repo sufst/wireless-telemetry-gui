@@ -1,73 +1,141 @@
-import { useStyles } from "./styles";
-import {
+/*
+    Southampton University Formula Student Team
+    Copyright (C) 2022 SUFST
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+import { 
+    Paper, 
+    Typography,
+    TextField,
+    Box,
+    FormLabel,
+    FormControl,
+    FormControlLabel,
+    FormHelperText,
+    IconButton,
     Table,
     TableBody,
-    TableCell,
     TableContainer,
+    TableCell,
     TableHead,
     TableRow,
-    Paper,
-} from '@material-ui/core';
+    Checkbox, 
+    Grid
+} from "@material-ui/core";
+import GetAppIcon from '@material-ui/icons/GetApp';
+import { useCallback, useState } from "react";
 import { SessionsGetResponse } from "types/api/api";
-import { v4 } from 'uuid';
-import { ClassNameMap } from "@material-ui/core/styles/withStyles";
-import { sessionSlice } from "redux/slices/sessions";
+import { useStyles } from "../dashboard/session/styles";
+import { saveAs } from 'file-saver';
 
-const SessionsTable = () => {
-    const classes: ClassNameMap = useStyles();
-    const sessionData = sessionSlice;
-    const sessionEntries = Object.entries(sessionData);
-    return (
-        <TableContainer component={Paper} className={classes.tableContainer}>
-            <Table className={classes.table} aria-label="simple table">
-                <SessionsTableHead />
-                <TableBody>
-                    {sessionEntries.map((session) => (
-                        <SessionsTableRow sessionData={session} key={v4()} />
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
-};
-
-const SessionsTableRow = (props: { sessionData: SessionsGetResponse }) => {
+export const SessionPaper = () => {
     const classes = useStyles();
-    const sessionData = props.sessionData;
-    //const createdAt = new Date(sessionData.creation!! * 1000).toLocaleString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
+    
     return (
-        <TableRow>
-            <TableCell>
-                <div className={classes.createdAt}>{sessionData.name}</div>
-            </TableCell>
+        <Paper className={classes.rootPaper}>
+            <p className={classes.newSessionText}>Session</p>
+        </Paper>
+    )
+}
 
-            <TableCell>
-                <div className={classes.createdAt}>{sessionData.status}</div>
-            </TableCell>
+export const SensorChooser = (props: { allGroups: string[], selectedGroups: string[], onSensorChangeCallback: (sensor : string) => void, disabled: boolean }) => {
+    
+    const checkboxes = props.allGroups.map(groupName => {
+        return (
+            <FormControlLabel
+                control = { <Checkbox id={groupName} 
+                                      checked={props.selectedGroups.includes(groupName)}
+                                      onChange={() => props.onSensorChangeCallback(groupName)} 
+                                      style={{ color: 'lightBlue' }} 
+                          /> } 
+                label={ groupName }
+                disabled={props.disabled} />
+        )
+    })
 
-            <TableCell>
-                <div className={classes.createdAt}>{sessionData.createdAt}</div>
-            </TableCell>
+    const classes = useStyles(); 
 
-            <TableCell>
-                <div className={classes.createdAt}>{sessionData.actions}</div>
-            </TableCell>
-        </TableRow>
-    );
-};
-
-const SessionsTableHead = () => {
-    const classes = useStyles();
     return (
-        <TableHead>
-            <TableRow>
-                <TableCell className={classes.tableHeaderCell}>Name</TableCell>
-                <TableCell className={classes.tableHeaderCell}>Status</TableCell>
-                <TableCell className={classes.tableHeaderCell}>Creation Date</TableCell>
-                <TableCell className={classes.tableHeaderCell}>Actions</TableCell>
-            </TableRow>
-        </TableHead>
-    );
-};
+        <Box className={classes.sensorChooserBox}>
+            <FormLabel component="legend" className={classes.formLabel}>Sensors</FormLabel>
+            {checkboxes}
+        </Box>
+    )
+}
 
-export default SessionsTable;
+export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
+    const classes = useStyles(); 
+
+    const sessionEntries = Object.entries(props.sessionData);
+    const info = sessionEntries.map(sessionEntry => {
+        const name = sessionEntry[0]
+        const sessionInfo = sessionEntry[1]
+        return {
+            name,
+            status: sessionInfo.status,
+            created: (new Date(sessionInfo.creation)).toString(),
+            actions: <>
+            <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => downloadSession(sessionEntry)}>
+                <GetAppIcon />
+            </IconButton>
+          </>
+        }
+    });
+    return (
+        <div>
+            <p className={classes.newSessionText}>All Sessions</p>
+            <TableContainer component={Paper}>
+                <Table aria-label="customized table">
+                    <TableHead>
+                    <TableRow>
+                        <TableCell>Name</TableCell>
+                        <TableCell align="right">Status</TableCell>
+                        <TableCell align="right">Creation Date</TableCell>
+                        <TableCell align="right">Actions</TableCell>
+                    </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {info.map((sessionEntry) => (
+                            <TableRow key={sessionEntry.name}>
+                            <TableCell component="th" scope="row">
+                                {sessionEntry.name}
+                            </TableCell>
+                            <TableCell align="right">{sessionEntry.status}</TableCell>
+                            <TableCell align="right">{sessionEntry.created}</TableCell>
+                            <TableCell align="right">{sessionEntry.actions}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>           
+        </div>
+    )
+}
+
+const downloadSession = (sessionEntry: any) => {
+    alert("Downloading session...");
+    console.log(sessionEntry);
+    saveCSV([sessionEntry]);
+}
+
+const saveCSV = (sessionEntries: any) => {
+    let output = "";
+    for(let entry of sessionEntries) {
+        output += entry[0] + entry[1].name
+    }
+    const myFile = new File([output], "sessions.csv", {type: "text/csv;charset=utf-8"});
+    saveAs(myFile);
+}
