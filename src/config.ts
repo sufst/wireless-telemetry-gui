@@ -27,5 +27,5 @@
  * FORMAT: '<ip>:5000'
  * EXAMPLE: '192.168.1.26:5000'
  */
-export const url: string = 'localhost:5000';
+export const url: string = '192.168.254.78:5000';
 

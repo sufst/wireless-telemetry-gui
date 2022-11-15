@@ -60,8 +60,8 @@ export const SessionPaper = () => {
     )
 }
 
-export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, sensorGroups: string[], isRunning: boolean, sessionMeta: { name: string, driver: string, conditions: string, sensorGroups: string[]} }) => {
-    
+export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, onNotes: () => void, sensorGroups: string[], isRunning: boolean, sessionMeta: { name: string, driver: string, conditions: string, sensorGroups: string[]} }) => {
+
     const classes = useStyles(); 
 
     const [name, setName] = useState<string>(props.sessionMeta.name); 
@@ -107,6 +107,18 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
         setName(""); 
         setSensorGroups([]);
     }, [props])
+
+    const notesPressed = useCallback(() => {
+        props.onNotes();
+    }, [props])
+
+    // const addNotes = useCallback(() => {
+    //     props.onStop();
+    //     setCondition(""); 
+    //     setDriver("");
+    //     setName(""); 
+    //     setSensorGroups([]);
+    // }, [props])
 
     
     // Called when one of the checkboxes is clicked. 
@@ -179,6 +191,11 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
                     <Grid item xs={4} onClick={stopPressed}>
                         <Box className={stopButtonClasses()}>
                             Stop Session
+                        </Box>
+                    </Grid>
+                    <Grid item xs={4} onClick={notesPressed}>
+                        <Box className={stopButtonClasses()}>
+                            Session Notes
                         </Box>
                     </Grid>
                 </Grid>

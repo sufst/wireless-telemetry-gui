@@ -104,6 +104,12 @@ export const SessionContainer = () => {
         dispatch(stopSession()); 
     }, [dispatch])
 
+    const onNotesClicked = useCallback(() => {
+        console.log('Notes Button Clicked.');
+        const notesAlert = createAlert(3000, "error", "alert", "Notes Alert Here"); 
+        dispatch(showAlert(notesAlert));
+    }, [dispatch])
+
     const currentSessionStyles = useCallback(() => {
         return isSessionRunning ? classes.rootPaperRunningSession : classes.rootPaper; 
     }, [isSessionRunning, classes.rootPaper, classes.rootPaperRunningSession])
@@ -126,6 +132,7 @@ export const SessionContainer = () => {
                 <NewSessionContainer 
                     onSubmit={onStartClicked}
                     onStop={onStopClicked}
+                    onNotes={onNotesClicked}
                     sensorGroups={sensorGroupNames}
                     isRunning={isSessionRunning}
                     sessionMeta={sessionMeta()}
