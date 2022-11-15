@@ -31,7 +31,13 @@ import {
    Avatar,
    Grid,
    Typography,
+   Button,
+   Menu,
+   MenuItem
 } from '@material-ui/core';
+
+// CUSTOM MENU IMPORTS
+import React from 'react';
 
 export const AdminPanelTable = (props: { users: UserState[]}) => {
    const classes = useStyles(); 
@@ -56,6 +62,17 @@ const AdminPanelTableRow = (props: { user: UserState }) => {
    const classes = useStyles(); 
 
    const user = props.user; 
+
+   // MODIFY LIST CONSTANTS
+   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+     setAnchorEl(event.currentTarget);
+   };
+
+   const handleClose = () => {
+     setAnchorEl(null);
+   };
 
    // TODO: Remove force unwrapping here. Make it safer. 
    const createdAt = new Date(user.creation!! * 1000).toLocaleString('en-GB', {day: 'numeric', month: 'numeric', year: 'numeric'});
@@ -87,6 +104,22 @@ const AdminPanelTableRow = (props: { user: UserState }) => {
          <TableCell>
             <div className={classes.createdAt}>{createdAt}</div>
          </TableCell>
+         <TableCell>
+            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+               Modify Menu
+            </Button>
+            <Menu 
+               id="simple-menu"
+               anchorEl={anchorEl}
+               keepMounted
+               open={Boolean(anchorEl)}
+               onClose={handleClose}
+               >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+            </Menu>
+         </TableCell>
       </TableRow>
    )
 }
@@ -101,6 +134,7 @@ const AdminPanelTableHead = () => {
             <TableCell className={classes.tableHeaderCell}>Department</TableCell>
             <TableCell className={classes.tableHeaderCell}>Privilege</TableCell>
             <TableCell className={classes.tableHeaderCell}>Created At</TableCell>
+            <TableCell className={classes.tableHeaderCell}>Modify</TableCell>
          </TableRow>
       </TableHead>
    )
