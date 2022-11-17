@@ -37,7 +37,7 @@ npm install
 ### 4. Update `config.ts`
 You now need to update the back-end API URL on `config.ts` under `scr/config.ts`. Open that file and update the `url` variable on line 30 with your own back-end API URL. 
 
-### 3. Starting the application 
+### 5. Starting the application 
 Once all dependencies are installed and all servers are running, you can start the web-app by running the following command from the root of the application: 
 
 ```
