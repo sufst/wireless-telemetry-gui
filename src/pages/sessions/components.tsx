@@ -58,7 +58,7 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
             status: sessionInfo.status,
             created: (new Date(sessionInfo.creation)).toString(),
             actions: <>
-                <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => downloadSession(sessionEntry)}>
+                <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => saveCSV([sessionEntry])}>
                     <GetAppIcon />
                 </IconButton>
             </>
@@ -99,24 +99,11 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
     )
 }
 
-/*const downloadSessions = (sessionData: SessionsGetResponse) => {
-    const sessionEntries = Object.entries(sessionData);
-    saveCSV([sessionEntries]);
-}*/
-
-const downloadSession = (sessionEntry: [string, {
+const saveCSV = (sessionEntries: [string, {
     creation: number;
     status: string;
     sensors: [string];
-}]) => {
-    saveCSV([sessionEntry]);
-}
-
-const saveCSV = (sessionEntries: [[string, {
-    creation: number;
-    status: string;
-    sensors: [string];
-}]]) => {
+}][]) => {
     let output = "Name,Creation,Status,Sensors";
     for (let entry of sessionEntries) {
         const sensors = JSON.parse(entry[1].sensors.toString()).join(';');
