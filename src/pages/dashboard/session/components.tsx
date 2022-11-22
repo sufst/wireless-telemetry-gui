@@ -68,6 +68,8 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
     const [driver, setDriver] = useState(props.sessionMeta.driver); 
     const [condition, setCondition] = useState(props.sessionMeta.conditions); 
     const [sensorGroups, setSensorGroups] = useState<string[]>(props.sessionMeta.sensorGroups); 
+    const [showNotesEditor, setShowNotesEditor] = useState<boolean>(false);
+    const [sessionNotes, setSessionNotes] = useState<string>("");
 
     // Error state for the MUI FormControl 
     const [error, setError] = useState(false);
@@ -110,7 +112,8 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
 
     const notesPressed = useCallback(() => {
         props.onNotes();
-    }, [props])
+        setShowNotesEditor(!showNotesEditor);
+    }, [props, showNotesEditor])
 
     // const addNotes = useCallback(() => {
     //     props.onStop();
@@ -197,6 +200,16 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
                         <Box className={stopButtonClasses()}>
                             Session Notes
                         </Box>
+                    </Grid>
+                    <Grid>
+                        {isSessionRunning && showNotesEditor && (
+                        <TextField label="Session Notes" 
+                            className={classes.newSessionTextField} 
+                            value={sessionNotes} 
+                            onChange={e => {
+                                setSessionNotes(e.target.value);
+                            }}
+                        />)}
                     </Grid>
                 </Grid>
             </FormControl>
