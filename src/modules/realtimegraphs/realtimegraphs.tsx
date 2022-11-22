@@ -78,7 +78,6 @@ const SensorGraphContainer = (props: { name: string }) => {
     const inData = useSelector(selectSensorData); 
 
     const graphData = convertDataToGraphData(trimData(inData, sensor.timeEndS));
-    console.log('Graph Data', graphData);
     const LiveValue = memo(SensorLiveValue);
     const Graph = memo(SensorGraph);
     const date = new Date();
@@ -95,7 +94,7 @@ const SensorGraphContainer = (props: { name: string }) => {
         return arr
     })
     dataArray.unshift(["time", sensor.units]) 
-    console.log(dataArray)
+
     const generate = () => {
         let book = XLSX.utils.book_new()
         let sheet = XLSX.utils.aoa_to_sheet(dataArray)
