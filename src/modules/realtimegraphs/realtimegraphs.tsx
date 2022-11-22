@@ -19,7 +19,7 @@
 import {useCallback, memo, useMemo } from 'react';
 import { v4 }from 'uuid';
 import { useStyles }from "./styles";
-import {  Grid, Paper } from '@material-ui/core';
+import {  Button, Grid, Paper } from '@material-ui/core';
 import {  SensorPaperHeaderHideButton,  SensorPaperHeaderTitle, SensorGraph, SensorLiveValue
 } from "./components";
 import { useSelector } from 'react-redux';
@@ -28,7 +28,7 @@ import {  useDispatch } from 'react-redux';
 import type { RootState} from "redux/store";
 import { SensorData } from 'types/models/sensor';
 import { GraphData } from 'types/models/ui-types';
-
+import * as XLSX from 'xlsx';
 
 const SensorPaperHeaderContainer = (props: { name: string }) => {
     const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
@@ -78,7 +78,7 @@ const SensorGraphContainer = (props: { name: string }) => {
     const inData = useSelector(selectSensorData); 
 
     const graphData = convertDataToGraphData(trimData(inData, sensor.timeEndS));
-
+    console.log('Graph Data', graphData);
     const LiveValue = memo(SensorLiveValue);
     const Graph = memo(SensorGraph);
     const date = new Date();
@@ -87,13 +87,28 @@ const SensorGraphContainer = (props: { name: string }) => {
     const timeXEnd = dateEnd.toTimeString().split(" ")[0] + ":" + dateEnd.getMilliseconds();
 
     const classes = useStyles();
+    
+    let dataArray : any = graphData.map((item) => {
+        let arr : (string|number)[] = []
+        arr[0] = item.time
+        arr[1] = item.value
+        return arr
+    })
+    dataArray.unshift(["time", sensor.units]) 
+    console.log(dataArray)
+    const generate = () => {
+        let book = XLSX.utils.book_new()
+        let sheet = XLSX.utils.aoa_to_sheet(dataArray)
+        XLSX.utils.book_append_sheet(book, sheet, sensor.units)
+        XLSX.writeFile(book, sensor.units+".csv")
+    }
 
     return (
         <Grid container alignItems="center" key={v4()} spacing={1} className={classes.sensorGraphContainerRoot}>
             <Grid item key={v4()} xs={2}>
                 {graphData.length > 0 ? <LiveValue key={v4()} value={Math.round(graphData[graphData.length - 1].value)}/> : <></>}
             </Grid>
-            <Grid item key={v4()} xs={10}>
+            <Grid item key={v4()} xs={7}>
                 <Graph 
                     data={graphData} 
                     width={700}
@@ -103,6 +118,9 @@ const SensorGraphContainer = (props: { name: string }) => {
                     yAxisDomainMax={sensor.max}
                     yAxisLabel={sensor.units}
                 />
+            </Grid>
+            <Grid item xs={3} style={{justifyContent: 'flex-start'}}>
+                <Button onClick={() => (generate())} variant="outlined" color="primary">CSV</Button>
             </Grid>
         </Grid>
 
