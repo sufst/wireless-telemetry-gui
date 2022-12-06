@@ -16,10 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-/**
- * For Docker Implementation on macOS.
- * 127.0.0.1
- */
+//
+// UPDATE THIS FILE THIS YOUR BACK-END
+// SERVER IP address.
+//
 
 /**
  * BACK-END SERVER IP HERE
