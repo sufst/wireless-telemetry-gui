@@ -15,10 +15,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
+import React from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { createAlert } from 'modules/alert/alert';
-import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { showAlert } from 'redux/slices/alert';
 import { RootState } from 'redux/store';
@@ -26,7 +25,7 @@ import { SensorData } from 'types/models/sensor';
 import { DashStatusItemColor, DashStatusItemText } from 'types/models/ui-types';
 import { useStyles } from './styles';
 
-export const DashStatusItem = (props: { name: string, data: SensorData[] }) => {
+export const DashStatusItem: React.FC = (props: { name: string; data: SensorData[] }) => {
 	const classes = useStyles();
 
 	const name = props.name;
@@ -104,12 +103,12 @@ export const DashStatusItem = (props: { name: string, data: SensorData[] }) => {
 	);
 };
 
-export const CurrentTime = () => {
-	const [time, setTime] = useState(new Date());
+export const CurrentTime: React.FC = () => {
+	const [time, setTime] = React.useState(new Date());
 
 	const classes = useStyles();
 
-	useEffect(() => {
+	React.useEffect(() => {
 		const timer = setInterval(() => setTime(new Date()), 1000);
 
 		return function cleanup () {
@@ -122,7 +121,7 @@ export const CurrentTime = () => {
 	);
 };
 
-export const DashSensorsItem = (props: { name: string }) => {
+export const DashSensorsItem: React.FC = (props: { name: string }) => {
 	const classes = useStyles();
 
 	const sensorsSelector = (state: RootState) => state.sensors.sensors[props.name];
@@ -140,7 +139,7 @@ export const DashSensorsItem = (props: { name: string }) => {
 	);
 };
 
-export const DashSensors = () => {
+export const DashSensors: React.FC = () => {
 	const classes = useStyles();
 
 	const names = ['rpm', 'water_temp_c', 'tps_perc', 'battery_mv', 'speed_kph', 'fuel_flow'];
@@ -160,7 +159,7 @@ export const DashSensors = () => {
 	);
 };
 
-export const DashSession = (props: { handleStart: (event: any, name: string) => void, handleStop: (event: any, name: string) => void }) => {
+export const DashSession: React.FC = (props: { handleStart: (event: any, name: string) => void; handleStop: (event: any, name: string) => void }) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
@@ -265,7 +264,7 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
 	);
 };
 
-const CurrentSessionBox = (props: { currentSessionName: string }) => {
+const CurrentSessionBox: React.FC = (props: { currentSessionName: string }) => {
 	const classes = useStyles();
 
 	const { currentSessionName } = props;

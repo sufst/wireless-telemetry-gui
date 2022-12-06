@@ -16,10 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import React from 'react';
 import { Container, CssBaseline } from '@material-ui/core';
 import { createAlert } from 'modules/alert/alert';
 import { LoginButton, PasswordField, UsernameField } from 'pages/signin/components';
-import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { showAlert } from 'redux/slices/alert';
 import { UserRegister } from 'types/models/actions';
@@ -27,22 +27,22 @@ import { UserDepartment, UserPrivilege } from 'types/models/user';
 import { DepartmentSelect, PrivilegeSelect, RegisterFooter, RegisterHeader } from './components';
 import { useStyles } from './styles';
 
-export const RegisterContainer = (props: { registerUser: UserRegister }) => {
+export const RegisterContainer: React.FC = (props: { registerUser: UserRegister }) => {
 	const classes = useStyles();
 
 	const { registerUser } = props;
 
 	const dispatch = useDispatch();
 
-	const [department, setDepartment] = useState<UserDepartment>('Electronics');
+	const [department, setDepartment] = React.useState<UserDepartment>('Electronics');
 
-	const [privilege, setPrivilege] = useState<UserPrivilege>('Basic');
+	const [privilege, setPrivilege] = React.useState<UserPrivilege>('Basic');
 
-	const handleDepartmentChange = useCallback((event: any) => {
+	const handleDepartmentChange = React.useCallback((event: any) => {
 		setDepartment(event.target.value);
 	}, []);
 
-	const handlePrivilegeChange = useCallback((event: any) => {
+	const handlePrivilegeChange = React.useCallback((event: any) => {
 		setPrivilege(event.target.value);
 	}, []);
 

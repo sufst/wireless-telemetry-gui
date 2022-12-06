@@ -32,7 +32,7 @@ import { UserState } from 'types/models/user';
 // Styles
 import { avatarStyle, subheaderStyle, useStyles } from './styles';
 
-const AccountContainer = (props: { user: UserState, onLogoutClick: () => void, onRegisterNewUser: () => void }) => {
+const AccountContainer = (props: { user: UserState; onLogoutClick: () => void; onRegisterNewUser: () => void }) => {
 	const classes = useStyles();
 
 	const { onRegisterNewUser, onLogoutClick } = props;

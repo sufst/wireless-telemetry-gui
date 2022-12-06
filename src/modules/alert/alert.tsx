@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
+import React from 'react';
 import { AlertState, AlertLevel, AlertText, AlertTimeout, AlertType } from 'types/models/alert';
 import AlertContainer from './containers';
 
@@ -28,7 +28,7 @@ import AlertContainer from './containers';
  * "success": Green Background in the Alert
  */
 
-const Alert = () => {
+const Alert: React.FC = () => {
 	return (
 		<AlertContainer />
 	);

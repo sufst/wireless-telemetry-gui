@@ -16,8 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import React from 'react';
 import { createAlert } from 'modules/alert/alert';
-import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { showAlert } from 'redux/slices/alert';
@@ -27,7 +27,7 @@ import { RegisterContainer } from './containers';
 import { registerNewUser } from 'redux/slices/user';
 import { UserRegister } from 'types/models/actions';
 
-export const Register = () => {
+export const Register: React.FC = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -36,7 +36,7 @@ export const Register = () => {
 
 	const privilege = user.privilege;
 
-	useEffect(() => {
+	React.useEffect(() => {
 		if (privilege === 'Anon' || privilege === 'Basic') {
 			const cannotRegisterUserAlert = createAlert(3000, 'error', 'alert', 'You cannot create a new user. Sorry :(');
 			dispatch(showAlert(cannotRegisterUserAlert));

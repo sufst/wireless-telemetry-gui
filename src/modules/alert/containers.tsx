@@ -17,6 +17,7 @@
 */
 
 // Module Imports
+import React from 'react';
 import { Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import { useSelector } from 'react-redux';
@@ -27,11 +28,10 @@ import { useStyles } from './styles';
 // Redux Imports
 import type { RootState } from 'redux/store';
 
-const AlertContainer = () => {
+const AlertContainer: React.FC = () => {
 	const classes = useStyles();
 
-	const selectAlert = (state: RootState) => state.alert;
-	const { text, type, timeout, level } = useSelector(selectAlert);
+	const { text, type, timeout, level } = useSelector((state: RootState) => state.alert);
 
 	if (type === undefined) {
 		return null;

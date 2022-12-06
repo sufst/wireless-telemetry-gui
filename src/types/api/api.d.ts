@@ -51,18 +51,18 @@ export type UsersCreate = (
 export type UsersGet = (username: string, accessToken: string) => Promise;
 
 export interface UsersGetResponse {
-	username: string
-	creation: number
-	privilege: UserPrivilege
-	department: UserDepartment
+	username: string;
+	creation: number;
+	privilege: UserPrivilege;
+	department: UserDepartment;
 	meta: string
 }
 
 export interface UsersPatchRequest {
-	[username: ?string]: string
-	[password: ?string]: string
-	[privilege: ?string]: UserPrivilege
-	[department: ?string]: UserDepartment
+	[username: ?string]: string;
+	[password: ?string]: string;
+	[privilege: ?string]: UserPrivilege;
+	[department: ?string]: UserDepartment;
 	[meta: ?string]: UserMeta
 }
 
@@ -75,18 +75,18 @@ export type UsersPatch = (
 export type UserGet = (accessToken: string) => Promise;
 
 export interface UserGetResponse {
-	username: string
-	creation: number
-	privilege: UserPrivilege
-	department: UserDepartment
+	username: string;
+	creation: number;
+	privilege: UserPrivilege;
+	department: UserDepartment;
 	meta: string
 }
 
 export interface UserPatchRequest {
-	[username: ?string]: string
-	[password: ?string]: string
-	[privilege: ?string]: UserPrivilege
-	[department: ?string]: UserDepartment
+	[username: ?string]: string;
+	[password: ?string]: string;
+	[privilege: ?string]: UserPrivilege;
+	[department: ?string]: UserDepartment;
 	[meta: ?string]: UserMeta
 }
 
@@ -102,8 +102,8 @@ export type SessionsGet = () => Promise;
 
 export interface SessionsGetResponse {
 	[name: string]: {
-		creation: number
-		status: string
+		creation: number;
+		status: string;
 		sensors: [string]
 	}
 }
@@ -115,7 +115,7 @@ export type SessionCreate = (
 ) => Promise;
 
 interface SessionCreateFields {
-	sessionMetadata: Object
+	sessionMetadata: Object;
 	sessionSensors: Object
 }
 
@@ -123,3 +123,5 @@ export type SessionStop = (
 	name: string,
 	accessToken: string
 ) => Promise;
+
+export type GetAllUsersType = (accessToken: string) => Promise<any>;

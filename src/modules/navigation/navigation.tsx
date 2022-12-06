@@ -32,12 +32,11 @@ import { useStyles } from './styles';
 /**
  * A Container that holds all the logic & views for the main AppBar and the AppSideBar
  */
-const AppNav = () => {
+const AppNav: React.FC = () => {
 	const classes = useStyles();
 	const history = useHistory();
 
-	const selectUser = (state: RootState) => state.user;
-	const user = useSelector(selectUser);
+	const user = useSelector((state: RootState) => state.user);
 
 	const [open, setOpen] = React.useState(false);
 

@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
+import React from 'react';
 import { UserState } from 'types/models/user';
 import { useStyles, getColorForPrivelege } from './styles';
 import { v4 } from 'uuid';
@@ -33,7 +33,7 @@ import {
 	Typography
 } from '@material-ui/core';
 
-export const AdminPanelTable = (props: { users: UserState[] }) => {
+export const AdminPanelTable: React.FC = (props: { users: UserState[] }) => {
 	const classes = useStyles();
 
 	const users = props.users;
@@ -52,7 +52,7 @@ export const AdminPanelTable = (props: { users: UserState[] }) => {
 	);
 };
 
-const AdminPanelTableRow = (props: { user: UserState }) => {
+const AdminPanelTableRow: React.FC = (props: { user: UserState }) => {
 	const classes = useStyles();
 
 	const user = props.user;
@@ -91,7 +91,7 @@ const AdminPanelTableRow = (props: { user: UserState }) => {
 	);
 };
 
-const AdminPanelTableHead = () => {
+const AdminPanelTableHead: React.FC = () => {
 	const classes = useStyles();
 
 	return (

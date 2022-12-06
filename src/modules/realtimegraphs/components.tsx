@@ -15,51 +15,60 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+import React from 'react';
 import { useStyles } from './styles';
 import { Switch, FormControlLabel, Typography } from '@material-ui/core';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Label } from 'recharts';
 import { GraphData } from 'types/models/ui-types';
 
-export const SensorPaperHeaderHideButton = (props: { onChange: (event: any) => void, checked: boolean }) => {
+export const SensorPaperHeaderHideButton: React.FC = (props: {
+	onChange: (event: any) => void;
+	checked: boolean
+}) => {
 	const classes = useStyles();
 
 	return (
-		<FormControlLabel control={
-			<Switch checked={props.checked} onChange={props.onChange} color="primary"/>
-		}
-		label="Show"
-		className={classes.sensorPaperHeaderButton}
+		<FormControlLabel
+			control={
+				<Switch
+					checked={props.checked}
+					onChange={props.onChange}
+					color="primary"
+				/>
+			}
+			label="Show"
+			className={classes.sensorPaperHeaderButton}
 		/>
 	);
 };
 
-export const SensorPaperHeaderTitle = (props: { name: string }) => {
+export const SensorPaperHeaderTitle: React.FC = (props: { name: string }) => {
 	const classes = useStyles();
 
 	return (
 		<Typography variant="h6" className={classes.sensorPaperHeaderTitle}>
 			{props.name}
-		</Typography >
+		</Typography>
 	);
 };
 
-export const SensorLiveValue = (props: { value: number }) => {
+export const SensorLiveValue: React.FC = (props: { value: number }) => {
 	const classes = useStyles();
 
 	return (
 		<Typography variant="h3" className={classes.sensorLiveValue}>
 			{props.value}
-		</Typography >
+		</Typography>
 	);
 };
 
-export const SensorGraph = (props: {
-	width: number
-	data: GraphData[]
-	xAxisDomainMin: string
-	xAxisDomainMax: string
-	yAxisDomainMin: number
-	yAxisDomainMax: number
+export const SensorGraph: React.FC = (props: {
+	width: number;
+	data: GraphData[];
+	xAxisDomainMin: string;
+	xAxisDomainMax: string;
+	yAxisDomainMin: number;
+	yAxisDomainMax: number;
 	yAxisLabel: string
 }) => {
 	const classes = useStyles();
@@ -70,18 +79,36 @@ export const SensorGraph = (props: {
 			height={400}
 			data={props.data}
 			margin={{
-			  top: 5,
-			  right: 30,
-			  left: 20,
-			  bottom: 30
+				top: 5,
+				right: 30,
+				left: 20,
+				bottom: 30
 			}}
 		>
 			<CartesianGrid strokeDasharray="4 4 4 " />
-			<XAxis dataKey="time" domain={[props.xAxisDomainMin, props.xAxisDomainMax]} stroke='#d0d0d0'>
-				<Label value="Time (s)" offset={5} position="bottom" className={classes.sensorGraph}/>
+			<XAxis
+				dataKey="time"
+				domain={[props.xAxisDomainMin, props.xAxisDomainMax]}
+				stroke="#d0d0d0"
+			>
+				<Label
+					value="Time (s)"
+					offset={5}
+					position="bottom"
+					className={classes.sensorGraph}
+				/>
 			</XAxis>
-			<YAxis domain={[props.yAxisDomainMin, props.yAxisDomainMax]} stroke='#d0d0d0'>
-				<Label value={props.yAxisLabel} offset={-10} position="insideLeft" angle={-90} className={classes.sensorGraph}/>
+			<YAxis
+				domain={[props.yAxisDomainMin, props.yAxisDomainMax]}
+				stroke="#d0d0d0"
+			>
+				<Label
+					value={props.yAxisLabel}
+					offset={-10}
+					position="insideLeft"
+					angle={-90}
+					className={classes.sensorGraph}
+				/>
 			</YAxis>
 			<Line
 				type="monotone"

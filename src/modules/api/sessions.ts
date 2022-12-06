@@ -30,7 +30,7 @@ const handleCreateSession: SessionCreate = async (accessToken, name, fields) => 
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: 'Bearer ' + accessToken
+			Authorization: `Bearer ${accessToken.toString()}`
 		},
 		body: JSON.stringify({
 			meta: fields.sessionMetadata,
@@ -39,21 +39,24 @@ const handleCreateSession: SessionCreate = async (accessToken, name, fields) => 
 	});
 
 	if (!response.ok) {
-		throw response.statusText;
+		throw Object.assign(new Error(response.statusText));
 	}
 
-	const data = await response.json();
+	const data: SessionCreate = await response.json();
 	return data;
 };
 
-export const createSession = async (accessToken: string, name: string, sessionMeta: object, sessionSensors: string[]) => {
+// NEEDS MOVED TO APPROPRIATE TYPES FILE
+type s = (accessToken: string, name: string, sessionMeta: object, sessionSensors: string[]) => Promise<SessionCreate | null>;
+
+export const createSession: s = async (accessToken: string, name: string, sessionMeta: object, sessionSensors: string[]) => {
 	const fields: SessionCreateFields = {
 		sessionMetadata: sessionMeta,
 		sessionSensors
 	};
 
 	try {
-		const response = await handleCreateSession(accessToken, name, fields);
+		const response: SessionCreate = await handleCreateSession(accessToken, name, fields);
 		return response;
 	} catch (statusText) {
 		console.log('Error creating new session: ', statusText);
@@ -66,7 +69,7 @@ export const createSession = async (accessToken: string, name: string, sessionMe
  * @param name Name of session to be stopped.
  * @param accessToken JWT authentication token
  */
-const handleSessionStop = async (name: string, accessToken: string) => {
+const handleSessionStop: SessionStop = async (name: string, accessToken: string) => {
 	const response = await fetch(`http://${url}/sessions/${name}`, {
 		method: 'PATCH',
 		headers: {
@@ -79,7 +82,7 @@ const handleSessionStop = async (name: string, accessToken: string) => {
 	});
 
 	if (!response.ok) {
-		throw response.statusText;
+		throw Object.assign(new Error(response.statusText));
 	}
 
 	return response;
@@ -98,7 +101,7 @@ export const stopSession: SessionStop = async (name, token) => {
 /**
  * Getting all the sessions in the database
  */
-const handleGetAllSessions = async () => {
+const handleGetAllSessions: SessionsGet = async () => {
 	const response = await fetch(`http://${url}/sessions`, {
 		method: 'GET',
 		headers: {
@@ -107,7 +110,7 @@ const handleGetAllSessions = async () => {
 	});
 
 	if (!response.ok) {
-		throw response.statusText;
+		throw Object.assign(new Error(response.statusText));
 	}
 
 	const data = await response.json();

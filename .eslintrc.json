@@ -1,36 +1,46 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
-    },
-    "extends": [
-        // Uses default rules for standardised typescript and react
-        "plugin:react/recommended",
-        "standard-with-typescript"
-    ],
-    "overrides": [
-    ],
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module", 
-        "project": ["./tsconfig.json"]  // Requires tsconfig to enforce typescript
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-        // Enforces the semi-colon rule, #Warning - Do not enable "semi", since the typescript version should enforce instead
-        "semi": "off",
-        "@typescript-eslint/semi": ["error", "always"],
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"extends": [
+		// Uses default rules for standardised typescript and react
+		"plugin:react/recommended",
+		"standard-with-typescript"
+	],
+	"overrides": [],
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module",
+		"project": ["./tsconfig.json"] // Requires tsconfig to enforce typescript
+	},
+	"plugins": ["react"],
+	"rules": {
+		// Enforces the semi-colon rule, #Warning - Do not enable "semi", since the typescript version should enforce instead
+		"semi": "off",
+		"@typescript-eslint/semi": ["error", "always"],
 
-        // Exact same thing for indentation
-        "indent": "off",
-        "@typescript-eslint/indent": ["error", "tab"],
-        "no-tabs": 0
-    },
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
-    }
+		// Exact same thing for indentation
+		"indent": "off",
+		"@typescript-eslint/indent": ["error", "tab"],
+		"no-tabs": 0,
+		"@typescript-eslint/member-delimiter-style": [
+			"error",
+			{
+				"multiline": {
+					"delimiter": "semi", // 'none' or 'semi' or 'comma'
+					"requireLast": true
+				},
+				"singleline": {
+					"delimiter": "semi", // 'semi' or 'comma'
+					"requireLast": false
+				}
+			}
+		]
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	}
 }

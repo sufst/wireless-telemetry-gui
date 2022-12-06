@@ -20,7 +20,7 @@ import { url } from 'config';
 import { LoginUser } from 'types/api/api';
 
 const handleLoginUser: LoginUser = async (username, password) => {
-	const response = await fetch(`http://${url}/login/${username}`, {
+	const response: Response = await fetch(`http://${url}/login/${username}`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -31,14 +31,17 @@ const handleLoginUser: LoginUser = async (username, password) => {
 	});
 
 	if (!response.ok) {
-		throw response.statusText;
+		throw Object.assign(new Error(response.statusText));
 	}
 
 	const data = await response.json();
 	return data;
 };
 
-export const loginUser = async (username: string, password: string) => {
+export const loginUser: LoginUser = async (
+	username: string,
+	password: string
+) => {
 	let token;
 
 	try {

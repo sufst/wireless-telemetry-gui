@@ -30,14 +30,16 @@ const handleGetUser: UserGet = async (accessToken) => {
 	});
 
 	if (!response.ok) {
-		throw response.statusText;
+		throw Object.assign(new Error(response.statusText));
 	}
 
 	const data = await response.json();
 	return data;
 };
 
-export const getUser = async (username: string, accessToken: string) => {
+type UserGetPromise = (username: string, accessToken: string) => Promise<SetUserAction | null>;
+
+export const getUser: UserGetPromise = async (username: string, accessToken: string) => {
 	const user: SetUserAction = {
 		username,
 		accessToken,
@@ -78,7 +80,7 @@ const handleUserPatch: UserPatch = async (accessToken, fields) => {
 	});
 
 	if (!response.ok) {
-		throw response.statusText;
+		throw Object.assign(new Error(response.statusText));
 	}
 
 	return response;

@@ -37,6 +37,6 @@ export interface PrivilegeToColors {
 // GRAPHS
 //
 export interface GraphData {
-	time: string
+	time: string;
 	value: number
 }

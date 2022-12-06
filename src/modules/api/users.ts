@@ -17,7 +17,7 @@
 */
 
 import { url } from 'config';
-import { UsersCreate, UsersGet, UsersGetResponse, UsersPatch } from 'types/api/api';
+import { UsersCreate, UsersGet, UsersGetResponse, UsersPatch, GetAllUsersType } from 'types/api/api';
 
 /**
  *
@@ -47,7 +47,7 @@ const handleCreateUsers: UsersCreate = async (
 	});
 
 	if (!response.ok) {
-		throw response.statusText;
+		throw Object.assign(new Error(response.statusText));
 	}
 
 	return response;
@@ -90,7 +90,7 @@ const handleUsersGet: UsersGet = async (username, accessToken) => {
 	});
 
 	if (!response.ok) {
-		throw response.statusText;
+		throw Object.assign(new Error(response.statusText));
 	}
 
 	const data = await response.json();
@@ -122,7 +122,7 @@ const handleUsersPatch: UsersPatch = async (username, accessToken, fields) => {
 	});
 
 	if (!response.ok) {
-		throw response.statusText;
+		throw Object.assign(new Error(response.statusText));
 	}
 
 	return response;
@@ -143,12 +143,7 @@ export const usersPatch: UsersPatch = async (username, accessToken, fields) => {
 	}
 };
 
-/**
- *
- * GetAllUsers
- *
- */
-const handleGetAllUsers = async (accessToken: string) => {
+const handleGetAllUsers: GetAllUsersType = async (accessToken: string) => {
 	const response = await fetch(`http://${url}/users`, {
 		method: 'GET',
 		headers: {
@@ -158,14 +153,14 @@ const handleGetAllUsers = async (accessToken: string) => {
 	});
 
 	if (!response.ok) {
-		throw response.statusText;
+		throw Object.assign(new Error(response.statusText));
 	}
 
 	const data = await response.json();
 	return data;
 };
 
-export const fetchAllUsers = async (accessToken: string) => {
+export const fetchAllUsers: GetAllUsersType = async (accessToken: string) => {
 	try {
 		const result = await handleGetAllUsers(accessToken);
 		return result;

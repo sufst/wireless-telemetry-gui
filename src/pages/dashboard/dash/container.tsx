@@ -15,16 +15,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
+import React from 'react';
 import { Grid, Paper } from '@material-ui/core';
-import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startSession, stopSession } from 'redux/slices/sessions';
 import { RootState } from 'redux/store';
 import { DashStatusItem, CurrentTime, DashSensors, DashSession } from './components';
 import { useStyles } from './styles';
 
-const Dash = () => {
+const Dash: React.FC = () => {
 	const _ecu = 'status_ecu_connected';
 	const _engine = 'status_engine';
 	const _battery = 'status_battery';
@@ -59,7 +58,7 @@ const Dash = () => {
 		dispatch(stopSession());
 	}, [dispatch]);
 
-	const handleStartSession = useCallback((e, name) => {
+	const handleStartSession = React.useCallback((e, name) => {
 		console.log('Starting From Component: ', name);
 		const driver: string = ''; const condition: string = '';
 		const sensors: string[] = allSensors;

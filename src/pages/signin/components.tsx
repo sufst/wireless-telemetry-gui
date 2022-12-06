@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import React from 'react';
 import {
 	Avatar,
 	Button,
@@ -29,7 +30,7 @@ import {
 	useStyles
 } from './styles';
 
-export const LoginFooter = () => {
+export const LoginFooter: React.FC = () => {
 	return (
 		<Box mt={4} >
 			<Typography variant="body2" color="textSecondary" align="center">
@@ -44,7 +45,7 @@ export const LoginFooter = () => {
 	);
 };
 
-export const LoginHeader = () => {
+export const LoginHeader: React.FC = () => {
 	const classes = useStyles();
 
 	return (
@@ -59,7 +60,7 @@ export const LoginHeader = () => {
 	);
 };
 
-export const UsernameField = () => {
+export const UsernameField: React.FC = () => {
 	return (
 		<TextField
 			variant="outlined"
@@ -74,7 +75,7 @@ export const UsernameField = () => {
 	);
 };
 
-export const PasswordField = (props: { label: string, id: string }) => {
+export const PasswordField: React.FC = (props: { label: string; id: string }) => {
 	return (
 		<TextField
 			variant="outlined"
@@ -89,7 +90,7 @@ export const PasswordField = (props: { label: string, id: string }) => {
 	);
 };
 
-export const LoginButton = (props: { text: string }) => {
+export const LoginButton: React.FC = (props: { text: string }) => {
 	const classes = useStyles();
 
 	return (

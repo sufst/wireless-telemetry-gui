@@ -53,7 +53,7 @@ export const sessionMiddleware: Middleware<{}, any> =
 				sensors
 			);
 
-			if (response) {
+			if (response != null) {
 				const createSessionOkayAlert = createAlert(
 					3000,
 					'success',

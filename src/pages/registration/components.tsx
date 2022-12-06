@@ -16,12 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import React from 'react';
 import { Avatar, Box, Typography, Link, InputLabel, Select } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { UserDepartment, UserPrivilege } from 'types/models/user';
 import { useStyles } from './styles';
 
-export const DepartmentSelect = (props: { department: UserDepartment, handleDepartmentChange: (event: any) => void }) => {
+export const DepartmentSelect = (props: { department: UserDepartment; handleDepartmentChange: (event: any) => void }) => {
 	const classes = useStyles();
 
 	const { department, handleDepartmentChange } = props;
@@ -51,7 +52,7 @@ export const DepartmentSelect = (props: { department: UserDepartment, handleDepa
 	);
 };
 
-export const PrivilegeSelect = (props: { privilege: UserPrivilege, handlePrivilegeChange: (event: any) => void }) => {
+export const PrivilegeSelect = (props: { privilege: UserPrivilege; handlePrivilegeChange: (event: any) => void }) => {
 	const classes = useStyles();
 
 	const { privilege, handlePrivilegeChange } = props;

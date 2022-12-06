@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import React from 'react';
 import {
 	Paper,
 	Typography,
@@ -36,11 +37,10 @@ import {
 	Grid
 } from '@material-ui/core';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import { useCallback, useState } from 'react';
 import { SessionsGetResponse } from 'types/api/api';
 import { useStyles } from './styles';
 
-export const CurrentSessionHeader = (props: { name: string }) => {
+export const CurrentSessionHeader: React.FC = (props: { name: string }) => {
 	const classes = useStyles();
 
 	return (
@@ -50,7 +50,7 @@ export const CurrentSessionHeader = (props: { name: string }) => {
 	);
 };
 
-export const SessionPaper = () => {
+export const SessionPaper: React.FC = () => {
 	const classes = useStyles();
 
 	return (
@@ -60,20 +60,20 @@ export const SessionPaper = () => {
 	);
 };
 
-export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, sensorGroups: string[], isRunning: boolean, sessionMeta: { name: string, driver: string, conditions: string, sensorGroups: string[] } }) => {
+export const NewSessionContainer: React.FC = (props: { onSubmit: any; onStop: () => void; sensorGroups: string[]; isRunning: boolean; sessionMeta: { name: string; driver: string; conditions: string; sensorGroups: string[] } }) => {
 	const classes = useStyles();
 
-	const [name, setName] = useState<string>(props.sessionMeta.name);
-	const [driver, setDriver] = useState(props.sessionMeta.driver);
-	const [condition, setCondition] = useState(props.sessionMeta.conditions);
-	const [sensorGroups, setSensorGroups] = useState<string[]>(props.sessionMeta.sensorGroups);
+	const [name, setName] = React.useState<string>(props.sessionMeta.name);
+	const [driver, setDriver] = React.useState(props.sessionMeta.driver);
+	const [condition, setCondition] = React.useState(props.sessionMeta.conditions);
+	const [sensorGroups, setSensorGroups] = React.useState<string[]>(props.sessionMeta.sensorGroups);
 
 	// Error state for the MUI FormControl
-	const [error, setError] = useState(false);
+	const [error, setError] = React.useState(false);
 
 	const isSessionRunning = props.isRunning;
 
-	const startButtonClasses = useCallback(() => {
+	const startButtonClasses = React.useCallback(() => {
 		if (!isSessionRunning) {
 			return classes.sessionButtonStartBox;
 		} else {
@@ -81,7 +81,7 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
 		}
 	}, [isSessionRunning, classes.sessionButtonStartBox, classes.sessionButtonStartBoxDisabled]);
 
-	const stopButtonClasses = useCallback(() => {
+	const stopButtonClasses = React.useCallback(() => {
 		if (!isSessionRunning) {
 			return classes.sessionButtonStopBoxDisabled;
 		} else {
@@ -89,7 +89,7 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
 		}
 	}, [isSessionRunning, classes.sessionButtonStopBox, classes.sessionButtonStopBoxDisabled]);
 
-	const startPressed = useCallback(() => {
+	const startPressed = React.useCallback(() => {
 		if (name === '' || sensorGroups.length === 0) {
 			setError(true);
 			return;
@@ -99,7 +99,7 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
 		props.onSubmit(name, driver, condition, sensorGroups);
 	}, [name, driver, condition, sensorGroups, props]);
 
-	const stopPressed = useCallback(() => {
+	const stopPressed = React.useCallback(() => {
 		props.onStop();
 		setCondition('');
 		setDriver('');
@@ -109,7 +109,7 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
 
 	// Called when one of the checkboxes is clicked.
 	// Sets the sensorGroups state array with the new values.
-	const onSensorChange = useCallback((newSensorGroup: string) => {
+	const onSensorChange = React.useCallback((newSensorGroup: string) => {
 		if (sensorGroups.includes(newSensorGroup)) {
 			setSensorGroups(sensorGroups.filter(sensorGroup => sensorGroup !== newSensorGroup));
 		} else {
@@ -184,7 +184,7 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
 	);
 };
 
-export const SensorChooser = (props: { allGroups: string[], selectedGroups: string[], onSensorChangeCallback: (sensor: string) => void, disabled: boolean }) => {
+export const SensorChooser: React.FC = (props: { allGroups: string[]; selectedGroups: string[]; onSensorChangeCallback: (sensor: string) => void; disabled: boolean }) => {
 	const checkboxes = props.allGroups.map(groupName => {
 		return (
 			<FormControlLabel
@@ -208,7 +208,7 @@ export const SensorChooser = (props: { allGroups: string[], selectedGroups: stri
 	);
 };
 
-export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
+export const SessionTable: React.FC = (props: { sessionData: SessionsGetResponse }) => {
 	const classes = useStyles();
 
 	let sessionEntries = Object.entries(props.sessionData);

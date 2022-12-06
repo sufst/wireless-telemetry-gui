@@ -23,18 +23,18 @@ import { UserDepartment, UserMeta, UserPrivilege } from './user';
 // USER
 //
 export interface SetUserAction {
-	username: string
-	accessToken: string
-	creation: number
-	privilege: UserPrivilege
-	department: UserDepartment
+	username: string;
+	accessToken: string;
+	creation: number;
+	privilege: UserPrivilege;
+	department: UserDepartment;
 	meta: UserMeta
 }
 
 export interface RegisterUserAction {
-	username: string
-	password: string
-	privilege: UserPrivilege
+	username: string;
+	password: string;
+	privilege: UserPrivilege;
 	department: UserDepartment
 }
 
@@ -46,7 +46,7 @@ export type UserRegister = (
 ) => void;
 
 export interface LoginUserAction {
-	username: string
+	username: string;
 	password: string
 }
 
@@ -54,10 +54,10 @@ export interface LoginUserAction {
 // SESSION
 //
 export interface StartSessionAction {
-	name: string
-	driver: string
-	condition: string
-	sensors: string[]
+	name: string;
+	driver: string;
+	condition: string;
+	sensors: string[];
 	groups: string[]
 }
 
@@ -73,8 +73,8 @@ export type StartSessionButtonAction = (
 // SENSORS
 //
 export interface UpdateSensorsMetaAction {
-	sensor: string
-	key: string
+	sensor: string;
+	key: string;
 	value: any
 }
 

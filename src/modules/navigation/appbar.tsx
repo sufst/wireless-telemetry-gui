@@ -23,7 +23,14 @@ import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 
 // Material UI Imports
-import { AppBar, Button, CssBaseline, IconButton, Toolbar, Typography } from '@material-ui/core';
+import {
+	AppBar,
+	Button,
+	CssBaseline,
+	IconButton,
+	Toolbar,
+	Typography
+} from '@material-ui/core';
 
 // Material UI Icon Imports
 import MenuIcon from '@material-ui/icons/Menu';
@@ -35,15 +42,27 @@ import { useStyles } from './styles';
 import { logoutUser } from 'redux/slices/user';
 import { UserState } from 'types/models/user';
 
+interface NavigationBarProps {
+	handleDrawerOpen: () => void;
+	open: boolean;
+	onAccountClick: () => void;
+	user: UserState
+}
+
 /**
  * A Component that holds the top navigation bar of the application.
  */
-const AppNavigationBar = (props: { handleDrawerOpen: () => void, open: boolean, onAccountClick: () => void, user: UserState }) => {
+const AppNavigationBar: React.FC<NavigationBarProps> = ({
+	handleDrawerOpen,
+	open,
+	onAccountClick,
+	user
+}) => {
 	const classes = useStyles();
 	const history = useHistory();
 	const dispatch = useDispatch();
 
-	const username = props.user.username;
+	const username = user.username;
 
 	const loginLogoutButtonText = useCallback(() => {
 		if (username === 'anonymous' || username === undefined) {
@@ -67,28 +86,40 @@ const AppNavigationBar = (props: { handleDrawerOpen: () => void, open: boolean, 
 			<AppBar
 				position="fixed"
 				className={clsx(classes.appBar, {
-				  [classes.appBarShift]: props.open
+					[classes.appBarShift]: open
 				})}
 			>
 				<Toolbar>
 					<IconButton
 						color="inherit"
 						aria-label="open drawer"
-						onClick={props.handleDrawerOpen}
+						onClick={handleDrawerOpen}
 						edge="start"
 						className={clsx(classes.menuButton, {
-						  [classes.hide]: props.open
+							[classes.hide]: open
 						})}
 					>
 						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" noWrap className={classes.title}>
-                  SUFST Telemetry
+						SUFST Telemetry
 					</Typography>
-					<Typography className={classes.usernameLabel} variant='h6'>
+					<Typography className={classes.usernameLabel} variant="h6">
 						{username === 'anonymous' ? '' : username}
 					</Typography>
-					<Button variant='contained' disableElevation color="secondary" onClick={onLoginLogoutButtonClick} className={username === 'anonymous' ? classes.loginButton : classes.logoutButton}>{loginLogoutButtonText()}</Button>
+					<Button
+						variant="contained"
+						disableElevation
+						color="secondary"
+						onClick={onLoginLogoutButtonClick}
+						className={
+							username === 'anonymous'
+								? classes.loginButton
+								: classes.logoutButton
+						}
+					>
+						{loginLogoutButtonText()}
+					</Button>
 				</Toolbar>
 			</AppBar>
 		</div>

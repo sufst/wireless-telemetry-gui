@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { Paper } from '@material-ui/core';
 import { useStyles } from './styles';
 import { getAllSessions } from 'modules/api/sessions';
@@ -28,7 +28,7 @@ import { createAlert } from 'modules/alert/alert';
 import { startSession, stopSession } from 'redux/slices/sessions';
 import { StartSessionButtonAction } from 'types/models/actions';
 
-export const SessionContainer = () => {
+export const SessionContainer: React.FC = () => {
 	const dispatch = useDispatch();
 
 	const classes = useStyles();
@@ -68,16 +68,16 @@ export const SessionContainer = () => {
 
 	const { privilege } = user;
 
-	const fetchAllSessions = useCallback(async () => {
+	const fetchAllSessions = React.useCallback(async () => {
 		const sessions = await getAllSessions();
 		setSessionData(sessions);
 	}, []);
 
-	useEffect(() => {
+	React.useEffect(() => {
 		fetchAllSessions();
 	}, [fetchAllSessions]);
 
-	const handleStartSession: StartSessionButtonAction = useCallback((name, driver, condition, sessionSensorGroups) => {
+	const handleStartSession: StartSessionButtonAction = React.useCallback((name, driver, condition, sessionSensorGroups) => {
 		// Creates an array of all the names of the sensors to be saved in the session.
 		const groupsForSession = Object.entries(groups).filter((group: [key: string, value: string[]]) => sessionSensorGroups.includes(group[0]));
 		const sensors = groupsForSession.map((group: [key: string, value: string[]]) => (group[1])).flat();
@@ -87,7 +87,7 @@ export const SessionContainer = () => {
 		dispatch(startSession({ name, driver, condition, sensors, groups: sessionSensorGroups }));
 	}, [dispatch, groups]);
 
-	const onStartClicked: StartSessionButtonAction = useCallback((name, driver, condition, sensors, groups) => {
+	const onStartClicked: StartSessionButtonAction = React.useCallback((name, driver, condition, sensors, groups) => {
 		if (privilege !== 'Admin' && privilege !== 'Developer') {
 			const createSessionFailedAlert = createAlert(3000, 'error', 'snack', 'Login to start a new session.');
 			dispatch(showAlert(createSessionFailedAlert));
@@ -97,16 +97,16 @@ export const SessionContainer = () => {
 		handleStartSession(name, driver, condition, sensors, groups);
 	}, [privilege, dispatch, handleStartSession]);
 
-	const onStopClicked = useCallback(() => {
+	const onStopClicked = React.useCallback(() => {
 		console.log('Stopping Session.');
 		dispatch(stopSession());
 	}, [dispatch]);
 
-	const currentSessionStyles = useCallback(() => {
+	const currentSessionStyles = React.useCallback(() => {
 		return isSessionRunning ? classes.rootPaperRunningSession : classes.rootPaper;
 	}, [isSessionRunning, classes.rootPaper, classes.rootPaperRunningSession]);
 
-	const sessionMeta = useCallback(() => {
+	const sessionMeta = React.useCallback(() => {
 		return {
 			name: sessionName,
 			driver: sessionDriver,

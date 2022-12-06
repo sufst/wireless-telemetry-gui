@@ -45,13 +45,14 @@ import { useStyles } from './styles';
 // Redux Imports
 import { loginUser } from 'redux/slices/user';
 import type { RootState } from 'redux/store';
+import { UserState } from 'types/models/user';
 
 const AppRouterSwitch: React.FC = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const selectUser = (state: RootState) => state.user;
+	const selectUser: UserState = (state: RootState) => state.user;
 	const user = useSelector(selectUser);
 
 	React.useEffect(() => {
@@ -107,7 +108,7 @@ const AppRouterSwitch: React.FC = () => {
 	);
 };
 
-export const AppContainer : React.FC = () => {
+export const AppContainer: React.FC = () => {
 	return (
 		<Router>
 			<AppNavigation />

@@ -17,7 +17,7 @@
 */
 
 export interface SensorData {
-	epoch: number
+	epoch: number;
 	value: number
 }
 
@@ -26,18 +26,18 @@ export interface SensorMeta {
 }
 
 export interface Sensor {
-	meta: SensorMeta
-	data: SensorData[]
+	meta: SensorMeta;
+	data: SensorData[];
 	isDisplay: boolean
 }
 
 export interface SensorsState {
 	sensors: {
 		[sensor: string]: Sensor
-	}
+	};
 	groups: {
 		[sensor: string]: string[]
-	}
+	};
 	sensorMetadata: SensorMeta
 }
 

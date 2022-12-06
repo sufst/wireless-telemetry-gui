@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { useCallback, memo, useMemo } from 'react';
+import React from 'react';
 import { v4 } from 'uuid';
 import { useStyles } from './styles';
 import { Grid, Paper } from '@material-ui/core';
@@ -27,19 +27,19 @@ import type { RootState } from 'redux/store';
 import { SensorData } from 'types/models/sensor';
 import { GraphData } from 'types/models/ui-types';
 
-const SensorPaperHeaderContainer = (props: { name: string }) => {
+const SensorPaperHeaderContainer: React.FC = (props: { name: string }) => {
 	const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
 	const sensor = useSelector(selectSensorMeta);
 
 	const dispatch = useDispatch();
 
-	const onChange = useCallback((event) => {
+	const onChange = React.useCallback((event) => {
 		event.preventDefault();
 		dispatch(updateSensorsMeta({ sensor: props.name, key: 'isDisplay', value: !sensor.isDisplay }));
 	}, [dispatch, props.name, sensor.isDisplay]);
 
-	const HeaderTitle = memo(SensorPaperHeaderTitle);
-	const HeaderButton = memo(SensorPaperHeaderHideButton);
+	const HeaderTitle = React.memo(SensorPaperHeaderTitle);
+	const HeaderButton = React.memo(SensorPaperHeaderHideButton);
 
 	return (
 		<Grid container alignItems="center" key={v4()} spacing={1}>
@@ -76,8 +76,8 @@ const SensorGraphContainer = (props: { name: string }) => {
 
 	const graphData = convertDataToGraphData(trimData(inData, sensor.timeEndS));
 
-	const LiveValue = memo(SensorLiveValue);
-	const Graph = memo(SensorGraph);
+	const LiveValue = React.memo(SensorLiveValue);
+	const Graph = React.memo(SensorGraph);
 	const date = new Date();
 	const timeXStart = date.toTimeString().split(' ')[0] + ':' + date.getMilliseconds();
 	const dateEnd = new Date((date.valueOf() / 1000) + sensor.timeEndS);
@@ -106,7 +106,7 @@ const SensorGraphContainer = (props: { name: string }) => {
 	);
 };
 
-const SensorPaperContainer = (props: { name: string }) => {
+const SensorPaperContainer: React.FC = (props: { name: string }) => {
 	const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
 	const sensor = useSelector(selectSensorMeta);
 
@@ -127,12 +127,12 @@ const SensorPaperContainer = (props: { name: string }) => {
 	);
 };
 
-const RealtimeSensorsGroupContainer = (props: { name: string }) => {
+const RealtimeSensorsGroupContainer: React.FC = (props: { name: string }) => {
 	const selectSensors = (state: RootState) => state.sensors.groups[props.name];
 	const sensors = useSelector(selectSensors);
 
 	// See modules index.js for explaination of why useMemo is used.
-	const sensorContainers = useMemo(() => {
+	const sensorContainers = React.useMemo(() => {
 		const containers = sensors.map((x: string) => {
 			return (<Grid item key={v4()} xs={12}>
 				<SensorPaperContainer key={v4()} name={x}/>

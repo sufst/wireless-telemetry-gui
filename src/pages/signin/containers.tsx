@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { useCallback } from 'react';
+import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 
@@ -27,12 +27,12 @@ import { LoginHeader, LoginFooter, LoginButton, UsernameField, PasswordField } f
 
 import { useStyles } from './styles';
 
-const LoginContainer = () => {
+const LoginContainer: React.FC = () => {
 	const classes = useStyles();
 
 	const dispatch = useDispatch();
 
-	const onLoginSubmit = useCallback((event) => {
+	const onLoginSubmit = React.useCallback((event) => {
 		event.preventDefault();
 
 		const username = event.target.username.value;

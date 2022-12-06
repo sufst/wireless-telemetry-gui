@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
+import React from 'react';
 import { Provider } from 'react-redux';
 import store from 'redux/store';
 import { AppContainer } from './containers';
@@ -23,7 +23,7 @@ import { AppContainer } from './containers';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
 
-export const App = () => {
+export const App: React.FC = () => {
 	return (
 		<Provider store={store}>
 			<ThemeProvider theme={theme}>
