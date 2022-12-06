@@ -33,6 +33,7 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import { SessionsGetResponse } from "types/api/api";
 import { useStyles } from "../dashboard/session/styles";
 import download from 'downloadjs';
+import { getSessionDetail } from "modules/api/sessions";
 
 export const SessionPaper = () => {
     const classes = useStyles();
@@ -58,7 +59,7 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
             status: sessionInfo.status,
             created: (new Date(sessionInfo.creation)).toString(),
             actions: <>
-                <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => saveCSV([sessionEntry])}>
+                <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => saveSession(name)}>
                     <GetAppIcon />
                 </IconButton>
             </>
@@ -111,4 +112,9 @@ const saveCSV = (sessionEntries: [string, {
         output += `\n${entry[0]},${entry[1].creation},${entry[1].status},${sensors}`;
     }
     download(output, "sessions.csv", "text/csv;charset=utf-8");
+}
+
+const saveSession = async (name: String) => {
+    const sessionData = await getSessionDetail(name);
+    download(JSON.stringify(sessionData), "session.json", "application/json;charset=utf-8");
 }
