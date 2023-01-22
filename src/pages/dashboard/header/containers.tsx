@@ -19,13 +19,9 @@
 import Tabs from '@material-ui/core/Tabs';
 import React, { useCallback } from 'react';
 import Tab from '@material-ui/core/Tab';
-import {
-    SessionContainer
-} from "../session/containers"
+import { SessionContainer } from "../session/containers"
 import RealtimeSensorsGroupContainer from 'modules/realtimegraphs/realtimegraphs';
-import {
-    v4 
-}from 'uuid';
+import { v4 }from 'uuid';
 import { useSelector } from 'react-redux';
 import { RootState } from "redux/store";
 import Dash from '../dash/container';
