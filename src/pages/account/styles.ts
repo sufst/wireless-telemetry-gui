@@ -59,25 +59,25 @@ export const avatarStyle = (privilege?: UserPrivilege) => {
 }
 
 export const useStyles = makeStyles((theme) => ({
-   cardRoot: {
-     marginTop: '1em',
-     backgroundColor: '#292929'
-   },
-   btn: {
-      marginTop: '20px',
-      backgroundColor: 'red'
-   },
-   btn_register: {
-      marginTop: '20px',
-      marginLeft: '20px',
-      backgroundColor: 'green'
-   },
-   list: {
-     margin: '0px',
-     paddingBottom: '0px',
-     paddingTop: '0px'
-   },
-   line: {
-     marginTop: '20px'
-   },
+  cardRoot: {
+    marginTop: '1em',
+    backgroundColor: '#292929'
+  },
+  btn: {
+    marginTop: '20px',
+    backgroundColor: 'red'
+  },
+  btn_register: {
+    marginTop: '20px',
+    marginLeft: '20px',
+    backgroundColor: 'green'
+  },
+  list: {
+    margin: '0px',
+    paddingBottom: '0px',
+    paddingTop: '0px'
+  },
+  line: {
+    marginTop: '20px'
+  },
 }));
