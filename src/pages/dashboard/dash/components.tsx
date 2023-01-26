@@ -25,11 +25,11 @@ import { SensorData } from 'types/models/sensor';
 import { DashStatusItemColor, DashStatusItemText } from 'types/models/ui-types';
 import { useStyles } from './styles';
 
-export const DashStatusItem: React.FC = (props: { name: string; data: SensorData[] }) => {
+export const DashStatusItem: React.FC<{ name: string; data: SensorData[] }> = ({
+	name,
+	data
+}) => {
 	const classes = useStyles();
-
-	const name = props.name;
-	const data = props.data ?? [];
 
 	const lastValue = data[data?.length - 1]?.value;
 
@@ -94,10 +94,15 @@ export const DashStatusItem: React.FC = (props: { name: string; data: SensorData
 
 	return (
 		<Grid item lg={3} xs={12} sm={6} className={classes.item}>
-			<Box className={classes.box} style={{
-			  backgroundColor: background
-			}}>
-				<span>{props.name}: <span className={classes.status}>{text}</span></span>
+			<Box
+				className={classes.box}
+				style={{
+					backgroundColor: background
+				}}
+			>
+				<span>
+					{name}: <span className={classes.status}>{text}</span>
+				</span>
 			</Box>
 		</Grid>
 	);
@@ -111,20 +116,24 @@ export const CurrentTime: React.FC = () => {
 	React.useEffect(() => {
 		const timer = setInterval(() => setTime(new Date()), 1000);
 
-		return function cleanup () {
+		return function cleanup() {
 			clearInterval(timer);
 		};
 	}, [time]);
 
 	return (
-		<p className={classes.currentTimeText}>Current Time: <span className={classes.time}>{time.toLocaleTimeString()}</span></p>
+		<p className={classes.currentTimeText}>
+			Current Time:{' '}
+			<span className={classes.time}>{time.toLocaleTimeString()}</span>
+		</p>
 	);
 };
 
 export const DashSensorsItem: React.FC = (props: { name: string }) => {
 	const classes = useStyles();
 
-	const sensorsSelector = (state: RootState) => state.sensors.sensors[props.name];
+	const sensorsSelector = (state: RootState) =>
+		state.sensors.sensors[props.name];
 	const sensor = useSelector(sensorsSelector);
 
 	const data = sensor?.data ?? [];
@@ -133,7 +142,13 @@ export const DashSensorsItem: React.FC = (props: { name: string }) => {
 	return (
 		<Grid item xs={2}>
 			<Box className={classes.sensorBox}>
-				<div>{sensor?.meta?.name}:<br/><span className={classes.sensorLastValue}>{lastValue} </span>{sensor?.meta?.units}</div>
+				<div>
+					{sensor?.meta?.name}:<br />
+					<span className={classes.sensorLastValue}>
+						{lastValue}{' '}
+					</span>
+					{sensor?.meta?.units}
+				</div>
 			</Box>
 		</Grid>
 	);
@@ -142,24 +157,34 @@ export const DashSensorsItem: React.FC = (props: { name: string }) => {
 export const DashSensors: React.FC = () => {
 	const classes = useStyles();
 
-	const names = ['rpm', 'water_temp_c', 'tps_perc', 'battery_mv', 'speed_kph', 'fuel_flow'];
+	const names = [
+		'rpm',
+		'water_temp_c',
+		'tps_perc',
+		'battery_mv',
+		'speed_kph',
+		'fuel_flow'
+	];
 
 	return (
 		<>
 			<p className={classes.sensorsText}>Sensors</p>
 			<Grid container className={classes.gridContainer} spacing={2}>
-				<DashSensorsItem name={names[0]}/>
-				<DashSensorsItem name={names[1]}/>
-				<DashSensorsItem name={names[2]}/>
-				<DashSensorsItem name={names[3]}/>
-				<DashSensorsItem name={names[4]}/>
-				<DashSensorsItem name={names[5]}/>
+				<DashSensorsItem name={names[0]} />
+				<DashSensorsItem name={names[1]} />
+				<DashSensorsItem name={names[2]} />
+				<DashSensorsItem name={names[3]} />
+				<DashSensorsItem name={names[4]} />
+				<DashSensorsItem name={names[5]} />
 			</Grid>
 		</>
 	);
 };
 
-export const DashSession: React.FC = (props: { handleStart: (event: any, name: string) => void; handleStop: (event: any, name: string) => void }) => {
+export const DashSession: React.FC = (props: {
+	handleStart: (event: any, name: string) => void;
+	handleStop: (event: any, name: string) => void;
+}) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
@@ -170,7 +195,8 @@ export const DashSession: React.FC = (props: { handleStart: (event: any, name: s
 	// Session Name from Redux
 	const selectSessionName = (state: RootState) => state.session.sessionName;
 	const sessionName = useSelector(selectSessionName);
-	const sessionNameLabelText: string = sessionName === '' ? 'NOT RUNNING' : sessionName;
+	const sessionNameLabelText: string =
+		sessionName === '' ? 'NOT RUNNING' : sessionName;
 
 	// Current User from Redux
 	const selectUser = (state: RootState) => state.user;
@@ -192,36 +218,52 @@ export const DashSession: React.FC = (props: { handleStart: (event: any, name: s
 		return name;
 	};
 
-	const startPressed = useCallback((e) => {
-		if (isSessionRunning) {
-			console.log('Session is already running...');
-			return;
-		}
+	const startPressed = useCallback(
+		(e) => {
+			if (isSessionRunning) {
+				console.log('Session is already running...');
+				return;
+			}
 
-		if (privilege !== 'Admin' && privilege !== 'Developer') {
-			const createSessionFailedAlert = createAlert(3000, 'error', 'snack', 'Login to start a new session.');
-			dispatch(showAlert(createSessionFailedAlert));
-			return;
-		}
+			if (privilege !== 'Admin' && privilege !== 'Developer') {
+				const createSessionFailedAlert = createAlert(
+					3000,
+					'error',
+					'snack',
+					'Login to start a new session.'
+				);
+				dispatch(showAlert(createSessionFailedAlert));
+				return;
+			}
 
-		const name = buildSessionName();
-		props.handleStart(e, name);
-	}, [isSessionRunning, props, dispatch, privilege]);
+			const name = buildSessionName();
+			props.handleStart(e, name);
+		},
+		[isSessionRunning, props, dispatch, privilege]
+	);
 
-	const stopPressed = useCallback((e) => {
-		if (!isSessionRunning) {
-			console.log('No active session...');
-			return;
-		}
+	const stopPressed = useCallback(
+		(e) => {
+			if (!isSessionRunning) {
+				console.log('No active session...');
+				return;
+			}
 
-		if (privilege !== 'Admin' && privilege !== 'Developer') {
-			const createSessionFailedAlert = createAlert(3000, 'error', 'snack', 'Log in to stop a running session.');
-			dispatch(showAlert(createSessionFailedAlert));
-			return;
-		}
+			if (privilege !== 'Admin' && privilege !== 'Developer') {
+				const createSessionFailedAlert = createAlert(
+					3000,
+					'error',
+					'snack',
+					'Log in to stop a running session.'
+				);
+				dispatch(showAlert(createSessionFailedAlert));
+				return;
+			}
 
-		props.handleStop(e, sessionName);
-	}, [isSessionRunning, props, dispatch, privilege, sessionName]);
+			props.handleStop(e, sessionName);
+		},
+		[isSessionRunning, props, dispatch, privilege, sessionName]
+	);
 
 	const startButtonClasses = useCallback(() => {
 		if (!isSessionRunning) {
@@ -229,7 +271,11 @@ export const DashSession: React.FC = (props: { handleStart: (event: any, name: s
 		} else {
 			return classes.sessionButtonStartBoxDisabled;
 		}
-	}, [isSessionRunning, classes.sessionButtonStartBox, classes.sessionButtonStartBoxDisabled]);
+	}, [
+		isSessionRunning,
+		classes.sessionButtonStartBox,
+		classes.sessionButtonStartBoxDisabled
+	]);
 
 	const stopButtonClasses = useCallback(() => {
 		if (!isSessionRunning) {
@@ -237,37 +283,44 @@ export const DashSession: React.FC = (props: { handleStart: (event: any, name: s
 		} else {
 			return classes.sessionButtonStopBox;
 		}
-	}, [isSessionRunning, classes.sessionButtonStopBox, classes.sessionButtonStopBoxDisabled]);
+	}, [
+		isSessionRunning,
+		classes.sessionButtonStopBox,
+		classes.sessionButtonStopBoxDisabled
+	]);
 
 	return (
 		<>
 			<p className={classes.sensorsText}>Session</p>
 			<Grid container className={classes.gridContainer} spacing={3}>
 				<Grid item xs={4}>
-					<CurrentSessionBox currentSessionName={sessionNameLabelText}/>
+					<CurrentSessionBox
+						currentSessionName={sessionNameLabelText}
+					/>
 				</Grid>
 				<Grid item xs={4} onClick={startPressed}>
-					<Box className={startButtonClasses()}>
-                        Start Session
-					</Box>
+					<Box className={startButtonClasses()}>Start Session</Box>
 				</Grid>
 				<Grid item xs={4} onClick={stopPressed}>
-					<Box className={stopButtonClasses()}>
-                        Stop Session
-					</Box>
+					<Box className={stopButtonClasses()}>Stop Session</Box>
 				</Grid>
 			</Grid>
-			<span style={{
-			  opacity: '0.3'
-			}}>Starting a session from here will provide a default name and enable all sensors.</span>
+			<span
+				style={{
+					opacity: '0.3'
+				}}
+			>
+				Starting a session from here will provide a default name and
+				enable all sensors.
+			</span>
 		</>
 	);
 };
 
-const CurrentSessionBox: React.FC = (props: { currentSessionName: string }) => {
+const CurrentSessionBox: React.FC<{ currentSessionName: string }> = ({
+	currentSessionName
+}) => {
 	const classes = useStyles();
-
-	const { currentSessionName } = props;
 
 	let backgroundColor = 'grey';
 
@@ -278,10 +331,16 @@ const CurrentSessionBox: React.FC = (props: { currentSessionName: string }) => {
 	}
 
 	return (
-		<Box className={classes.currentSessionBox} style={{
-		  backgroundColor
-		}}>
-			<p>Current: <br/>{currentSessionName}</p>
+		<Box
+			className={classes.currentSessionBox}
+			style={{
+				backgroundColor
+			}}
+		>
+			<p>
+				Current: <br />
+				{currentSessionName}
+			</p>
 		</Box>
 	);
 };

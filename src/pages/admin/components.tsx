@@ -33,10 +33,10 @@ import {
 	Typography
 } from '@material-ui/core';
 
-export const AdminPanelTable: React.FC = (props: { users: UserState[] }) => {
+export const AdminPanelTable: React.FC<{ users: UserState[] }> = ({
+	users
+}) => {
 	const classes = useStyles();
-
-	const users = props.users;
 
 	return (
 		<TableContainer component={Paper} className={classes.tableContainer}>
@@ -44,7 +44,7 @@ export const AdminPanelTable: React.FC = (props: { users: UserState[] }) => {
 				<AdminPanelTableHead />
 				<TableBody>
 					{users.map((user) => (
-						<AdminPanelTableRow user={user} key={v4()}/>
+						<AdminPanelTableRow user={user} key={v4()} />
 					))}
 				</TableBody>
 			</Table>
@@ -52,36 +52,55 @@ export const AdminPanelTable: React.FC = (props: { users: UserState[] }) => {
 	);
 };
 
-const AdminPanelTableRow: React.FC = (props: { user: UserState }) => {
+// TODO: Solve the warning about user.creation being optional, even though its requied as part of the calculation, potentially breaking the application
+const AdminPanelTableRow: React.FC<{ user: UserState }> = ({ user }) => {
 	const classes = useStyles();
 
-	const user = props.user;
-
 	// TODO: Remove force unwrapping here. Make it safer.
-	const createdAt = new Date(user.creation! * 1000).toLocaleString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
+	const createdAt = new Date(user.creation! * 1000).toLocaleString('en-GB', {
+		day: 'numeric',
+		month: 'numeric',
+		year: 'numeric'
+	});
 
 	return (
 		<TableRow>
 			<TableCell>
 				<Grid container>
 					<Grid item lg={2}>
-						<Avatar alt={user.username} src='.' className={classes.avatar}/>
+						<Avatar
+							alt={user.username}
+							src="."
+							className={classes.avatar}
+						/>
 					</Grid>
 					<Grid item lg={10}>
-						<Typography className={classes.name}>{user.username}</Typography>
+						<Typography className={classes.name}>
+							{user.username}
+						</Typography>
 					</Grid>
 				</Grid>
 			</TableCell>
 
 			<TableCell>
-				<Typography className={classes.department} color="primary" variant="subtitle2">{user.department}</Typography>
+				<Typography
+					className={classes.department}
+					color="primary"
+					variant="subtitle2"
+				>
+					{user.department}
+				</Typography>
 			</TableCell>
 
 			<TableCell>
-				<div style={{
-				  color: getColorForPrivelege(user.privilege!),
-				  fontWeight: 'bold'
-				}}>{user.privilege}</div>
+				<div
+					style={{
+						color: getColorForPrivelege(user.privilege!),
+						fontWeight: 'bold'
+					}}
+				>
+					{user.privilege}
+				</div>
 			</TableCell>
 
 			<TableCell>
@@ -97,10 +116,18 @@ const AdminPanelTableHead: React.FC = () => {
 	return (
 		<TableHead>
 			<TableRow>
-				<TableCell className={classes.tableHeaderCell}>Username</TableCell>
-				<TableCell className={classes.tableHeaderCell}>Department</TableCell>
-				<TableCell className={classes.tableHeaderCell}>Privilege</TableCell>
-				<TableCell className={classes.tableHeaderCell}>Created At</TableCell>
+				<TableCell className={classes.tableHeaderCell}>
+					Username
+				</TableCell>
+				<TableCell className={classes.tableHeaderCell}>
+					Department
+				</TableCell>
+				<TableCell className={classes.tableHeaderCell}>
+					Privilege
+				</TableCell>
+				<TableCell className={classes.tableHeaderCell}>
+					Created At
+				</TableCell>
 			</TableRow>
 		</TableHead>
 	);

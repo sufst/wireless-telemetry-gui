@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
+import React from 'react';
 import { fetchAllUsers } from 'modules/api/users';
 import { useCallback, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -53,9 +53,7 @@ const Admin = () => {
 		fetchUsers();
 	}, [history, privilege, fetchUsers]);
 
-	return (
-		<AdminPanelContainer users={users} />
-	);
+	return <AdminPanelContainer users={users} />;
 };
 
 export default Admin;
