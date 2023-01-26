@@ -1,49 +1,42 @@
 {
-	"env": {
-		"browser": true,
-		"es2021": true
-	},
-	"extends": [
-		// Uses default rules for standardised typescript and react
-		"plugin:react/recommended",
-		"standard-with-typescript"
-	],
-	"overrides": [],
-	"parserOptions": {
-		"ecmaVersion": "latest",
-		"sourceType": "module",
-		"project": ["./tsconfig.json"] // Requires tsconfig to enforce typescript
-	},
-	"plugins": ["react"],
-	"rules": {
-		// Enforces the semi-colon rule, #Warning - Do not enable "semi", since the typescript version should enforce instead
-		"semi": "off",
-		"@typescript-eslint/semi": ["error", "always"],
-
-		// Exact same thing for indentation
-		"indent": "off",
-		"@typescript-eslint/indent": ["error", "tab"],
-		"no-tabs": 0,
-		"@typescript-eslint/member-delimiter-style": [
-			"error",
-			{
-				"multiline": {
-					"delimiter": "semi", // 'none' or 'semi' or 'comma'
-					"requireLast": true
-				},
-				"singleline": {
-					"delimiter": "semi", // 'semi' or 'comma'
-					"requireLast": false
-				}
-			}
-		],
-		"space-before-blocks": "off",
-		"@typescript-eslint/space-before-blocks" : "off",
-		"multiline-ternary" : "off"
-	},
-	"settings": {
-		"react": {
-			"version": "detect"
-		}
-	}
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "@typescript-eslint/quotes": "off",
+        "indent": [
+            "error",
+            "tab"
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "off",  // Temporarily disabled since i'm not bothered rn
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
 }

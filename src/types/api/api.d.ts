@@ -109,7 +109,7 @@ export interface SessionsGetResponse {
 }
 
 export type SessionCreate = (
-	accessToken: String,
+	accessToken: string,
 	name: string,
 	fields: SessionCreateFields
 ) => Promise;

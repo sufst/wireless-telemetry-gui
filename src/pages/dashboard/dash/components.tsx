@@ -269,7 +269,7 @@ const CurrentSessionBox: React.FC = (props: { currentSessionName: string }) => {
 
 	const { currentSessionName } = props;
 
-	let backgroundColor: string = 'grey';
+	let backgroundColor = 'grey';
 
 	if (currentSessionName === 'NOT RUNNING') {
 		backgroundColor = 'grey';

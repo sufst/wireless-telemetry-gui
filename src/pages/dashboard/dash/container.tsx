@@ -60,7 +60,7 @@ const Dash: React.FC = () => {
 
 	const handleStartSession = React.useCallback((e, name) => {
 		console.log('Starting From Component: ', name);
-		const driver: string = ''; const condition: string = '';
+		const driver = ''; const condition = '';
 		const sensors: string[] = allSensors;
 		const groups: string[] = sensorGroupNames;
 		dispatch(startSession({ name, driver, condition, sensors, groups }));

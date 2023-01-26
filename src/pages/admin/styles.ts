@@ -21,16 +21,16 @@ import { UserPrivilege } from 'types/models/user';
 
 export const getColorForPrivelege = (privilege: UserPrivilege) => {
 	switch (privilege) {
-		case 'Admin':
-			return 'red';
-		case 'Anon':
-			return 'blue';
-		case 'Basic':
-			return '#3399FF';
-		case 'Developer':
-			return 'yellow';
-		default:
-			break;
+	case 'Admin':
+		return 'red';
+	case 'Anon':
+		return 'blue';
+	case 'Basic':
+		return '#3399FF';
+	case 'Developer':
+		return 'yellow';
+	default:
+		break;
 	}
 };
 
