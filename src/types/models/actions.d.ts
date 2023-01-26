@@ -28,14 +28,14 @@ export interface SetUserAction {
 	creation: number;
 	privilege: UserPrivilege;
 	department: UserDepartment;
-	meta: UserMeta
+	meta: UserMeta;
 }
 
 export interface RegisterUserAction {
 	username: string;
 	password: string;
 	privilege: UserPrivilege;
-	department: UserDepartment
+	department: UserDepartment;
 }
 
 export type UserRegister = (
@@ -47,7 +47,7 @@ export type UserRegister = (
 
 export interface LoginUserAction {
 	username: string;
-	password: string
+	password: string;
 }
 
 //
@@ -58,7 +58,7 @@ export interface StartSessionAction {
 	driver: string;
 	condition: string;
 	sensors: string[];
-	groups: string[]
+	groups: string[];
 }
 
 export type StartSessionButtonAction = (
@@ -75,13 +75,13 @@ export type StartSessionButtonAction = (
 export interface UpdateSensorsMetaAction {
 	sensor: string;
 	key: string;
-	value: any
+	value: any;
 }
 
 export type BuildSensorsFromMetaAction = SensorsMeta;
 
 export interface InsertSensorsBulkDataAction {
-	[sensor: string]: SensorData[]
+	[sensor: string]: SensorData[];
 }
 
 //

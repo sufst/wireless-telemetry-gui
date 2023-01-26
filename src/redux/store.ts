@@ -27,7 +27,7 @@ import { alertMiddleware } from './middleware/alert';
 import { userMiddleware } from './middleware/user';
 import { sessionMiddleware } from './middleware/sessions';
 
-const store = configureStore({
+export const store = configureStore({
 	reducer: {
 		alert: alertReducer,
 		sensors: sensorsReducer,
@@ -44,3 +44,4 @@ const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
+export default store;

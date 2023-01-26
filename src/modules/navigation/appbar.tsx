@@ -46,7 +46,7 @@ interface NavigationBarProps {
 	handleDrawerOpen: () => void;
 	open: boolean;
 	onAccountClick: () => void;
-	user: UserState
+	user: UserState;
 }
 
 /**

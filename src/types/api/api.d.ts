@@ -33,7 +33,7 @@ export type SioConnect = (
 export type SioOnMetaHander = (meta: SensorsMeta) => void;
 
 export type SioOnDataHandler = (data: {
-	[sensor: string]: SensorData[]
+	[sensor: string]: SensorData[];
 }) => void;
 
 //
@@ -55,7 +55,7 @@ export interface UsersGetResponse {
 	creation: number;
 	privilege: UserPrivilege;
 	department: UserDepartment;
-	meta: string
+	meta: string;
 }
 
 export interface UsersPatchRequest {
@@ -63,7 +63,7 @@ export interface UsersPatchRequest {
 	[password: ?string]: string;
 	[privilege: ?string]: UserPrivilege;
 	[department: ?string]: UserDepartment;
-	[meta: ?string]: UserMeta
+	[meta: ?string]: UserMeta;
 }
 
 export type UsersPatch = (
@@ -79,7 +79,7 @@ export interface UserGetResponse {
 	creation: number;
 	privilege: UserPrivilege;
 	department: UserDepartment;
-	meta: string
+	meta: string;
 }
 
 export interface UserPatchRequest {
@@ -87,7 +87,7 @@ export interface UserPatchRequest {
 	[password: ?string]: string;
 	[privilege: ?string]: UserPrivilege;
 	[department: ?string]: UserDepartment;
-	[meta: ?string]: UserMeta
+	[meta: ?string]: UserMeta;
 }
 
 export type UserPatch = (
@@ -104,8 +104,8 @@ export interface SessionsGetResponse {
 	[name: string]: {
 		creation: number;
 		status: string;
-		sensors: [string]
-	}
+		sensors: [string];
+	};
 }
 
 export type SessionCreate = (
@@ -116,7 +116,7 @@ export type SessionCreate = (
 
 interface SessionCreateFields {
 	sessionMetadata: Object;
-	sessionSensors: Object
+	sessionSensors: Object;
 }
 
 export type SessionStop = (

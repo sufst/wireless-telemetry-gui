@@ -45,15 +45,13 @@ import { useStyles } from './styles';
 // Redux Imports
 import { loginUser } from 'redux/slices/user';
 import type { RootState } from 'redux/store';
-import { UserState } from 'types/models/user';
 
 const AppRouterSwitch: React.FC = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const selectUser: UserState = (state: RootState) => state.user;
-	const user = useSelector(selectUser);
+	const user = useSelector((state: RootState) => state.user);
 
 	React.useEffect(() => {
 		if (user.username === undefined) {

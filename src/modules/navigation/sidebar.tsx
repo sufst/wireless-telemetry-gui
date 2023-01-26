@@ -70,20 +70,26 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
 
 	const socialTitles = ['Instagram', 'Twitter', 'GitHub'];
 
+	// Using useMemo with 0 dependencies allows us to ignore rerendering these icons each time
+	// Not sure what keys to use, but 0-6 seemed to not warn lmao.
 	const actionIcons = useMemo(() => {
 		return [
-			<AccountCircleIcon />,
-			<SpeedIcon />,
-			<AccessTimeIcon />,
-			<SupervisorAccountIcon />,
-			<StorageIcon />,
-			<RssFeedIcon />,
-			<SettingsIcon />
+			<AccountCircleIcon key={0} />,
+			<SpeedIcon key={1} />,
+			<AccessTimeIcon key={2} />,
+			<SupervisorAccountIcon key={3} />,
+			<StorageIcon key={4} />,
+			<RssFeedIcon key={5} />,
+			<SettingsIcon key={6} />
 		];
 	}, []);
 
 	const socialIcons = useMemo(() => {
-		return [<InstagramIcon />, <TwitterIcon />, <GitHubIcon />];
+		return [
+			<InstagramIcon key={0} />,
+			<TwitterIcon key={1} />,
+			<GitHubIcon key={2} />
+		];
 	}, []);
 
 	const handleActionIconClicked = useMemo(
@@ -126,6 +132,8 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
 		[handleSocialIconClicked]
 	);
 
+	// Disabled this line since it was whinging about there beinng a missing return statement
+	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 	const openSocial = (url: string) => {
 		const win = window.open(url, '_blank');
 		win?.focus();
@@ -136,18 +144,18 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
 			<Drawer
 				variant="permanent"
 				className={clsx(classes.drawer, {
-					[classes.drawerOpen]: props.open,
-					[classes.drawerClose]: !props.open
+					[classes.drawerOpen]: open,
+					[classes.drawerClose]: !open
 				})}
 				classes={{
 					paper: clsx({
-						[classes.drawerOpen]: props.open,
-						[classes.drawerClose]: !props.open
+						[classes.drawerOpen]: open,
+						[classes.drawerClose]: !open
 					})
 				}}
 			>
 				<div className={classes.toolbar}>
-					<IconButton onClick={props.handleDrawerClose}>
+					<IconButton onClick={handleDrawerClose}>
 						{theme.direction === 'rtl' ? (
 							<ChevronRightIcon />
 						) : (

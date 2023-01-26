@@ -27,16 +27,19 @@ import type { RootState } from 'redux/store';
 import { SensorData } from 'types/models/sensor';
 import { GraphData } from 'types/models/ui-types';
 
-const SensorPaperHeaderContainer: React.FC = (props: { name: string }) => {
-	const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
-	const sensor = useSelector(selectSensorMeta);
+interface props {
+	name: string;
+}
+
+const SensorPaperHeaderContainer: React.FC<props> = ({ name }) => {
+	const sensor = useSelector((state: RootState) => state.sensors.sensors[name].meta);
 
 	const dispatch = useDispatch();
 
 	const onChange = React.useCallback((event) => {
 		event.preventDefault();
-		dispatch(updateSensorsMeta({ sensor: props.name, key: 'isDisplay', value: !sensor.isDisplay }));
-	}, [dispatch, props.name, sensor.isDisplay]);
+		dispatch(updateSensorsMeta({ sensor: name, key: 'isDisplay', value: !sensor.isDisplay }));
+	}, [dispatch, name, sensor.isDisplay]);
 
 	const HeaderTitle = React.memo(SensorPaperHeaderTitle);
 	const HeaderButton = React.memo(SensorPaperHeaderHideButton);

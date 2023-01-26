@@ -27,5 +27,5 @@ export interface AlertState {
 	timeout?: AlertTimeout;
 	level?: AlertLevel;
 	type?: AlertType;
-	text?: AlertText
+	text?: AlertText;
 }

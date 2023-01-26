@@ -30,7 +30,7 @@ export type UserDepartment = 'Electronics'
 export interface UserMeta {
 	dept?: string;
 	lastLogin?: string;
-	createdAt?: string
+	createdAt?: string;
 }
 
 export interface UserState {
@@ -39,5 +39,5 @@ export interface UserState {
 	privilege?: UserPrivilege;
 	creation?: number;
 	department: UserDepartment;
-	meta: UserMeta
+	meta: UserMeta;
 }

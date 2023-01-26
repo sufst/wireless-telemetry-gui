@@ -36,7 +36,10 @@
 					"requireLast": false
 				}
 			}
-		]
+		],
+		"space-before-blocks": "off",
+		"@typescript-eslint/space-before-blocks" : "off",
+		"multiline-ternary" : "off"
 	},
 	"settings": {
 		"react": {

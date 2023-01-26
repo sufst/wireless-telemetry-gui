@@ -22,5 +22,5 @@ export interface SessionState {
 	sessionConditions: string;
 	sessionSensors: string[];
 	sessionSensorGroups: string[];
-	isRunning: boolean
+	isRunning: boolean;
 }

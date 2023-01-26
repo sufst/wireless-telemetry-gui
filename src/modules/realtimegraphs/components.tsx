@@ -23,7 +23,7 @@ import { GraphData } from 'types/models/ui-types';
 
 export const SensorPaperHeaderHideButton: React.FC = (props: {
 	onChange: (event: any) => void;
-	checked: boolean
+	checked: boolean;
 }) => {
 	const classes = useStyles();
 
@@ -69,7 +69,7 @@ export const SensorGraph: React.FC = (props: {
 	xAxisDomainMax: string;
 	yAxisDomainMin: number;
 	yAxisDomainMax: number;
-	yAxisLabel: string
+	yAxisLabel: string;
 }) => {
 	const classes = useStyles();
 

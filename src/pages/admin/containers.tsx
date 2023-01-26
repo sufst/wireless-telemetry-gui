@@ -21,7 +21,7 @@ import { AdminPanelTable } from './components';
 import { useStyles } from './styles';
 
 interface AdminPanelProps {
-	users: UserState[]
+	users: UserState[];
 }
 
 export const AdminPanelContainer: React.FC<AdminPanelProps> = ({ users }) => {
