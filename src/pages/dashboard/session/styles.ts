@@ -137,7 +137,8 @@ export const useStyles = makeStyles((theme) => ({
 	sensorChooserBox: {
 		marginBottom: '1rem',
 		display: 'flex',
-		flexDirection: 'row'
+		flexDirection: 'row',
+        flexWrap: 'wrap'
 	},
 	sessionButtonStartBoxDisabled: {
 		color: 'white',

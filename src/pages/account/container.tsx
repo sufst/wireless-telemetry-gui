@@ -63,7 +63,7 @@ const AccountContainer = (props: { user: UserState; onLogoutClick: () => void; o
 					<CardHeader subheaderTypographyProps={subheaderProps}
 						avatar={
 							<Avatar aria-label="recipe" style={avatarColorStyle}>
-								{username?.charAt(0).toUpperCase() ?? 'B'}
+								{username?.charAt(0).toUpperCase() ?? ''}
 							</Avatar>
 						}
 						title={username}
