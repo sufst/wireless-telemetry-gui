@@ -40,12 +40,16 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import { SessionsGetResponse } from 'types/api/api';
 import { useStyles } from './styles';
 
-export const CurrentSessionHeader: React.FC = (props: { name: string }) => {
+// TODO: Need to fix the styling issues, including styles.ts
+export const CurrentSessionHeader: React.FC<{ name: string }> = ({ name }) => {
 	const classes = useStyles();
 
 	return (
 		<Typography variant="h6" className={classes.currentSessionTypo}>
-			<span className={classes.currentSessionText}>Current Session: </span><span className={classes.sessionName}>{props.name}</span>
+			<span className={classes.currentSessionText}>
+				Current Session:{' '}
+			</span>
+			<span className={classes.sessionName}>{props.name}</span>
 		</Typography>
 	);
 };
@@ -60,13 +64,33 @@ export const SessionPaper: React.FC = () => {
 	);
 };
 
-export const NewSessionContainer: React.FC = (props: { onSubmit: any; onStop: () => void; sensorGroups: string[]; isRunning: boolean; sessionMeta: { name: string; driver: string; conditions: string; sensorGroups: string[] } }) => {
+interface NewSessionContainerProps {
+	onSubmit: any;
+	onStop: () => void;
+	sensorGroups: string[];
+	isRunning: boolean;
+	sessionMeta: {
+		name: string;
+		driver: string;
+		conditions: string;
+		sensorGroups: string[];
+	};
+}
+
+export const NewSessionContainer: React.FC<NewSessionContainerProps> = ({
+	onSubmit,
+	sensorGroups,
+	isRunning,
+	sessionMeta
+}) => {
 	const classes = useStyles();
 
-	const [name, setName] = React.useState<string>(props.sessionMeta.name);
-	const [driver, setDriver] = React.useState(props.sessionMeta.driver);
-	const [condition, setCondition] = React.useState(props.sessionMeta.conditions);
-	const [sensorGroups, setSensorGroups] = React.useState<string[]>(props.sessionMeta.sensorGroups);
+	const [name, setName] = React.useState<string>(sessionMeta.name);
+	const [driver, setDriver] = React.useState(sessionMeta.driver);
+	const [condition, setCondition] = React.useState(sessionMeta.conditions);
+	const [sensorGroups, setSensorGroups] = React.useState<string[]>(
+		sessionMeta.sensorGroups
+	);
 
 	// Error state for the MUI FormControl
 	const [error, setError] = React.useState(false);
@@ -79,7 +103,11 @@ export const NewSessionContainer: React.FC = (props: { onSubmit: any; onStop: ()
 		} else {
 			return classes.sessionButtonStartBoxDisabled;
 		}
-	}, [isSessionRunning, classes.sessionButtonStartBox, classes.sessionButtonStartBoxDisabled]);
+	}, [
+		isSessionRunning,
+		classes.sessionButtonStartBox,
+		classes.sessionButtonStartBoxDisabled
+	]);
 
 	const stopButtonClasses = React.useCallback(() => {
 		if (!isSessionRunning) {
@@ -87,7 +115,11 @@ export const NewSessionContainer: React.FC = (props: { onSubmit: any; onStop: ()
 		} else {
 			return classes.sessionButtonStopBox;
 		}
-	}, [isSessionRunning, classes.sessionButtonStopBox, classes.sessionButtonStopBoxDisabled]);
+	}, [
+		isSessionRunning,
+		classes.sessionButtonStopBox,
+		classes.sessionButtonStopBoxDisabled
+	]);
 
 	const startPressed = React.useCallback(() => {
 		if (name === '' || sensorGroups.length === 0) {
@@ -109,43 +141,57 @@ export const NewSessionContainer: React.FC = (props: { onSubmit: any; onStop: ()
 
 	// Called when one of the checkboxes is clicked.
 	// Sets the sensorGroups state array with the new values.
-	const onSensorChange = React.useCallback((newSensorGroup: string) => {
-		if (sensorGroups.includes(newSensorGroup)) {
-			setSensorGroups(sensorGroups.filter(sensorGroup => sensorGroup !== newSensorGroup));
-		} else {
-			const newSensors = sensorGroups.concat(newSensorGroup);
-			setSensorGroups(newSensors);
-		}
-	}, [sensorGroups]);
+	const onSensorChange = React.useCallback(
+		(newSensorGroup: string) => {
+			if (sensorGroups.includes(newSensorGroup)) {
+				setSensorGroups(
+					sensorGroups.filter(
+						(sensorGroup) => sensorGroup !== newSensorGroup
+					)
+				);
+			} else {
+				const newSensors = sensorGroups.concat(newSensorGroup);
+				setSensorGroups(newSensors);
+			}
+		},
+		[sensorGroups]
+	);
 
 	return (
 		<>
 			<p className={classes.newSessionText}>New Session</p>
-			<FormControl error={error} >
+			<FormControl error={error}>
 				<Box>
-					<TextField label="Session Name"
+					<TextField
+						label="Session Name"
 						className={classes.newSessionTextField}
 						value={name}
 						disabled={isSessionRunning}
-						helperText={isSessionRunning ? 'Session is already running' : null}
-						onChange={e => {
-						  setName(e.target.value);
+						helperText={
+							isSessionRunning
+								? 'Session is already running'
+								: null
+						}
+						onChange={(e) => {
+							setName(e.target.value);
 						}}
 					/>
-					<TextField label="Driver"
+					<TextField
+						label="Driver"
 						className={classes.newSessionTextFieldMargin}
 						value={driver}
 						disabled={isSessionRunning}
-						onChange={e => {
-						  setDriver(e.target.value);
+						onChange={(e) => {
+							setDriver(e.target.value);
 						}}
 					/>
-					<TextField label="Conditions"
+					<TextField
+						label="Conditions"
 						className={classes.newSessionTextFieldMargin}
 						value={condition}
 						disabled={isSessionRunning}
-						onChange={e => {
-						  setCondition(e.target.value);
+						onChange={(e) => {
+							setCondition(e.target.value);
 						}}
 					/>
 				</Box>
@@ -155,28 +201,26 @@ export const NewSessionContainer: React.FC = (props: { onSubmit: any; onStop: ()
 					onSensorChangeCallback={onSensorChange}
 					disabled={isSessionRunning}
 				/>
-				{
-					isSessionRunning &&
-                        <p className={classes.sessionAlreadyRunningText}>
-                            Session is already running. You can't edit these now.
-                        </p>
-				}
-				{
-					error &&
-                    <FormHelperText>
-                        Set a name and choose at least one sensor
-                    </FormHelperText>
-				}
+				{isSessionRunning && (
+					// We are using &apos; to conform to eslints rule of no-unescaped-entities
+					<p className={classes.sessionAlreadyRunningText}>
+						Session is already running. You can&apos;t edit these
+						now.
+					</p>
+				)}
+				{error && (
+					<FormHelperText>
+						Set a name and choose at least one sensor
+					</FormHelperText>
+				)}
 				<Grid container className={classes.gridContainer} spacing={3}>
 					<Grid item xs={4} onClick={startPressed}>
 						<Box className={startButtonClasses()}>
-                            Start Session
+							Start Session
 						</Box>
 					</Grid>
 					<Grid item xs={4} onClick={stopPressed}>
-						<Box className={stopButtonClasses()}>
-                            Stop Session
-						</Box>
+						<Box className={stopButtonClasses()}>Stop Session</Box>
 					</Grid>
 				</Grid>
 			</FormControl>
@@ -184,17 +228,27 @@ export const NewSessionContainer: React.FC = (props: { onSubmit: any; onStop: ()
 	);
 };
 
-export const SensorChooser: React.FC = (props: { allGroups: string[]; selectedGroups: string[]; onSensorChangeCallback: (sensor: string) => void; disabled: boolean }) => {
-	const checkboxes = props.allGroups.map(groupName => {
+export const SensorChooser: React.FC = (props: {
+	allGroups: string[];
+	selectedGroups: string[];
+	onSensorChangeCallback: (sensor: string) => void;
+	disabled: boolean;
+}) => {
+	const checkboxes = props.allGroups.map((groupName) => {
 		return (
 			<FormControlLabel
-				control = { <Checkbox id={groupName}
-					checked={props.selectedGroups.includes(groupName)}
-					onChange={() => props.onSensorChangeCallback(groupName)}
-					style={{ color: 'lightBlue' }}
-				/> }
-				label={ groupName }
-				disabled={props.disabled} />
+				key={groupName}
+				control={
+					<Checkbox
+						id={groupName}
+						checked={props.selectedGroups.includes(groupName)}
+						onChange={() => props.onSensorChangeCallback(groupName)}
+						style={{ color: 'lightBlue' }}
+					/>
+				}
+				label={groupName}
+				disabled={props.disabled}
+			/>
 		);
 	});
 
@@ -202,30 +256,42 @@ export const SensorChooser: React.FC = (props: { allGroups: string[]; selectedGr
 
 	return (
 		<Box className={classes.sensorChooserBox}>
-			<FormLabel component="legend" className={classes.formLabel}>Sensors</FormLabel>
+			<FormLabel component="legend" className={classes.formLabel}>
+				Sensors
+			</FormLabel>
 			{checkboxes}
 		</Box>
 	);
 };
 
-export const SessionTable: React.FC = (props: { sessionData: SessionsGetResponse }) => {
+export const SessionTable: React.FC = (props: {
+	sessionData: SessionsGetResponse;
+}) => {
 	const classes = useStyles();
 
 	let sessionEntries = Object.entries(props.sessionData);
-	sessionEntries = sessionEntries.sort((a, b) => (b[1].creation - a[1].creation)).slice(0, 10);
-	const info = sessionEntries.map(sessionEntry => {
+	sessionEntries = sessionEntries
+		.sort((a, b) => b[1].creation - a[1].creation)
+		.slice(0, 10);
+	const info = sessionEntries.map((sessionEntry) => {
 		const name = sessionEntry[0];
 		const sessionInfo = sessionEntry[1];
 		return {
 			name,
 			status: sessionInfo.status,
-			created: (new Date(sessionInfo.creation)).toString(),
-			actions: <>
-				{/* TODO: Add callback to download data and add button to stop session */}
-				<IconButton color="primary" aria-label="upload picture" component="span">
-					<GetAppIcon />
-				</IconButton>
-			</>
+			created: new Date(sessionInfo.creation).toString(),
+			actions: (
+				<>
+					{/* TODO: Add callback to download data and add button to stop session */}
+					<IconButton
+						color="primary"
+						aria-label="upload picture"
+						component="span"
+					>
+						<GetAppIcon />
+					</IconButton>
+				</>
+			)
 		};
 	});
 	return (
@@ -247,9 +313,15 @@ export const SessionTable: React.FC = (props: { sessionData: SessionsGetResponse
 								<TableCell component="th" scope="row">
 									{sessionEntry.name}
 								</TableCell>
-								<TableCell align="right">{sessionEntry.status}</TableCell>
-								<TableCell align="right">{sessionEntry.created}</TableCell>
-								<TableCell align="right">{sessionEntry.actions}</TableCell>
+								<TableCell align="right">
+									{sessionEntry.status}
+								</TableCell>
+								<TableCell align="right">
+									{sessionEntry.created}
+								</TableCell>
+								<TableCell align="right">
+									{sessionEntry.actions}
+								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>
