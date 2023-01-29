@@ -20,9 +20,7 @@ import { Middleware } from 'redux';
 import { removeAlert } from '../slices/alert';
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
-// TODO: Not sure why previously it was `alertMiddleware: Middleware<{}, any>`, had to change to "any" so that it passes the linting process, 
-// since it complains "Don't use `{}` as a type. `{}` actually means "any non-nullish value"."
-export const alertMiddleware: Middleware<any, any> = storeAPI => next => action => {
+export const alertMiddleware: Middleware<{}, any> = storeAPI => next => action => {
 	if (action.type === 'alert/showAlert') {
 		setTimeout(() => {
 			storeAPI.dispatch(removeAlert());

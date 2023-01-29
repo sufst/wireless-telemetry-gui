@@ -16,9 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = withStyles(theme => ({
+export const useStyles = makeStyles((theme) => ({
 	root: {
 		width: '100%',
 		margin: '0'
