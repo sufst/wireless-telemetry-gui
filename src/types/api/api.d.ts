@@ -108,7 +108,7 @@ export type SessionsGetResponse = {
   }
 };
 
-export type SessionDetailGet = (String) => Promise;
+export type SessionDetailGet = (string, string) => Promise;
 
 export type SessionDetailGetResponse = {
   meta: {

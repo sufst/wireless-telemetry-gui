@@ -18,8 +18,6 @@
 
 import {
     Paper,
-    Box,
-    FormLabel,
     IconButton,
     Table,
     TableBody,
@@ -27,13 +25,12 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    Grid,
 } from "@material-ui/core";
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { SessionsGetResponse } from "types/api/api";
 import { useStyles } from "../dashboard/session/styles";
-import download from 'downloadjs';
-import { getSessionDetail } from "modules/api/sessions";
+import { getSessionDetail } from "redux/slices/sessions";
+import { useDispatch } from "react-redux";
 
 export const SessionPaper = () => {
     const classes = useStyles();
@@ -46,8 +43,7 @@ export const SessionPaper = () => {
 }
 
 export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
-    const classes = useStyles();
-
+    const dispatch = useDispatch();
     const sessionEntries = Object.entries(props.sessionData);
     console.log("sessionData",props.sessionData);
     console.log("sessionEntries",sessionEntries);
@@ -59,7 +55,7 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
             status: sessionInfo.status,
             created: (new Date(sessionInfo.creation)).toString(),
             actions: <>
-                <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => saveSession(name)}>
+                <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => dispatch(getSessionDetail({name}))}>
                     <GetAppIcon />
                 </IconButton>
             </>
@@ -67,11 +63,6 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
     });
     return (
         <div>
-            <p className={classes.newSessionText}>All Sessions</p>
-            <Box className={classes.sensorChooserBox}>
-            <FormLabel component="legend" className={classes.formLabel}>Sensors</FormLabel>
-            <Grid onClick={ () => saveCSV(sessionEntries) }>Download</Grid>
-        </Box>
             <TableContainer component={Paper}>
                 <Table aria-label="customized table">
                     <TableHead>
@@ -98,23 +89,4 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
             </TableContainer>
         </div>
     )
-}
-
-const saveCSV = (sessionEntries: [string, {
-    creation: number;
-    status: string;
-    sensors: [string];
-}][]) => {
-    let output = "Name,Creation,Status,Sensors";
-    for (let entry of sessionEntries) {
-        const sensors = JSON.parse(entry[1].sensors.toString()).join(';');
-        console.log(sensors);
-        output += `\n${entry[0]},${entry[1].creation},${entry[1].status},${sensors}`;
-    }
-    download(output, "sessions.csv", "text/csv;charset=utf-8");
-}
-
-const saveSession = async (name: String) => {
-    const sessionData = await getSessionDetail(name);
-    download(sessionData, name + ".zip", "application/zip");
 }

@@ -131,11 +131,12 @@ export const getAllSessions: SessionsGet = async () => {
 /**
  * Getting details of one of the sessions in the database 
  */
-const handleGetSessionDetail = async (name: String) => {
+const handleGetSessionDetail = async (name: String, accessToken: string) => {
   const response = await fetch(`http://${url}/sessions/${name}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/zip",
+      Authorization: "Bearer " + accessToken,
     },
   })
 
@@ -147,9 +148,9 @@ const handleGetSessionDetail = async (name: String) => {
   return data;
 }
 
-export const getSessionDetail: SessionDetailGet = async (name: String) => {
+export const getSessionDetail: SessionDetailGet = async (name: string, token: string) => {
   try {
-    const sessionResponse = await handleGetSessionDetail(name);
+    const sessionResponse = await handleGetSessionDetail(name, token);
     return sessionResponse;
   }
   catch (statusText) {
