@@ -135,7 +135,7 @@ const handleGetSessionDetail = async (name: String) => {
   const response = await fetch(`http://${url}/sessions/${name}`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/zip",
     },
   })
 
@@ -143,7 +143,7 @@ const handleGetSessionDetail = async (name: String) => {
     throw response.statusText;
   }
 
-  const data = await response.json();
+  const data = await response.blob();
   return data;
 }
 

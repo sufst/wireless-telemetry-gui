@@ -114,20 +114,12 @@ export type SessionDetailGetResponse = {
   meta: {
     condition: String,
     creation: Number,
-    driver: String
+    driver: String,
     sensors: [String],
   },
   notes: [],
   data: {
-    rpm: [{ epoch: Number, value: Number }],
-    water_temp_c: [{ epoch: Number, value: Number }],
-    ride_height_fr_cm: [{ epoch: Number, value: Number }],
-    ride_height_flw_cm: [{ epoch: Number, value: Number }],
-    ride_height_rear_cm: [{ epoch: Number, value: Number }],
-    lap_time_s: [{ epoch: Number, value: Number }],
-    accel_fl_x_mg: [{ epoch: Number, value: Number }],
-    accel_fl_y_mg: [{ epoch: Number, value: Number }],
-    accel_fl_z_mg: [{ epoch: Number, value: Number }],
+    String: [{ epoch: Number, value: Number }]
   },
 };
 

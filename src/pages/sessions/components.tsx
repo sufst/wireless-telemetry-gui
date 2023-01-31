@@ -116,5 +116,5 @@ const saveCSV = (sessionEntries: [string, {
 
 const saveSession = async (name: String) => {
     const sessionData = await getSessionDetail(name);
-    download(JSON.stringify(sessionData), "session.json", "application/json;charset=utf-8");
+    download(sessionData, name + ".zip", "application/zip");
 }
