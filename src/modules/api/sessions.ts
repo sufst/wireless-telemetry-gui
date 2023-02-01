@@ -17,7 +17,7 @@
 */
 
 import { url } from "config";
-import { SessionCreate, SessionCreateFields, SessionsGet, SessionStop } from "types/api/api";
+import { SessionDetailGet, SessionCreate, SessionCreateFields, SessionsGet, SessionStop } from "types/api/api";
 
 /**
  * Creating new sessions 
@@ -27,36 +27,36 @@ import { SessionCreate, SessionCreateFields, SessionsGet, SessionStop } from "ty
  */
 const handleCreateSession: SessionCreate = async (accessToken, name, fields) => {
   const response = await fetch(`http://${url}/sessions/${name}`, {
-    method: "POST", 
+    method: "POST",
     headers: {
-      "Content-Type": "application/json", 
+      "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
-    }, 
+    },
     body: JSON.stringify({
-      meta: fields.sessionMetadata, 
+      meta: fields.sessionMetadata,
       sensors: fields.sessionSensors
     })
   })
 
   if (!response.ok) {
-    throw response.statusText; 
+    throw response.statusText;
   }
 
-  const data = await response.json(); 
-  return data; 
+  const data = await response.json();
+  return data;
 }
 
 export const createSession = async (accessToken: string, name: string, sessionMeta: object, sessionSensors: Array<string>) => {
 
   const fields: SessionCreateFields = {
-    sessionMetadata: sessionMeta, 
+    sessionMetadata: sessionMeta,
     sessionSensors: sessionSensors
   };
 
   try {
-    const response = await handleCreateSession(accessToken, name, fields); 
+    const response = await handleCreateSession(accessToken, name, fields);
     return response;
-  } 
+  }
   catch (statusText) {
     console.log('Error creating new session: ', statusText);
     return null;
@@ -70,28 +70,28 @@ export const createSession = async (accessToken: string, name: string, sessionMe
  */
 const handleSessionStop = async (name: string, accessToken: string) => {
   const response = await fetch(`http://${url}/sessions/${name}`, {
-    method: "PATCH", 
+    method: "PATCH",
     headers: {
-      "Content-Type": "application/json", 
+      "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
-    }, 
+    },
     body: JSON.stringify({
       status: 'dead'
     })
   })
 
   if(!response.ok) {
-    throw response.statusText; 
+    throw response.statusText;
   }
-  
+
   return response;
 }
 
 export const stopSession: SessionStop = async (name, token) => {
   try {
-    const response = await handleSessionStop(name, token); 
-    return response; 
-  } 
+    const response = await handleSessionStop(name, token);
+    return response;
+  }
   catch (statusText) {
     console.log('Error Stopping session: ', statusText);
     return null;
@@ -110,20 +110,51 @@ const handleGetAllSessions = async () => {
   })
 
   if(!response.ok) {
-    throw response.statusText; 
+    throw response.statusText;
   }
 
-  const data = await response.json(); 
+  const data = await response.json();
   return data;
 }
 
 export const getAllSessions: SessionsGet = async () => {
   try {
-    const sessionResponse = await handleGetAllSessions(); 
-    return sessionResponse; 
-  } 
+    const sessionResponse = await handleGetAllSessions();
+    return sessionResponse;
+  }
   catch (statusText) {
     console.log('Error in Sessions GET: ', statusText);
+    return null;
+  }
+};
+
+/**
+ * Getting details of one of the sessions in the database 
+ */
+const handleGetSessionDetail = async (name: String, accessToken: string) => {
+  const response = await fetch(`http://${url}/sessions/${name}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/zip",
+      Authorization: "Bearer " + accessToken,
+    },
+  })
+
+  if (!response.ok) {
+    throw response.statusText;
+  }
+
+  const data = await response.blob();
+  return data;
+}
+
+export const getSessionDetail: SessionDetailGet = async (name: string, token: string) => {
+  try {
+    const sessionResponse = await handleGetSessionDetail(name, token);
+    return sessionResponse;
+  }
+  catch (statusText) {
+    console.log('Error in Session Detail GET: ', statusText);
     return null;
   }
 };

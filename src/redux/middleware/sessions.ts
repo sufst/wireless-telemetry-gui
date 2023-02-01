@@ -17,8 +17,9 @@
 */
 
 // Module Imports
+import download from "downloadjs";
 import { createAlert } from "modules/alert/alert";
-import { createSession, stopSession } from "modules/api/sessions";
+import { createSession, getSessionDetail, stopSession } from "modules/api/sessions";
 import { Middleware } from "redux";
 import { showAlert } from "redux/slices/alert";
 
@@ -72,6 +73,11 @@ export const sessionMiddleware: Middleware<{}, any> =
         }
 
         return next(action);
+    }
+
+    if (action.type === "session/getSessionDetail") {
+        const response = await getSessionDetail(action.payload.name, storeAPI.getState().user.accessToken);
+        download(response, action.payload.name + ".zip", "application/zip");
     }
 
     return next(action);

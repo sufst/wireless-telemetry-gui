@@ -70,6 +70,9 @@ export type StartSessionButtonAction = (
     groups: Array<string>
 ) => void;
 
+export type GetSessionDetailAction = {
+    name: string,
+}
 
 //
 // SENSORS

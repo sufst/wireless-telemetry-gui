@@ -33,6 +33,7 @@ import { SignIn } from "pages/signin/index";
 import AppNavigation from "modules/navigation/navigation";
 import { Register } from 'pages/registration';
 import Alert from 'modules/alert/alert';
+import Sessions from 'pages/sessions';
 
 // Styles
 import { useStyles } from "./styles";
@@ -93,6 +94,12 @@ const AppRouterSwitch = () => {
                 <Paper className={classes.viewPaper}>
                     <Alert /> 
                     <Admin />
+                </Paper> 
+            </Route>
+            <Route path="/sessions" exact>
+                <Paper className={classes.viewPaper}>
+                    <Alert /> 
+                    <Sessions />
                 </Paper> 
             </Route>
             <Route path="*">

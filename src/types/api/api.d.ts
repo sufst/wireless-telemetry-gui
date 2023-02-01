@@ -25,28 +25,28 @@ export type LoginUser = (username: string, password: string) => Promise;
 // SocketIO
 //
 export type SioConnect = (
-    accessToken: string,
-    onMeta: SioOnMetaHander,
-    onData: SioOnDataHandler
+  accessToken: string,
+  onMeta: SioOnMetaHander,
+  onData: SioOnDataHandler
 ) => void;
 
 export type SioOnMetaHander = (meta: SensorsMeta) => void;
 
 export type SioOnDataHandler = (data: {
-    [sensor: string]: Array<SensorData>;
+  [sensor: string]: Array<SensorData>;
 }) => void;
 
 //
 // USER(S)
 //
 export type UsersCreate = (
-    username: string,
-    password: string,
-    privilege: UserPrivilege,
-    department: UserDepartment,
-    meta: object,
-    accessToken: string
-  ) => Promise;
+  username: string,
+  password: string,
+  privilege: UserPrivilege,
+  department: UserDepartment,
+  meta: object,
+  accessToken: string
+) => Promise;
 
 export type UsersGet = (username: string, accessToken: string) => Promise;
 
@@ -54,7 +54,7 @@ export type UsersGetResponse = {
   username: string;
   creation: number;
   privilege: UserPrivilege;
-  department: UserDepartment; 
+  department: UserDepartment;
   meta: string;
 };
 
@@ -78,7 +78,7 @@ export type UserGetResponse = {
   username: string;
   creation: number;
   privilege: UserPrivilege;
-  department: UserDepartment; 
+  department: UserDepartment;
   meta: string;
 };
 
@@ -86,7 +86,7 @@ export type UserPatchRequest = {
   [username: ?string]: string;
   [password: ?string]: string;
   [privilege: ?string]: UserPrivilege;
-  [department: ?string]: UserDepartment; 
+  [department: ?string]: UserDepartment;
   [meta: ?string]: UserMeta;
 };
 
@@ -101,25 +101,40 @@ export type UserPatch = (
 export type SessionsGet = () => Promise;
 
 export type SessionsGetResponse = {
-    [name: string]: {
-        creation: number,
-        status: string,
-        sensors: [string]
-    }
+  [name: string]: {
+    creation: number,
+    status: string,
+    sensors: [string]
+  }
+};
+
+export type SessionDetailGet = (string, string) => Promise;
+
+export type SessionDetailGetResponse = {
+  meta: {
+    condition: string,
+    creation: Number,
+    driver: string,
+    sensors: [string],
+  },
+  notes: [],
+  data: {
+    string: [{ epoch: Number, value: Number }]
+  },
 };
 
 export type SessionCreate = (
-  accessToken: String, 
-  name: string, 
+  accessToken: string,
+  name: string,
   fields: SessionCreateFields
-) => Promise; 
+) => Promise;
 
 type SessionCreateFields = {
-  sessionMetadata: Object, 
+  sessionMetadata: Object,
   sessionSensors: Object
-}; 
+};
 
 export type SessionStop = (
-  name: string, 
+  name: string,
   accessToken: string
 ) => Promise;

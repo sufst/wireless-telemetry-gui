@@ -17,7 +17,7 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { StartSessionAction } from "types/models/actions";
+import { GetSessionDetailAction, StartSessionAction } from "types/models/actions";
 import { SessionState } from "types/models/session";
 
 const initialState: SessionState = {
@@ -35,6 +35,7 @@ export const sessionSlice = createSlice({
   reducers: {
     getAllSessions: () => {
     },
+    getSessionDetail: (state: SessionState, action: PayloadAction<GetSessionDetailAction>) => {},
     startSession: (state: SessionState, action: PayloadAction<StartSessionAction>) => {      
       state.sessionName = action.payload.name
       state.sessionDriver = action.payload.driver
@@ -54,6 +55,11 @@ export const sessionSlice = createSlice({
   },
 });
 
-export const { getAllSessions, startSession, stopSession } = sessionSlice.actions;
+export const {
+  getAllSessions,
+  getSessionDetail,
+  startSession,
+  stopSession
+} = sessionSlice.actions;
 
 export default sessionSlice.reducer;
