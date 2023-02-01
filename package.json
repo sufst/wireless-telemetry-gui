@@ -33,7 +33,6 @@
     "socket.io-client": "^4.0.0",
     "typescript": "^4.2.4",
     "web-vitals": "^1.1.0",
-    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
