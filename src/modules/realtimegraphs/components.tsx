@@ -66,31 +66,32 @@ export const SensorGraph = (props: {
 
     return (
         <LineChart
-            width={props.width}
-            height={400}
-            data={props.data}
-            margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 30
-            }}
-            >
-            <CartesianGrid strokeDasharray="4 4 4 " />
-            <XAxis dataKey="time" domain={[props.xAxisDomainMin, props.xAxisDomainMax]} stroke='#d0d0d0'>
-                <Label value="Time (s)" offset={5} position="bottom" className={classes.sensorGraph}/>
-            </XAxis>
-            <YAxis domain={[props.yAxisDomainMin, props.yAxisDomainMax]} stroke='#d0d0d0'>
-                <Label value={props.yAxisLabel} offset={-10} position="insideLeft" angle={-90} className={classes.sensorGraph}/>
-            </YAxis>
-            <Line
-                type="monotone"
-                isAnimationActive={false}
-                dataKey="value"
-                stroke="#66b2ff"
-                strokeWidth={3}
-                dot={false}
-            />
-        </LineChart>
+        width={props.width}
+        height={400}
+        data={props.data}
+        margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 30
+        }}
+        >
+        <CartesianGrid strokeDasharray="4 4 4 " />
+        <XAxis dataKey="time" domain={[props.xAxisDomainMin, props.xAxisDomainMax]} stroke='#d0d0d0'>
+            <Label value="Time (s)" offset={5} position="bottom" className={classes.sensorGraph}/>
+        </XAxis>
+        <YAxis domain={[props.yAxisDomainMin, props.yAxisDomainMax]} stroke='#d0d0d0'>
+            <Label value={props.yAxisLabel} offset={-10} position="insideLeft" angle={-90} className={classes.sensorGraph}/>
+        </YAxis>
+        <Line
+            type="monotone"
+            isAnimationActive={false}
+            dataKey="value"
+            stroke="#66b2ff"
+            strokeWidth={3}
+            dot={false}
+        />
+    </LineChart>      
     );
 }
+

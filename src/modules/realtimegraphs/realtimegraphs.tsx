@@ -29,7 +29,6 @@ import type { RootState} from "redux/store";
 import { SensorData } from 'types/models/sensor';
 import { GraphData } from 'types/models/ui-types';
 
-
 const SensorPaperHeaderContainer = (props: { name: string }) => {
     const selectSensorMeta = (state: RootState) => state.sensors.sensors[props.name].meta;
     const sensor = useSelector(selectSensorMeta);
@@ -78,7 +77,6 @@ const SensorGraphContainer = (props: { name: string }) => {
     const inData = useSelector(selectSensorData); 
 
     const graphData = convertDataToGraphData(trimData(inData, sensor.timeEndS));
-
     const LiveValue = memo(SensorLiveValue);
     const Graph = memo(SensorGraph);
     const date = new Date();

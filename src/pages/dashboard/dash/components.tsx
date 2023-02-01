@@ -144,7 +144,7 @@ export const DashSensorsItem = (props: { name: string }) => {
     const lastValue = data[data?.length-1]?.value;  
     
     return (
-        <Grid item xs={2}>
+        <Grid item xs={12} sm={4} lg={2}>
             <Box className={classes.sensorBox}>
                 <div>{sensor?.meta?.name}:<br/><span className={classes.sensorLastValue}>{lastValue} </span>{sensor?.meta?.units}</div>
             </Box>
@@ -258,15 +258,15 @@ export const DashSession = (props: { handleStart: (event: any, name: string) => 
         <>
             <p className={classes.sensorsText}>Session</p>
             <Grid container className={classes.gridContainer} spacing={3}>
-                <Grid item xs={4}>
+                <Grid item xs={12} lg={4}>
                     <CurrentSessionBox currentSessionName={sessionNameLabelText}/>
                 </Grid>
-                <Grid item xs={4} onClick={startPressed}>
+                <Grid item xs={12} lg={4} onClick={startPressed}>
                     <Box className={startButtonClasses()}>
                         Start Session
                     </Box>
                 </Grid>
-                <Grid item xs={4} onClick={stopPressed}>
+                <Grid item xs={12} lg={4} onClick={stopPressed}>
                     <Box className={stopButtonClasses()}>
                         Stop Session
                     </Box>
