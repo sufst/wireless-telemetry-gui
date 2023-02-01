@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import { useStyles } from "./styles"
-import {  Switch, FormControlLabel, Typography, Button } from '@material-ui/core';
+import {  Switch, FormControlLabel, Typography } from '@material-ui/core';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Label } from "recharts";
 import { GraphData } from "types/models/ui-types";
 
