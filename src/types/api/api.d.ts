@@ -112,19 +112,19 @@ export type SessionDetailGet = (string, string) => Promise;
 
 export type SessionDetailGetResponse = {
   meta: {
-    condition: String,
+    condition: string,
     creation: Number,
-    driver: String,
-    sensors: [String],
+    driver: string,
+    sensors: [string],
   },
   notes: [],
   data: {
-    String: [{ epoch: Number, value: Number }]
+    string: [{ epoch: Number, value: Number }]
   },
 };
 
 export type SessionCreate = (
-  accessToken: String,
+  accessToken: string,
   name: string,
   fields: SessionCreateFields
 ) => Promise;
