@@ -39,7 +39,7 @@ registerRoute(
 
 // Images: serve cached version, or from network if not in cache
 registerRoute(
-  ({ request, sameOrigin }) => sameOrigin && request.destination === 'image',
+  ({ event }) => event.request.destination === 'image',
   new CacheFirst({
     cacheName: 'images',
   })
@@ -47,7 +47,7 @@ registerRoute(
 
 // Manifest: serve cached version, or from network if not in cache
 registerRoute(
-  ({ request, sameOrigin }) => sameOrigin && request.destination === 'manifest',
+  ({ event }) => event.request.destination === 'manifest',
   new CacheFirst({
     cacheName: 'manifest',
   })
