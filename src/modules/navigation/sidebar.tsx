@@ -34,6 +34,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import { useTheme } from '@material-ui/core/styles';
 import { useStyles } from './styles'
+import InstallListItem from './InstallListItem';
 
 // Material UI Icons Imports 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -144,6 +145,7 @@ const AppSideBar = (props: { handleDrawerClose: () => void , open: boolean }) =>
             </List>
             <Divider />
             <List>
+                <InstallListItem key={'install'} />
                 {socialTitles.map((text, index) => (
                 <ListItem button key={text} onClick={() => onSocialClick(index)}>
                     <ListItemIcon >
