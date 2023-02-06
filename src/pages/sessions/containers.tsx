@@ -29,8 +29,10 @@ export const SessionContainer = () => {
     const [sessionData, setSessionData] = useState({})
 
     const fetchAllSessions = useCallback(async () => {
-        const sessions = await getAllSessions();
-        setSessionData(sessions); 
+        const [sessions] = await getAllSessions();
+        if (sessions) {
+            setSessionData(sessions);
+        }
      }, [])
 
     useEffect(() => {

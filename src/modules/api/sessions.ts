@@ -26,24 +26,28 @@ import { SessionDetailGet, SessionCreate, SessionCreateFields, SessionsGet, Sess
  * @param fields Object housing the session metadata and sensors to be saved. 
  */
 const handleCreateSession: SessionCreate = async (accessToken, name, fields) => {
-  const response = await fetch(`http://${url}/sessions/${name}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken,
-    },
-    body: JSON.stringify({
-      meta: fields.sessionMetadata,
-      sensors: fields.sessionSensors
+  try {
+    const response = await fetch(`http://${url}/sessions/${name}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+      body: JSON.stringify({
+        meta: fields.sessionMetadata,
+        sensors: fields.sessionSensors
+      })
     })
-  })
 
-  if (!response.ok) {
-    throw response.statusText;
+    if (!response.ok) {
+      throw response.statusText;
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error('offline');
   }
-
-  const data = await response.json();
-  return data;
 }
 
 export const createSession = async (accessToken: string, name: string, sessionMeta: object, sessionSensors: Array<string>) => {
@@ -55,11 +59,11 @@ export const createSession = async (accessToken: string, name: string, sessionMe
 
   try {
     const response = await handleCreateSession(accessToken, name, fields);
-    return response;
+    return [response, false];
   }
-  catch (statusText) {
-    console.log('Error creating new session: ', statusText);
-    return null;
+  catch (error: any) {
+    console.log('Error creating new session: ', error);
+    return [null, error.message === 'offline'];
   }
 }
 
@@ -69,32 +73,36 @@ export const createSession = async (accessToken: string, name: string, sessionMe
  * @param accessToken JWT authentication token 
  */
 const handleSessionStop = async (name: string, accessToken: string) => {
-  const response = await fetch(`http://${url}/sessions/${name}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken,
-    },
-    body: JSON.stringify({
-      status: 'dead'
+  try {
+    const response = await fetch(`http://${url}/sessions/${name}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+      body: JSON.stringify({
+        status: 'dead'
+      })
     })
-  })
 
-  if(!response.ok) {
-    throw response.statusText;
+    if (!response.ok) {
+      throw response.statusText;
+    }
+
+    return response;
+  } catch (error) {
+    throw new Error('offline');
   }
-
-  return response;
 }
 
 export const stopSession: SessionStop = async (name, token) => {
   try {
     const response = await handleSessionStop(name, token);
-    return response;
+    return [response, false];
   }
-  catch (statusText) {
-    console.log('Error Stopping session: ', statusText);
-    return null;
+  catch (error: any) {
+    console.error('Error Stopping session: ', error);
+    return [null, error.message === 'offline'];
   }
 }
 
@@ -102,29 +110,33 @@ export const stopSession: SessionStop = async (name, token) => {
  * Getting all the sessions in the database 
  */
 const handleGetAllSessions = async () => {
-  const response = await fetch(`http://${url}/sessions`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
+  try {
+    const response = await fetch(`http://${url}/sessions`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
 
-  if(!response.ok) {
-    throw response.statusText;
+    if (!response.ok) {
+      throw response.statusText;
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error('offline');
   }
-
-  const data = await response.json();
-  return data;
 }
 
 export const getAllSessions: SessionsGet = async () => {
   try {
     const sessionResponse = await handleGetAllSessions();
-    return sessionResponse;
+    return [sessionResponse, false];
   }
-  catch (statusText) {
-    console.log('Error in Sessions GET: ', statusText);
-    return null;
+  catch (error: any) {
+    console.error('Error in Sessions GET: ', error);
+    return [null, error.message === 'offline'];
   }
 };
 
@@ -132,29 +144,33 @@ export const getAllSessions: SessionsGet = async () => {
  * Getting details of one of the sessions in the database 
  */
 const handleGetSessionDetail = async (name: String, accessToken: string) => {
-  const response = await fetch(`http://${url}/sessions/${name}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/zip",
-      Authorization: "Bearer " + accessToken,
-    },
-  })
+  try {
+    const response = await fetch(`http://${url}/sessions/${name}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/zip",
+        Authorization: "Bearer " + accessToken,
+      },
+    })
 
-  if (!response.ok) {
-    throw response.statusText;
+    if (!response.ok) {
+      throw response.statusText;
+    }
+
+    const data = await response.blob();
+    return data;
+  } catch (error) {
+    throw new Error('offline');
   }
-
-  const data = await response.blob();
-  return data;
 }
 
 export const getSessionDetail: SessionDetailGet = async (name: string, token: string) => {
   try {
     const sessionResponse = await handleGetSessionDetail(name, token);
-    return sessionResponse;
+    return [sessionResponse, false];
   }
-  catch (statusText) {
-    console.log('Error in Session Detail GET: ', statusText);
-    return null;
+  catch (error: any) {
+    console.error('Error in Session Detail GET: ', error);
+    return [null, error.message === 'offline'];
   }
 };
