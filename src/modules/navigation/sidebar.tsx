@@ -145,7 +145,6 @@ const AppSideBar = (props: { handleDrawerClose: () => void , open: boolean }) =>
             </List>
             <Divider />
             <List>
-                <InstallListItem key={'install'} />
                 {socialTitles.map((text, index) => (
                 <ListItem button key={text} onClick={() => onSocialClick(index)}>
                     <ListItemIcon >
@@ -155,6 +154,7 @@ const AppSideBar = (props: { handleDrawerClose: () => void , open: boolean }) =>
                 </ListItem>
                 ))}
             </List>
+            <InstallListItem key={'install'} />
          </Drawer>
       </div>
    )
