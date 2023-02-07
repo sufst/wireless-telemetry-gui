@@ -33,65 +33,65 @@ import { UserState } from 'types/models/user';
 import { avatarStyle, subheaderStyle, useStyles } from './styles';
 
 const AccountContainer = (props: { user: UserState; onLogoutClick: () => void; onRegisterNewUser: () => void }) => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	const { onRegisterNewUser, onLogoutClick } = props;
+  const { onRegisterNewUser, onLogoutClick } = props;
 
-	const user: UserState = props.user;
+  const user: UserState = props.user;
 
-	const username = user.username;
-	const privilege = user.privilege;
-	const department = user.department;
-	const creation = user.creation;
+  const username = user.username;
+  const privilege = user.privilege;
+  const department = user.department;
+  const creation = user.creation;
 
-	// TODO: Remove force unwrapping here. Make it safer.
-	const createdAt = new Date(creation! * 1000).toLocaleString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
+  // TODO: Remove force unwrapping here. Make it safer.
+  const createdAt = new Date(creation! * 1000).toLocaleString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' });
 
-	const subheaderProps = subheaderStyle(privilege);
-	const avatarColorStyle = avatarStyle(privilege);
+  const subheaderProps = subheaderStyle(privilege);
+  const avatarColorStyle = avatarStyle(privilege);
 
-	return (
-		<Grid
-			container
-			spacing={0}
-			direction="row"
-			justify="center"
-			style={{ minHeight: '100vh' }}
-		>
-			<Grid item xs={8}>
-				<Card className={classes.cardRoot}>
-					<CardHeader subheaderTypographyProps={subheaderProps}
-						avatar={
-							<Avatar aria-label="recipe" style={avatarColorStyle}>
-								{username?.charAt(0).toUpperCase() ?? ''}
-							</Avatar>
-						}
-						title={username}
-						subheader={privilege}
-					/>
-					<CardContent className={classes.list}>
-						<List className={classes.list}>
-							<ListItemText>
-								<span>DEPARTMENT:</span> <span >{department}</span>
-							</ListItemText>
-							<ListItemText>
-								<Typography variant="body2" color="textSecondary" component="p">
-									{`Account Created: ${createdAt}`}
-								</Typography>
-							</ListItemText>
-						</List>
-						<Divider className={classes.line} />
-						<Button variant="contained" color="secondary" className={classes.btn} onClick={onLogoutClick}>
+  return (
+    <Grid
+      container
+      spacing={0}
+      direction="row"
+      justify="center"
+      style={{ minHeight: '100vh' }}
+    >
+      <Grid item xs={8}>
+        <Card className={classes.cardRoot}>
+          <CardHeader subheaderTypographyProps={subheaderProps}
+            avatar={
+              <Avatar aria-label="recipe" style={avatarColorStyle}>
+                {username?.charAt(0).toUpperCase() ?? ''}
+              </Avatar>
+            }
+            title={username}
+            subheader={privilege}
+          />
+          <CardContent className={classes.list}>
+            <List className={classes.list}>
+              <ListItemText>
+                <span>DEPARTMENT:</span> <span >{department}</span>
+              </ListItemText>
+              <ListItemText>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {`Account Created: ${createdAt}`}
+                </Typography>
+              </ListItemText>
+            </List>
+            <Divider className={classes.line} />
+            <Button variant="contained" color="secondary" className={classes.btn} onClick={onLogoutClick}>
                      LOG OUT
-						</Button>
-						<Button variant="contained" color="primary" className={classes.btn_register} onClick={onRegisterNewUser}>
+            </Button>
+            <Button variant="contained" color="primary" className={classes.btn_register} onClick={onRegisterNewUser}>
                      Register New User
-						</Button>
-					</CardContent>
-				</Card>
-			</Grid>
-		</Grid>
-	);
+            </Button>
+          </CardContent>
+        </Card>
+      </Grid>
+    </Grid>
+  );
 };
 
 export default AccountContainer;

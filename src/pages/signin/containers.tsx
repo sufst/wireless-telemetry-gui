@@ -28,35 +28,35 @@ import { LoginHeader, LoginFooter, LoginButton, UsernameField, PasswordField } f
 import { useStyles } from './styles';
 
 const LoginContainer: React.FC = () => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	const onLoginSubmit = React.useCallback((event) => {
-		event.preventDefault();
+  const onLoginSubmit = React.useCallback((event) => {
+    event.preventDefault();
 
-		const username = event.target.username.value;
-		const password = event.target.password.value;
+    const username = event.target.username.value;
+    const password = event.target.password.value;
 
-		dispatch(loginUser({ username, password }));
-	}, [dispatch]);
+    dispatch(loginUser({ username, password }));
+  }, [dispatch]);
 
-	return (
-		<Container component="main" maxWidth="xs">
-			<CssBaseline />
-			<div className={classes.paper}>
-				<LoginHeader />
-				<form className={classes.form} noValidate onSubmit={onLoginSubmit}>
-					<UsernameField />
-					<PasswordField label={'Password'} id={'password'}/>
-					<div className={classes.btnContainer}>
-						<LoginButton text='Login' />
-					</div>
-				</form>
-			</div>
-			<LoginFooter />
-		</Container>
-	);
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <LoginHeader />
+        <form className={classes.form} noValidate onSubmit={onLoginSubmit}>
+          <UsernameField />
+          <PasswordField label={'Password'} id={'password'}/>
+          <div className={classes.btnContainer}>
+            <LoginButton text='Login' />
+          </div>
+        </form>
+      </div>
+      <LoginFooter />
+    </Container>
+  );
 };
 
 export default LoginContainer;

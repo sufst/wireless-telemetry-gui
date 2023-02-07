@@ -25,74 +25,74 @@ export type LoginUser = (username: string, password: string) => Promise;
 // SocketIO
 //
 export type SioConnect = (
-	accessToken: string,
-	onMeta: SioOnMetaHander,
-	onData: SioOnDataHandler
+  accessToken: string,
+  onMeta: SioOnMetaHander,
+  onData: SioOnDataHandler
 ) => void;
 
 export type SioOnMetaHander = (meta: SensorsMeta) => void;
 
 export type SioOnDataHandler = (data: {
-	[sensor: string]: SensorData[];
+  [sensor: string]: SensorData[];
 }) => void;
 
 //
 // USER(S)
 //
 export type UsersCreate = (
-	username: string,
-	password: string,
-	privilege: UserPrivilege,
-	department: UserDepartment,
-	meta: object,
-	accessToken: string
+  username: string,
+  password: string,
+  privilege: UserPrivilege,
+  department: UserDepartment,
+  meta: object,
+  accessToken: string
 ) => Promise;
 
 export type UsersGet = (username: string, accessToken: string) => Promise;
 
 export interface UsersGetResponse {
-	username: string;
-	creation: number;
-	privilege: UserPrivilege;
-	department: UserDepartment;
-	meta: string;
+  username: string;
+  creation: number;
+  privilege: UserPrivilege;
+  department: UserDepartment;
+  meta: string;
 }
 
 export interface UsersPatchRequest {
-	[username: ?string]: string;
-	[password: ?string]: string;
-	[privilege: ?string]: UserPrivilege;
-	[department: ?string]: UserDepartment;
-	[meta: ?string]: UserMeta;
+  [username: ?string]: string;
+  [password: ?string]: string;
+  [privilege: ?string]: UserPrivilege;
+  [department: ?string]: UserDepartment;
+  [meta: ?string]: UserMeta;
 }
 
 export type UsersPatch = (
-	username: string,
-	accessToken: string,
-	fields: UsersPatchRequest
+  username: string,
+  accessToken: string,
+  fields: UsersPatchRequest
 ) => Promise;
 
 export type UserGet = (accessToken: string) => Promise;
 
 export interface UserGetResponse {
-	username: string;
-	creation: number;
-	privilege: UserPrivilege;
-	department: UserDepartment;
-	meta: string;
+  username: string;
+  creation: number;
+  privilege: UserPrivilege;
+  department: UserDepartment;
+  meta: string;
 }
 
 export interface UserPatchRequest {
-	[username: ?string]: string;
-	[password: ?string]: string;
-	[privilege: ?string]: UserPrivilege;
-	[department: ?string]: UserDepartment;
-	[meta: ?string]: UserMeta;
+  [username: ?string]: string;
+  [password: ?string]: string;
+  [privilege: ?string]: UserPrivilege;
+  [department: ?string]: UserDepartment;
+  [meta: ?string]: UserMeta;
 }
 
 export type UserPatch = (
-	accessToken: string,
-	fields: UserPatchRequest
+  accessToken: string,
+  fields: UserPatchRequest
 ) => Promise;
 
 //
@@ -101,27 +101,27 @@ export type UserPatch = (
 export type SessionsGet = () => Promise;
 
 export interface SessionsGetResponse {
-	[name: string]: {
-		creation: number;
-		status: string;
-		sensors: [string];
-	};
+  [name: string]: {
+    creation: number;
+    status: string;
+    sensors: [string];
+  };
 }
 
 export type SessionCreate = (
-	accessToken: string,
-	name: string,
-	fields: SessionCreateFields
+  accessToken: string,
+  name: string,
+  fields: SessionCreateFields
 ) => Promise;
 
 interface SessionCreateFields {
-	sessionMetadata: Object;
-	sessionSensors: Object;
+  sessionMetadata: Object;
+  sessionSensors: Object;
 }
 
 export type SessionStop = (
-	name: string,
-	accessToken: string
+  name: string,
+  accessToken: string
 ) => Promise;
 
 export type GetAllUsersType = (accessToken: string) => Promise<any>;

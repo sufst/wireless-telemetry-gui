@@ -25,83 +25,83 @@ import { showAlert } from 'redux/slices/alert';
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
 export const sessionMiddleware: Middleware<{}, any> =
 	(storeAPI) => (next) => async (action) => {
-		if (action.type === 'session/startSession') {
-			const { name, driver, condition } = action.payload;
-			const sensors: string[] = action.payload.sensors;
-			const groups: string[] = action.payload.groups;
+	  if (action.type === 'session/startSession') {
+	    const { name, driver, condition } = action.payload;
+	    const sensors: string[] = action.payload.sensors;
+	    const groups: string[] = action.payload.groups;
 
-			const accessToken = storeAPI.getState().user.accessToken;
+	    const accessToken = storeAPI.getState().user.accessToken;
 
-			console.log(
-				'Starting session from middleware: ',
-				name,
-				driver,
-				condition,
-				sensors,
-				groups
-			);
+	    console.log(
+	      'Starting session from middleware: ',
+	      name,
+	      driver,
+	      condition,
+	      sensors,
+	      groups
+	    );
 
-			const sessionMeta = {
-				driver,
-				condition
-			};
+	    const sessionMeta = {
+	      driver,
+	      condition
+	    };
 
-			const response = await createSession(
-				accessToken,
-				name,
-				sessionMeta,
-				sensors
-			);
+	    const response = await createSession(
+	      accessToken,
+	      name,
+	      sessionMeta,
+	      sensors
+	    );
 
-			if (response != null) {
-				const createSessionOkayAlert = createAlert(
-					3000,
-					'success',
-					'alert',
-					'New session created.'
-				);
-				storeAPI.dispatch(showAlert(createSessionOkayAlert));
-			} else {
-				const createSessionFailedAlert = createAlert(
-					3000,
-					'error',
-					'alert',
-					"Can't create a new session..."
-				);
-				storeAPI.dispatch(showAlert(createSessionFailedAlert));
-			}
+	    if (response != null) {
+	      const createSessionOkayAlert = createAlert(
+	        3000,
+	        'success',
+	        'alert',
+	        'New session created.'
+	      );
+	      storeAPI.dispatch(showAlert(createSessionOkayAlert));
+	    } else {
+	      const createSessionFailedAlert = createAlert(
+	        3000,
+	        'error',
+	        'alert',
+	        "Can't create a new session..."
+	      );
+	      storeAPI.dispatch(showAlert(createSessionFailedAlert));
+	    }
 
-			return next(action);
-		}
+	    return next(action);
+	  }
 
-		if (action.type === 'session/stopSession') {
-			const accessToken = storeAPI.getState().user.accessToken;
-			const name = storeAPI.getState().session.sessionName;
+	  if (action.type === 'session/stopSession') {
+	    const accessToken = storeAPI.getState().user.accessToken;
+	    const name = storeAPI.getState().session.sessionName;
 
-			console.log('Stopping session from middleware: ', name);
+	    console.log('Stopping session from middleware: ', name);
 
-			const response = await stopSession(name, accessToken);
+	    const response = await stopSession(name, accessToken);
 
-			if (response) {
-				const stopSessionOkayAlert = createAlert(
-					3000,
-					'success',
-					'alert',
-					'Session Stopped.'
-				);
-				storeAPI.dispatch(showAlert(stopSessionOkayAlert));
-			} else {
-				const stopSessionFailedAlert = createAlert(
-					3000,
-					'error',
-					'alert',
-					"Can't stop session..."
-				);
-				storeAPI.dispatch(showAlert(stopSessionFailedAlert));
-			}
+	    if (response) {
+	      const stopSessionOkayAlert = createAlert(
+	        3000,
+	        'success',
+	        'alert',
+	        'Session Stopped.'
+	      );
+	      storeAPI.dispatch(showAlert(stopSessionOkayAlert));
+	    } else {
+	      const stopSessionFailedAlert = createAlert(
+	        3000,
+	        'error',
+	        'alert',
+	        "Can't stop session..."
+	      );
+	      storeAPI.dispatch(showAlert(stopSessionFailedAlert));
+	    }
 
-			return next(action);
-		}
+	    return next(action);
+	  }
 
-		return next(action);
+	  return next(action);
 	};

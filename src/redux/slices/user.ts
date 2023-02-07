@@ -21,42 +21,42 @@ import { LoginUserAction, RegisterUserAction, SetUserAction } from 'types/models
 import { UserMeta, UserState } from 'types/models/user';
 
 const initialMetaState: UserMeta = {
-	dept: undefined,
-	lastLogin: undefined,
-	createdAt: undefined
+  dept: undefined,
+  lastLogin: undefined,
+  createdAt: undefined
 };
 
 const initialState: UserState = {
-	username: undefined,
-	accessToken: undefined,
-	department: 'NON SPECIFIED',
-	privilege: undefined,
-	creation: undefined,
-	meta: initialMetaState
+  username: undefined,
+  accessToken: undefined,
+  department: 'NON SPECIFIED',
+  privilege: undefined,
+  creation: undefined,
+  meta: initialMetaState
 };
 
 export const userSlice = createSlice({
-	name: 'user',
-	initialState,
-	reducers: {
-		getAllUsers: () => {
-		},
-		registerNewUser: (state: UserState, action: PayloadAction<RegisterUserAction>) => {
-		},
-		loginUser: (state: UserState, action: PayloadAction<LoginUserAction>) => {
-		},
-		setUser: (state: UserState, action: PayloadAction<SetUserAction>) => {
-			state.username = action.payload.username;
-			state.accessToken = action.payload.accessToken;
-			state.privilege = action.payload.privilege;
-			state.meta = action.payload.meta;
-			state.department = action.payload.department;
-			state.creation = action.payload.creation;
-		},
-		logoutUser: (state: UserState) => {
-			state.username = undefined;
-		}
-	}
+  name: 'user',
+  initialState,
+  reducers: {
+    getAllUsers: () => {
+    },
+    registerNewUser: (state: UserState, action: PayloadAction<RegisterUserAction>) => {
+    },
+    loginUser: (state: UserState, action: PayloadAction<LoginUserAction>) => {
+    },
+    setUser: (state: UserState, action: PayloadAction<SetUserAction>) => {
+      state.username = action.payload.username;
+      state.accessToken = action.payload.accessToken;
+      state.privilege = action.payload.privilege;
+      state.meta = action.payload.meta;
+      state.department = action.payload.department;
+      state.creation = action.payload.creation;
+    },
+    logoutUser: (state: UserState) => {
+      state.username = undefined;
+    }
+  }
 });
 
 export const { loginUser, setUser, logoutUser, registerNewUser, getAllUsers } = userSlice.actions;

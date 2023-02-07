@@ -28,63 +28,63 @@ import { DepartmentSelect, PrivilegeSelect, RegisterFooter, RegisterHeader } fro
 import { useStyles } from './styles';
 
 export const RegisterContainer: React.FC = (props: { registerUser: UserRegister }) => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	const { registerUser } = props;
+  const { registerUser } = props;
 
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	const [department, setDepartment] = React.useState<UserDepartment>('Electronics');
+  const [department, setDepartment] = React.useState<UserDepartment>('Electronics');
 
-	const [privilege, setPrivilege] = React.useState<UserPrivilege>('Basic');
+  const [privilege, setPrivilege] = React.useState<UserPrivilege>('Basic');
 
-	const handleDepartmentChange = React.useCallback((event: any) => {
-		setDepartment(event.target.value);
-	}, []);
+  const handleDepartmentChange = React.useCallback((event: any) => {
+    setDepartment(event.target.value);
+  }, []);
 
-	const handlePrivilegeChange = React.useCallback((event: any) => {
-		setPrivilege(event.target.value);
-	}, []);
+  const handlePrivilegeChange = React.useCallback((event: any) => {
+    setPrivilege(event.target.value);
+  }, []);
 
-	const onRegisterSubmit = useCallback((event) => {
-		event.preventDefault();
+  const onRegisterSubmit = useCallback((event) => {
+    event.preventDefault();
 
-		const username: string = event.target.username.value;
-		const password: string = event.target.password.value;
-		const confirmPass: string = event.target.passconfirm.value;
+    const username: string = event.target.username.value;
+    const password: string = event.target.password.value;
+    const confirmPass: string = event.target.passconfirm.value;
 
-		if (username === '' || password === '' || confirmPass === '') {
-			const emptyFieldAlert = createAlert(3000, 'error', 'alert', 'Please fill all fields.');
-			dispatch(showAlert(emptyFieldAlert));
-			return;
-		}
+    if (username === '' || password === '' || confirmPass === '') {
+      const emptyFieldAlert = createAlert(3000, 'error', 'alert', 'Please fill all fields.');
+      dispatch(showAlert(emptyFieldAlert));
+      return;
+    }
 
-		if (password === confirmPass) {
-			registerUser(username, password, privilege, department);
-			return;
-		}
+    if (password === confirmPass) {
+      registerUser(username, password, privilege, department);
+      return;
+    }
 
-		const mismatchPassAlert = createAlert(3000, 'error', 'alert', "The passwords don't match.");
-		dispatch(showAlert(mismatchPassAlert));
-	}, [department, privilege, dispatch, registerUser]);
+    const mismatchPassAlert = createAlert(3000, 'error', 'alert', "The passwords don't match.");
+    dispatch(showAlert(mismatchPassAlert));
+  }, [department, privilege, dispatch, registerUser]);
 
-	return (
-		<Container component="main" maxWidth="xs">
-			<CssBaseline />
-			<div className={classes.paper}>
-				<RegisterHeader />
-				<form className={classes.form} noValidate onSubmit={onRegisterSubmit}>
-					<UsernameField />
-					<PasswordField label={'Password'} id={'password'}/>
-					<PasswordField label={'Confirm Password'} id={'passconfirm'}/>
-					<DepartmentSelect department={department} handleDepartmentChange={handleDepartmentChange} />
-					<PrivilegeSelect privilege={privilege} handlePrivilegeChange={handlePrivilegeChange} />
-					<div className={classes.btnContainer}>
-						<LoginButton text='Register' />
-					</div>
-				</form>
-			</div>
-			<RegisterFooter />
-		</Container>
-	);
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <RegisterHeader />
+        <form className={classes.form} noValidate onSubmit={onRegisterSubmit}>
+          <UsernameField />
+          <PasswordField label={'Password'} id={'password'}/>
+          <PasswordField label={'Confirm Password'} id={'passconfirm'}/>
+          <DepartmentSelect department={department} handleDepartmentChange={handleDepartmentChange} />
+          <PrivilegeSelect privilege={privilege} handlePrivilegeChange={handlePrivilegeChange} />
+          <div className={classes.btnContainer}>
+            <LoginButton text='Register' />
+          </div>
+        </form>
+      </div>
+      <RegisterFooter />
+    </Container>
+  );
 };

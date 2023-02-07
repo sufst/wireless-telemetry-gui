@@ -28,32 +28,32 @@ import { registerNewUser } from 'redux/slices/user';
 import { UserRegister } from 'types/models/actions';
 
 export const Register: React.FC = () => {
-	const dispatch = useDispatch();
-	const history = useHistory();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-	const selectUser = (state: RootState) => state.user;
-	const user = useSelector(selectUser);
+  const selectUser = (state: RootState) => state.user;
+  const user = useSelector(selectUser);
 
-	const privilege = user.privilege;
+  const privilege = user.privilege;
 
-	React.useEffect(() => {
-		if (privilege === 'Anon' || privilege === 'Basic') {
-			const cannotRegisterUserAlert = createAlert(3000, 'error', 'alert', 'You cannot create a new user. Sorry :(');
-			dispatch(showAlert(cannotRegisterUserAlert));
+  React.useEffect(() => {
+    if (privilege === 'Anon' || privilege === 'Basic') {
+      const cannotRegisterUserAlert = createAlert(3000, 'error', 'alert', 'You cannot create a new user. Sorry :(');
+      dispatch(showAlert(cannotRegisterUserAlert));
 
-			history.push('/');
-		}
-	}, [dispatch, user, privilege, history]);
+      history.push('/');
+    }
+  }, [dispatch, user, privilege, history]);
 
-	const registerUser: UserRegister = useCallback((username, password, privilege, department) => {
-		const newUser = { username, password, privilege, department };
-		dispatch(registerNewUser(newUser));
-	}, [dispatch]);
+  const registerUser: UserRegister = useCallback((username, password, privilege, department) => {
+    const newUser = { username, password, privilege, department };
+    dispatch(registerNewUser(newUser));
+  }, [dispatch]);
 
-	return (
-		<>
-			<RegisterContainer registerUser={registerUser}/>
-		</>
+  return (
+    <>
+      <RegisterContainer registerUser={registerUser}/>
+    </>
 
-	);
+  );
 };

@@ -24,11 +24,11 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './theme';
 
 export const App: React.FC = () => {
-	return (
-		<Provider store={store}>
-			<ThemeProvider theme={theme}>
-				<AppContainer />
-			</ThemeProvider>
-		</Provider>
-	);
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <AppContainer />
+      </ThemeProvider>
+    </Provider>
+  );
 };

@@ -29,9 +29,9 @@ import AlertContainer from './containers';
  */
 
 const Alert: React.FC = () => {
-	return (
-		<AlertContainer />
-	);
+  return (
+    <AlertContainer />
+  );
 };
 
 /**
@@ -43,12 +43,12 @@ const Alert: React.FC = () => {
  * @param text the text to be shown in the alert
  */
 export const createAlert: CreateAlert = (timeout, level, type, text) => {
-	return {
-		timeout,
-		level,
-		type,
-		text
-	};
+  return {
+    timeout,
+    level,
+    type,
+    text
+  };
 };
 
 type CreateAlert = (timeout: AlertTimeout, level: AlertLevel, type: AlertType, text: AlertText) => AlertState;

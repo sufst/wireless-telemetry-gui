@@ -25,35 +25,35 @@ import { UserState } from 'types/models/user';
 import { AdminPanelContainer } from './containers';
 
 const Admin = () => {
-	const history = useHistory();
+  const history = useHistory();
 
-	const selectUser = (state: RootState) => state.user;
-	const user = useSelector(selectUser);
+  const selectUser = (state: RootState) => state.user;
+  const user = useSelector(selectUser);
 
-	const [users, setUsers] = useState<UserState[]>([]);
+  const [users, setUsers] = useState<UserState[]>([]);
 
-	const privilege = user.privilege;
-	const token = user.accessToken;
+  const privilege = user.privilege;
+  const token = user.accessToken;
 
-	const fetchUsers = useCallback(async () => {
-		if (token === undefined) {
-			return;
-		}
+  const fetchUsers = useCallback(async () => {
+    if (token === undefined) {
+      return;
+    }
 
-		const users = await fetchAllUsers(token);
-		setUsers(users.users);
-	}, [token]);
+    const users = await fetchAllUsers(token);
+    setUsers(users.users);
+  }, [token]);
 
-	useEffect(() => {
-		if (privilege === 'Anon' || privilege === 'Basic') {
-			history.push('/');
-			return;
-		}
+  useEffect(() => {
+    if (privilege === 'Anon' || privilege === 'Basic') {
+      history.push('/');
+      return;
+    }
 
-		fetchUsers();
-	}, [history, privilege, fetchUsers]);
+    fetchUsers();
+  }, [history, privilege, fetchUsers]);
 
-	return <AdminPanelContainer users={users} />;
+  return <AdminPanelContainer users={users} />;
 };
 
 export default Admin;

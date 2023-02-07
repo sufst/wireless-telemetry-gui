@@ -28,19 +28,19 @@ import { userMiddleware } from './middleware/user';
 import { sessionMiddleware } from './middleware/sessions';
 
 export const store = configureStore({
-	reducer: {
-		alert: alertReducer,
-		sensors: sensorsReducer,
-		user: userReducer,
-		session: sessionReducer
-	},
-	middleware: getDefaultMiddleware =>
-		getDefaultMiddleware()
-			.prepend(
-				alertMiddleware,
-				userMiddleware,
-				sessionMiddleware
-			)
+  reducer: {
+    alert: alertReducer,
+    sensors: sensorsReducer,
+    user: userReducer,
+    session: sessionReducer
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware()
+      .prepend(
+        alertMiddleware,
+        userMiddleware,
+        sessionMiddleware
+      )
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -33,32 +33,32 @@ import { useStyles } from './styles';
  * A Container that holds all the logic & views for the main AppBar and the AppSideBar
  */
 const AppNav: React.FC = () => {
-	const classes = useStyles();
-	const history = useHistory();
+  const classes = useStyles();
+  const history = useHistory();
 
-	const user = useSelector((state: RootState) => state.user);
+  const user = useSelector((state: RootState) => state.user);
 
-	const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-	const handleDrawerOpen = useCallback(() => {
-		setOpen(true);
-	}, []);
+  const handleDrawerOpen = useCallback(() => {
+    setOpen(true);
+  }, []);
 
-	const handleDrawerClose = useCallback(() => {
-		setOpen(false);
-	}, []);
+  const handleDrawerClose = useCallback(() => {
+    setOpen(false);
+  }, []);
 
-	const handleAccountClick = useCallback(() => {
-		history.push('/account');
-	}, [history]);
+  const handleAccountClick = useCallback(() => {
+    history.push('/account');
+  }, [history]);
 
-	return (
-		<div className={classes.navigationRoot}>
-			<AppNavigationBar open={open} handleDrawerOpen={handleDrawerOpen} onAccountClick={handleAccountClick} user={user}/>
+  return (
+    <div className={classes.navigationRoot}>
+      <AppNavigationBar open={open} handleDrawerOpen={handleDrawerOpen} onAccountClick={handleAccountClick} user={user}/>
          SideBar
-			<AppSideBar open={open} handleDrawerClose={handleDrawerClose} />
-		</div>
-	);
+      <AppSideBar open={open} handleDrawerClose={handleDrawerClose} />
+    </div>
+  );
 };
 
 export default AppNav;

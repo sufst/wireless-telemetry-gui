@@ -21,16 +21,16 @@ import { AdminPanelTable } from './components';
 import { useStyles } from './styles';
 
 interface AdminPanelProps {
-	users: UserState[];
+  users: UserState[];
 }
 
 export const AdminPanelContainer: React.FC<AdminPanelProps> = ({ users }) => {
-	const classes = useStyles();
+  const classes = useStyles();
 
-	return (
-		<div className={classes.adminPanelContainer}>
-			<h2>Admin Panel</h2>
-			<AdminPanelTable users={users}/>
-		</div>
-	);
+  return (
+    <div className={classes.adminPanelContainer}>
+      <h2>Admin Panel</h2>
+      <AdminPanelTable users={users}/>
+    </div>
+  );
 };

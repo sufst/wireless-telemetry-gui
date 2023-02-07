@@ -26,42 +26,42 @@ import { SessionCreate, SessionCreateFields, SessionsGet, SessionStop } from 'ty
  * @param fields Object housing the session metadata and sensors to be saved.
  */
 const handleCreateSession: SessionCreate = async (accessToken, name, fields) => {
-	const response = await fetch(`http://${url}/sessions/${name}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${accessToken.toString()}`
-		},
-		body: JSON.stringify({
-			meta: fields.sessionMetadata,
-			sensors: fields.sessionSensors
-		})
-	});
+  const response = await fetch(`http://${url}/sessions/${name}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken.toString()}`
+    },
+    body: JSON.stringify({
+      meta: fields.sessionMetadata,
+      sensors: fields.sessionSensors
+    })
+  });
 
-	if (!response.ok) {
-		throw Object.assign(new Error(response.statusText));
-	}
+  if (!response.ok) {
+    throw Object.assign(new Error(response.statusText));
+  }
 
-	const data: SessionCreate = await response.json();
-	return data;
+  const data: SessionCreate = await response.json();
+  return data;
 };
 
 // NEEDS MOVED TO APPROPRIATE TYPES FILE
 type s = (accessToken: string, name: string, sessionMeta: object, sessionSensors: string[]) => Promise<SessionCreate | null>;
 
 export const createSession: s = async (accessToken: string, name: string, sessionMeta: object, sessionSensors: string[]) => {
-	const fields: SessionCreateFields = {
-		sessionMetadata: sessionMeta,
-		sessionSensors
-	};
+  const fields: SessionCreateFields = {
+    sessionMetadata: sessionMeta,
+    sessionSensors
+  };
 
-	try {
-		const response: SessionCreate = await handleCreateSession(accessToken, name, fields);
-		return response;
-	} catch (statusText) {
-		console.log('Error creating new session: ', statusText);
-		return null;
-	}
+  try {
+    const response: SessionCreate = await handleCreateSession(accessToken, name, fields);
+    return response;
+  } catch (statusText) {
+    console.log('Error creating new session: ', statusText);
+    return null;
+  }
 };
 
 /**
@@ -70,59 +70,59 @@ export const createSession: s = async (accessToken: string, name: string, sessio
  * @param accessToken JWT authentication token
  */
 const handleSessionStop: SessionStop = async (name: string, accessToken: string) => {
-	const response = await fetch(`http://${url}/sessions/${name}`, {
-		method: 'PATCH',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: 'Bearer ' + accessToken
-		},
-		body: JSON.stringify({
-			status: 'dead'
-		})
-	});
+  const response = await fetch(`http://${url}/sessions/${name}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + accessToken
+    },
+    body: JSON.stringify({
+      status: 'dead'
+    })
+  });
 
-	if (!response.ok) {
-		throw Object.assign(new Error(response.statusText));
-	}
+  if (!response.ok) {
+    throw Object.assign(new Error(response.statusText));
+  }
 
-	return response;
+  return response;
 };
 
 export const stopSession: SessionStop = async (name, token) => {
-	try {
-		const response = await handleSessionStop(name, token);
-		return response;
-	} catch (statusText) {
-		console.log('Error Stopping session: ', statusText);
-		return null;
-	}
+  try {
+    const response = await handleSessionStop(name, token);
+    return response;
+  } catch (statusText) {
+    console.log('Error Stopping session: ', statusText);
+    return null;
+  }
 };
 
 /**
  * Getting all the sessions in the database
  */
 const handleGetAllSessions: SessionsGet = async () => {
-	const response = await fetch(`http://${url}/sessions`, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	});
+  const response = await fetch(`http://${url}/sessions`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
 
-	if (!response.ok) {
-		throw Object.assign(new Error(response.statusText));
-	}
+  if (!response.ok) {
+    throw Object.assign(new Error(response.statusText));
+  }
 
-	const data = await response.json();
-	return data;
+  const data = await response.json();
+  return data;
 };
 
 export const getAllSessions: SessionsGet = async () => {
-	try {
-		const sessionResponse = await handleGetAllSessions();
-		return sessionResponse;
-	} catch (statusText) {
-		console.log('Error in Sessions GET: ', statusText);
-		return null;
-	}
+  try {
+    const sessionResponse = await handleGetAllSessions();
+    return sessionResponse;
+  } catch (statusText) {
+    console.log('Error in Sessions GET: ', statusText);
+    return null;
+  }
 };
