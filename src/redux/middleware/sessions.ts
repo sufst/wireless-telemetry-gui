@@ -86,7 +86,7 @@ export const sessionMiddleware: Middleware<{}, any> =
     if (action.type === "session/getSessionDetail") {
         const [response, offline] = await getSessionDetail(action.payload.name, storeAPI.getState().user.accessToken);
         if (offline) {
-            const offlineAlert = createAlert(3000, "error", "alert", "Can't stop sessions as you are offline"); 
+            const offlineAlert = createAlert(3000, "error", "alert", "Can't download sessions as you are offline"); 
             storeAPI.dispatch(showAlert(offlineAlert));
         }
         else {

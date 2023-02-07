@@ -70,9 +70,14 @@ export const SessionContainer = () => {
     const { privilege } = user; 
 
     const fetchAllSessions = useCallback(async () => {
-        const sessions = await getAllSessions();
-        setSessionData(sessions); 
-     }, [])
+        const [sessions] = await getAllSessions();
+        if (sessions) {
+            setSessionData(sessions);
+        } else {
+            const offlineAlert = createAlert(3000, "error", "alert", "Can't get sessions list as you are offline"); 
+            dispatch(showAlert(offlineAlert));
+        }
+     }, [dispatch])
 
     useEffect(() => {
         fetchAllSessions(); 
