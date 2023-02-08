@@ -6,7 +6,7 @@ const isLocalhost: boolean = Boolean(
   window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
 );
 
-export const register = (config: any) => {
+export const registerServiceWorker = (config: any) => {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
@@ -112,7 +112,7 @@ const checkValidServiceWorker = (swUrl: string, config: any) => {
     });
 }
 
-export const unregister = () => {
+export const unregisterServiceWorker = () => {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready
       .then((registration) => {

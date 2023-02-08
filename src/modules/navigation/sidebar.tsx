@@ -34,7 +34,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import { useTheme } from '@material-ui/core/styles';
 import { useStyles } from './styles'
-import InstallListItem from './InstallListItem';
+import InstallPwaListItem from './InstallPwaListItem';
 
 // Material UI Icons Imports 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -154,7 +154,7 @@ const AppSideBar = (props: { handleDrawerClose: () => void , open: boolean }) =>
                 </ListItem>
                 ))}
             </List>
-            <InstallListItem key={'install'} />
+            <InstallPwaListItem key={'install'} />
          </Drawer>
       </div>
    )

@@ -6,14 +6,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { useState } from 'react';
 
 
-const InstallListItem = (props: { key: string }) => {
+const InstallPwaListItem = (props: { key: string }) => {
   const [show, setShow] = useState(false);
   const [deferredPrompt, setDeferredPrompt]: any = useState(null);
   window.addEventListener('beforeinstallprompt', (event: Event) => {
     setShow(true);
     setDeferredPrompt(event);
   });
-  const click = async () => {
+  const onButtonClick = async () => {
     if (deferredPrompt !== null) {
       deferredPrompt.prompt()
       const { outcome } = await deferredPrompt.userChoice
@@ -27,7 +27,7 @@ const InstallListItem = (props: { key: string }) => {
     return (
       <>
         <Divider />
-        <ListItem button key={props.key} onClick={click}>
+        <ListItem button key={props.key} onClick={onButtonClick}>
           <ListItemIcon><GetAppIcon /></ListItemIcon>
           <ListItemText>Install</ListItemText>
         </ListItem>
@@ -38,4 +38,4 @@ const InstallListItem = (props: { key: string }) => {
   }
 }
 
-export default InstallListItem;
+export default InstallPwaListItem;

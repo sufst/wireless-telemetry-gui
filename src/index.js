@@ -18,7 +18,7 @@
 
 // Imports
 import ReactDOM from 'react-dom';
-import { register } from 'serviceWorkerRegistration';
+import { registerServiceWorker } from 'serviceWorkerRegistration';
 import { App } from './app/index';
 import './index.css';
 
@@ -27,4 +27,4 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-register();
+registerServiceWorker();
