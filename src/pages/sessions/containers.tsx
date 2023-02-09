@@ -18,20 +18,30 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Paper } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 import { useStyles } from "../dashboard/session/styles";
 import { getAllSessions } from "modules/api/sessions";
 import { SessionTable, SessionPaper } from "./components";
+import { showAlert } from "redux/slices/alert";
+import { createAlert } from "modules/alert/alert";
 
 export const SessionContainer = () => {
+
+    const dispatch = useDispatch();
 
     const classes = useStyles(); 
     
     const [sessionData, setSessionData] = useState({})
 
     const fetchAllSessions = useCallback(async () => {
-        const sessions = await getAllSessions();
-        setSessionData(sessions); 
-     }, [])
+        const [sessions] = await getAllSessions();
+        if (sessions) {
+            setSessionData(sessions);
+        } else {
+            const offlineAlert = createAlert(3000, "error", "alert", "Can't get sessions list as you are offline"); 
+            dispatch(showAlert(offlineAlert));
+        }
+     }, [dispatch])
 
     useEffect(() => {
         fetchAllSessions(); 
