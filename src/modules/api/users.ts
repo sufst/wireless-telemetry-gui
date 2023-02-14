@@ -16,8 +16,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { url } from 'config';
-import { UsersCreate, UsersGet, UsersGetResponse, UsersPatch, GetAllUsersType } from 'types/api/api';
+import { url } from "config";
+import {
+  UsersCreate,
+  UsersGet,
+  UsersGetResponse,
+  UsersPatch,
+  GetAllUsersType,
+} from "types/api/api";
 
 /**
  *
@@ -33,17 +39,17 @@ const handleCreateUsers: UsersCreate = async (
   accessToken
 ) => {
   const response = await fetch(`http://${url}/users/${username}`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + accessToken
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
     },
     body: JSON.stringify({
       password,
       privilege,
       department,
-      meta
-    })
+      meta,
+    }),
   });
 
   if (!response.ok) {
@@ -62,7 +68,14 @@ export const usersCreate: UsersCreate = async (
   accessToken
 ) => {
   try {
-    const response = await handleCreateUsers(username, password, privilege, department, meta, accessToken);
+    const response = await handleCreateUsers(
+      username,
+      password,
+      privilege,
+      department,
+      meta,
+      accessToken
+    );
 
     if (response.status === 200) {
       return true;
@@ -70,7 +83,7 @@ export const usersCreate: UsersCreate = async (
 
     return false;
   } catch (statusText) {
-    console.log('Error Creating User: ', statusText);
+    console.log("Error Creating User: ", statusText);
     return false;
   }
 };
@@ -82,11 +95,11 @@ export const usersCreate: UsersCreate = async (
  */
 const handleUsersGet: UsersGet = async (username, accessToken) => {
   const response = await fetch(`http://${url}/users/${username}`, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + accessToken
-    }
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
   });
 
   if (!response.ok) {
@@ -99,10 +112,13 @@ const handleUsersGet: UsersGet = async (username, accessToken) => {
 
 export const usersGet: UsersGet = async (username, accessToken) => {
   try {
-    const userResponse: UsersGetResponse = await handleUsersGet(username, accessToken);
+    const userResponse: UsersGetResponse = await handleUsersGet(
+      username,
+      accessToken
+    );
     return userResponse;
   } catch (statusText) {
-    console.log('Error in UsersGet: ', statusText);
+    console.log("Error in UsersGet: ", statusText);
     return null;
   }
 };
@@ -113,12 +129,12 @@ export const usersGet: UsersGet = async (username, accessToken) => {
  */
 const handleUsersPatch: UsersPatch = async (username, accessToken, fields) => {
   const response = await fetch(`http://${url}/users/${username}`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + accessToken
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
     },
-    body: JSON.stringify(fields)
+    body: JSON.stringify(fields),
   });
 
   if (!response.ok) {
@@ -138,18 +154,18 @@ export const usersPatch: UsersPatch = async (username, accessToken, fields) => {
 
     return false;
   } catch (statusText) {
-    console.log('Error in UsersPatch: ', statusText);
+    console.log("Error in UsersPatch: ", statusText);
     return false;
   }
 };
 
 const handleGetAllUsers: GetAllUsersType = async (accessToken: string) => {
   const response = await fetch(`http://${url}/users`, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + accessToken
-    }
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
   });
 
   if (!response.ok) {
@@ -165,7 +181,7 @@ export const fetchAllUsers: GetAllUsersType = async (accessToken: string) => {
     const result = await handleGetAllUsers(accessToken);
     return result;
   } catch (statusText) {
-    console.log('Error Fetching all users: ', statusText);
+    console.log("Error Fetching all users: ", statusText);
     return null;
   }
 };

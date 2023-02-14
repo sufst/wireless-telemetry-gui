@@ -16,20 +16,35 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React from 'react';
-import { Avatar, Box, Typography, Link, InputLabel, Select } from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { UserDepartment, UserPrivilege } from 'types/models/user';
-import { useStyles } from './styles';
+import React from "react";
+import {
+  Avatar,
+  Box,
+  Typography,
+  Link,
+  InputLabel,
+  Select,
+} from "@material-ui/core";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { UserDepartment, UserPrivilege } from "types/models/user";
+import { useStyles } from "./styles";
 
-export const DepartmentSelect = (props: { department: UserDepartment; handleDepartmentChange: (event: any) => void }) => {
+export const DepartmentSelect = (props: {
+  department: UserDepartment;
+  handleDepartmentChange: (event: any) => void;
+}) => {
   const classes = useStyles();
 
   const { department, handleDepartmentChange } = props;
 
   return (
     <>
-      <InputLabel htmlFor="department-select" className={classes.department_label}>Department</InputLabel>
+      <InputLabel
+        htmlFor="department-select"
+        className={classes.department_label}
+      >
+        Department
+      </InputLabel>
       <Select
         native
         value={department}
@@ -37,29 +52,37 @@ export const DepartmentSelect = (props: { department: UserDepartment; handleDepa
         className={classes.department_select}
         autoWidth={true}
         inputProps={{
-				  name: 'department',
-				  id: 'department-select'
+          name: "department",
+          id: "department-select",
         }}
       >
-        <option value={'Electronics'}>Electronics</option>
-        <option value={'Tier 1'}>Tier 1</option>
-        <option value={'Operations'}>Operations</option>
-        <option value={'Power-Train'}>Power-Train</option>
-        <option value={'Vehicle Performance'}>Vehicle Performance</option>
-        <option value={'Race Engineering'}>Race Engineering</option>
+        <option value={"Electronics"}>Electronics</option>
+        <option value={"Tier 1"}>Tier 1</option>
+        <option value={"Operations"}>Operations</option>
+        <option value={"Power-Train"}>Power-Train</option>
+        <option value={"Vehicle Performance"}>Vehicle Performance</option>
+        <option value={"Race Engineering"}>Race Engineering</option>
       </Select>
     </>
   );
 };
 
-export const PrivilegeSelect = (props: { privilege: UserPrivilege; handlePrivilegeChange: (event: any) => void }) => {
+export const PrivilegeSelect = (props: {
+  privilege: UserPrivilege;
+  handlePrivilegeChange: (event: any) => void;
+}) => {
   const classes = useStyles();
 
   const { privilege, handlePrivilegeChange } = props;
 
   return (
     <>
-      <InputLabel htmlFor="privilege-select" className={classes.department_label}>Privilege Level</InputLabel>
+      <InputLabel
+        htmlFor="privilege-select"
+        className={classes.department_label}
+      >
+        Privilege Level
+      </InputLabel>
       <Select
         native
         value={privilege}
@@ -67,13 +90,13 @@ export const PrivilegeSelect = (props: { privilege: UserPrivilege; handlePrivile
         className={classes.department_select}
         autoWidth={true}
         inputProps={{
-				  name: 'privilege',
-				  id: 'privilege-select'
+          name: "privilege",
+          id: "privilege-select",
         }}
       >
-        <option value={'Admin'}>Admin</option>
-        <option value={'Basic'}>Basic</option>
-        <option value={'Developer'}>Developer</option>
+        <option value={"Admin"}>Admin</option>
+        <option value={"Basic"}>Basic</option>
+        <option value={"Developer"}>Developer</option>
       </Select>
     </>
   );
@@ -88,7 +111,7 @@ export const RegisterHeader = () => {
         <AccountCircleIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-            Please Enter the User Details
+        Please Enter the User Details
       </Typography>
     </>
   );
@@ -96,14 +119,14 @@ export const RegisterHeader = () => {
 
 export const RegisterFooter = () => {
   return (
-    <Box mt={4} >
+    <Box mt={4}>
       <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
+        {"Copyright © "}
         <Link color="inherit" href="https://sufst.co.uk/">
-            SUFST
-        </Link>{' '}
+          SUFST
+        </Link>{" "}
         {new Date().getFullYear()}
-        {'.'}
+        {"."}
       </Typography>
     </Box>
   );

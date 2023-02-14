@@ -16,8 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { AlertState } from './alert';
-import { UserDepartment, UserMeta, UserPrivilege } from './user';
+import { AlertState } from "./alert";
+import { UserDepartment, UserMeta, UserPrivilege } from "./user";
 
 //
 // USER
@@ -42,7 +42,7 @@ export type UserRegister = (
   username: string,
   password: string,
   privilege: UserPrivilege,
-  department: UserDepartment,
+  department: UserDepartment
 ) => void;
 
 export interface LoginUserAction {

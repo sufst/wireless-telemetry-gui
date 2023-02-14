@@ -17,10 +17,10 @@
 */
 
 // Styles
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme) => ({
   alert: {
-    marginBottom: '2rem'
-  }
+    marginBottom: "2rem",
+  },
 }));

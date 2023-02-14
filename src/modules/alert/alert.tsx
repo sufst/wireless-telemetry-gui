@@ -15,9 +15,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React from 'react';
-import { AlertState, AlertLevel, AlertText, AlertTimeout, AlertType } from 'types/models/alert';
-import AlertContainer from './containers';
+import React from "react";
+import {
+  AlertState,
+  AlertLevel,
+  AlertText,
+  AlertTimeout,
+  AlertType,
+} from "types/models/alert";
+import AlertContainer from "./containers";
 
 /**
  * Alert Levels - (severity) - as specified from MUI Labs - Name of type to be specified
@@ -29,9 +35,7 @@ import AlertContainer from './containers';
  */
 
 const Alert: React.FC = () => {
-  return (
-    <AlertContainer />
-  );
+  return <AlertContainer />;
 };
 
 /**
@@ -47,10 +51,15 @@ export const createAlert: CreateAlert = (timeout, level, type, text) => {
     timeout,
     level,
     type,
-    text
+    text,
   };
 };
 
-type CreateAlert = (timeout: AlertTimeout, level: AlertLevel, type: AlertType, text: AlertText) => AlertState;
+type CreateAlert = (
+  timeout: AlertTimeout,
+  level: AlertLevel,
+  type: AlertType,
+  text: AlertText
+) => AlertState;
 
 export default Alert;

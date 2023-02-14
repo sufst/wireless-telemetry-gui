@@ -22,7 +22,7 @@ export interface SensorData {
 }
 
 export interface SensorMeta {
-  [entry: string ]: any;
+  [entry: string]: any;
 }
 
 export interface Sensor {

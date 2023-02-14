@@ -16,11 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Color } from '@material-ui/lab/Alert';
+import { Color } from "@material-ui/lab/Alert";
 
 export type AlertTimeout = number;
 export type AlertLevel = Color;
-export type AlertType = 'snack' | 'alert';
+export type AlertType = "snack" | "alert";
 export type AlertText = string;
 
 export interface AlertState {

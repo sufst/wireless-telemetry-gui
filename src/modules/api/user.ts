@@ -16,17 +16,17 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { url } from 'config';
-import { UserGet, UserPatch } from 'types/api/api';
-import { SetUserAction } from 'types/models/actions';
+import { url } from "config";
+import { UserGet, UserPatch } from "types/api/api";
+import { SetUserAction } from "types/models/actions";
 
 const handleGetUser: UserGet = async (accessToken) => {
   const response = await fetch(`http://${url}/user`, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + accessToken
-    }
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
+    },
   });
 
   if (!response.ok) {
@@ -37,19 +37,25 @@ const handleGetUser: UserGet = async (accessToken) => {
   return data;
 };
 
-type UserGetPromise = (username: string, accessToken: string) => Promise<SetUserAction | null>;
+type UserGetPromise = (
+  username: string,
+  accessToken: string
+) => Promise<SetUserAction | null>;
 
-export const getUser: UserGetPromise = async (username: string, accessToken: string) => {
+export const getUser: UserGetPromise = async (
+  username: string,
+  accessToken: string
+) => {
   const user: SetUserAction = {
     username,
     accessToken,
     creation: new Date().valueOf() / 1000,
-    privilege: 'Anon',
-    department: 'NON SPECIFIED',
-    meta: {}
+    privilege: "Anon",
+    department: "NON SPECIFIED",
+    meta: {},
   };
 
-  if (username === 'anonymous') {
+  if (username === "anonymous") {
     return user;
   }
 
@@ -62,7 +68,7 @@ export const getUser: UserGetPromise = async (username: string, accessToken: str
     user.department = data.department;
     user.meta = JSON.parse(data.meta);
   } catch (statusText) {
-    console.error('Error Getting User:', statusText);
+    console.error("Error Getting User:", statusText);
     return null;
   }
 
@@ -71,12 +77,12 @@ export const getUser: UserGetPromise = async (username: string, accessToken: str
 
 const handleUserPatch: UserPatch = async (accessToken, fields) => {
   const response = await fetch(`http://${url}/user`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + accessToken
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
     },
-    body: JSON.stringify(fields)
+    body: JSON.stringify(fields),
   });
 
   if (!response.ok) {
@@ -96,7 +102,7 @@ export const userPatch: UserPatch = async (accessToken, fields) => {
 
     return false;
   } catch (statusText) {
-    console.log('Error in User Patch: ', statusText);
+    console.log("Error in User Patch: ", statusText);
     return false;
   }
 };

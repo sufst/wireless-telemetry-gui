@@ -15,64 +15,62 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import {
-  makeStyles
-} from '@material-ui/core';
+import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   sensorGraphContainerRoot: {
-    paddingBottom: '25px',
-    backgroundColor: '#292929'
+    paddingBottom: "25px",
+    backgroundColor: "#292929",
   },
   sensorPaperHeaderButton: {
-    color: 'white',
-    width: '10%'
+    color: "white",
+    width: "10%",
   },
   sensorPaperHeaderTitle: {
-    textAlign: 'left',
-    color: 'white',
-    width: '90%',
-    fontWeight: 'bold',
+    textAlign: "left",
+    color: "white",
+    width: "90%",
+    fontWeight: "bold",
     fontSize: 23,
-    margin: '0% 0% 0% 5%'
+    margin: "0% 0% 0% 5%",
   },
   sensorGraph: {
     fontSize: 28,
-    color: 'white',
-    fill: 'white'
+    color: "white",
+    fill: "white",
   },
   sensorLiveValue: {
-    textAlign: 'left',
-    color: 'white',
-    width: '90%',
-    margin: '0% 0% 0% 10%'
+    textAlign: "left",
+    color: "white",
+    width: "90%",
+    margin: "0% 0% 0% 10%",
   },
   sensorPaper: {
-    textAlign: 'center',
-    background: '#292929',
-    width: '100%',
-    margin: '1% 0% 1% 0%'
+    textAlign: "center",
+    background: "#292929",
+    width: "100%",
+    margin: "1% 0% 1% 0%",
   },
   groupPaperHeaderButton: {
-    color: '#002472',
-    width: '10%'
+    color: "#002472",
+    width: "10%",
   },
   groupPaperHeaderTitle: {
-    textAlign: 'center',
-    color: 'white',
-    width: '90%',
-    fontSize: 33
+    textAlign: "center",
+    color: "white",
+    width: "90%",
+    fontSize: 33,
   },
   groupPaperHeader: {
-    background: '#292929',
-    textAlign: 'center',
-    margin: '1% 0% 1% 0%'
+    background: "#292929",
+    textAlign: "center",
+    margin: "1% 0% 1% 0%",
   },
   groupPaper: {
-    width: '99.9%',
-    background: '#292929'
-  }
+    width: "99.9%",
+    background: "#292929",
+  },
 }));

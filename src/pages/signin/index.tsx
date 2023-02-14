@@ -16,10 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import LoginContainer from './containers';
+import LoginContainer from "./containers";
 
 export const SignIn = () => {
-  return (
-    <LoginContainer />
-  );
+  return <LoginContainer />;
 };

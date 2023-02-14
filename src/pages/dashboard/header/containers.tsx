@@ -16,35 +16,36 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import Tabs from '@material-ui/core/Tabs';
-import React, { useCallback } from 'react';
-import Tab from '@material-ui/core/Tab';
-import {
-  SessionContainer
-} from '../session/containers';
-import RealtimeSensorsGroupContainer from 'modules/realtimegraphs/realtimegraphs';
-import {
-  v4
-} from 'uuid';
-import { useSelector } from 'react-redux';
-import { RootState } from 'redux/store';
-import Dash from '../dash/container';
+import Tabs from "@material-ui/core/Tabs";
+import React, { useCallback } from "react";
+import Tab from "@material-ui/core/Tab";
+import { SessionContainer } from "../session/containers";
+import RealtimeSensorsGroupContainer from "modules/realtimegraphs/realtimegraphs";
+import { v4 } from "uuid";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/store";
+import Dash from "../dash/container";
 
 export const DashboardHeader = () => {
   // Tabs
   const viewTabs = React.useRef([
-    [<Dash key={v4()} />, <Tab key={v4()} label = "Dash"/>],
-    [<SessionContainer key={v4()} />, <Tab key={v4()} label = "Session"/>]
+    [<Dash key={v4()} />, <Tab key={v4()} label="Dash" />],
+    [<SessionContainer key={v4()} />, <Tab key={v4()} label="Session" />],
   ]);
 
-  const tabNames = React.useRef(['Dash', 'Session']);
+  const tabNames = React.useRef(["Dash", "Session"]);
 
   const selectGroups = (state: RootState) => state.sensors.groups;
   const groups = useSelector(selectGroups);
 
   const groupNames = Object.keys(groups);
-  const newTabNames = groupNames.filter(name => !tabNames.current.includes(name));
-  const newViewTabs = newTabNames.map(tabName => [<GroupTab key={v4()} group={tabName}/>, <Tab key={v4()} label={tabName}/>]);
+  const newTabNames = groupNames.filter(
+    (name) => !tabNames.current.includes(name)
+  );
+  const newViewTabs = newTabNames.map((tabName) => [
+    <GroupTab key={v4()} group={tabName} />,
+    <Tab key={v4()} label={tabName} />,
+  ]);
   viewTabs.current.push(...newViewTabs);
   tabNames.current.push(...newTabNames);
 
@@ -55,8 +56,13 @@ export const DashboardHeader = () => {
 
   return (
     <div>
-      <Tabs variant="scrollable" scrollButtons="auto" value={selectedTab} onChange={onTabChange}>
-        {viewTabs.current.map(x => x[1])}
+      <Tabs
+        variant="scrollable"
+        scrollButtons="auto"
+        value={selectedTab}
+        onChange={onTabChange}
+      >
+        {viewTabs.current.map((x) => x[1])}
       </Tabs>
       {viewTabs.current[selectedTab][0]}
     </div>
@@ -64,7 +70,5 @@ export const DashboardHeader = () => {
 };
 
 const GroupTab = (props: { group: string }) => {
-  return (
-    <RealtimeSensorsGroupContainer key={v4()} name={props.group}/>
-  );
+  return <RealtimeSensorsGroupContainer key={v4()} name={props.group} />;
 };

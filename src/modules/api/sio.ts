@@ -15,35 +15,35 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { url } from 'config';
-import { io, Socket } from 'socket.io-client';
-import { SioConnect } from 'types/api/api';
+import { url } from "config";
+import { io, Socket } from "socket.io-client";
+import { SioConnect } from "types/api/api";
 
 let sio: Socket;
 
 export const sioConnect: SioConnect = (accessToken, onMeta, onData) => {
   sio?.disconnect();
-  sio?.off('connnect');
-  sio?.off('meta');
-  sio?.off('data');
+  sio?.off("connnect");
+  sio?.off("meta");
+  sio?.off("data");
 
   sio = io(`ws://${url}/car`, {
     reconnectionDelayMax: 10000,
     extraHeaders: {
-      Authorization: 'Bearer ' + accessToken
-    }
+      Authorization: "Bearer " + accessToken,
+    },
   });
 
-  sio.on('connect', () => {
-    console.log('Sio connected');
+  sio.on("connect", () => {
+    console.log("Sio connected");
   });
 
-  sio.on('meta', (message: string) => {
+  sio.on("meta", (message: string) => {
     const meta = JSON.parse(message);
     onMeta(meta);
   });
 
-  sio.on('data', (message: string) => {
+  sio.on("data", (message: string) => {
     const data = JSON.parse(message);
     onData(data);
   });

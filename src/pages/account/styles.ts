@@ -17,19 +17,19 @@
 */
 
 // Material UI Imports
-import { makeStyles } from '@material-ui/core/styles';
-import { PrivilegeColor, PrivilegeToColors } from 'types/models/ui-types';
-import { UserPrivilege } from 'types/models/user';
+import { makeStyles } from "@material-ui/core/styles";
+import { PrivilegeColor, PrivilegeToColors } from "types/models/ui-types";
+import { UserPrivilege } from "types/models/user";
 
 const privilegeToColors: PrivilegeToColors = {
-  Anon: 'gray',
-  Admin: 'red',
-  Basic: 'gray',
-  Developer: 'green'
+  Anon: "gray",
+  Admin: "red",
+  Basic: "gray",
+  Developer: "green",
 };
 
 const privilegeFont = (privilege?: UserPrivilege) => {
-  if (privilege === 'Admin' || privilege === 'Developer') {
+  if (privilege === "Admin" || privilege === "Developer") {
     return 700;
   }
 
@@ -37,7 +37,7 @@ const privilegeFont = (privilege?: UserPrivilege) => {
 };
 
 const getPrivilegeColor = (privilege?: UserPrivilege): PrivilegeColor => {
-  const priv: keyof PrivilegeToColors = privilege ?? 'Basic';
+  const priv: keyof PrivilegeToColors = privilege ?? "Basic";
 
   return privilegeToColors[priv];
 };
@@ -46,38 +46,38 @@ export const subheaderStyle = (privilege?: UserPrivilege) => {
   return {
     style: {
       color: getPrivilegeColor(privilege),
-      fontWeight: privilegeFont(privilege)
-    }
+      fontWeight: privilegeFont(privilege),
+    },
   };
 };
 
 export const avatarStyle = (privilege?: UserPrivilege) => {
   return {
     backgroundColor: getPrivilegeColor(privilege),
-    color: 'white'
+    color: "white",
   };
 };
 
 export const useStyles = makeStyles((theme) => ({
   cardRoot: {
-    marginTop: '1em',
-    backgroundColor: '#292929'
+    marginTop: "1em",
+    backgroundColor: "#292929",
   },
   btn: {
-    marginTop: '20px',
-    backgroundColor: 'red'
+    marginTop: "20px",
+    backgroundColor: "red",
   },
   btn_register: {
-    marginTop: '20px',
-    marginLeft: '20px',
-    backgroundColor: 'green'
+    marginTop: "20px",
+    marginLeft: "20px",
+    backgroundColor: "green",
   },
   list: {
-    margin: '0px',
-    paddingBottom: '0px',
-    paddingTop: '0px'
+    margin: "0px",
+    paddingBottom: "0px",
+    paddingTop: "0px",
   },
   line: {
-    marginTop: '20px'
-  }
+    marginTop: "20px",
+  },
 }));

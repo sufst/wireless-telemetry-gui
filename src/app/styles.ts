@@ -15,18 +15,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: "flex",
   },
   viewPaper: {
-    margin: '45px 0px 0px 75px',
-    padding: '15px',
-    boxShadow: '0px 0px 0px 0px'
+    margin: "45px 0px 0px 75px",
+    padding: "15px",
+    boxShadow: "0px 0px 0px 0px",
   },
   alert: {
-    marginBottom: '2rem'
-  }
+    marginBottom: "2rem",
+  },
 }));

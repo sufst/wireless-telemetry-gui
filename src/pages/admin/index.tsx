@@ -15,14 +15,14 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React from 'react';
-import { fetchAllUsers } from 'modules/api/users';
-import { useCallback, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { RootState } from 'redux/store';
-import { UserState } from 'types/models/user';
-import { AdminPanelContainer } from './containers';
+import React from "react";
+import { fetchAllUsers } from "modules/api/users";
+import { useCallback, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { RootState } from "redux/store";
+import { UserState } from "types/models/user";
+import { AdminPanelContainer } from "./containers";
 
 const Admin = () => {
   const history = useHistory();
@@ -45,8 +45,8 @@ const Admin = () => {
   }, [token]);
 
   useEffect(() => {
-    if (privilege === 'Anon' || privilege === 'Basic') {
-      history.push('/');
+    if (privilege === "Anon" || privilege === "Basic") {
+      history.push("/");
       return;
     }
 

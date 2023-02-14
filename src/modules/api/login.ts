@@ -16,18 +16,18 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { url } from 'config';
-import { LoginUser } from 'types/api/api';
+import { url } from "config";
+import { LoginUser } from "types/api/api";
 
 const handleLoginUser: LoginUser = async (username, password) => {
   const response: Response = await fetch(`http://${url}/login/${username}`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      password
-    })
+      password,
+    }),
   });
 
   if (!response.ok) {
@@ -48,7 +48,7 @@ export const loginUser: LoginUser = async (
     const data = await handleLoginUser(username, password);
     token = data.access_token;
   } catch (statusCode) {
-    console.error('Error Logging in:', statusCode);
+    console.error("Error Logging in:", statusCode);
   }
 
   return token;

@@ -19,14 +19,27 @@
 //
 // DASHBOARD
 //
-export type DashStatusItemColor = 'grey' | 'red' | 'green' | 'orange' | 'rgba(0, 0, 0, 0.5)';
+export type DashStatusItemColor =
+  | "grey"
+  | "red"
+  | "green"
+  | "orange"
+  | "rgba(0, 0, 0, 0.5)";
 
-export type DashStatusItemText = 'IDLE' | 'INACTIVE' | 'ACTIVE' | 'CONNECTED' | 'DISCONNECTED' | 'LOW' | 'HEALTHY' | ' ';
+export type DashStatusItemText =
+  | "IDLE"
+  | "INACTIVE"
+  | "ACTIVE"
+  | "CONNECTED"
+  | "DISCONNECTED"
+  | "LOW"
+  | "HEALTHY"
+  | " ";
 
 //
 // User Privilege UI
 //
-export type PrivilegeColor = 'red' | 'gray' | 'green';
+export type PrivilegeColor = "red" | "gray" | "green";
 
 // TODO: Fix this here...
 export interface PrivilegeToColors {

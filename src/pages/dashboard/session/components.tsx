@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React from 'react';
+import React from "react";
 import {
   Paper,
   Typography,
@@ -34,20 +34,18 @@ import {
   TableHead,
   TableRow,
   Checkbox,
-  Grid
-} from '@material-ui/core';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import { SessionsGetResponse } from 'types/api/api';
-import { useStyles } from './styles';
+  Grid,
+} from "@material-ui/core";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import { SessionsGetResponse } from "types/api/api";
+import { useStyles } from "./styles";
 
 export const CurrentSessionHeader: React.FC<{ name: string }> = ({ name }) => {
   const classes = useStyles();
 
   return (
     <Typography variant="h6" className={classes.currentSessionTypo}>
-      <span className={classes.currentSessionText}>
-				Current Session:{' '}
-      </span>
+      <span className={classes.currentSessionText}>Current Session: </span>
       <span className={classes.sessionName}>{name}</span>
     </Typography>
   );
@@ -81,15 +79,13 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = ({
   onStop,
   sensorGroups,
   isRunning,
-  sessionMeta
+  sessionMeta,
 }) => {
   const classes = useStyles();
 
   const [name, setName] = React.useState<string>(sessionMeta.name);
   const [driver, setDriver] = React.useState(sessionMeta.driver);
-  const [condition, setCondition] = React.useState(
-    sessionMeta.conditions
-  );
+  const [condition, setCondition] = React.useState(sessionMeta.conditions);
   const [sensorGroups, setSensorGroups] = React.useState<string[]>(
     sessionMeta.sensorGroups
   );
@@ -108,7 +104,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = ({
   }, [
     isSessionRunning,
     classes.sessionButtonStartBox,
-    classes.sessionButtonStartBoxDisabled
+    classes.sessionButtonStartBoxDisabled,
   ]);
 
   const stopButtonClasses = React.useCallback(() => {
@@ -120,24 +116,24 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = ({
   }, [
     isSessionRunning,
     classes.sessionButtonStopBox,
-    classes.sessionButtonStopBoxDisabled
+    classes.sessionButtonStopBoxDisabled,
   ]);
 
   const startPressed = React.useCallback(() => {
-    if (name === '' || sensorGroups.length === 0) {
+    if (name === "" || sensorGroups.length === 0) {
       setError(true);
       return;
     }
-    console.log('Starting: ', name, driver, condition, sensorGroups);
+    console.log("Starting: ", name, driver, condition, sensorGroups);
 
     props.onSubmit(name, driver, condition, sensorGroups);
   }, [name, driver, condition, sensorGroups, props]);
 
   const stopPressed = React.useCallback(() => {
     props.onStop();
-    setCondition('');
-    setDriver('');
-    setName('');
+    setCondition("");
+    setDriver("");
+    setName("");
     setSensorGroups([]);
   }, [props]);
 
@@ -147,9 +143,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = ({
     (newSensorGroup: string) => {
       if (sensorGroups.includes(newSensorGroup)) {
         setSensorGroups(
-          sensorGroups.filter(
-            (sensorGroup) => sensorGroup !== newSensorGroup
-          )
+          sensorGroups.filter((sensorGroup) => sensorGroup !== newSensorGroup)
         );
       } else {
         const newSensors = sensorGroups.concat(newSensorGroup);
@@ -169,11 +163,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = ({
             className={classes.newSessionTextField}
             value={name}
             disabled={isSessionRunning}
-            helperText={
-              isSessionRunning
-                ? 'Session is already running'
-                : null
-            }
+            helperText={isSessionRunning ? "Session is already running" : null}
             onChange={(e) => {
               setName(e.target.value);
             }}
@@ -205,19 +195,17 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = ({
         />
         {isSessionRunning && (
           <p className={classes.sessionAlreadyRunningText}>
-						Session is already running. You can't edit these now.
+            Session is already running. You can't edit these now.
           </p>
         )}
         {error && (
           <FormHelperText>
-						Set a name and choose at least one sensor
+            Set a name and choose at least one sensor
           </FormHelperText>
         )}
         <Grid container className={classes.gridContainer} spacing={3}>
           <Grid item xs={4} onClick={startPressed}>
-            <Box className={startButtonClasses()}>
-							Start Session
-            </Box>
+            <Box className={startButtonClasses()}>Start Session</Box>
           </Grid>
           <Grid item xs={4} onClick={stopPressed}>
             <Box className={stopButtonClasses()}>Stop Session</Box>
@@ -242,7 +230,7 @@ export const SensorChooser: React.FC = (props: {
             id={groupName}
             checked={props.selectedGroups.includes(groupName)}
             onChange={() => props.onSensorChangeCallback(groupName)}
-            style={{ color: 'lightBlue' }}
+            style={{ color: "lightBlue" }}
           />
         }
         label={groupName}
@@ -256,7 +244,7 @@ export const SensorChooser: React.FC = (props: {
   return (
     <Box className={classes.sensorChooserBox}>
       <FormLabel component="legend" className={classes.formLabel}>
-				Sensors
+        Sensors
       </FormLabel>
       {checkboxes}
     </Box>
@@ -290,7 +278,7 @@ export const SessionTable: React.FC = (props: {
             <GetAppIcon />
           </IconButton>
         </>
-      )
+      ),
     };
   });
   return (
@@ -312,15 +300,9 @@ export const SessionTable: React.FC = (props: {
                 <TableCell component="th" scope="row">
                   {sessionEntry.name}
                 </TableCell>
-                <TableCell align="right">
-                  {sessionEntry.status}
-                </TableCell>
-                <TableCell align="right">
-                  {sessionEntry.created}
-                </TableCell>
-                <TableCell align="right">
-                  {sessionEntry.actions}
-                </TableCell>
+                <TableCell align="right">{sessionEntry.status}</TableCell>
+                <TableCell align="right">{sessionEntry.created}</TableCell>
+                <TableCell align="right">{sessionEntry.actions}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -15,80 +15,80 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React from 'react';
-import { Box, Grid } from '@material-ui/core';
-import { createAlert } from 'modules/alert/alert';
-import { useDispatch, useSelector } from 'react-redux';
-import { showAlert } from 'redux/slices/alert';
-import { RootState } from 'redux/store';
-import { SensorData } from 'types/models/sensor';
-import { DashStatusItemColor, DashStatusItemText } from 'types/models/ui-types';
-import { useStyles } from './styles';
+import React from "react";
+import { Box, Grid } from "@material-ui/core";
+import { createAlert } from "modules/alert/alert";
+import { useDispatch, useSelector } from "react-redux";
+import { showAlert } from "redux/slices/alert";
+import { RootState } from "redux/store";
+import { SensorData } from "types/models/sensor";
+import { DashStatusItemColor, DashStatusItemText } from "types/models/ui-types";
+import { useStyles } from "./styles";
 
 export const DashStatusItem: React.FC<{ name: string; data: SensorData[] }> = ({
   name,
-  data
+  data,
 }) => {
   const classes = useStyles();
 
   const lastValue = data[data?.length - 1]?.value;
 
-  let background: DashStatusItemColor = 'rgba(0, 0, 0, 0.5)';
-  let text: DashStatusItemText = ' ';
+  let background: DashStatusItemColor = "rgba(0, 0, 0, 0.5)";
+  let text: DashStatusItemText = " ";
 
   const checkECU = () => {
     if (lastValue === 1) {
-      text = 'CONNECTED';
-      background = 'green';
+      text = "CONNECTED";
+      background = "green";
     } else if (lastValue === 0) {
-      text = 'DISCONNECTED';
-      background = 'red';
+      text = "DISCONNECTED";
+      background = "red";
     }
   };
 
   const checkEngine = () => {
     if (lastValue === 1) {
-      text = 'INACTIVE';
-      background = 'red';
+      text = "INACTIVE";
+      background = "red";
     } else if (lastValue === 2) {
-      text = 'IDLE';
-      background = 'orange';
+      text = "IDLE";
+      background = "orange";
     } else if (lastValue === 3) {
-      text = 'ACTIVE';
-      background = 'green';
+      text = "ACTIVE";
+      background = "green";
     }
   };
 
   const checkBattery = () => {
     if (lastValue === 1) {
-      text = 'DISCONNECTED';
-      background = 'grey';
+      text = "DISCONNECTED";
+      background = "grey";
     } else if (lastValue === 2) {
-      text = 'LOW';
-      background = 'red';
+      text = "LOW";
+      background = "red";
     } else if (lastValue === 3) {
-      text = 'HEALTHY';
-      background = 'green';
+      text = "HEALTHY";
+      background = "green";
     }
   };
 
   const checkLogging = () => {
     if (lastValue === 0) {
-      text = 'INACTIVE';
-      background = 'red';
+      text = "INACTIVE";
+      background = "red";
     } else if (lastValue === 1) {
-      text = 'ACTIVE';
-      background = 'green';
+      text = "ACTIVE";
+      background = "green";
     }
   };
 
-  if (name === 'ECU') {
+  if (name === "ECU") {
     checkECU();
-  } else if (name === 'ENGINE') {
+  } else if (name === "ENGINE") {
     checkEngine();
-  } else if (name === 'BATTERY') {
+  } else if (name === "BATTERY") {
     checkBattery();
-  } else if (name === 'LOGGING') {
+  } else if (name === "LOGGING") {
     checkLogging();
   }
 
@@ -97,7 +97,7 @@ export const DashStatusItem: React.FC<{ name: string; data: SensorData[] }> = ({
       <Box
         className={classes.box}
         style={{
-          backgroundColor: background
+          backgroundColor: background,
         }}
       >
         <span>
@@ -123,7 +123,7 @@ export const CurrentTime: React.FC = () => {
 
   return (
     <p className={classes.currentTimeText}>
-			Current Time:{' '}
+      Current Time:{" "}
       <span className={classes.time}>{time.toLocaleTimeString()}</span>
     </p>
   );
@@ -144,9 +144,7 @@ export const DashSensorsItem: React.FC = (props: { name: string }) => {
       <Box className={classes.sensorBox}>
         <div>
           {sensor?.meta?.name}:<br />
-          <span className={classes.sensorLastValue}>
-            {lastValue}{' '}
-          </span>
+          <span className={classes.sensorLastValue}>{lastValue} </span>
           {sensor?.meta?.units}
         </div>
       </Box>
@@ -158,12 +156,12 @@ export const DashSensors: React.FC = () => {
   const classes = useStyles();
 
   const names = [
-    'rpm',
-    'water_temp_c',
-    'tps_perc',
-    'battery_mv',
-    'speed_kph',
-    'fuel_flow'
+    "rpm",
+    "water_temp_c",
+    "tps_perc",
+    "battery_mv",
+    "speed_kph",
+    "fuel_flow",
   ];
 
   return (
@@ -196,7 +194,7 @@ export const DashSession: React.FC = (props: {
   const selectSessionName = (state: RootState) => state.session.sessionName;
   const sessionName = useSelector(selectSessionName);
   const sessionNameLabelText: string =
-		sessionName === '' ? 'NOT RUNNING' : sessionName;
+    sessionName === "" ? "NOT RUNNING" : sessionName;
 
   // Current User from Redux
   const selectUser = (state: RootState) => state.user;
@@ -207,8 +205,8 @@ export const DashSession: React.FC = (props: {
   // Builds a name for the session based on the current date & time.
   const buildSessionName = () => {
     const date = new Date();
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // January is 0!
     const year = date.getFullYear() - 2000;
     const hour = date.getHours();
     const minute = date.getMinutes();
@@ -221,16 +219,16 @@ export const DashSession: React.FC = (props: {
   const startPressed = useCallback(
     (e) => {
       if (isSessionRunning) {
-        console.log('Session is already running...');
+        console.log("Session is already running...");
         return;
       }
 
-      if (privilege !== 'Admin' && privilege !== 'Developer') {
+      if (privilege !== "Admin" && privilege !== "Developer") {
         const createSessionFailedAlert = createAlert(
           3000,
-          'error',
-          'snack',
-          'Login to start a new session.'
+          "error",
+          "snack",
+          "Login to start a new session."
         );
         dispatch(showAlert(createSessionFailedAlert));
         return;
@@ -245,16 +243,16 @@ export const DashSession: React.FC = (props: {
   const stopPressed = useCallback(
     (e) => {
       if (!isSessionRunning) {
-        console.log('No active session...');
+        console.log("No active session...");
         return;
       }
 
-      if (privilege !== 'Admin' && privilege !== 'Developer') {
+      if (privilege !== "Admin" && privilege !== "Developer") {
         const createSessionFailedAlert = createAlert(
           3000,
-          'error',
-          'snack',
-          'Log in to stop a running session.'
+          "error",
+          "snack",
+          "Log in to stop a running session."
         );
         dispatch(showAlert(createSessionFailedAlert));
         return;
@@ -274,7 +272,7 @@ export const DashSession: React.FC = (props: {
   }, [
     isSessionRunning,
     classes.sessionButtonStartBox,
-    classes.sessionButtonStartBoxDisabled
+    classes.sessionButtonStartBoxDisabled,
   ]);
 
   const stopButtonClasses = useCallback(() => {
@@ -286,7 +284,7 @@ export const DashSession: React.FC = (props: {
   }, [
     isSessionRunning,
     classes.sessionButtonStopBox,
-    classes.sessionButtonStopBoxDisabled
+    classes.sessionButtonStopBoxDisabled,
   ]);
 
   return (
@@ -294,9 +292,7 @@ export const DashSession: React.FC = (props: {
       <p className={classes.sensorsText}>Session</p>
       <Grid container className={classes.gridContainer} spacing={3}>
         <Grid item xs={4}>
-          <CurrentSessionBox
-            currentSessionName={sessionNameLabelText}
-          />
+          <CurrentSessionBox currentSessionName={sessionNameLabelText} />
         </Grid>
         <Grid item xs={4} onClick={startPressed}>
           <Box className={startButtonClasses()}>Start Session</Box>
@@ -307,38 +303,38 @@ export const DashSession: React.FC = (props: {
       </Grid>
       <span
         style={{
-          opacity: '0.3'
+          opacity: "0.3",
         }}
       >
-				Starting a session from here will provide a default name and
-				enable all sensors.
+        Starting a session from here will provide a default name and enable all
+        sensors.
       </span>
     </>
   );
 };
 
 const CurrentSessionBox: React.FC<{ currentSessionName: string }> = ({
-  currentSessionName
+  currentSessionName,
 }) => {
   const classes = useStyles();
 
-  let backgroundColor = 'grey';
+  let backgroundColor = "grey";
 
-  if (currentSessionName === 'NOT RUNNING') {
-    backgroundColor = 'grey';
+  if (currentSessionName === "NOT RUNNING") {
+    backgroundColor = "grey";
   } else {
-    backgroundColor = 'darkBlue';
+    backgroundColor = "darkBlue";
   }
 
   return (
     <Box
       className={classes.currentSessionBox}
       style={{
-        backgroundColor
+        backgroundColor,
       }}
     >
       <p>
-				Current: <br />
+        Current: <br />
         {currentSessionName}
       </p>
     </Box>

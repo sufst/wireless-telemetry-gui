@@ -16,8 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { url } from 'config';
-import { SessionCreate, SessionCreateFields, SessionsGet, SessionStop } from 'types/api/api';
+import { url } from "config";
+import {
+  SessionCreate,
+  SessionCreateFields,
+  SessionsGet,
+  SessionStop,
+} from "types/api/api";
 
 /**
  * Creating new sessions
@@ -25,17 +30,21 @@ import { SessionCreate, SessionCreateFields, SessionsGet, SessionStop } from 'ty
  * @param name Name for new session
  * @param fields Object housing the session metadata and sensors to be saved.
  */
-const handleCreateSession: SessionCreate = async (accessToken, name, fields) => {
+const handleCreateSession: SessionCreate = async (
+  accessToken,
+  name,
+  fields
+) => {
   const response = await fetch(`http://${url}/sessions/${name}`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken.toString()}`
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken.toString()}`,
     },
     body: JSON.stringify({
       meta: fields.sessionMetadata,
-      sensors: fields.sessionSensors
-    })
+      sensors: fields.sessionSensors,
+    }),
   });
 
   if (!response.ok) {
@@ -47,19 +56,33 @@ const handleCreateSession: SessionCreate = async (accessToken, name, fields) => 
 };
 
 // NEEDS MOVED TO APPROPRIATE TYPES FILE
-type s = (accessToken: string, name: string, sessionMeta: object, sessionSensors: string[]) => Promise<SessionCreate | null>;
+type s = (
+  accessToken: string,
+  name: string,
+  sessionMeta: object,
+  sessionSensors: string[]
+) => Promise<SessionCreate | null>;
 
-export const createSession: s = async (accessToken: string, name: string, sessionMeta: object, sessionSensors: string[]) => {
+export const createSession: s = async (
+  accessToken: string,
+  name: string,
+  sessionMeta: object,
+  sessionSensors: string[]
+) => {
   const fields: SessionCreateFields = {
     sessionMetadata: sessionMeta,
-    sessionSensors
+    sessionSensors,
   };
 
   try {
-    const response: SessionCreate = await handleCreateSession(accessToken, name, fields);
+    const response: SessionCreate = await handleCreateSession(
+      accessToken,
+      name,
+      fields
+    );
     return response;
   } catch (statusText) {
-    console.log('Error creating new session: ', statusText);
+    console.log("Error creating new session: ", statusText);
     return null;
   }
 };
@@ -69,16 +92,19 @@ export const createSession: s = async (accessToken: string, name: string, sessio
  * @param name Name of session to be stopped.
  * @param accessToken JWT authentication token
  */
-const handleSessionStop: SessionStop = async (name: string, accessToken: string) => {
+const handleSessionStop: SessionStop = async (
+  name: string,
+  accessToken: string
+) => {
   const response = await fetch(`http://${url}/sessions/${name}`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + accessToken
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + accessToken,
     },
     body: JSON.stringify({
-      status: 'dead'
-    })
+      status: "dead",
+    }),
   });
 
   if (!response.ok) {
@@ -93,7 +119,7 @@ export const stopSession: SessionStop = async (name, token) => {
     const response = await handleSessionStop(name, token);
     return response;
   } catch (statusText) {
-    console.log('Error Stopping session: ', statusText);
+    console.log("Error Stopping session: ", statusText);
     return null;
   }
 };
@@ -103,10 +129,10 @@ export const stopSession: SessionStop = async (name, token) => {
  */
 const handleGetAllSessions: SessionsGet = async () => {
   const response = await fetch(`http://${url}/sessions`, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json'
-    }
+      "Content-Type": "application/json",
+    },
   });
 
   if (!response.ok) {
@@ -122,7 +148,7 @@ export const getAllSessions: SessionsGet = async () => {
     const sessionResponse = await handleGetAllSessions();
     return sessionResponse;
   } catch (statusText) {
-    console.log('Error in Sessions GET: ', statusText);
+    console.log("Error in Sessions GET: ", statusText);
     return null;
   }
 };

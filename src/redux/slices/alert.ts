@@ -16,19 +16,19 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ShowAlertAction } from 'types/models/actions';
-import { AlertState } from 'types/models/alert';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ShowAlertAction } from "types/models/actions";
+import { AlertState } from "types/models/alert";
 
 const initialState: AlertState = {
   timeout: undefined,
   level: undefined,
   type: undefined,
-  text: undefined
+  text: undefined,
 };
 
 const alertSlice = createSlice({
-  name: 'alert',
+  name: "alert",
   initialState,
   reducers: {
     showAlert: (state: AlertState, action: PayloadAction<ShowAlertAction>) => {
@@ -42,8 +42,8 @@ const alertSlice = createSlice({
       state.level = undefined;
       state.type = undefined;
       state.text = undefined;
-    }
-  }
+    },
+  },
 });
 
 export const { showAlert, removeAlert } = alertSlice.actions;

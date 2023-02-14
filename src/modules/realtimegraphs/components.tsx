@@ -15,11 +15,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React from 'react';
-import { useStyles } from './styles';
-import { Switch, FormControlLabel, Typography } from '@material-ui/core';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Label } from 'recharts';
-import { GraphData } from 'types/models/ui-types';
+import React from "react";
+import { useStyles } from "./styles";
+import { Switch, FormControlLabel, Typography } from "@material-ui/core";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Label } from "recharts";
+import { GraphData } from "types/models/ui-types";
 
 export const SensorPaperHeaderHideButton: React.FC = (props: {
   onChange: (event: any) => void;
@@ -82,7 +82,7 @@ export const SensorGraph: React.FC = (props: {
         top: 5,
         right: 30,
         left: 20,
-        bottom: 30
+        bottom: 30,
       }}
     >
       <CartesianGrid strokeDasharray="4 4 4 " />

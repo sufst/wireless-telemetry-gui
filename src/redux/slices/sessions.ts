@@ -16,26 +16,28 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { StartSessionAction } from 'types/models/actions';
-import { SessionState } from 'types/models/session';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { StartSessionAction } from "types/models/actions";
+import { SessionState } from "types/models/session";
 
 const initialState: SessionState = {
-  sessionName: '',
-  sessionDriver: '',
-  sessionConditions: '',
+  sessionName: "",
+  sessionDriver: "",
+  sessionConditions: "",
   sessionSensors: [],
   sessionSensorGroups: [],
-  isRunning: false
+  isRunning: false,
 };
 
 export const sessionSlice = createSlice({
-  name: 'session',
+  name: "session",
   initialState,
   reducers: {
-    getAllSessions: () => {
-    },
-    startSession: (state: SessionState, action: PayloadAction<StartSessionAction>) => {
+    getAllSessions: () => {},
+    startSession: (
+      state: SessionState,
+      action: PayloadAction<StartSessionAction>
+    ) => {
       state.sessionName = action.payload.name;
       state.sessionDriver = action.payload.driver;
       state.sessionConditions = action.payload.condition;
@@ -44,16 +46,17 @@ export const sessionSlice = createSlice({
       state.isRunning = true;
     },
     stopSession: (state: SessionState) => {
-      state.sessionName = '';
-      state.sessionDriver = '';
-      state.sessionConditions = '';
+      state.sessionName = "";
+      state.sessionDriver = "";
+      state.sessionConditions = "";
       state.sessionSensors = [];
       state.sessionSensorGroups = [];
       state.isRunning = false;
-    }
-  }
+    },
+  },
 });
 
-export const { getAllSessions, startSession, stopSession } = sessionSlice.actions;
+export const { getAllSessions, startSession, stopSession } =
+  sessionSlice.actions;
 
 export default sessionSlice.reducer;

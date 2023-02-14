@@ -17,17 +17,17 @@
 */
 
 // Module Imports
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from "react";
 
 // Container
-import AccountContainer from './container';
+import AccountContainer from "./container";
 
 // Context
-import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from 'redux/store';
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "redux/store";
 
-import { logoutUser } from 'redux/slices/user';
-import { useHistory } from 'react-router';
+import { logoutUser } from "redux/slices/user";
+import { useHistory } from "react-router";
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -42,18 +42,22 @@ const Account = () => {
   }, [dispatch]);
 
   const onRegisterNewUser = useCallback(() => {
-    history.push('/register');
+    history.push("/register");
   }, [history]);
 
   useEffect(() => {
-    if (username === undefined || username === 'anonymous') {
-      history.push('/');
+    if (username === undefined || username === "anonymous") {
+      history.push("/");
     }
   }, [history, username]);
 
   return (
     <>
-      <AccountContainer user={user} onLogoutClick={onLogoutClick} onRegisterNewUser={onRegisterNewUser}/>
+      <AccountContainer
+        user={user}
+        onLogoutClick={onLogoutClick}
+        onRegisterNewUser={onRegisterNewUser}
+      />
     </>
   );
 };

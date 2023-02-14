@@ -17,17 +17,17 @@
 */
 
 // React - Redux Imports
-import React, { useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-import { RootState } from 'redux/store';
+import React, { useCallback } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { RootState } from "redux/store";
 
 // Components Impors
-import AppNavigationBar from './appbar';
-import AppSideBar from './sidebar';
+import AppNavigationBar from "./appbar";
+import AppSideBar from "./sidebar";
 
 // Material UI Imports
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 /**
  * A Container that holds all the logic & views for the main AppBar and the AppSideBar
@@ -49,13 +49,18 @@ const AppNav: React.FC = () => {
   }, []);
 
   const handleAccountClick = useCallback(() => {
-    history.push('/account');
+    history.push("/account");
   }, [history]);
 
   return (
     <div className={classes.navigationRoot}>
-      <AppNavigationBar open={open} handleDrawerOpen={handleDrawerOpen} onAccountClick={handleAccountClick} user={user}/>
-         SideBar
+      <AppNavigationBar
+        open={open}
+        handleDrawerOpen={handleDrawerOpen}
+        onAccountClick={handleAccountClick}
+        user={user}
+      />
+      SideBar
       <AppSideBar open={open} handleDrawerClose={handleDrawerClose} />
     </div>
   );

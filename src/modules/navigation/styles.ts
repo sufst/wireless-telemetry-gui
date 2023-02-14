@@ -16,83 +16,83 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core";
 
 // The width of the drawer when opened
 const DRAWER_WIDTH = 240;
 
 export const useStyles = makeStyles((theme) => ({
   navigationRoot: {
-    display: 'flex'
+    display: "flex",
   },
   title: {
     flexGrow: 1,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   appBarShift: {
     marginLeft: DRAWER_WIDTH,
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   menuButton: {
-    marginRight: 36
+    marginRight: 36,
   },
   usernameLabel: {
-    color: 'white',
-    marginRight: '1rem'
+    color: "white",
+    marginRight: "1rem",
   },
   loginButton: {
-    backgroundColor: 'green'
+    backgroundColor: "green",
   },
   logoutButton: {
-    backgroundColor: 'red'
+    backgroundColor: "red",
   },
   hide: {
-    display: 'none'
+    display: "none",
   },
   drawer: {
     width: DRAWER_WIDTH,
     flexShrink: 0,
-    whiteSpace: 'nowrap'
+    whiteSpace: "nowrap",
   },
   drawerOpen: {
     width: DRAWER_WIDTH,
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   drawerClose: {
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
-    overflowX: 'hidden',
+    overflowX: "hidden",
     width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1
-    }
+    [theme.breakpoints.up("sm")]: {
+      width: theme.spacing(9) + 1,
+    },
   },
   toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
-  }
+    padding: theme.spacing(3),
+  },
 }));

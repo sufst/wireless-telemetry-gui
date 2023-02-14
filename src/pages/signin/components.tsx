@@ -16,30 +16,28 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React from 'react';
+import React from "react";
 import {
   Avatar,
   Button,
   TextField,
   Link,
   Box,
-  Typography
-} from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import {
-  useStyles
-} from './styles';
+  Typography,
+} from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { useStyles } from "./styles";
 
 export const LoginFooter: React.FC = () => {
   return (
-    <Box mt={4} >
+    <Box mt={4}>
       <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
+        {"Copyright © "}
         <Link color="inherit" href="https://sufst.co.uk/">
-             SUFST
-        </Link>{' '}
+          SUFST
+        </Link>{" "}
         {new Date().getFullYear()}
-        {'.'}
+        {"."}
       </Typography>
     </Box>
   );
@@ -51,10 +49,10 @@ export const LoginHeader: React.FC = () => {
   return (
     <>
       <Avatar className={classes.avatar}>
-        <LockOutlinedIcon className={classes.lockIcon}/>
+        <LockOutlinedIcon className={classes.lockIcon} />
       </Avatar>
       <Typography component="h1" variant="h5">
-             Please Login In
+        Please Login In
       </Typography>
     </>
   );
@@ -75,7 +73,10 @@ export const UsernameField: React.FC = () => {
   );
 };
 
-export const PasswordField: React.FC = (props: { label: string; id: string }) => {
+export const PasswordField: React.FC = (props: {
+  label: string;
+  id: string;
+}) => {
   return (
     <TextField
       variant="outlined"

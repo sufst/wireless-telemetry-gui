@@ -17,10 +17,10 @@
 */
 
 // Module Imports
-import React, { useCallback } from 'react';
-import { useHistory } from 'react-router';
-import { useDispatch } from 'react-redux';
-import clsx from 'clsx';
+import React, { useCallback } from "react";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import clsx from "clsx";
 
 // Material UI Imports
 import {
@@ -29,18 +29,18 @@ import {
   CssBaseline,
   IconButton,
   Toolbar,
-  Typography
-} from '@material-ui/core';
+  Typography,
+} from "@material-ui/core";
 
 // Material UI Icon Imports
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from "@material-ui/icons/Menu";
 
 // Styles
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 // Redux Imports
-import { logoutUser } from 'redux/slices/user';
-import { UserState } from 'types/models/user';
+import { logoutUser } from "redux/slices/user";
+import { UserState } from "types/models/user";
 
 interface NavigationBarProps {
   handleDrawerOpen: () => void;
@@ -56,7 +56,7 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
   handleDrawerOpen,
   open,
   onAccountClick,
-  user
+  user,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -65,16 +65,16 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
   const username = user.username;
 
   const loginLogoutButtonText = useCallback(() => {
-    if (username === 'anonymous' || username === undefined) {
-      return 'Login';
+    if (username === "anonymous" || username === undefined) {
+      return "Login";
     }
 
-    return 'Logout';
+    return "Logout";
   }, [username]);
 
   const onLoginLogoutButtonClick = useCallback(() => {
-    if (username === 'anonymous' || username === undefined) {
-      history.push('/login');
+    if (username === "anonymous" || username === undefined) {
+      history.push("/login");
     } else {
       dispatch(logoutUser());
     }
@@ -86,7 +86,7 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
+          [classes.appBarShift]: open,
         })}
       >
         <Toolbar>
@@ -96,16 +96,16 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, {
-              [classes.hide]: open
+              [classes.hide]: open,
             })}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap className={classes.title}>
-						SUFST Telemetry
+            SUFST Telemetry
           </Typography>
           <Typography className={classes.usernameLabel} variant="h6">
-            {username === 'anonymous' ? '' : username}
+            {username === "anonymous" ? "" : username}
           </Typography>
           <Button
             variant="contained"
@@ -113,7 +113,7 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
             color="secondary"
             onClick={onLoginLogoutButtonClick}
             className={
-              username === 'anonymous'
+              username === "anonymous"
                 ? classes.loginButton
                 : classes.logoutButton
             }

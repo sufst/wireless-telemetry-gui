@@ -15,10 +15,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React from 'react';
-import { UserState } from 'types/models/user';
-import { useStyles, getColorForPrivelege } from './styles';
-import { v4 } from 'uuid';
+import React from "react";
+import { UserState } from "types/models/user";
+import { useStyles, getColorForPrivelege } from "./styles";
+import { v4 } from "uuid";
 
 import {
   Table,
@@ -30,11 +30,11 @@ import {
   Paper,
   Avatar,
   Grid,
-  Typography
-} from '@material-ui/core';
+  Typography,
+} from "@material-ui/core";
 
 export const AdminPanelTable: React.FC<{ users: UserState[] }> = ({
-  users
+  users,
 }) => {
   const classes = useStyles();
 
@@ -57,10 +57,10 @@ const AdminPanelTableRow: React.FC<{ user: UserState }> = ({ user }) => {
   const classes = useStyles();
 
   // TODO: Remove force unwrapping here. Make it safer.
-  const createdAt = new Date(user.creation! * 1000).toLocaleString('en-GB', {
-    day: 'numeric',
-    month: 'numeric',
-    year: 'numeric'
+  const createdAt = new Date(user.creation! * 1000).toLocaleString("en-GB", {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
   });
 
   return (
@@ -68,16 +68,10 @@ const AdminPanelTableRow: React.FC<{ user: UserState }> = ({ user }) => {
       <TableCell>
         <Grid container>
           <Grid item lg={2}>
-            <Avatar
-              alt={user.username}
-              src="."
-              className={classes.avatar}
-            />
+            <Avatar alt={user.username} src="." className={classes.avatar} />
           </Grid>
           <Grid item lg={10}>
-            <Typography className={classes.name}>
-              {user.username}
-            </Typography>
+            <Typography className={classes.name}>{user.username}</Typography>
           </Grid>
         </Grid>
       </TableCell>
@@ -96,7 +90,7 @@ const AdminPanelTableRow: React.FC<{ user: UserState }> = ({ user }) => {
         <div
           style={{
             color: getColorForPrivelege(user.privilege!),
-            fontWeight: 'bold'
+            fontWeight: "bold",
           }}
         >
           {user.privilege}
@@ -116,18 +110,10 @@ const AdminPanelTableHead: React.FC = () => {
   return (
     <TableHead>
       <TableRow>
-        <TableCell className={classes.tableHeaderCell}>
-					Username
-        </TableCell>
-        <TableCell className={classes.tableHeaderCell}>
-					Department
-        </TableCell>
-        <TableCell className={classes.tableHeaderCell}>
-					Privilege
-        </TableCell>
-        <TableCell className={classes.tableHeaderCell}>
-					Created At
-        </TableCell>
+        <TableCell className={classes.tableHeaderCell}>Username</TableCell>
+        <TableCell className={classes.tableHeaderCell}>Department</TableCell>
+        <TableCell className={classes.tableHeaderCell}>Privilege</TableCell>
+        <TableCell className={classes.tableHeaderCell}>Created At</TableCell>
       </TableRow>
     </TableHead>
   );

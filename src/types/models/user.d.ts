@@ -16,16 +16,17 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export type UserPrivilege = 'Anon' | 'Basic' | 'Admin' | 'Developer';
+export type UserPrivilege = "Anon" | "Basic" | "Admin" | "Developer";
 
-export type UserDepartment = 'Electronics'
-| 'Operations'
-| 'Power-train'
-| 'Vehicle Performance'
-| 'Race Engineering'
-| 'Aerodynamics'
-| 'Tier 1'
-| 'NON SPECIFIED';
+export type UserDepartment =
+  | "Electronics"
+  | "Operations"
+  | "Power-train"
+  | "Vehicle Performance"
+  | "Race Engineering"
+  | "Aerodynamics"
+  | "Tier 1"
+  | "NON SPECIFIED";
 
 export interface UserMeta {
   dept?: string;

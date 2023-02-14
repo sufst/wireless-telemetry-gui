@@ -16,16 +16,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React from 'react';
-import { createAlert } from 'modules/alert/alert';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-import { showAlert } from 'redux/slices/alert';
-import { RootState } from 'redux/store';
-import { RegisterContainer } from './containers';
+import React from "react";
+import { createAlert } from "modules/alert/alert";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { showAlert } from "redux/slices/alert";
+import { RootState } from "redux/store";
+import { RegisterContainer } from "./containers";
 
-import { registerNewUser } from 'redux/slices/user';
-import { UserRegister } from 'types/models/actions';
+import { registerNewUser } from "redux/slices/user";
+import { UserRegister } from "types/models/actions";
 
 export const Register: React.FC = () => {
   const dispatch = useDispatch();
@@ -37,23 +37,30 @@ export const Register: React.FC = () => {
   const privilege = user.privilege;
 
   React.useEffect(() => {
-    if (privilege === 'Anon' || privilege === 'Basic') {
-      const cannotRegisterUserAlert = createAlert(3000, 'error', 'alert', 'You cannot create a new user. Sorry :(');
+    if (privilege === "Anon" || privilege === "Basic") {
+      const cannotRegisterUserAlert = createAlert(
+        3000,
+        "error",
+        "alert",
+        "You cannot create a new user. Sorry :("
+      );
       dispatch(showAlert(cannotRegisterUserAlert));
 
-      history.push('/');
+      history.push("/");
     }
   }, [dispatch, user, privilege, history]);
 
-  const registerUser: UserRegister = useCallback((username, password, privilege, department) => {
-    const newUser = { username, password, privilege, department };
-    dispatch(registerNewUser(newUser));
-  }, [dispatch]);
+  const registerUser: UserRegister = useCallback(
+    (username, password, privilege, department) => {
+      const newUser = { username, password, privilege, department };
+      dispatch(registerNewUser(newUser));
+    },
+    [dispatch]
+  );
 
   return (
     <>
-      <RegisterContainer registerUser={registerUser}/>
+      <RegisterContainer registerUser={registerUser} />
     </>
-
   );
 };

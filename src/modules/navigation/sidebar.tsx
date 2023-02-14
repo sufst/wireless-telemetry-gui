@@ -17,35 +17,35 @@
 */
 
 // Module Imports
-import React, { useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router';
-import clsx from 'clsx';
+import React, { useCallback, useMemo } from "react";
+import { useHistory } from "react-router";
+import clsx from "clsx";
 
 // Material UI Imports
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 
-import { useTheme } from '@material-ui/core/styles';
-import { useStyles } from './styles';
+import { useTheme } from "@material-ui/core/styles";
+import { useStyles } from "./styles";
 
 // Material UI Icons Imports
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import SpeedIcon from '@material-ui/icons/Speed';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import StorageIcon from '@material-ui/icons/Storage';
-import RssFeedIcon from '@material-ui/icons/RssFeed';
-import SettingsIcon from '@material-ui/icons/Settings';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import GitHubIcon from '@material-ui/icons/GitHub';
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import SpeedIcon from "@material-ui/icons/Speed";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import StorageIcon from "@material-ui/icons/Storage";
+import RssFeedIcon from "@material-ui/icons/RssFeed";
+import SettingsIcon from "@material-ui/icons/Settings";
+import InstagramIcon from "@material-ui/icons/Instagram";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import GitHubIcon from "@material-ui/icons/GitHub";
 
 interface AppSideBarProps {
   handleDrawerClose: () => void;
@@ -59,16 +59,16 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
   const history = useHistory();
 
   const actionTitles = [
-    'Account',
-    'Dashboard',
-    'Session',
-    'Admin',
-    'Database',
-    'Feed',
-    'Settings'
+    "Account",
+    "Dashboard",
+    "Session",
+    "Admin",
+    "Database",
+    "Feed",
+    "Settings",
   ];
 
-  const socialTitles = ['Instagram', 'Twitter', 'GitHub'];
+  const socialTitles = ["Instagram", "Twitter", "GitHub"];
 
   // Using useMemo with 0 dependencies allows us to ignore rerendering these icons each time
   // Not sure what keys to use, but 0-6 seemed to not warn lmao.
@@ -80,7 +80,7 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
       <SupervisorAccountIcon key={3} />,
       <StorageIcon key={4} />,
       <RssFeedIcon key={5} />,
-      <SettingsIcon key={6} />
+      <SettingsIcon key={6} />,
     ];
   }, []);
 
@@ -88,28 +88,28 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
     return [
       <InstagramIcon key={0} />,
       <TwitterIcon key={1} />,
-      <GitHubIcon key={2} />
+      <GitHubIcon key={2} />,
     ];
   }, []);
 
   const handleActionIconClicked = useMemo(
     () => [
-      () => history.push('/account'),
-      () => history.push('/dashboard'),
-      () => history.push('/dashboard'),
-      () => history.push('/admin'),
-      () => history.push('/dashboard'),
-      () => history.push('/dashboard'),
-      () => history.push('/dashboard')
+      () => history.push("/account"),
+      () => history.push("/dashboard"),
+      () => history.push("/dashboard"),
+      () => history.push("/admin"),
+      () => history.push("/dashboard"),
+      () => history.push("/dashboard"),
+      () => history.push("/dashboard"),
     ],
     [history]
   );
 
   const handleSocialIconClicked = useMemo(
     () => [
-      () => openSocial('https://www.instagram.com/sufst'),
-      () => openSocial('https://twitter.com/sufst'),
-      () => openSocial('https://github.com/orgs/sufst')
+      () => openSocial("https://www.instagram.com/sufst"),
+      () => openSocial("https://twitter.com/sufst"),
+      () => openSocial("https://github.com/orgs/sufst"),
     ],
     []
   );
@@ -135,7 +135,7 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
   // Disabled this line since it was whinging about there beinng a missing return statement
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const openSocial = (url: string) => {
-    const win = window.open(url, '_blank');
+    const win = window.open(url, "_blank");
     win?.focus();
   };
 
@@ -145,18 +145,18 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
         variant="permanent"
         className={clsx(classes.drawer, {
           [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open
+          [classes.drawerClose]: !open,
         })}
         classes={{
           paper: clsx({
             [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open
-          })
+            [classes.drawerClose]: !open,
+          }),
         }}
       >
         <div className={classes.toolbar}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? (
+            {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
               <ChevronLeftIcon />
@@ -166,11 +166,7 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
         <Divider />
         <List>
           {actionTitles.map((text, index) => (
-            <ListItem
-              button
-              key={text}
-              onClick={() => onIconClick(index)}
-            >
+            <ListItem button key={text} onClick={() => onIconClick(index)}>
               <ListItemIcon>{actionIcons[index]}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -179,11 +175,7 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
         <Divider />
         <List>
           {socialTitles.map((text, index) => (
-            <ListItem
-              button
-              key={text}
-              onClick={() => onSocialClick(index)}
-            >
+            <ListItem button key={text} onClick={() => onSocialClick(index)}>
               <ListItemIcon>{socialIcons[index]}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>

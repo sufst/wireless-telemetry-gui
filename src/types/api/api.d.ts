@@ -119,9 +119,6 @@ interface SessionCreateFields {
   sessionSensors: Object;
 }
 
-export type SessionStop = (
-  name: string,
-  accessToken: string
-) => Promise;
+export type SessionStop = (name: string, accessToken: string) => Promise;
 
 export type GetAllUsersType = (accessToken: string) => Promise<any>;
