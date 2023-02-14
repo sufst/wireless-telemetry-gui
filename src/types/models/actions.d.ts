@@ -74,6 +74,14 @@ export type GetSessionDetailAction = {
     name: string,
 }
 
+export type GetSessionListAction = {
+    name: {
+        creation: number,
+        status: string,
+        sensors: [],
+    },
+}
+
 //
 // SENSORS
 //

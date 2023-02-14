@@ -22,10 +22,12 @@ import alertReducer from './slices/alert';
 import sensorsReducer from './slices/sensors';
 import userReducer from './slices/user';
 import sessionReducer from './slices/sessions'
+import sessionListReducer from './slices/sessionList';
 
 import { alertMiddleware } from './middleware/alert';
 import { userMiddleware } from './middleware/user';
 import { sessionMiddleware } from './middleware/sessions';
+import { sessionListMiddleware } from './middleware/sessionList';
 
 
 const store = configureStore({
@@ -33,14 +35,16 @@ const store = configureStore({
      alert: alertReducer, 
      sensors : sensorsReducer,
      user: userReducer, 
-     session: sessionReducer
+     session: sessionReducer,
+     sessionList: sessionListReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
         .prepend(
             alertMiddleware, 
             userMiddleware,
-            sessionMiddleware
+            sessionMiddleware,
+            sessionListMiddleware,
         )
 })
 
