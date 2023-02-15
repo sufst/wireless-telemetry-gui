@@ -19,23 +19,23 @@
 import { useMemo } from 'react';
 import { v4 } from 'uuid';
 import { useStyles } from "../../pages/dashboard/dash/styles";
-import {  Box, Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import type { RootState } from "redux/store";
 
 const SensorPaperContainer = (props: { name: string }) => {
     const classes = useStyles();
 
-    const sensorsSelector = (state: RootState) => state.sensors.sensors[props.name]; 
-    const sensor = useSelector(sensorsSelector); 
+    const sensorsSelector = (state: RootState) => state.sensors.sensors[props.name];
+    const sensor = useSelector(sensorsSelector);
 
-    const data = sensor?.data ?? []; 
-    const lastValue = data[data?.length-1]?.value;  
-    
+    const data = sensor?.data ?? [];
+    const lastValue = data[data?.length - 1]?.value;
+
     return (
         <Grid item xs={12} sm={4} lg={2}>
             <Box className={classes.sensorBox}>
-                <div>{sensor?.meta?.name}:<br/><span className={classes.sensorLastValue}>{lastValue} </span>{sensor?.meta?.units}</div>
+                <div>{sensor?.meta?.name}:<br /><span className={classes.sensorLastValue}>{lastValue} </span>{sensor?.meta?.units}</div>
             </Box>
         </Grid>
     )
@@ -43,23 +43,21 @@ const SensorPaperContainer = (props: { name: string }) => {
 
 const RealtimeSensorsGroupContainer = (props: { name: string }) => {
     const selectSensors = (state: RootState) => state.sensors.groups[props.name];
-    const sensors = useSelector(selectSensors); 
+    const sensors = useSelector(selectSensors);
 
     // See modules index.js for explaination of why useMemo is used.
     const sensorContainers = useMemo(() => {
 
-        const containers = sensors.map((x: string) => 
-        {
-            return (<Grid item key={v4()} xs={12}>
-                    <SensorPaperContainer key={v4()} name={x}/>
-                    </Grid>
+        const containers = sensors.map((x: string) => {
+            return (
+                <SensorPaperContainer key={v4()} name={x} />
             );
         });
         return containers;
     }, [sensors]);
 
     return (
-        <Grid container alignItems="center" key={v4()}>
+        <Grid container alignItems="center" key={v4()} spacing={2}>
             {sensorContainers}
         </Grid>
     );
