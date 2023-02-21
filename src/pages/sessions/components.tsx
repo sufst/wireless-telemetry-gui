@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
+import React from "react";
 import {
     Paper,
     IconButton,
@@ -39,8 +39,8 @@ export const SessionPaper = () => {
         <Paper className={classes.rootPaper}>
             <p className={classes.newSessionText}>Session</p>
         </Paper>
-    )
-}
+    );
+};
 
 export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
     const dispatch = useDispatch();
@@ -48,8 +48,8 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
     console.log("sessionData",props.sessionData);
     console.log("sessionEntries",sessionEntries);
     const info = sessionEntries.map(sessionEntry => {
-        const name = sessionEntry[0]
-        const sessionInfo = sessionEntry[1]
+        const name = sessionEntry[0];
+        const sessionInfo = sessionEntry[1];
         return {
             name,
             status: sessionInfo.status,
@@ -59,7 +59,7 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
                     <GetAppIcon />
                 </IconButton>
             </>
-        }
+        };
     });
     return (
         <div>
@@ -88,5 +88,5 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
                 </Table>
             </TableContainer>
         </div>
-    )
-}
+    );
+};

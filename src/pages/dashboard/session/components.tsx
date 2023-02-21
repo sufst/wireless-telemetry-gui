@@ -74,20 +74,14 @@ interface NewSessionContainerProps {
   };
 }
 
-export const NewSessionContainer: React.FC<NewSessionContainerProps> = ({
-  onSubmit,
-  onStop,
-  sensorGroups,
-  isRunning,
-  sessionMeta,
-}) => {
+export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) => {
   const classes = useStyles();
 
-  const [name, setName] = React.useState<string>(sessionMeta.name);
-  const [driver, setDriver] = React.useState(sessionMeta.driver);
-  const [condition, setCondition] = React.useState(sessionMeta.conditions);
+  const [name, setName] = React.useState<string>(props.sessionMeta.name);
+  const [driver, setDriver] = React.useState(props.sessionMeta.driver);
+  const [condition, setCondition] = React.useState(props.sessionMeta.conditions);
   const [sensorGroups, setSensorGroups] = React.useState<string[]>(
-    sessionMeta.sensorGroups
+    props.sessionMeta.sensorGroups
   );
 
   // Error state for the MUI FormControl
@@ -195,7 +189,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = ({
         />
         {isSessionRunning && (
           <p className={classes.sessionAlreadyRunningText}>
-            Session is already running. You can't edit these now.
+            Session is already running. You can&apos;t edit these now.
           </p>
         )}
         {error && (
@@ -216,12 +210,14 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = ({
   );
 };
 
-export const SensorChooser: React.FC = (props: {
+interface sensorChooserInterface {
   allGroups: string[];
   selectedGroups: string[];
   onSensorChangeCallback: (sensor: string) => void;
   disabled: boolean;
-}) => {
+}
+
+export const SensorChooser: React.FC<sensorChooserInterface> = (props) => {
   const checkboxes = props.allGroups.map((groupName) => {
     return (
       <FormControlLabel
@@ -235,6 +231,7 @@ export const SensorChooser: React.FC = (props: {
         }
         label={groupName}
         disabled={props.disabled}
+        key={groupName}
       />
     );
   });
@@ -251,9 +248,7 @@ export const SensorChooser: React.FC = (props: {
   );
 };
 
-export const SessionTable: React.FC = (props: {
-  sessionData: SessionsGetResponse;
-}) => {
+export const SessionTable: React.FC<{sessionData: SessionsGetResponse}> = (props) => {
   const classes = useStyles();
 
   let sessionEntries = Object.entries(props.sessionData);

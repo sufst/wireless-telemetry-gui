@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Paper } from "@material-ui/core";
 import { useStyles } from "../dashboard/session/styles";
@@ -26,16 +26,16 @@ export const SessionContainer = () => {
 
     const classes = useStyles(); 
     
-    const [sessionData, setSessionData] = useState({})
+    const [sessionData, setSessionData] = useState({});
 
     const fetchAllSessions = useCallback(async () => {
         const sessions = await getAllSessions();
         setSessionData(sessions); 
-     }, [])
+     }, []);
 
     useEffect(() => {
         fetchAllSessions(); 
-    },[fetchAllSessions])
+    },[fetchAllSessions]);
 
     return (
         <>
@@ -52,5 +52,5 @@ export const SessionContainer = () => {
                 <SessionTable sessionData={sessionData} />
             </Paper>
         </>
-    )
-}
+    );
+};

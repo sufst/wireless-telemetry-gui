@@ -17,6 +17,7 @@
 */
 
 // Module Imports
+// TODO: Downloadjs is deprecated, needs replaced with a new library
 import download from "downloadjs";
 import { createAlert } from "modules/alert/alert";
 import { createSession, getSessionDetail, stopSession } from "modules/api/sessions";
@@ -24,7 +25,7 @@ import { Middleware } from "redux";
 import { showAlert } from "redux/slices/alert";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
-export const sessionMiddleware: Middleware<{}, any> =
+export const sessionMiddleware: Middleware<any, any> =
   (storeAPI) => (next) => async (action) => {
     if (action.type === "session/startSession") {
       const { name, driver, condition } = action.payload;

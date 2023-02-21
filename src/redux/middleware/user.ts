@@ -1,3 +1,4 @@
+
 /*
     Southampton University Formula Student Team
     Copyright (C) 2021 SUFST
@@ -33,7 +34,7 @@ import { usersCreate } from "modules/api/users";
 import { SioOnDataHandler, SioOnMetaHander } from "types/api/api";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
-export const userMiddleware: Middleware<{}, any> =
+export const userMiddleware: Middleware<any, any> =
   (storeAPI) => (next) => async (action) => {
     if (action.type === "user/loginUser") {
       const { username, password } = action.payload;

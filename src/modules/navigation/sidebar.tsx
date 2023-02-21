@@ -58,28 +58,28 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
 
     const history = useHistory();
 
-    const actionTitles = ['Account', 'Dashboard', 'Session', 'Admin', 'Database', 'Feed', 'Settings']
+    const actionTitles = ['Account', 'Dashboard', 'Session', 'Admin', 'Database', 'Feed', 'Settings'];
 
-    const socialTitles = ['Instagram', 'Twitter', 'GitHub'] 
+    const socialTitles = ['Instagram', 'Twitter', 'GitHub']; 
 
     const actionIcons = useMemo(() => {
         return [
-            <AccountCircleIcon />, 
-            <SpeedIcon />,
-            <AccessTimeIcon />,
-            <SupervisorAccountIcon />,
-            <StorageIcon />,
-            <RssFeedIcon />,
-            <SettingsIcon /> 
-        ]
+            <AccountCircleIcon key="accountCircleIcon"/>, 
+            <SpeedIcon key="speedIcon"/>,
+            <AccessTimeIcon key="accessTimeIcon"/>,
+            <SupervisorAccountIcon key="supervisorAccountIcon"/>,
+            <StorageIcon key="storageIcon"/>,
+            <RssFeedIcon key="rssFeedIcon"/>,
+            <SettingsIcon key="settingsIcon"/> 
+        ];
     }, []);
 
     const socialIcons = useMemo(() => {
         return [
-            <InstagramIcon/>,
-            <TwitterIcon />,
-            <GitHubIcon />,
-        ]
+            <InstagramIcon key="instagramIcon"/>,
+            <TwitterIcon key="twitterIcon"/>,
+            <GitHubIcon key="githubIcon"/>,
+        ];
     }, []);
 
     const handleActionIconClicked = useMemo(() => [
@@ -91,30 +91,30 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
         () =>  history.push('/dashboard'),
         () =>  history.push('/dashboard'),
         
-    ], [history])
+    ], [history]);
 
     const handleSocialIconClicked = useMemo(() => [
         () => openSocial('https://www.instagram.com/sufst'),
         () => openSocial('https://twitter.com/sufst'),
         () => openSocial('https://github.com/orgs/sufst')
-    ], [])
+    ], []);
 
     const onIconClick = useCallback((index) => {
         if (index < handleActionIconClicked.length ) {
-            handleActionIconClicked[index]()
+            handleActionIconClicked[index]();
         }
-    }, [handleActionIconClicked])
+    }, [handleActionIconClicked]);
 
     const onSocialClick = useCallback((index) => {
         if (index < handleSocialIconClicked.length ) {
-            handleSocialIconClicked[index]()
+            handleSocialIconClicked[index]();
         }
-    }, [handleSocialIconClicked])
+    }, [handleSocialIconClicked]);
 
     const openSocial = (url: string) => {
         const win = window.open(url, '_blank');
         win?.focus(); 
-    }
+    };
 
     return (
       <div>
@@ -160,8 +160,8 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
             </List>
          </Drawer>
       </div>
-    )
-}
+    );
+};
 
 
 export default AppSideBar;

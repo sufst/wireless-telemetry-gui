@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /*
     Southampton University Formula Student Team
     Copyright (C) 2021 SUFST

@@ -40,7 +40,7 @@ const handleCreateSession: SessionCreate = async (
       meta: fields.sessionMetadata,
       sensors: fields.sessionSensors
     })
-  })
+  });
 
   if (!response.ok) {
     throw response.statusText;
@@ -48,7 +48,7 @@ const handleCreateSession: SessionCreate = async (
 
   const data = await response.json();
   return data;
-}
+};
 
 // NEEDS MOVED TO APPROPRIATE TYPES FILE
 type s = (
@@ -148,14 +148,14 @@ export const getAllSessions: SessionsGet = async () => {
 /**
  * Getting details of one of the sessions in the database 
  */
-const handleGetSessionDetail = async (name: String, accessToken: string) => {
+const handleGetSessionDetail = async (name: string, accessToken: string) => {
   const response = await fetch(`http://${url}/sessions/${name}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/zip",
       Authorization: "Bearer " + accessToken,
     },
-  })
+  });
 
   if (!response.ok) {
     throw response.statusText;
@@ -163,7 +163,7 @@ const handleGetSessionDetail = async (name: String, accessToken: string) => {
 
   const data = await response.blob();
   return data;
-}
+};
 
 export const getSessionDetail: SessionDetailGet = async (name: string, token: string) => {
   try {
