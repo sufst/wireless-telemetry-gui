@@ -40,6 +40,15 @@ import { useCallback, useState } from "react";
 import { SessionsGetResponse } from "types/api/api";
 import { useStyles } from "./styles";
 
+// import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import './rte.css'
+
+const reactDraft = require('react-draft-wysiwyg')
+const draftJS = require('draft-js')
+const {EditorState} = draftJS
+const {Editor} = reactDraft
+
 export const CurrentSessionHeader = (props: { name: string }) => {
     const classes = useStyles(); 
 
@@ -135,6 +144,9 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
             setSensorGroups(newSensors);
         }
     }, [sensorGroups])
+    const [editorState, setEditorState] = useState(
+        () => EditorState.createEmpty()
+    )
 
     return (
         <>
@@ -203,13 +215,18 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
                     </Grid>
                     <Grid>
                         {isSessionRunning && showNotesEditor && (
-                        <TextField label="Session Notes" 
-                            className={classes.newSessionTextField} 
-                            value={sessionNotes} 
-                            onChange={e => {
-                                setSessionNotes(e.target.value);
-                            }}
-                        />)}
+                        <div className="App">
+                        {/* <header className="App-header">
+                          Rich Text Editor Example
+                        </header> */}
+                        <Editor
+                          editorState={editorState}
+                          onEditorStateChange={setEditorState}
+                          wrapperClassName="wrapper-class"
+                          editorClassName="editor-class"
+                          toolbarClassName="toolbar-class"
+                        />
+                      </div>)}
                     </Grid>
                 </Grid>
             </FormControl>
