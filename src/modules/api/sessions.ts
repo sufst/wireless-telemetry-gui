@@ -17,12 +17,7 @@
 */
 
 import { url } from "config";
-import {
-  SessionCreate,
-  SessionCreateFields,
-  SessionsGet,
-  SessionStop,
-} from "types/api/api";
+import { SessionDetailGet, SessionCreate, SessionCreateFields, SessionsGet, SessionStop } from "types/api/api";
 
 /**
  * Creating new sessions
@@ -39,21 +34,21 @@ const handleCreateSession: SessionCreate = async (
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken.toString()}`,
+      Authorization: "Bearer " + accessToken,
     },
     body: JSON.stringify({
       meta: fields.sessionMetadata,
-      sensors: fields.sessionSensors,
-    }),
-  });
+      sensors: fields.sessionSensors
+    })
+  })
 
   if (!response.ok) {
-    throw Object.assign(new Error(response.statusText));
+    throw response.statusText;
   }
 
-  const data: SessionCreate = await response.json();
+  const data = await response.json();
   return data;
-};
+}
 
 // NEEDS MOVED TO APPROPRIATE TYPES FILE
 type s = (
@@ -71,18 +66,15 @@ export const createSession: s = async (
 ) => {
   const fields: SessionCreateFields = {
     sessionMetadata: sessionMeta,
-    sessionSensors,
+    sessionSensors: sessionSensors
   };
 
   try {
-    const response: SessionCreate = await handleCreateSession(
-      accessToken,
-      name,
-      fields
-    );
+    const response = await handleCreateSession(accessToken, name, fields);
     return response;
-  } catch (statusText) {
-    console.log("Error creating new session: ", statusText);
+  }
+  catch (statusText) {
+    console.log('Error creating new session: ', statusText);
     return null;
   }
 };
@@ -107,8 +99,8 @@ const handleSessionStop: SessionStop = async (
     }),
   });
 
-  if (!response.ok) {
-    throw Object.assign(new Error(response.statusText));
+  if(!response.ok) {
+    throw response.statusText;
   }
 
   return response;
@@ -135,8 +127,8 @@ const handleGetAllSessions: SessionsGet = async () => {
     },
   });
 
-  if (!response.ok) {
-    throw Object.assign(new Error(response.statusText));
+  if(!response.ok) {
+    throw response.statusText;
   }
 
   const data = await response.json();
@@ -149,6 +141,37 @@ export const getAllSessions: SessionsGet = async () => {
     return sessionResponse;
   } catch (statusText) {
     console.log("Error in Sessions GET: ", statusText);
+    return null;
+  }
+};
+
+/**
+ * Getting details of one of the sessions in the database 
+ */
+const handleGetSessionDetail = async (name: String, accessToken: string) => {
+  const response = await fetch(`http://${url}/sessions/${name}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/zip",
+      Authorization: "Bearer " + accessToken,
+    },
+  })
+
+  if (!response.ok) {
+    throw response.statusText;
+  }
+
+  const data = await response.blob();
+  return data;
+}
+
+export const getSessionDetail: SessionDetailGet = async (name: string, token: string) => {
+  try {
+    const sessionResponse = await handleGetSessionDetail(name, token);
+    return sessionResponse;
+  }
+  catch (statusText) {
+    console.log('Error in Session Detail GET: ', statusText);
     return null;
   }
 };
