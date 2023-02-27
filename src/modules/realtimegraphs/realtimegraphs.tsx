@@ -18,13 +18,14 @@
 
 import { useMemo } from 'react';
 import { v4 } from 'uuid';
-import { useStyles } from "../../pages/dashboard/dash/styles";
-import { Box, Grid } from '@material-ui/core';
+import { useStyles } from './styles';
+import { useStyles as useDashStyles } from "../../pages/dashboard/dash/styles";
+import { Box, Grid, Paper } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import type { RootState } from "redux/store";
 
 const SensorPaperContainer = (props: { name: string, groupName: string }) => {
-    const classes = useStyles();
+    const classes = useDashStyles();
 
     const sensorsSelector = (state: RootState) => state.sensors.sensors[props.name];
     const sensor = useSelector(sensorsSelector);
@@ -45,6 +46,7 @@ const SensorPaperContainer = (props: { name: string, groupName: string }) => {
 const RealtimeSensorsGroupContainer = (props: { name: string }) => {
     const selectSensors = (state: RootState) => state.sensors.groups[props.name];
     const sensors = useSelector(selectSensors);
+    const classes = useStyles();
 
     // See modules index.js for explaination of why useMemo is used.
     const sensorContainers = useMemo(() => {
@@ -58,9 +60,14 @@ const RealtimeSensorsGroupContainer = (props: { name: string }) => {
     }, [sensors]);
 
     return (
-        <Grid container alignItems="center" key={v4()} spacing={2}>
-            {sensorContainers}
-        </Grid>
+        <Paper>
+            <div>
+                <p className={classes.groupPaperHeaderTitle}>{props.name} sensor group</p>
+            </div>
+            <Grid container alignItems="center" key={v4()} spacing={2}>
+                {sensorContainers}
+            </Grid>
+        </Paper>
     );
 }
 
