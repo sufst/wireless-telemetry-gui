@@ -23,7 +23,7 @@ import { Box, Grid } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import type { RootState } from "redux/store";
 
-const SensorPaperContainer = (props: { name: string }) => {
+const SensorPaperContainer = (props: { name: string, groupName: string }) => {
     const classes = useStyles();
 
     const sensorsSelector = (state: RootState) => state.sensors.sensors[props.name];
@@ -31,11 +31,12 @@ const SensorPaperContainer = (props: { name: string }) => {
 
     const data = sensor?.data ?? [];
     const lastValue = data[data?.length - 1]?.value;
+    const sensorName = sensor?.meta?.name.replace(props.groupName + " ", "");
 
     return (
         <Grid item xs={12} sm={4} lg={2}>
             <Box className={classes.sensorBox}>
-                <div>{sensor?.meta?.name}:<br /><span className={classes.sensorLastValue}>{lastValue} </span>{sensor?.meta?.units}</div>
+                <div>{sensorName}:<br /><span className={classes.sensorLastValue}>{lastValue} </span>{sensor?.meta?.units}</div>
             </Box>
         </Grid>
     )
@@ -50,7 +51,7 @@ const RealtimeSensorsGroupContainer = (props: { name: string }) => {
 
         const containers = sensors.map((x: string) => {
             return (
-                <SensorPaperContainer key={v4()} name={x} />
+                <SensorPaperContainer key={v4()} name={x} groupName={props.name} />
             );
         });
         return containers;
