@@ -35,6 +35,22 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: '0.5rem',
         fontSize: '20px'
     },
+    sensorBox: {
+        color: 'white',
+        overflow: 'hidden',
+        height: '120px',
+        textAlign: 'center',
+        fontSize: '20px',
+        borderRadius: '10px',
+        backgroundColor: 'black',
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+    }, 
     sensorGraphContainerRoot: {
         paddingBottom: '25px',
         backgroundColor: '#292929'
@@ -55,6 +71,9 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: 28,
         color: 'white',
         fill: 'white'
+    },
+    sensorLastValue: {
+        fontWeight: 'bold'
     },
     sensorLiveValue: {
         textAlign: "left",

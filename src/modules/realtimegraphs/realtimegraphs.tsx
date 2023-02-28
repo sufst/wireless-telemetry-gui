@@ -19,13 +19,12 @@
 import { useMemo } from 'react';
 import { v4 } from 'uuid';
 import { useStyles } from './styles';
-import { useStyles as useDashStyles } from "../../pages/dashboard/dash/styles";
 import { Box, Grid, Paper } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import type { RootState } from "redux/store";
 
 const SensorPaperContainer = (props: { name: string, groupName: string }) => {
-    const classes = useDashStyles();
+    const classes = useStyles();
 
     const sensorsSelector = (state: RootState) => state.sensors.sensors[props.name];
     const sensor = useSelector(sensorsSelector);
