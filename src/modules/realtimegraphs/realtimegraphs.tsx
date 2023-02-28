@@ -34,7 +34,7 @@ const SensorPaperContainer = (props: { name: string, groupName: string }) => {
     const sensorName = sensor?.meta?.name.replace(props.groupName + " ", "");
 
     return (
-        <Grid item xs={12} sm={6} lg={3} xxl={1}>
+        <Grid item xs={12} sm={6} lg={3} xl={2}>
             <Box className={classes.sensorBox}>
                 <div>{sensorName}:<br /><span className={classes.sensorLastValue}>{lastValue.toPrecision(4)} </span>{sensor?.meta?.units}</div>
             </Box>

@@ -19,31 +19,11 @@
 import { createMuiTheme } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 
-declare module '@material-ui/core/styles/createBreakpoints' {
-   interface BreakpointOverrides {
-     xs: true;
-     sm: true;
-     md: true;
-     lg: true;
-     xl: true;
-     xxl: true;
-   }
- }
 
 const theme = createMuiTheme({
    palette: {
       type: 'dark',
       primary: blue
-   },
-   breakpoints: {
-      values: {
-         lg: 1280,
-         md: 960,
-         sm: 700,
-         xl: 1920,
-         xs: 0,
-         xxl: 2000,
-      },
    },
 })
 
