@@ -23,6 +23,18 @@ export const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
+    rootPaper: {
+        flexGrow: 1,
+        padding: '1rem',
+        marginBottom: '1rem',
+        marginTop: '1rem',
+        background: '#292929'
+    },
+    headingText: {
+        margin: '0',
+        marginBottom: '0.5rem',
+        fontSize: '20px'
+    },
     sensorGraphContainerRoot: {
         paddingBottom: '25px',
         backgroundColor: '#292929'
