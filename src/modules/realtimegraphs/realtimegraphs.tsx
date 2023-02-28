@@ -30,13 +30,13 @@ const SensorPaperContainer = (props: { name: string, groupName: string }) => {
     const sensor = useSelector(sensorsSelector);
 
     const data = sensor?.data ?? [];
-    const lastValue = data[data?.length - 1]?.value;
+    const lastValue: Number = Number(data[data?.length - 1]?.value);
     const sensorName = sensor?.meta?.name.replace(props.groupName + " ", "");
 
     return (
-        <Grid item xs={12} sm={4} lg={2}>
+        <Grid item xs={12} sm={6} lg={3} xxl={1}>
             <Box className={classes.sensorBox}>
-                <div>{sensorName}:<br /><span className={classes.sensorLastValue}>{lastValue} </span>{sensor?.meta?.units}</div>
+                <div>{sensorName}:<br /><span className={classes.sensorLastValue}>{lastValue.toPrecision(4)} </span>{sensor?.meta?.units}</div>
             </Box>
         </Grid>
     )
