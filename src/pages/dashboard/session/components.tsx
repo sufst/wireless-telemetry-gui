@@ -101,6 +101,11 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
         }
     }, [isSessionRunning, classes.sessionButtonStopBox, classes.sessionButtonStopBoxDisabled])
  
+    
+    const sessionNotesButtonClass = useCallback(() => {
+       return classes.sessionNotesButton
+    }, [classes.sessionNotesButton])
+ 
     const startPressed = useCallback(() => {
         if (name === "" || sensorGroups.length === 0) {
             setError(true)
@@ -122,7 +127,7 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
     const notesPressed = useCallback(() => {
         props.onNotes();
         setShowNotesEditor(!showNotesEditor);
-    }, [props, showNotesEditor])
+    }, [props, showNotesEditor,classes.sessionNotesButton])
 
     // const addNotes = useCallback(() => {
     //     props.onStop();
@@ -209,8 +214,8 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
                         </Box>
                     </Grid>
                     {isSessionRunning && <Grid item xs={4} onClick={notesPressed}>
-                        <Box className={stopButtonClasses()}>
-                            Session Notes
+                        <Box className={sessionNotesButtonClass()}>
+                            {showNotesEditor ? "Close Session Notes" : "Open Session Notes"}
                         </Box>
                     </Grid>}
                     <Grid>

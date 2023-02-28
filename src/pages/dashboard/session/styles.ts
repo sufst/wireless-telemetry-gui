@@ -174,5 +174,24 @@ export const useStyles = makeStyles((theme) => ({
         left: 0,
         right: 0,
         bottom: 0, 
+    }, sessionNotesButton: {
+        color: 'white',
+        height: '80px',
+        textAlign: 'center',
+        fontSize: '20px',
+        fontWeight: 'bold',
+        borderRadius: '10px',
+        backgroundColor: 'blue',
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0, 
+        "&:hover": {
+            cursor: 'pointer', 
+            filter: 'brightness(125%)'
+        }
     }
 }));
