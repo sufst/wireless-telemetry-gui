@@ -208,11 +208,11 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
                             Stop Session
                         </Box>
                     </Grid>
-                    <Grid item xs={4} onClick={notesPressed}>
+                    {isSessionRunning && <Grid item xs={4} onClick={notesPressed}>
                         <Box className={stopButtonClasses()}>
                             Session Notes
                         </Box>
-                    </Grid>
+                    </Grid>}
                     <Grid>
                         {isSessionRunning && showNotesEditor && (
                         <div className="App">
