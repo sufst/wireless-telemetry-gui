@@ -20,6 +20,12 @@ If you use macOS or Linux, `git` will probably already be installed on your mach
 
 Regardless of OS, you can download `node.js` from its website [here](https://nodejs.org/en/). **Make sure to download version 16!**
 
+For the GUI to fully function, you need a running version of the following servers on your machine: 
+- [Back-end Server](https://github.com/sufst/back-end)
+- [Intermediate Server](https://github.com/sufst/intermediate-server/)  
+
+You can find building & running instructions for both on their respective repositories linked above. 
+
 ### 2. Cloning the Repo
 Clone the repository on your local machine using the following command: 
 
@@ -31,8 +37,10 @@ git clone https://github.com/sufst/wireless-telemetry-gui.git
 Open a terminal window, navigate to the folder the repository was cloned and run the following command to install all dependencies: 
 
 ```
-npm install 
+npm install --legacy-peer-deps
 ```
+
+*Note: Some dependency versions listed in the package.json file are outdated, thus it's important to specify the `--legacy-peer-deps` flag when using the command above.*
 
 ### 4. Update `config.ts`
 You now need to update the back-end API URL on `config.ts` under `scr/config.ts`. Open that file and update the `url` variable on line 30 with your own back-end API URL. 
@@ -51,6 +59,8 @@ This runs the app in the development mode. Open [http://localhost:3000](http://l
 1. Currently, the version of `material-ui` used in `v4` instead of the latest major release `v5`. This doesn't cause any known issues and is in the roadmap to be updated in the future. For now, development should docs the `v4` version of the `material-ui` documentation available [here](https://v4.mui.com/). 
 
 2. Currently, the version of `node.js` known to be able to build the project is `Node version 16`. If you happen to have a latest version, you'll need to use `v16` until this issue is fixed. 
+
+3. As mentioned above, the `npm install` command currently fails unless the `--legacy-peer-deps` flag is used with it. 
 
 ## Create-React-App Docs
 
