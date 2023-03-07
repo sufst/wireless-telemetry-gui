@@ -43,6 +43,7 @@ export const SessionContainer = () => {
 */
     dispatch(getAllSessions());
     const sessionData: SessionsState = useSelector((state:RootState) => state.sessions);
+    console.log("sessionData", sessionData)
     return (
         <>
             <Paper className={classes.rootPaper}>
