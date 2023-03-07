@@ -29,7 +29,7 @@ import {
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { SessionsGetResponse } from "types/api/api";
 import { useStyles } from "../dashboard/session/styles";
-import { getSessionDetail } from "redux/slices/sessions";
+import { getSessionDetail } from "redux/slices/session";
 import { useDispatch } from "react-redux";
 
 export const SessionPaper = () => {

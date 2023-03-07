@@ -20,7 +20,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "../dashboard/session/styles";
-import { getAllSessions } from "redux/slices/sessionList";
+import { getAllSessions } from "redux/slices/sessions";
 import { SessionTable, SessionPaper } from "./components";
 import { showAlert } from "redux/slices/alert";
 import { createAlert } from "modules/alert/alert";

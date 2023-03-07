@@ -21,13 +21,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import alertReducer from './slices/alert';
 import sensorsReducer from './slices/sensors';
 import userReducer from './slices/user';
-import sessionReducer from './slices/sessions'
-import sessionListReducer from './slices/sessionList';
+import sessionReducer from './slices/session'
+import sessionsReducer from './slices/sessions';
 
 import { alertMiddleware } from './middleware/alert';
 import { userMiddleware } from './middleware/user';
-import { sessionMiddleware } from './middleware/sessions';
-import { sessionListMiddleware } from './middleware/sessionList';
+import { sessionMiddleware } from './middleware/session';
+import { sessionsMiddleware } from './middleware/sessions';
 
 
 const store = configureStore({
@@ -36,7 +36,7 @@ const store = configureStore({
      sensors : sensorsReducer,
      user: userReducer, 
      session: sessionReducer,
-     sessionList: sessionListReducer,
+     sessions: sessionsReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
@@ -44,7 +44,7 @@ const store = configureStore({
             alertMiddleware, 
             userMiddleware,
             sessionMiddleware,
-            sessionListMiddleware,
+            sessionsMiddleware,
         )
 })
 

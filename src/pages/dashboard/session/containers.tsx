@@ -25,7 +25,7 @@ import { RootState } from "../../../redux/store";
 import { CurrentSessionHeader, NewSessionContainer, SessionTable } from "./components";
 import { showAlert } from "redux/slices/alert";
 import { createAlert } from "modules/alert/alert";
-import { startSession, stopSession } from "redux/slices/sessions";
+import { startSession, stopSession } from "redux/slices/session";
 import { StartSessionButtonAction } from "types/models/actions";
 
 export const SessionContainer = () => {
