@@ -19,7 +19,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Paper } from "@material-ui/core";
 import { useStyles } from "./styles";
-import { getAllSessions } from "modules/api/sessions";
+import { getAllSessions } from "redux/slices/sessions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { CurrentSessionHeader, NewSessionContainer, SessionTable } from "./components";
@@ -54,7 +54,7 @@ export const SessionContainer = () => {
     const selectIsRunning = (state: RootState) => state.session.isRunning; 
     const isSessionRunning = useSelector(selectIsRunning);
     
-    const [sessionData, setSessionData] = useState({})
+    //const [sessionData, setSessionData] = useState({})
 
     // All Sensor Groups from Redux
     const selectGroups = (state: RootState) => state.sensors.groups;
@@ -69,7 +69,7 @@ export const SessionContainer = () => {
 
     const { privilege } = user; 
 
-    const fetchAllSessions = useCallback(async () => {
+    /*const fetchAllSessions = useCallback(async () => {
         const [sessions] = await getAllSessions();
         if (sessions) {
             setSessionData(sessions);
@@ -81,8 +81,10 @@ export const SessionContainer = () => {
 
     useEffect(() => {
         fetchAllSessions(); 
-    },[fetchAllSessions])
-
+    },[fetchAllSessions])*/
+    dispatch(getAllSessions());
+    const sessionData = useSelector((state:RootState) => state.sessions);
+    //setSessionData(sessionData);
 
     const handleStartSession: StartSessionButtonAction = useCallback((name, driver, condition, sessionSensorGroups) => {
         // Creates an array of all the names of the sensors to be saved in the session. 

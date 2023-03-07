@@ -38,6 +38,7 @@ import {
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { useCallback, useState } from "react";
 import { SessionsGetResponse } from "types/api/api";
+import { SessionsState } from "types/models/sessions";
 import { useStyles } from "./styles";
 
 export const CurrentSessionHeader = (props: { name: string }) => {
@@ -212,18 +213,15 @@ export const SensorChooser = (props: { allGroups: string[], selectedGroups: stri
     )
 }
 
-export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
+export const SessionTable = (props: { sessionData: SessionsState }) => {
     const classes = useStyles(); 
 
-    let sessionEntries = Object.entries(props.sessionData);
-    sessionEntries = sessionEntries.sort((a, b) => (b[1].creation - a[1].creation)).slice(0, 10);
+    const sessionEntries = props.sessionData.sort((a, b) => (b.creation - a.creation)).slice(0, 10);
     const info = sessionEntries.map(sessionEntry => {
-        const name = sessionEntry[0]
-        const sessionInfo = sessionEntry[1]
         return {
-            name,
-            status: sessionInfo.status,
-            created: (new Date(sessionInfo.creation)).toString(),
+            name: sessionEntry.name,
+            status: sessionEntry.status,
+            created: (new Date(sessionEntry.creation)).toString(),
             actions: <>
             {/* TODO: Add callback to download data and add button to stop session */}
             <IconButton color="primary" aria-label="upload picture" component="span">
