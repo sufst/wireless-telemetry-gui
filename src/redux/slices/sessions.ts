@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GetSessionsAction } from "types/models/actions";
+import { GetSessionsAction, GetSessionsActionContent } from "types/models/actions";
 import { SessionsState } from "types/models/sessions";
 
 const initialState: SessionsState = [];
@@ -13,9 +13,10 @@ export const sessionsSlice = createSlice({
       state = initialState;
     },
     replaceSessions: (state: SessionsState, payload: PayloadAction<GetSessionsAction>) => {
-      let newSessions: SessionsState = [];
+      const newSessions: SessionsState = [];
       for(let key in payload.payload) {
-        newSessions.push({name: key, creation: key.creation, status: key.status, sensors: key.sensors});
+        const content: GetSessionsActionContent = payload.payload[key]
+        newSessions.push({name: key, creation: content.creation, status: content.status, sensors: content.sensors});
       }
       state = newSessions;
     },

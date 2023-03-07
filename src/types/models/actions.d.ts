@@ -74,12 +74,12 @@ export type GetSessionDetailAction = {
     name: string,
 }
 
-export type GetSessionsAction = {
-    name: {
-        creation: number,
-        status: string,
-        sensors: [],
-    },
+export type GetSessionsAction = Record<string, GetSessionsActionContent>
+
+export type GetSessionsActionContent = {
+    creation: number,
+    status: string,
+    sensors: [],
 }
 
 //
