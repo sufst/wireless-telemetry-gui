@@ -36,7 +36,10 @@ const SensorPaperContainer = (props: { name: string, groupName: string }) => {
     return (
         <Grid item xs={12} sm={6} lg={3} xl={2}>
             <Box className={classes.sensorBox}>
-                <div>{sensorName}:<br /><span className={classes.sensorLastValue}>{lastValue.toPrecision(4)} </span>{sensor?.meta?.units}</div>
+                <div>
+                    <div className={classes.sensorNameText}>{sensorName}:</div>
+                    <div className={classes.sensorValueText}><span className={classes.sensorLastValue}>{lastValue.toPrecision(4)}</span> {sensor?.meta?.units}</div>
+                </div>
             </Box>
         </Grid>
     )
@@ -56,7 +59,7 @@ const RealtimeSensorsGroupContainer = (props: { name: string }) => {
             );
         });
         return containers;
-    }, [sensors]);
+    }, [sensors, props.name]);
 
     return (
         <Paper className={classes.rootPaper}>
