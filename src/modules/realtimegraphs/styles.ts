@@ -17,36 +17,69 @@
 */
 import { 
     makeStyles 
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 export const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
+    rootPaper: {
+        flexGrow: 1,
+        padding: "1rem",
+        marginBottom: "1rem",
+        marginTop: "1rem",
+        background: "#292929"
+    },
+    headingText: {
+        margin: "0",
+        marginBottom: "0.5rem",
+        fontSize: "20px"
+    },
+    sensorBox: {
+        color: "white",
+        overflow: "hidden",
+        height: "120px",
+        textAlign: "center",
+        fontSize: "20px",
+        borderRadius: "10px",
+        backgroundColor: "black",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        paddingTop: "60px",
+        paddingBottom: "60px",
+    }, 
     sensorGraphContainerRoot: {
-        paddingBottom: '25px',
-        backgroundColor: '#292929'
+        paddingBottom: "25px",
+        backgroundColor: "#292929"
     },
     sensorPaperHeaderButton: {
-        color: 'white',
+        color: "white",
         width: "10%"
     },
     sensorPaperHeaderTitle: {
         textAlign: "left",
-        color: 'white',
+        color: "white",
         width: "90%",
-        fontWeight: 'bold',
+        fontWeight: "bold",
         fontSize: 23,
         margin: "0% 0% 0% 5%"
     },
     sensorGraph: {
         fontSize: 28,
-        color: 'white',
-        fill: 'white'
+        color: "white",
+        fill: "white"
+    },
+    sensorLastValue: {
+        fontWeight: "bold"
     },
     sensorLiveValue: {
         textAlign: "left",
-        color: 'white',
+        color: "white",
         width: "90%",
         margin: "0% 0% 0% 10%"
     },
@@ -57,12 +90,12 @@ export const useStyles = makeStyles((theme) => ({
         margin: "1% 0% 1% 0%"
     },
     groupPaperHeaderButton: {
-        color: '#002472',
+        color: "#002472",
         width: "10%"
     },
     groupPaperHeaderTitle: {
         textAlign: "center",
-        color: 'white',
+        color: "white",
         width: "90%",
         fontSize: 33
     },
@@ -73,6 +106,12 @@ export const useStyles = makeStyles((theme) => ({
     },
     groupPaper: {
         width: "99.9%",
-        background: '#292929',
-    }
+        background: "#292929",
+    },
+    sensorNameText: {
+        paddingBottom: "10px",
+    },
+    sensorValueText: {
+        fontSize: "30px",
+    },
 }));
