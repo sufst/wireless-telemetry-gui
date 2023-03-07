@@ -74,7 +74,7 @@ export type GetSessionDetailAction = {
     name: string,
 }
 
-export type GetSessionListAction = {
+export type GetSessionsAction = {
     name: {
         creation: number,
         status: string,

@@ -27,10 +27,11 @@ import {
     TableRow,
 } from "@material-ui/core";
 import GetAppIcon from '@material-ui/icons/GetApp';
-import { SessionsGetResponse } from "types/api/api";
 import { useStyles } from "../dashboard/session/styles";
 import { getSessionDetail } from "redux/slices/session";
 import { useDispatch } from "react-redux";
+import { SessionsState } from "types/models/sessions";
+import { GetSessionsActionContent } from "types/models/actions";
 
 export const SessionPaper = () => {
     const classes = useStyles();
@@ -42,12 +43,13 @@ export const SessionPaper = () => {
     )
 }
 
-export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
+export const SessionTable = (props: { sessionData: SessionsState }) => {
     const dispatch = useDispatch();
-    const sessionEntries = Object.entries(props.sessionData);
-    const info = sessionEntries.map(sessionEntry => {
-        const name = sessionEntry[0]
-        const sessionInfo = sessionEntry[1]
+    //const sessionEntries = Object.entries(props.sessionData);
+    const info = props.sessionData.map(sessionEntry => {
+        const name: string = Object.keys(sessionEntry)[0];
+        const sessionInfo: any = sessionEntry;
+        console.log(sessionEntry);
         return {
             name,
             status: sessionInfo.status,

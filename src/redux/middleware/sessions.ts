@@ -4,7 +4,7 @@ import { Middleware } from "redux";
 import { showAlert } from "redux/slices/alert";
 
 export const sessionsMiddleware: Middleware<{}, any> = (storeAPI) => (next) => async (action) => {
-  if (storeAPI.getState().sessionList == [] && action.type === 'session/getAllSessions') {
+  if (storeAPI.getState().sessions.length === 0 && action.type === 'session/getAllSessions') {
     const [sessions] = await getAllSessions();
     if (sessions) {
       storeAPI.dispatch(sessions);

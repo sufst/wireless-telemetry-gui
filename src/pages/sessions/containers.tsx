@@ -24,6 +24,8 @@ import { getAllSessions } from "redux/slices/sessions";
 import { SessionTable, SessionPaper } from "./components";
 import { showAlert } from "redux/slices/alert";
 import { createAlert } from "modules/alert/alert";
+import { RootState } from "redux/store";
+import { SessionsState } from "types/models/sessions";
 
 export const SessionContainer = () => {
 
@@ -40,7 +42,7 @@ export const SessionContainer = () => {
     },[fetchAllSessions])
 */
     dispatch(getAllSessions());
-    const sessionData = useSelector(state => state.sessionList);
+    const sessionData: SessionsState = useSelector((state:RootState) => state.sessions);
     return (
         <>
             <Paper className={classes.rootPaper}>

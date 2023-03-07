@@ -1,24 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GetSessionListAction } from "types/models/actions";
-import { SessionListItem, SessionListState, createSessionListState } from "types/models/sessionList";
+import { GetSessionsAction } from "types/models/actions";
+import { SessionsState } from "types/models/sessions";
 
-const initialState: SessionListState = createSessionListState();
+const initialState: SessionsState = [];
 
 export const sessionsSlice = createSlice({
-  name: "sessionList",
+  name: "sessions",
   initialState,
   reducers: {
     getAllSessions: () => {},
-    clearSessions: (state: SessionListState) => {
+    clearSessions: (state: SessionsState) => {
       state = initialState;
     },
-    replaceSessions: (state: SessionListState, payload: PayloadAction<GetSessionListAction>) => {
-      let sessionList: SessionListState = [];
-      const data: GetSessionListAction = payload.payload;
-      for(let key of Object.keys(data)) {
-        //
+    replaceSessions: (state: SessionsState, payload: PayloadAction<GetSessionsAction>) => {
+      let newSessions: SessionsState = [];
+      for(let key in payload.payload) {
+        newSessions.push({name: key, creation: key.creation, status: key.status, sensors: key.sensors});
       }
-      state = sessionList;
+      state = newSessions;
     },
   },
 });
