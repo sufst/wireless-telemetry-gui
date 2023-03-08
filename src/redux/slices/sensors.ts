@@ -47,7 +47,7 @@ export const sensorsSlice = createSlice({
           meta: { ...meta[sensor], timeEndS: -2.0 },
           isDisplay: false,
         };
-        const group = state.sensors[sensor].meta.group;
+        const group = state.sensors[sensor].meta.group.split("_")[0];
         if (state.groups[group] === undefined) {
           state.groups[group] = [];
         }

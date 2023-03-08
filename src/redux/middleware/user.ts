@@ -1,4 +1,3 @@
-
 /*
     Southampton University Formula Student Team
     Copyright (C) 2021 SUFST
@@ -39,9 +38,18 @@ export const userMiddleware: Middleware<any, any> =
     if (action.type === "user/loginUser") {
       const { username, password } = action.payload;
 
-      const accessToken = await loginUser(username, password);
+      const [accessToken, offline] = await loginUser(username, password);
 
-      if (accessToken === undefined) {
+      if (offline) {
+        const offlineAlert = createAlert(
+          3000,
+          "warning",
+          "alert",
+          "Cannot login as you are offline"
+        );
+        storeAPI.dispatch(showAlert(offlineAlert));
+        return next(action);
+      } else if (accessToken === undefined) {
         const loginFailedAlert = createAlert(
           3000,
           "error",

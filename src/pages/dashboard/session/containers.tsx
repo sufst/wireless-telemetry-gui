@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React, {useState} from "react";
+import React, {useState, useCallback} from "react";
 import { Paper } from "@material-ui/core";
 import { useStyles } from "./styles";
 import { getAllSessions } from "modules/api/sessions";
@@ -75,10 +75,15 @@ export const SessionContainer: React.FC = () => {
 
   const { privilege } = user;
 
-  const fetchAllSessions = React.useCallback(async () => {
-    const sessions = await getAllSessions();
-    setSessionData(sessions);
-  }, []);
+    const fetchAllSessions = useCallback(async () => {
+        const [sessions] = await getAllSessions();
+        if (sessions) {
+            setSessionData(sessions);
+        } else {
+            const offlineAlert = createAlert(3000, "error", "alert", "Can't get sessions list as you are offline"); 
+            dispatch(showAlert(offlineAlert));
+        }
+     }, [dispatch]);
 
   React.useEffect(() => {
     fetchAllSessions();

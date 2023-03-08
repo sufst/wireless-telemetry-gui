@@ -32,8 +32,9 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
-import { useTheme } from "@material-ui/core/styles";
-import { useStyles } from "./styles";
+import { useTheme } from '@material-ui/core/styles';
+import { useStyles } from './styles';
+import InstallPwaListItem from './InstallPwaListItem';
 
 // Material UI Icons Imports
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -158,6 +159,7 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
                 </ListItem>
                 ))}
             </List>
+            <InstallPwaListItem key={'install'} />
          </Drawer>
       </div>
     );

@@ -45,8 +45,6 @@ export const SessionPaper = () => {
 export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
     const dispatch = useDispatch();
     const sessionEntries = Object.entries(props.sessionData);
-    console.log("sessionData",props.sessionData);
-    console.log("sessionEntries",sessionEntries);
     const info = sessionEntries.map(sessionEntry => {
         const name = sessionEntry[0];
         const sessionInfo = sessionEntry[1];
