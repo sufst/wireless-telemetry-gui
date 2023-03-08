@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, {useState} from "react";
 import { Paper } from "@material-ui/core";
 import { useStyles } from "./styles";
 import { getAllSessions } from "modules/api/sessions";

@@ -73,10 +73,7 @@ export const UsernameField: React.FC = () => {
   );
 };
 
-export const PasswordField: React.FC = (props: {
-  label: string;
-  id: string;
-}) => {
+export const PasswordField: React.FC<{label: string, id: string}> = (props) => {
   return (
     <TextField
       variant="outlined"
@@ -91,7 +88,7 @@ export const PasswordField: React.FC = (props: {
   );
 };
 
-export const LoginButton: React.FC = (props: { text: string }) => {
+export const LoginButton: React.FC<{text: string}> = (props) => {
   const classes = useStyles();
 
   return (

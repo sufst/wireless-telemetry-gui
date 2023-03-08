@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, {useCallback} from "react";
 import { Container, CssBaseline } from "@material-ui/core";
 import { createAlert } from "modules/alert/alert";
 import {
@@ -36,9 +36,7 @@ import {
 } from "./components";
 import { useStyles } from "./styles";
 
-export const RegisterContainer: React.FC = (props: {
-  registerUser: UserRegister;
-}) => {
+export const RegisterContainer: React.FC<{ registerUser: UserRegister }> = (props) => {
   const classes = useStyles();
 
   const { registerUser } = props;
@@ -100,8 +98,8 @@ export const RegisterContainer: React.FC = (props: {
         <RegisterHeader />
         <form className={classes.form} noValidate onSubmit={onRegisterSubmit}>
           <UsernameField />
-          <PasswordField label={"Password"} id={"password"} />
-          <PasswordField label={"Confirm Password"} id={"passconfirm"} />
+          <PasswordField label="Password" id={"password"} />
+          <PasswordField label="Confirm Password" id={"passconfirm"} />
           <DepartmentSelect
             department={department}
             handleDepartmentChange={handleDepartmentChange}

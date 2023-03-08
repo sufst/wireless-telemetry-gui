@@ -22,7 +22,6 @@ import {
   UsersGet,
   UsersGetResponse,
   UsersPatch,
-  GetAllUsersType,
 } from "types/api/api";
 
 /**
@@ -58,6 +57,8 @@ const handleCreateUsers: UsersCreate = async (
 
   return response;
 };
+
+export type GetAllUsersType = (accessToken: string) => Promise<any>;
 
 export const usersCreate: UsersCreate = async (
   username,

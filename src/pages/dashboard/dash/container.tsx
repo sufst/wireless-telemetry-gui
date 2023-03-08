@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React from "react";
+import React, {useCallback} from "react";
 import { Grid, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { startSession, stopSession } from "redux/slices/sessions";
