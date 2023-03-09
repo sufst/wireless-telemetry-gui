@@ -31,9 +31,9 @@ export const useStyles = makeStyles((theme) => ({
         background: "#292929"
     },
     headingText: {
-        margin: "0",
-        marginBottom: "0.5rem",
-        fontSize: "20px"
+        margin: "0rem 0 1rem 0",
+        fontSize: "20px",
+        fontWeight: "bold"
     },
     sensorBox: {
         color: "white",

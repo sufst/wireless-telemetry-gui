@@ -144,7 +144,7 @@ export const DashSensorsItem = (props: { name: string }) => {
     const lastValue = data[data?.length-1]?.value;  
     
     return (
-        <Grid item xs={12} sm={4} lg={2}>
+        <Grid item xs={12} sm={6} lg={3}>
             <Box className={classes.sensorBox}>
                 <div>{sensor?.meta?.name}:<br/><span className={classes.sensorLastValue}>{lastValue} </span>{sensor?.meta?.units}</div>
             </Box>
@@ -156,7 +156,12 @@ export const DashSensors = () => {
 
     const classes = useStyles(); 
 
-    const names = ['rpm', 'water_temp_c', 'tps_perc', 'battery_mv', 'speed_kph', 'fuel_flow']
+    const names = [
+        'PM100_Motor_Speed',
+        'PM100_Phase_A_Current',
+        'PM100_BMS_Active',
+        'PM100_Rolling_Counter'
+    ]
     
     return (
         <>
@@ -166,8 +171,6 @@ export const DashSensors = () => {
                 <DashSensorsItem name={names[1]}/>
                 <DashSensorsItem name={names[2]}/>
                 <DashSensorsItem name={names[3]}/>
-                <DashSensorsItem name={names[4]}/>
-                <DashSensorsItem name={names[5]}/>
             </Grid>
         </>
     )
