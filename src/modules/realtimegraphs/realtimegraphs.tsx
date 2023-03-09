@@ -62,12 +62,14 @@ const RealtimeSensorsGroupContainer = (props: { name: string }) => {
     }, [sensors, props.name]);
 
     return (
-        <Paper className={classes.rootPaper}>
-            <p className={classes.headingText}>{props.name} sensor group</p>
-            <Grid container alignItems="center" key={v4()} spacing={2}>
-                {sensorContainers}
-            </Grid>
-        </Paper>
+        <>
+            <Paper className={classes.rootPaper}>
+                <p className={classes.headingText}>{props.name} Sensors</p>
+                <Grid container alignItems="center" key={v4()} spacing={2}>
+                    {sensorContainers}
+                </Grid>
+            </Paper>
+        </>
     );
 }
 
