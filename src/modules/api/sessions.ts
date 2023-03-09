@@ -66,7 +66,7 @@ type s = (
   name: string,
   sessionMeta: object,
   sessionSensors: string[]
-) => Promise<SessionCreate | null>;
+) => Promise<[SessionCreate | null, boolean]>;
 
 export const createSession: s = async (
   accessToken: string,
