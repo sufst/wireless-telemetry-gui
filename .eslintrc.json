@@ -25,6 +25,6 @@
       "off", // Temporarily disabled since i'm not bothered rn
       "double"
     ],
-    "semi": ["error", "always"]
+    "semi": "off"
   }
 }
