@@ -31,11 +31,28 @@ export const DashStatusItem: React.FC<{ name: string; data: SensorData[] }> = ({
 	data
 }) => {
 	const classes = useStyles();
-
-	const lastValue = data[data?.length - 1]?.value;
-
 	let background: DashStatusItemColor = 'rgba(0, 0, 0, 0.5)';
 	let text: DashStatusItemText = ' ';
+
+	// Component renders this when initial state is still undefined, basically meaning 
+	// state has not been intiailised since socket.io is still fetching sensor data/metadata
+	if (data == undefined)
+		return (
+			<Grid item lg={3} xs={12} sm={6} className={classes.item}>
+				<Box
+					className={classes.box}
+					style={{
+						backgroundColor: background
+					}}
+				>
+					<span>
+						Loading
+					</span>
+				</Box>
+			</Grid>
+	); 
+
+	const lastValue = data[data?.length - 1]?.value;
 
 	const checkECU = () => {
 		if (lastValue === 1) {
@@ -130,11 +147,10 @@ export const CurrentTime: React.FC = () => {
 	);
 };
 
-export const DashSensorsItem: React.FC<{name: string}> = ({ name }) => {
+export const DashSensorsItem: React.FC<{ name: string }> = ({ name }) => {
 	const classes = useStyles();
 
-	const sensorsSelector = (state: RootState) =>
-		state.sensors.sensors[name];
+	const sensorsSelector = (state: RootState) => state.sensors.sensors[name];
 	const sensor = useSelector(sensorsSelector);
 
 	const data = sensor?.data ?? [];

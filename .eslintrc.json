@@ -20,7 +20,6 @@
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
     "@typescript-eslint/quotes": "off",
-    "linebreak-style": ["error", "unix"],
     "quotes": [
       "off", // Temporarily disabled since i'm not bothered rn
       "double"
