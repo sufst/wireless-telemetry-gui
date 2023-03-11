@@ -39,8 +39,7 @@ export const sensorsSlice = createSlice({
 			action: PayloadAction<BuildSensorsFromMetaAction>
 		) => {
 			const meta: SensorsMeta = action.payload;
-      console.log("INITIAL SENSOR STATE");
-      console.log(meta);
+      
 			state.sensorMetadata = meta;
 			for (const sensor in meta) {
 				// Set a default graph cut off of 2 seconds
