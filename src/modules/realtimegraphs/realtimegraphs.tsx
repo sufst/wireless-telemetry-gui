@@ -16,86 +16,61 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React, { memo, useMemo } from "react";
-import { v4 } from "uuid";
-import { useStyles } from "../../pages/dashboard/dash/styles";
-import { Box, Grid } from "@material-ui/core";
-import { SensorPaperHeaderTitle } from "./components";
-import { useSelector } from "react-redux";
+import React, { useMemo } from 'react';
+import { v4 } from 'uuid';
+import { useStyles } from './styles';
+import { Box, Grid, Paper } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import type { RootState } from "redux/store";
 
-const SensorPaperHeaderContainer: React.FC<{ name: string }> = (props) => {
-  const selectSensorMeta = (state: RootState) =>
-    state.sensors.sensors[props.name].meta;
-  const sensor = useSelector(selectSensorMeta);
+const SensorPaperContainer: React.FC<{name: string, groupName: string}> = (props) => {
+    const classes = useStyles();
 
-  const HeaderTitle = memo(SensorPaperHeaderTitle);
+    const sensorsSelector = (state: RootState) => state.sensors.sensors[props.name];
+    const sensor = useSelector(sensorsSelector);
 
-  return (
-    //<Grid container alignItems="center" key={v4()} spacing={1}>
-    //    <Grid item key={v4()} xs={6}>
-    <HeaderTitle name={sensor.name} />
-    //    </Grid>
-    //</Grid>
-  );
-};
+    const data = sensor?.data ?? [];
+    const lastValue = Number(data[data?.length - 1]?.value);
+    const sensorName = sensor?.meta?.name.replace(props.groupName + " ", "");
 
-const SensorValueContainer: React.FC<{ name: string }> = (props) => {
-  const selectSensorData = (state: RootState) =>
-    state.sensors.sensors[props.name].data;
-
-  const inData = useSelector(selectSensorData);
-
-  //const LiveValue = memo(SensorLiveValue);
-
-  //const classes = useStyles();
-
-  return <span>{inData[inData.length - 1].value}</span>;
-};
-
-const SensorPaperContainer: React.FC<{ name: string }> = (props) => {
-  const sensorMeta = useSelector(
-    (state: RootState) => state.sensors.sensors[props.name].meta
-  );
-  const classes = useStyles();
-
-  return (
-    <Grid item xs={12} sm={4} lg={2}>
-      <Box className={classes.sensorBox}>
-        <div>
-          <SensorPaperHeaderContainer name={props.name} />
-          <br />
-          <SensorValueContainer key={v4()} name={props.name} />{" "}
-          {sensorMeta.units}
-        </div>
-      </Box>
-    </Grid>
-  );
-};
-
-const RealtimeSensorsGroupContainer: React.FC<{ name: string }> = ({
-  name,
-}) => {
-  const selectSensors = (state: RootState) => state.sensors.groups[name];
-  const sensors = useSelector(selectSensors);
-
-  // See modules index.js for explaination of why useMemo is used.
-  const sensorContainers = React.useMemo(() => {
-    const containers = sensors.map((x: string) => {
-      return (
-        <Grid item key={v4()} xs={12}>
-          <SensorPaperContainer key={v4()} name={x} />
+    return (
+        <Grid item xs={12} sm={6} lg={3} xl={2}>
+            <Box className={classes.sensorBox}>
+                <div>
+                    <div className={classes.sensorNameText}>{sensorName}:</div>
+                    <div className={classes.sensorValueText}><span className={classes.sensorLastValue}>{lastValue.toPrecision(4)}</span> {sensor?.meta?.units}</div>
+                </div>
+            </Box>
         </Grid>
-      );
-    });
-    return containers;
-  }, [sensors]);
+    )
+}
 
-  return (
-    <Grid container alignItems="center" key={v4()}>
-      {sensorContainers}
-    </Grid>
-  );
-};
+const RealtimeSensorsGroupContainer: React.FC<{name: string}> = (props) => {
+    const selectSensors = (state: RootState) => state.sensors.groups[props.name];
+    const sensors = useSelector(selectSensors);
+    const classes = useStyles();
+
+    // See modules index.js for explaination of why useMemo is used.
+    const sensorContainers = useMemo(() => {
+
+        const containers = sensors.map((x: string) => {
+            return (
+                <SensorPaperContainer key={v4()} name={x} groupName={props.name} />
+            );
+        });
+        return containers;
+    }, [sensors, props.name]);
+
+    return (
+        <>
+            <Paper className={classes.rootPaper}>
+                <p className={classes.headingText}>{props.name} Sensors</p>
+                <Grid container alignItems="center" key={v4()} spacing={2}>
+                    {sensorContainers}
+                </Grid>
+            </Paper>
+        </>
+    );
+}
 
 export default RealtimeSensorsGroupContainer;

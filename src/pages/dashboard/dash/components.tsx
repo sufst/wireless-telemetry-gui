@@ -153,57 +153,45 @@ export const DashSensorsItem: React.FC<{ name: string }> = ({ name }) => {
 	const sensorsSelector = (state: RootState) => state.sensors.sensors[name];
 	const sensor = useSelector(sensorsSelector);
 
-	const data = sensor?.data ?? [];
-	const lastValue = data[data?.length - 1]?.value;
-
-	return (
-		<Grid item xs={12} sm={4} lg={2}>
-			<Box className={classes.sensorBox}>
-				<div>
-					{sensor?.meta?.name}:<br />
-					<span className={classes.sensorLastValue}>
-						{lastValue}{' '}
-					</span>
-					{sensor?.meta?.units}
-				</div>
-			</Box>
-		</Grid>
-	);
-};
+    const data = sensor?.data ?? []; 
+    const lastValue = data[data?.length-1]?.value;  
+    
+    return (
+        <Grid item xs={12} sm={6} lg={3}>
+            <Box className={classes.sensorBox}>
+                <div>{sensor?.meta?.name}:<br/><span className={classes.sensorLastValue}>{lastValue} </span>{sensor?.meta?.units}</div>
+            </Box>
+        </Grid>
+    )
+}
 
 export const DashSensors: React.FC = () => {
 	const classes = useStyles();
 
-	const names = [
-		'rpm',
-		'water_temp_c',
-		'tps_perc',
-		'battery_mv',
-		'speed_kph',
-		'fuel_flow'
-	];
+    const names = [
+        'PM100_Motor_Speed',
+        'PM100_Phase_A_Current',
+        'PM100_BMS_Active',
+        'PM100_Rolling_Counter'
+    ]
+    
+    return (
+        <>
+            <p className={classes.sensorsText}>Sensors</p>
+            <Grid container className={classes.gridContainer} spacing={2}>
+                <DashSensorsItem name={names[0]}/>
+                <DashSensorsItem name={names[1]}/>
+                <DashSensorsItem name={names[2]}/>
+                <DashSensorsItem name={names[3]}/>
+            </Grid>
+        </>
+    )
+}
 
-	return (
-		<>
-			<p className={classes.sensorsText}>Sensors</p>
-			<Grid container className={classes.gridContainer} spacing={2}>
-				<DashSensorsItem name={names[0]} />
-				<DashSensorsItem name={names[1]} />
-				<DashSensorsItem name={names[2]} />
-				<DashSensorsItem name={names[3]} />
-				<DashSensorsItem name={names[4]} />
-				<DashSensorsItem name={names[5]} />
-			</Grid>
-		</>
-	);
-};
-
-export const DashSession = (props: {
-	handleStart: (event: any, name: string) => void;
-	handleStop: (event: any, name: string) => void;
-}) => {
-	const classes = useStyles();
-	const dispatch = useDispatch();
+export const DashSession = (props: { handleStart: (event: any, name: string) => void, handleStop: (event: any, name: string) => void }) => {
+    
+    const classes = useStyles(); 
+    const dispatch = useDispatch(); 
 
 	// isRunning status from Redux
 	const selectIsRunning = (state: RootState) => state.session.isRunning;
