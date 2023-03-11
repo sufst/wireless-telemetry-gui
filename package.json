@@ -5,7 +5,7 @@
   "author": "Electronics Department - SUFST",
   "license": "GPL-3.0-or-later",
   "private": true,
-  "homepage": "https://github.com/sufst/wireless-telemetry-gui",
+  "homepage": "/",
   "dependencies": {
     "clsx": "^1.1.1",
     "downloadjs": "^1.4.7",
