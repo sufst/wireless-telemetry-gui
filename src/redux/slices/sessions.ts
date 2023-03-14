@@ -11,7 +11,7 @@ export const sessionsSlice = createSlice({
     getAllSessions: () => {},
     refreshSessions: () => {},
     clearSessions: (state: SessionsState) => {
-      state = initialState;
+      state.sessions = [];
     },
     replaceSessions: (state: SessionsState, payload: PayloadAction<SessionsGetResponse>) => {
       const newSessions: SessionsArray = [];
