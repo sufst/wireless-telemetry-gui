@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { Paper } from "@material-ui/core";
 import { useStyles } from "./styles";
 import { getAllSessions } from "redux/slices/sessions";
@@ -69,22 +69,8 @@ export const SessionContainer = () => {
 
     const { privilege } = user; 
 
-    /*const fetchAllSessions = useCallback(async () => {
-        const [sessions] = await getAllSessions();
-        if (sessions) {
-            setSessionData(sessions);
-        } else {
-            const offlineAlert = createAlert(3000, "error", "alert", "Can't get sessions list as you are offline"); 
-            dispatch(showAlert(offlineAlert));
-        }
-     }, [dispatch])
-
-    useEffect(() => {
-        fetchAllSessions(); 
-    },[fetchAllSessions])*/
     dispatch(getAllSessions());
     const sessionData = useSelector((state:RootState) => state.sessions);
-    //setSessionData(sessionData);
 
     const handleStartSession: StartSessionButtonAction = useCallback((name, driver, condition, sessionSensorGroups) => {
         // Creates an array of all the names of the sensors to be saved in the session. 

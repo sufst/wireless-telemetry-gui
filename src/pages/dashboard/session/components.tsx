@@ -39,7 +39,6 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { refreshSessions } from "redux/slices/sessions";
-import { SessionsGetResponse } from "types/api/api";
 import { SessionsState } from "types/models/sessions";
 import { useStyles } from "./styles";
 
