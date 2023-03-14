@@ -38,8 +38,8 @@ export const useStyles = makeStyles((theme) => ({
         background: 'darkBlue'
     }, 
     newSessionText: {
-        margin: '0',
-        marginBottom: '0.5rem',
+        margin: 'auto',
+        flexGrow: 1,
         fontSize: '20px'
     },
     heading: {
@@ -74,9 +74,16 @@ export const useStyles = makeStyles((theme) => ({
     sessionName: {
         fontWeight: 'bold'
     },
+    refreshButton: {
+        backgroundColor: 'green',
+    },
     rootSessionPaper: {
         marginTop: '1rem'
     }, 
+    sessionHeadingContainer: {
+        display: 'flex',
+        marginBottom: '1rem',
+    },
     sessionButtonStopBox: {
         color: 'white',
         overflow: 'hidden',

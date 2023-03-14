@@ -48,7 +48,6 @@ export const SessionPaper = () => {
 export const SessionTable = (props: { sessionData: SessionsState }) => {
     const dispatch = useDispatch();
     const info = props.sessionData.sessions.map(sessionEntry => {
-        console.log(sessionEntry);
         return {
             name: sessionEntry.name,
             status: sessionEntry.status,

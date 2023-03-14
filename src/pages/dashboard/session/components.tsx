@@ -21,6 +21,7 @@ import {
     Typography,
     TextField,
     Box,
+    Button,
     FormLabel,
     FormControl,
     FormControlLabel,
@@ -234,8 +235,11 @@ export const SessionTable = (props: { sessionData: SessionsState }) => {
     });
     return (
         <div>
-            <p className={classes.newSessionText}>All Sessions</p>
-            <button onClick={() => dispatch(refreshSessions())}>Refresh</button>
+            <div className={classes.sessionHeadingContainer}>
+                <span className={classes.newSessionText}>All Sessions</span>
+                    <Button onClick={() => dispatch(refreshSessions())} className={classes.refreshButton} variant='contained' disableElevation color="secondary">Refresh</Button>
+            </div>
+
             <TableContainer component={Paper}>
                 <Table aria-label="customized table">
                     <TableHead>
