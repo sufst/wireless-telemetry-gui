@@ -53,8 +53,6 @@ export const SessionContainer = () => {
     // Session isRunning from Redux 
     const selectIsRunning = (state: RootState) => state.session.isRunning; 
     const isSessionRunning = useSelector(selectIsRunning);
-    
-    //const [sessionData, setSessionData] = useState({})
 
     // All Sensor Groups from Redux
     const selectGroups = (state: RootState) => state.sensors.groups;
