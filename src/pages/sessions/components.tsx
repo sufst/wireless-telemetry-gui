@@ -18,6 +18,7 @@
 
 import {
     Paper,
+    Button,
     IconButton,
     Table,
     TableBody,
@@ -27,33 +28,33 @@ import {
     TableRow,
 } from "@material-ui/core";
 import GetAppIcon from '@material-ui/icons/GetApp';
-import { SessionsGetResponse } from "types/api/api";
 import { useStyles } from "../dashboard/session/styles";
-import { getSessionDetail } from "redux/slices/sessions";
+import { getSessionDetail } from "redux/slices/session";
 import { useDispatch } from "react-redux";
+import { SessionsState } from "types/models/sessions";
+import { refreshSessions } from "redux/slices/sessions";
 
 export const SessionPaper = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     return (
-        <Paper className={classes.rootPaper}>
+        <div className={classes.sessionHeadingContainer}>
             <p className={classes.newSessionText}>Session</p>
-        </Paper>
+            <Button onClick={() => dispatch(refreshSessions())} className={classes.refreshButton} variant='contained' disableElevation color="secondary">Refresh</Button>
+        </div>
     )
 }
 
-export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
+export const SessionTable = (props: { sessionData: SessionsState }) => {
     const dispatch = useDispatch();
-    const sessionEntries = Object.entries(props.sessionData);
-    const info = sessionEntries.map(sessionEntry => {
-        const name = sessionEntry[0]
-        const sessionInfo = sessionEntry[1]
+    const info = props.sessionData.sessions.map(sessionEntry => {
         return {
-            name,
-            status: sessionInfo.status,
-            created: (new Date(sessionInfo.creation)).toString(),
+            name: sessionEntry.name,
+            status: sessionEntry.status,
+            created: (new Date(sessionEntry.creation)).toString(),
             actions: <>
-                <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => dispatch(getSessionDetail({name}))}>
+                <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => dispatch(getSessionDetail({name: sessionEntry.name}))}>
                     <GetAppIcon />
                 </IconButton>
             </>

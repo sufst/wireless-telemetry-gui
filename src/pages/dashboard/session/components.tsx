@@ -21,6 +21,7 @@ import {
     Typography,
     TextField,
     Box,
+    Button,
     FormLabel,
     FormControl,
     FormControlLabel,
@@ -37,7 +38,9 @@ import {
 } from "@material-ui/core";
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { useCallback, useState } from "react";
-import { SessionsGetResponse } from "types/api/api";
+import { useDispatch } from "react-redux";
+import { refreshSessions } from "redux/slices/sessions";
+import { SessionsState } from "types/models/sessions";
 import { useStyles } from "./styles";
 
 export const CurrentSessionHeader = (props: { name: string }) => {
@@ -212,18 +215,16 @@ export const SensorChooser = (props: { allGroups: string[], selectedGroups: stri
     )
 }
 
-export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
-    const classes = useStyles(); 
+export const SessionTable = (props: { sessionData: SessionsState }) => {
+    const classes = useStyles();
+    const dispatch = useDispatch();
 
-    let sessionEntries = Object.entries(props.sessionData);
-    sessionEntries = sessionEntries.sort((a, b) => (b[1].creation - a[1].creation)).slice(0, 10);
+    const sessionEntries = props.sessionData.sessions.concat().sort((a, b) => (b.creation - a.creation)).slice(0, 10);
     const info = sessionEntries.map(sessionEntry => {
-        const name = sessionEntry[0]
-        const sessionInfo = sessionEntry[1]
         return {
-            name,
-            status: sessionInfo.status,
-            created: (new Date(sessionInfo.creation)).toString(),
+            name: sessionEntry.name,
+            status: sessionEntry.status,
+            created: (new Date(sessionEntry.creation)).toString(),
             actions: <>
             {/* TODO: Add callback to download data and add button to stop session */}
             <IconButton color="primary" aria-label="upload picture" component="span">
@@ -234,7 +235,11 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
     });
     return (
         <div>
-            <p className={classes.newSessionText}>All Sessions</p>
+            <div className={classes.sessionHeadingContainer}>
+                <span className={classes.newSessionText}>All Sessions</span>
+                <Button onClick={() => dispatch(refreshSessions())} className={classes.refreshButton} variant='contained' disableElevation color="secondary">Refresh</Button>
+            </div>
+
             <TableContainer component={Paper}>
                 <Table aria-label="customized table">
                     <TableHead>
