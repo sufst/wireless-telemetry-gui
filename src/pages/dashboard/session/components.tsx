@@ -237,7 +237,7 @@ export const SessionTable = (props: { sessionData: SessionsState }) => {
         <div>
             <div className={classes.sessionHeadingContainer}>
                 <span className={classes.newSessionText}>All Sessions</span>
-                    <Button onClick={() => dispatch(refreshSessions())} className={classes.refreshButton} variant='contained' disableElevation color="secondary">Refresh</Button>
+                <Button onClick={() => dispatch(refreshSessions())} className={classes.refreshButton} variant='contained' disableElevation color="secondary">Refresh</Button>
             </div>
 
             <TableContainer component={Paper}>

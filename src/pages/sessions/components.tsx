@@ -18,6 +18,7 @@
 
 import {
     Paper,
+    Button,
     IconButton,
     Table,
     TableBody,
@@ -38,10 +39,10 @@ export const SessionPaper = () => {
     const dispatch = useDispatch();
 
     return (
-        <Paper className={classes.rootPaper}>
+        <div className={classes.sessionHeadingContainer}>
             <p className={classes.newSessionText}>Session</p>
-            <button onClick={() => dispatch(refreshSessions())}>Refresh</button>
-        </Paper>
+            <Button onClick={() => dispatch(refreshSessions())} className={classes.refreshButton} variant='contained' disableElevation color="secondary">Refresh</Button>
+        </div>
     )
 }
 
