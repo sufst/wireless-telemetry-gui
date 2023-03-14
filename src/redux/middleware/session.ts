@@ -22,6 +22,7 @@ import { createAlert } from "modules/alert/alert";
 import { createSession, getSessionDetail, stopSession } from "modules/api/sessions";
 import { Middleware } from "redux";
 import { showAlert } from "redux/slices/alert";
+import { refreshSessions } from "redux/slices/sessions";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
 export const sessionMiddleware: Middleware<{}, any> = 
@@ -70,6 +71,7 @@ export const sessionMiddleware: Middleware<{}, any> =
         if (response) {
             const stopSessionOkayAlert = createAlert(3000, "success", "alert", "Session Stopped."); 
             storeAPI.dispatch(showAlert(stopSessionOkayAlert));
+            storeAPI.dispatch(refreshSessions());
         } 
         else if (offline) {
             const offlineAlert = createAlert(3000, "error", "alert", "Can't stop session as you are offline"); 
