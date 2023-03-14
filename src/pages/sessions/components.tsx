@@ -31,20 +31,23 @@ import { useStyles } from "../dashboard/session/styles";
 import { getSessionDetail } from "redux/slices/session";
 import { useDispatch } from "react-redux";
 import { SessionsState } from "types/models/sessions";
+import { refreshSessions } from "redux/slices/sessions";
 
 export const SessionPaper = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     return (
         <Paper className={classes.rootPaper}>
             <p className={classes.newSessionText}>Session</p>
+            <button onClick={() => dispatch(refreshSessions())}>Refresh</button>
         </Paper>
     )
 }
 
 export const SessionTable = (props: { sessionData: SessionsState }) => {
     const dispatch = useDispatch();
-    const info = props.sessionData.map(sessionEntry => {
+    const info = props.sessionData.sessions.map(sessionEntry => {
         console.log(sessionEntry);
         return {
             name: sessionEntry.name,

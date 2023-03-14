@@ -5,7 +5,7 @@ import { showAlert } from "redux/slices/alert";
 import { replaceSessions } from "redux/slices/sessions";
 
 export const sessionsMiddleware: Middleware<{}, any> = (storeAPI) => (next) => async (action) => {
-  if (storeAPI.getState().sessions.length === 0 && action.type === 'session/getAllSessions') {
+  if ((storeAPI.getState().sessions.sessions.length === 0 && action.type === 'sessions/getAllSessions') || action.type === 'sessions/refreshSessions') {
     const [sessions] = await getAllSessions();
     if (sessions) {
       storeAPI.dispatch(replaceSessions(sessions));

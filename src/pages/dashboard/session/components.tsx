@@ -37,6 +37,8 @@ import {
 } from "@material-ui/core";
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import { refreshSessions } from "redux/slices/sessions";
 import { SessionsGetResponse } from "types/api/api";
 import { SessionsState } from "types/models/sessions";
 import { useStyles } from "./styles";
@@ -214,9 +216,10 @@ export const SensorChooser = (props: { allGroups: string[], selectedGroups: stri
 }
 
 export const SessionTable = (props: { sessionData: SessionsState }) => {
-    const classes = useStyles(); 
+    const classes = useStyles();
+    const dispatch = useDispatch();
 
-    const sessionEntries = props.sessionData.sort((a, b) => (b.creation - a.creation)).slice(0, 10);
+    const sessionEntries = props.sessionData.sessions.concat().sort((a, b) => (b.creation - a.creation)).slice(0, 10);
     const info = sessionEntries.map(sessionEntry => {
         return {
             name: sessionEntry.name,
@@ -233,6 +236,7 @@ export const SessionTable = (props: { sessionData: SessionsState }) => {
     return (
         <div>
             <p className={classes.newSessionText}>All Sessions</p>
+            <button onClick={() => dispatch(refreshSessions())}>Refresh</button>
             <TableContainer component={Paper}>
                 <Table aria-label="customized table">
                     <TableHead>

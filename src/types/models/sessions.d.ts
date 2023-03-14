@@ -5,4 +5,8 @@ export type SessionsItem = {
   sensors: [string],
 }
 
-export type SessionsState = Array<SessionsItem>;
+export type SessionsState = {
+  sessions: SessionsArray,
+};
+
+export type SessionsArray = Array<SessionsItem>;

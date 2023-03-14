@@ -31,19 +31,10 @@ export const SessionContainer = () => {
 
     const dispatch = useDispatch();
 
-    const classes = useStyles(); 
-    /*
-    const [sessionData, setSessionData] = useState({})
+    const classes = useStyles();
 
-    const fetchAllSessions = () => getAllSessions();
-
-    useEffect(() => {
-        fetchAllSessions(); 
-    },[fetchAllSessions])
-*/
     dispatch(getAllSessions());
     const sessionData: SessionsState = useSelector((state:RootState) => state.sessions);
-    console.log("sessionData", sessionData)
     return (
         <>
             <Paper className={classes.rootPaper}>
