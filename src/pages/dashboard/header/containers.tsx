@@ -28,7 +28,7 @@ import Dash from "../dash/container";
 
 export const DashboardHeader = () => {
   // Tabs
-  const viewTabs = React.useRef([
+  const viewTabs = useRef([
     [<Dash key={v4()} />, <Tab key={v4()} label="Dash" />],
     [<SessionContainer key={v4()} />, <Tab key={v4()} label="Session" />],
   ]);
