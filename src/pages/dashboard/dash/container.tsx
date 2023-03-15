@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Grid, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { startSession, stopSession } from 'redux/slices/sessions';
@@ -69,7 +69,7 @@ const Dash: React.FC = () => {
 		[dispatch]
 	);
 
-	const handleStartSession = React.useCallback(
+	const handleStartSession = useCallback(
 		(e, name) => {
 			console.log('Starting From Component: ', name);
 			const driver = '';

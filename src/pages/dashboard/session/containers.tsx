@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React, {useState, useCallback} from "react";
+import React, {useState, useCallback, useEffect} from "react";
 import { Paper } from "@material-ui/core";
 import { useStyles } from "./styles";
 import { getAllSessions } from "modules/api/sessions";
@@ -85,11 +85,11 @@ export const SessionContainer: React.FC = () => {
         }
      }, [dispatch]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchAllSessions();
   }, [fetchAllSessions]);
 
-  const handleStartSession: StartSessionButtonAction = React.useCallback(
+  const handleStartSession: StartSessionButtonAction = useCallback(
     (name, driver, condition, sessionSensorGroups) => {
       // Creates an array of all the names of the sensors to be saved in the session.
       const groupsForSession = Object.entries(groups).filter(
@@ -115,7 +115,7 @@ export const SessionContainer: React.FC = () => {
     [dispatch, groups]
   );
 
-  const onStartClicked: StartSessionButtonAction = React.useCallback(
+  const onStartClicked: StartSessionButtonAction = useCallback(
     (name, driver, condition, sensors, groups) => {
       if (privilege !== "Admin" && privilege !== "Developer") {
         const createSessionFailedAlert = createAlert(
@@ -133,18 +133,18 @@ export const SessionContainer: React.FC = () => {
     [privilege, dispatch, handleStartSession]
   );
 
-  const onStopClicked = React.useCallback(() => {
+  const onStopClicked = useCallback(() => {
     console.log("Stopping Session.");
     dispatch(stopSession());
   }, [dispatch]);
 
-  const currentSessionStyles = React.useCallback(() => {
+  const currentSessionStyles = useCallback(() => {
     return isSessionRunning
       ? classes.rootPaperRunningSession
       : classes.rootPaper;
   }, [isSessionRunning, classes.rootPaper, classes.rootPaperRunningSession]);
 
-  const sessionMeta = React.useCallback(() => {
+  const sessionMeta = useCallback(() => {
     return {
       name: sessionName,
       driver: sessionDriver,

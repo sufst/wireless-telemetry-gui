@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useCallback } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { createAlert } from 'modules/alert/alert';
@@ -131,7 +131,7 @@ export const CurrentTime: React.FC = () => {
 
 	const classes = useStyles();
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const timer = setInterval(() => setTime(new Date()), 1000);
 
 		return function cleanup() {

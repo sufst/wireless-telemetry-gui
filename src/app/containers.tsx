@@ -17,7 +17,7 @@
 */
 
 // Module Imports
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
 	BrowserRouter as Router,
 	Route,
@@ -54,7 +54,7 @@ const AppRouterSwitch: React.FC = () => {
 
 	const user = useSelector((state: RootState) => state.user);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (user.username === undefined) {
 			const username = 'anonymous';
 			const password = 'anonymous';

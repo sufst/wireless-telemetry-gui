@@ -48,11 +48,11 @@ export const RegisterContainer: React.FC<{ registerUser: UserRegister }> = (prop
 
   const [privilege, setPrivilege] = useState<UserPrivilege>("Basic");
 
-  const handleDepartmentChange = React.useCallback((event: any) => {
+  const handleDepartmentChange = useCallback((event: any) => {
     setDepartment(event.target.value);
   }, []);
 
-  const handlePrivilegeChange = React.useCallback((event: any) => {
+  const handlePrivilegeChange = useCallback((event: any) => {
     setPrivilege(event.target.value);
   }, []);
 

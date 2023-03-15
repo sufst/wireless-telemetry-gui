@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React, {useState} from "react";
+import React, {useState, useCallback} from "react";
 import {
   Paper,
   Typography,
@@ -89,7 +89,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) =
 
   const isSessionRunning = props.isRunning;
 
-  const startButtonClasses = React.useCallback(() => {
+  const startButtonClasses = useCallback(() => {
     if (!isSessionRunning) {
       return classes.sessionButtonStartBox;
     } else {
@@ -101,7 +101,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) =
     classes.sessionButtonStartBoxDisabled,
   ]);
 
-  const stopButtonClasses = React.useCallback(() => {
+  const stopButtonClasses = useCallback(() => {
     if (!isSessionRunning) {
       return classes.sessionButtonStopBoxDisabled;
     } else {
@@ -113,7 +113,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) =
     classes.sessionButtonStopBoxDisabled,
   ]);
 
-  const startPressed = React.useCallback(() => {
+  const startPressed = useCallback(() => {
     if (name === "" || sensorGroups.length === 0) {
       setError(true);
       return;
@@ -123,7 +123,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) =
     props.onSubmit(name, driver, condition, sensorGroups);
   }, [name, driver, condition, sensorGroups, props]);
 
-  const stopPressed = React.useCallback(() => {
+  const stopPressed = useCallback(() => {
     props.onStop();
     setCondition("");
     setDriver("");
@@ -133,7 +133,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) =
 
   // Called when one of the checkboxes is clicked.
   // Sets the sensorGroups state array with the new values.
-  const onSensorChange = React.useCallback(
+  const onSensorChange = useCallback(
     (newSensorGroup: string) => {
       if (sensorGroups.includes(newSensorGroup)) {
         setSensorGroups(

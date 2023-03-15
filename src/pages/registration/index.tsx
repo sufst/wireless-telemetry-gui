@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import { createAlert } from "modules/alert/alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -36,7 +36,7 @@ export const Register: React.FC = () => {
 
   const privilege = user.privilege;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (privilege === "Anon" || privilege === "Basic") {
       const cannotRegisterUserAlert = createAlert(
         3000,
