@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React from 'react';
+import React, {useState} from 'react';
 import { useCallback } from 'react';
 import { Box, Grid } from '@material-ui/core';
 import { createAlert } from 'modules/alert/alert';
@@ -127,7 +127,7 @@ export const DashStatusItem: React.FC<{ name: string; data: SensorData[] }> = ({
 };
 
 export const CurrentTime: React.FC = () => {
-	const [time, setTime] = React.useState(new Date());
+	const [time, setTime] = useState(new Date());
 
 	const classes = useStyles();
 

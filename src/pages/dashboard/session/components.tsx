@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, {useState} from "react";
 import {
   Paper,
   Typography,
@@ -77,15 +77,15 @@ interface NewSessionContainerProps {
 export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) => {
   const classes = useStyles();
 
-  const [name, setName] = React.useState<string>(props.sessionMeta.name);
-  const [driver, setDriver] = React.useState(props.sessionMeta.driver);
-  const [condition, setCondition] = React.useState(props.sessionMeta.conditions);
-  const [sensorGroups, setSensorGroups] = React.useState<string[]>(
+  const [name, setName] = useState<string>(props.sessionMeta.name);
+  const [driver, setDriver] = useState(props.sessionMeta.driver);
+  const [condition, setCondition] = useState(props.sessionMeta.conditions);
+  const [sensorGroups, setSensorGroups] = useState<string[]>(
     props.sessionMeta.sensorGroups
   );
 
   // Error state for the MUI FormControl
-  const [error, setError] = React.useState(false);
+  const [error, setError] = useState(false);
 
   const isSessionRunning = props.isRunning;
 

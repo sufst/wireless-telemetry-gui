@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React, {useCallback} from "react";
+import React, { useCallback, useState } from "react";
 import { Container, CssBaseline } from "@material-ui/core";
 import { createAlert } from "modules/alert/alert";
 import {
@@ -44,9 +44,9 @@ export const RegisterContainer: React.FC<{ registerUser: UserRegister }> = (prop
   const dispatch = useDispatch();
 
   const [department, setDepartment] =
-    React.useState<UserDepartment>("Electronics");
+    useState<UserDepartment>("Electronics");
 
-  const [privilege, setPrivilege] = React.useState<UserPrivilege>("Basic");
+  const [privilege, setPrivilege] = useState<UserPrivilege>("Basic");
 
   const handleDepartmentChange = React.useCallback((event: any) => {
     setDepartment(event.target.value);
