@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, { useState, useCallback } from "react";
 import {
   Paper,
   Typography,
@@ -74,22 +74,24 @@ interface NewSessionContainerProps {
   };
 }
 
-export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) => {
+export const NewSessionContainer: React.FC<NewSessionContainerProps> = (
+  props
+) => {
   const classes = useStyles();
 
-  const [name, setName] = React.useState<string>(props.sessionMeta.name);
-  const [driver, setDriver] = React.useState(props.sessionMeta.driver);
-  const [condition, setCondition] = React.useState(props.sessionMeta.conditions);
-  const [sensorGroups, setSensorGroups] = React.useState<string[]>(
+  const [name, setName] = useState<string>(props.sessionMeta.name);
+  const [driver, setDriver] = useState(props.sessionMeta.driver);
+  const [condition, setCondition] = useState(props.sessionMeta.conditions);
+  const [sensorGroups, setSensorGroups] = useState<string[]>(
     props.sessionMeta.sensorGroups
   );
 
   // Error state for the MUI FormControl
-  const [error, setError] = React.useState(false);
+  const [error, setError] = useState(false);
 
   const isSessionRunning = props.isRunning;
 
-  const startButtonClasses = React.useCallback(() => {
+  const startButtonClasses = useCallback(() => {
     if (!isSessionRunning) {
       return classes.sessionButtonStartBox;
     } else {
@@ -101,7 +103,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) =
     classes.sessionButtonStartBoxDisabled,
   ]);
 
-  const stopButtonClasses = React.useCallback(() => {
+  const stopButtonClasses = useCallback(() => {
     if (!isSessionRunning) {
       return classes.sessionButtonStopBoxDisabled;
     } else {
@@ -113,7 +115,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) =
     classes.sessionButtonStopBoxDisabled,
   ]);
 
-  const startPressed = React.useCallback(() => {
+  const startPressed = useCallback(() => {
     if (name === "" || sensorGroups.length === 0) {
       setError(true);
       return;
@@ -123,7 +125,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) =
     props.onSubmit(name, driver, condition, sensorGroups);
   }, [name, driver, condition, sensorGroups, props]);
 
-  const stopPressed = React.useCallback(() => {
+  const stopPressed = useCallback(() => {
     props.onStop();
     setCondition("");
     setDriver("");
@@ -133,7 +135,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) =
 
   // Called when one of the checkboxes is clicked.
   // Sets the sensorGroups state array with the new values.
-  const onSensorChange = React.useCallback(
+  const onSensorChange = useCallback(
     (newSensorGroup: string) => {
       if (sensorGroups.includes(newSensorGroup)) {
         setSensorGroups(
@@ -248,7 +250,9 @@ export const SensorChooser: React.FC<sensorChooserInterface> = (props) => {
   );
 };
 
-export const SessionTable: React.FC<{sessionData: SessionsGetResponse}> = (props) => {
+export const SessionTable: React.FC<{ sessionData: SessionsGetResponse }> = (
+  props
+) => {
   const classes = useStyles();
 
   let sessionEntries = Object.entries(props.sessionData);

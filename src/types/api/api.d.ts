@@ -102,25 +102,25 @@ export type SessionsGet = () => Promise;
 
 export type SessionsGetResponse = {
   [name: string]: {
-    creation: number,
-    status: string,
-    sensors: [string]
-  }
+    creation: number;
+    status: string;
+    sensors: [string];
+  };
 };
 
 export type SessionDetailGet = (string, string) => Promise;
 
 export type SessionDetailGetResponse = {
   meta: {
-    condition: string,
-    creation: number,
-    driver: string,
-    sensors: [string],
-  },
-  notes: [],
+    condition: string;
+    creation: number;
+    driver: string;
+    sensors: [string];
+  };
+  notes: [];
   data: {
-    string: [{ epoch: number, value: number }]
-  },
+    string: [{ epoch: number; value: number }];
+  };
 };
 
 export type SessionCreate = (
@@ -130,11 +130,8 @@ export type SessionCreate = (
 ) => Promise;
 
 type SessionCreateFields = {
-  sessionMetadata: any,
-  sessionSensors: any
+  sessionMetadata: any;
+  sessionSensors: any;
 };
 
-export type SessionStop = (
-  name: string,
-  accessToken: string
-) => Promise;
+export type SessionStop = (name: string, accessToken: string) => Promise;

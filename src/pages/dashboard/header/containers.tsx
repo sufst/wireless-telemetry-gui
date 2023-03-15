@@ -17,7 +17,7 @@
 */
 
 import Tabs from "@material-ui/core/Tabs";
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import Tab from "@material-ui/core/Tab";
 import { SessionContainer } from "../session/containers";
 import RealtimeSensorsGroupContainer from "modules/realtimegraphs/realtimegraphs";
@@ -28,12 +28,12 @@ import Dash from "../dash/container";
 
 export const DashboardHeader = () => {
   // Tabs
-  const viewTabs = React.useRef([
+  const viewTabs = useRef([
     [<Dash key={v4()} />, <Tab key={v4()} label="Dash" />],
     [<SessionContainer key={v4()} />, <Tab key={v4()} label="Session" />],
   ]);
 
-  const tabNames = React.useRef(["Dash", "Session"]);
+  const tabNames = useRef(["Dash", "Session"]);
 
   const selectGroups = (state: RootState) => state.sensors.groups;
   const groups = useSelector(selectGroups);
@@ -49,7 +49,7 @@ export const DashboardHeader = () => {
   viewTabs.current.push(...newViewTabs);
   tabNames.current.push(...newTabNames);
 
-  const [selectedTab, selectTab] = React.useState(0);
+  const [selectedTab, selectTab] = useState(0);
   const onTabChange = useCallback((event, newIndex) => {
     selectTab(newIndex);
   }, []);

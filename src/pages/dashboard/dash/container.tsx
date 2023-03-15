@@ -15,96 +15,94 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import React, { useCallback } from 'react';
-import { Grid, Paper } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { startSession, stopSession } from 'redux/slices/sessions';
-import { RootState } from 'redux/store';
+import React, { useCallback, useEffect } from "react";
+import { Grid, Paper } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { startSession, stopSession } from "redux/slices/sessions";
+import { RootState } from "redux/store";
 import {
-	DashStatusItem,
-	CurrentTime,
-	DashSensors,
-	DashSession
-} from './components';
-import { useStyles } from './styles';
+  DashStatusItem,
+  CurrentTime,
+  DashSensors,
+  DashSession,
+} from "./components";
+import { useStyles } from "./styles";
 
 const Dash: React.FC = () => {
-	const _ecu = 'status_ecu_connected';
-	const _engine = 'status_engine';
-	const _battery = 'status_battery';
-	const _log = 'status_logging';
+  const _ecu = "status_ecu_connected";
+  const _engine = "status_engine";
+  const _battery = "status_battery";
+  const _log = "status_logging";
 
-	const dispatch = useDispatch();
-	const classes = useStyles();
+  const dispatch = useDispatch();
+  const classes = useStyles();
 
-	// All Sensor Groups from Redux
-	const selectGroups = (state: RootState) => state.sensors.groups;
-	const groups = useSelector(selectGroups);
-	const sensorGroupNames = Object.keys(groups);
+  // All Sensor Groups from Redux
+  const selectGroups = (state: RootState) => state.sensors.groups;
+  const groups = useSelector(selectGroups);
+  const sensorGroupNames = Object.keys(groups);
 
-	// All Sensors from Redux
-	const selectAllSensors = (state: RootState) => state.sensors.sensorMetadata;
-	const allSensorMeta = useSelector(selectAllSensors);
-	const allSensors = Object.keys(allSensorMeta);
+  // All Sensors from Redux
+  const selectAllSensors = (state: RootState) => state.sensors.sensorMetadata;
+  const allSensorMeta = useSelector(selectAllSensors);
+  const allSensors = Object.keys(allSensorMeta);
 
-	const ecuSelector = (state: RootState) => state.sensors.sensors[_ecu]?.data;
-	const ecuSensorData = useSelector(ecuSelector);
+  const ecuSelector = (state: RootState) => state.sensors.sensors[_ecu]?.data;
+  const ecuSensorData = useSelector(ecuSelector);
 
-	const engineSelector = (state: RootState) =>
-		state.sensors.sensors[_engine]?.data;
-	const engineSensorData = useSelector(engineSelector);
+  const engineSelector = (state: RootState) =>
+    state.sensors.sensors[_engine]?.data;
+  const engineSensorData = useSelector(engineSelector);
 
-	const batterySelector = (state: RootState) =>
-		state.sensors.sensors[_battery]?.data;
-	const batterySensorData = useSelector(batterySelector);
+  const batterySelector = (state: RootState) =>
+    state.sensors.sensors[_battery]?.data;
+  const batterySensorData = useSelector(batterySelector);
 
-	const loggingSelector = (state: RootState) =>
-		state.sensors.sensors[_log]?.data;
-	const loggingSensorData = useSelector(loggingSelector);
+  const loggingSelector = (state: RootState) =>
+    state.sensors.sensors[_log]?.data;
+  const loggingSensorData = useSelector(loggingSelector);
 
-	const handleStopSession = useCallback(
-		(e, name) => {
-			dispatch(stopSession());
-		},
-		[dispatch]
-	);
+  const handleStopSession = useCallback(
+    (e, name) => {
+      dispatch(stopSession());
+    },
+    [dispatch]
+  );
 
-	const handleStartSession = React.useCallback(
-		(e, name) => {
-			console.log('Starting From Component: ', name);
-			const driver = '';
-			const condition = '';
-			const sensors: string[] = allSensors;
-			const groups: string[] = sensorGroupNames;
-			dispatch(
-				startSession({ name, driver, condition, sensors, groups })
-			);
-		},
-		[dispatch, allSensors, sensorGroupNames]
-	);
+  const handleStartSession = useCallback(
+    (e, name) => {
+      console.log("Starting From Component: ", name);
+      const driver = "";
+      const condition = "";
+      const sensors: string[] = allSensors;
+      const groups: string[] = sensorGroupNames;
+      dispatch(startSession({ name, driver, condition, sensors, groups }));
+    },
+    [dispatch, allSensors, sensorGroupNames]
+  );
 
-	return (
-		<>
-			<Paper className={classes.rootPaper}>
-				<CurrentTime />
-				<Grid container spacing={3} className={classes.gridContainer}>
-					<DashStatusItem name="ECU" data={ecuSensorData} />
-					<DashStatusItem name="ENGINE" data={engineSensorData} />
-					<DashStatusItem name="BATTERY" data={batterySensorData} />
-					<DashStatusItem name="LOGGING" data={loggingSensorData} />
-				</Grid>
-			</Paper>
-			<Paper className={classes.rootPaper}>
-				<DashSensors />
-			</Paper>
-			<Paper className={classes.rootPaper}>
-				<DashSession
-					handleStart={handleStartSession}
-					handleStop={handleStopSession}
-				/>
-			</Paper>
-		</>
-	);
+  return (
+    <>
+      <Paper className={classes.rootPaper}>
+        <CurrentTime />
+        <Grid container spacing={3} className={classes.gridContainer}>
+          <DashStatusItem name="ECU" data={ecuSensorData} />
+          <DashStatusItem name="ENGINE" data={engineSensorData} />
+          <DashStatusItem name="BATTERY" data={batterySensorData} />
+          <DashStatusItem name="LOGGING" data={loggingSensorData} />
+        </Grid>
+      </Paper>
+      <Paper className={classes.rootPaper}>
+        <DashSensors />
+      </Paper>
+      <Paper className={classes.rootPaper}>
+        <DashSession
+          handleStart={handleStartSession}
+          handleStop={handleStopSession}
+        />
+      </Paper>
+    </>
+  );
 };
 
 export default Dash;

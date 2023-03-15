@@ -23,7 +23,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 package-lock.json
-
-# Temporary for script to insert copyright
-copyrightText.txt
-copyrightScript.sh

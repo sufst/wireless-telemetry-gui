@@ -17,7 +17,7 @@
 */
 
 // React - Redux Imports
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { RootState } from "redux/store";
@@ -38,7 +38,7 @@ const AppNav: React.FC = () => {
 
   const user = useSelector((state: RootState) => state.user);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = useCallback(() => {
     setOpen(true);
