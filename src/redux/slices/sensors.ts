@@ -16,82 +16,80 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-	BuildSensorsFromMetaAction,
-	InsertSensorsBulkDataAction,
-	UpdateSensorsMetaAction
-} from 'types/models/actions';
-import { SensorsMeta, SensorsState } from 'types/models/sensor';
+  BuildSensorsFromMetaAction,
+  InsertSensorsBulkDataAction,
+  UpdateSensorsMetaAction,
+} from "types/models/actions";
+import { SensorsMeta, SensorsState } from "types/models/sensor";
 
 const initialState: SensorsState = {
-	sensors: {},
-	groups: {},
-	sensorMetadata: {}
+  sensors: {},
+  groups: {},
+  sensorMetadata: {},
 };
 
 export const sensorsSlice = createSlice({
-	name: 'sensors',
-	initialState,
-	reducers: {
-		buildSensorsFromMeta: (
-			state: SensorsState,
-			action: PayloadAction<BuildSensorsFromMetaAction>
-		) => {
-			const meta: SensorsMeta = action.payload;
-      
-			state.sensorMetadata = meta;
-			for (const sensor in meta) {
-				// Set a default graph cut off of 2 seconds
-				state.sensors[sensor] = {
-					data: [],
-					meta: { ...meta[sensor], timeEndS: -2.0 },
-					isDisplay: false
-				};
-				const group = state.sensors[sensor].meta.group.split('_')[0];
-				if (state.groups[group] === undefined) {
-					state.groups[group] = [];
-				}
-				if (!state.groups[group].includes(sensor)) {
-					state.groups[group].push(sensor);
-				}
-			}
-		},
-		insertSensorsBulkData: (
-			state: SensorsState,
-			action: PayloadAction<InsertSensorsBulkDataAction>
-		) => {
-			const data = action.payload;
+  name: "sensors",
+  initialState,
+  reducers: {
+    buildSensorsFromMeta: (
+      state: SensorsState,
+      action: PayloadAction<BuildSensorsFromMetaAction>
+    ) => {
+      const meta: SensorsMeta = action.payload;
 
-			// Stale data cut off time
-			const staleEpoch = new Date().valueOf() / 1000 - 20;
+      state.sensorMetadata = meta;
+      for (const sensor in meta) {
+        // Set a default graph cut off of 2 seconds
+        state.sensors[sensor] = {
+          data: [],
+          meta: { ...meta[sensor], timeEndS: -2.0 },
+          isDisplay: false,
+        };
+        const group = state.sensors[sensor].meta.group.split("_")[0];
+        if (state.groups[group] === undefined) {
+          state.groups[group] = [];
+        }
+        if (!state.groups[group].includes(sensor)) {
+          state.groups[group].push(sensor);
+        }
+      }
+    },
+    insertSensorsBulkData: (
+      state: SensorsState,
+      action: PayloadAction<InsertSensorsBulkDataAction>
+    ) => {
+      const data = action.payload;
 
-			for (const sensor in data) {
-				// Only keep the last 20 seconds worth of data (to prevent a memory leak)
-				state.sensors[sensor].data = [
-					...state.sensors[sensor].data.filter(
-						(x) => x.epoch > staleEpoch
-					),
-					...data[sensor]
-				];
-			}
-		},
-		updateSensorsMeta: (
-			state: SensorsState,
-			action: PayloadAction<UpdateSensorsMetaAction>
-		) => {
-			const sensor = action.payload.sensor;
-			const key = action.payload.key;
-			const value = action.payload.value;
-			state.sensors[sensor].meta[key] = value;
-		}
-	}
+      // Stale data cut off time
+      const staleEpoch = new Date().valueOf() / 1000 - 20;
+
+      for (const sensor in data) {
+        // Only keep the last 20 seconds worth of data (to prevent a memory leak)
+        state.sensors[sensor].data = [
+          ...state.sensors[sensor].data.filter((x) => x.epoch > staleEpoch),
+          ...data[sensor],
+        ];
+      }
+    },
+    updateSensorsMeta: (
+      state: SensorsState,
+      action: PayloadAction<UpdateSensorsMetaAction>
+    ) => {
+      const sensor = action.payload.sensor;
+      const key = action.payload.key;
+      const value = action.payload.value;
+      state.sensors[sensor].meta[key] = value;
+    },
+  },
 });
 
 export const {
-	buildSensorsFromMeta,
-	insertSensorsBulkData,
-	updateSensorsMeta
+  buildSensorsFromMeta,
+  insertSensorsBulkData,
+  updateSensorsMeta,
 } = sensorsSlice.actions;
 
 export default sensorsSlice.reducer;

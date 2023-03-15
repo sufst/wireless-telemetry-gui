@@ -36,15 +36,16 @@ import {
 } from "./components";
 import { useStyles } from "./styles";
 
-export const RegisterContainer: React.FC<{ registerUser: UserRegister }> = (props) => {
+export const RegisterContainer: React.FC<{ registerUser: UserRegister }> = (
+  props
+) => {
   const classes = useStyles();
 
   const { registerUser } = props;
 
   const dispatch = useDispatch();
 
-  const [department, setDepartment] =
-    useState<UserDepartment>("Electronics");
+  const [department, setDepartment] = useState<UserDepartment>("Electronics");
 
   const [privilege, setPrivilege] = useState<UserPrivilege>("Basic");
 

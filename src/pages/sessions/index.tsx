@@ -16,12 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import React from "react";
-import {SessionContainer} from './containers';
+import { SessionContainer } from "./containers";
 
 const Sessions = () => {
-    return (
-        <SessionContainer/>
-    );
+  return <SessionContainer />;
 };
 
 export default Sessions;

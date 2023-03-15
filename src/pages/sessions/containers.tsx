@@ -26,41 +26,45 @@ import { showAlert } from "redux/slices/alert";
 import { createAlert } from "modules/alert/alert";
 
 export const SessionContainer = () => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const classes = useStyles();
 
-    const classes = useStyles(); 
-    
-    const [sessionData, setSessionData] = useState({});
+  const [sessionData, setSessionData] = useState({});
 
-    const fetchAllSessions = useCallback(async () => {
-        const [sessions] = await getAllSessions();
-        if (sessions) {
-            setSessionData(sessions);
-        } else {
-            const offlineAlert = createAlert(3000, "error", "alert", "Can't get sessions list as you are offline"); 
-            dispatch(showAlert(offlineAlert));
-        }
-     }, [dispatch]);
+  const fetchAllSessions = useCallback(async () => {
+    const [sessions] = await getAllSessions();
+    if (sessions) {
+      setSessionData(sessions);
+    } else {
+      const offlineAlert = createAlert(
+        3000,
+        "error",
+        "alert",
+        "Can't get sessions list as you are offline"
+      );
+      dispatch(showAlert(offlineAlert));
+    }
+  }, [dispatch]);
 
-    useEffect(() => {
-        fetchAllSessions(); 
-    },[fetchAllSessions]);
+  useEffect(() => {
+    fetchAllSessions();
+  }, [fetchAllSessions]);
 
-    return (
-        <>
-            <Paper className={classes.rootPaper}>
-                {/* TODO: Loading logic needs to go back in */}
-                {/* <>
+  return (
+    <>
+      <Paper className={classes.rootPaper}>
+        {/* TODO: Loading logic needs to go back in */}
+        {/* <>
                     {!isLoading.sessions && (
                         <SessionTable sessionData={sessionData}/>
                     ) || (
                         <LinearProgress />
                     )}
                 </> */}
-                <SessionPaper />
-                <SessionTable sessionData={sessionData} />
-            </Paper>
-        </>
-    );
+        <SessionPaper />
+        <SessionTable sessionData={sessionData} />
+      </Paper>
+    </>
+  );
 };

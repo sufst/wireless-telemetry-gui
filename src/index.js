@@ -22,8 +22,7 @@ import React from "react";
 import { App } from "./app/index";
 import "./index.css";
 
-import { registerServiceWorker } from 'serviceWorkerRegistration';
+import { registerServiceWorker } from "serviceWorkerRegistration";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 registerServiceWorker();
-

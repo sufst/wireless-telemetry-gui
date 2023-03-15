@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React, {useCallback, useEffect} from "react";
+import React, { useCallback, useEffect } from "react";
 import { createAlert } from "modules/alert/alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";

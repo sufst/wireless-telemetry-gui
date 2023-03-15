@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React, {useState, useCallback} from "react";
+import React, { useState, useCallback } from "react";
 import {
   Paper,
   Typography,
@@ -74,7 +74,9 @@ interface NewSessionContainerProps {
   };
 }
 
-export const NewSessionContainer: React.FC<NewSessionContainerProps> = (props) => {
+export const NewSessionContainer: React.FC<NewSessionContainerProps> = (
+  props
+) => {
   const classes = useStyles();
 
   const [name, setName] = useState<string>(props.sessionMeta.name);
@@ -248,7 +250,9 @@ export const SensorChooser: React.FC<sensorChooserInterface> = (props) => {
   );
 };
 
-export const SessionTable: React.FC<{sessionData: SessionsGetResponse}> = (props) => {
+export const SessionTable: React.FC<{ sessionData: SessionsGetResponse }> = (
+  props
+) => {
   const classes = useStyles();
 
   let sessionEntries = Object.entries(props.sessionData);
