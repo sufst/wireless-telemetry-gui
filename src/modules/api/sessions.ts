@@ -61,14 +61,14 @@ const handleCreateSession: SessionCreate = async (
 };
 
 // NEEDS MOVED TO APPROPRIATE TYPES FILE
-type s = (
+type SessionCreatePromise = (
   accessToken: string,
   name: string,
   sessionMeta: object,
   sessionSensors: string[]
 ) => Promise<[SessionCreate | null, boolean]>;
 
-export const createSession: s = async (
+export const createSession: SessionCreatePromise = async (
   accessToken: string,
   name: string,
   sessionMeta: object,
