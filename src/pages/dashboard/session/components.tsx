@@ -40,14 +40,7 @@ import { useCallback, useState } from "react";
 import { SessionsGetResponse } from "types/api/api";
 import { useStyles } from "./styles";
 
-// import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import './rte.css'
-
-const reactDraft = require('react-draft-wysiwyg')
-const draftJS = require('draft-js')
-const {EditorState} = draftJS
-const {Editor} = reactDraft
+import MDEditor from '@uiw/react-md-editor';
 
 export const CurrentSessionHeader = (props: { name: string }) => {
     const classes = useStyles(); 
@@ -70,16 +63,15 @@ export const SessionPaper = () => {
 }
 
 export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, onNotes: () => void, sensorGroups: string[], isRunning: boolean, sessionMeta: { name: string, driver: string, conditions: string, sensorGroups: string[]} }) => {
-
+    
     const classes = useStyles(); 
-
+    
     const [name, setName] = useState<string>(props.sessionMeta.name); 
     const [driver, setDriver] = useState(props.sessionMeta.driver); 
     const [condition, setCondition] = useState(props.sessionMeta.conditions); 
     const [sensorGroups, setSensorGroups] = useState<string[]>(props.sessionMeta.sensorGroups); 
     const [showNotesEditor, setShowNotesEditor] = useState<boolean>(false);
-    const [sessionNotes, setSessionNotes] = useState<string>("");
-
+    const [sessionNotes, setSessionNotes] = useState<string|undefined>("");
     // Error state for the MUI FormControl 
     const [error, setError] = useState(false);
 
@@ -95,8 +87,10 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
 
     const stopButtonClasses = useCallback(() => {
         if (!isSessionRunning) {
+            console.log(sessionNotes)
             return classes.sessionButtonStopBoxDisabled
         } else {
+            console.log(sessionNotes)
             return classes.sessionButtonStopBox
         }
     }, [isSessionRunning, classes.sessionButtonStopBox, classes.sessionButtonStopBoxDisabled])
@@ -117,12 +111,15 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
     }, [name, driver, condition, sensorGroups, props])
 
     const stopPressed = useCallback(() => {
+        console.log(
+            sessionNotes
+        )
         props.onStop();
         setCondition(""); 
         setDriver("");
         setName(""); 
         setSensorGroups([]);
-    }, [props])
+    }, [props, sessionNotes])
 
     const notesPressed = useCallback(() => {
         props.onNotes();
@@ -149,9 +146,6 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
             setSensorGroups(newSensors);
         }
     }, [sensorGroups])
-    const [editorState, setEditorState] = useState(
-        () => EditorState.createEmpty()
-    )
 
     return (
         <>
@@ -224,13 +218,8 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
                         {/* <header className="App-header">
                           Rich Text Editor Example
                         </header> */}
-                        <Editor
-                          editorState={editorState}
-                          onEditorStateChange={setEditorState}
-                          wrapperClassName="wrapper-class"
-                          editorClassName="editor-class"
-                          toolbarClassName="toolbar-class"
-                        />
+                        <MDEditor value={sessionNotes} onChange={setSessionNotes} />
+                        <MDEditor.Markdown source={sessionNotes} style={{ whiteSpace: 'pre-wrap' }} />
                       </div>)}
                     </Grid>
                 </Grid>
