@@ -232,6 +232,28 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
           </>
         }
     });
+
+    function checkColors(value : String) {
+        /// assigns the status a colour based on its value
+        var colourVal:string;
+        if (value === "alive"){
+            colourVal = "green";
+        }
+        else {
+            colourVal = "red";
+        }
+        return {color:colourVal, fontSize:18}
+    }
+
+    
+    function formatDate(date : string) {
+        const d = new Date(date);
+        /// formats date in form day/month/year - .getMonth()+1 as it returns a value 0 to 11
+        return d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear();  
+    }
+    
+    
+
     return (
         <div>
             <p className={classes.newSessionText}>All Sessions</p>
@@ -239,20 +261,19 @@ export const SessionTable = (props: { sessionData: SessionsGetResponse }) => {
                 <Table aria-label="customized table">
                     <TableHead>
                     <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell align="right">Status</TableCell>
-                        <TableCell align="right">Creation Date</TableCell>
-                        <TableCell align="right">Actions</TableCell>
+                        <TableCell style={{fontWeight:"bold", fontSize:24}}>Name</TableCell>
+                        <TableCell align="right" style={{fontWeight:"bold", fontSize:24}}>Status</TableCell>
+                        <TableCell align="right" style={{fontWeight:"bold", fontSize:24}}>Creation Date</TableCell>
+                        <TableCell align="right" style={{fontWeight:"bold", fontSize:24}}>Actions</TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody>
                         {info.map((sessionEntry) => (
                             <TableRow key={sessionEntry.name}>
-                            <TableCell component="th" scope="row">
-                                {sessionEntry.name}
-                            </TableCell>
-                            <TableCell align="right">{sessionEntry.status}</TableCell>
-                            <TableCell align="right">{sessionEntry.created}</TableCell>
+                            <TableCell component="th" scope="row" style={{fontSize:18}}>{sessionEntry.name}</TableCell>
+                            {/*checkColors can be replaced by: style={sessionEntry.status === "alive" ? {color : "green"} : {color : "red"}} */}
+                            <TableCell align="right" style={checkColors(sessionEntry.status)}>{sessionEntry.status}</TableCell> 
+                            <TableCell align="right" style={{fontSize:18}}>{formatDate(sessionEntry.created)}</TableCell>
                             <TableCell align="right">{sessionEntry.actions}</TableCell>
                             </TableRow>
                         ))}
