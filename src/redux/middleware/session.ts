@@ -52,8 +52,6 @@ export const sessionMiddleware: Middleware<{}, any> =
         } 
         else if (offline) {
             storeAPI.dispatch(setOffline());
-            const offlineAlert = createAlert(3000, "error", "alert", "Can't create a new session as you are offline"); 
-            storeAPI.dispatch(showAlert(offlineAlert))
         }
         else {
             const createSessionFailedAlert = createAlert(3000, "error", "alert", "Can't create a new session..."); 
@@ -79,8 +77,6 @@ export const sessionMiddleware: Middleware<{}, any> =
         } 
         else if (offline) {
             storeAPI.dispatch(setOffline());
-            const offlineAlert = createAlert(3000, "error", "alert", "Can't stop session as you are offline"); 
-            storeAPI.dispatch(showAlert(offlineAlert));
         }
         else {
             const stopSessionFailedAlert = createAlert(3000, "error", "alert", "Can't stop session..."); 
@@ -94,8 +90,6 @@ export const sessionMiddleware: Middleware<{}, any> =
         const [response, offline] = await getSessionDetail(action.payload.name, storeAPI.getState().user.accessToken);
         if (offline) {
             storeAPI.dispatch(setOffline());
-            const offlineAlert = createAlert(3000, "error", "alert", "Can't download sessions as you are offline"); 
-            storeAPI.dispatch(showAlert(offlineAlert));
         }
         else {
             download(response, action.payload.name + ".zip", "application/zip");

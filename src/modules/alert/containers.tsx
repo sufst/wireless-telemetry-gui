@@ -17,37 +17,64 @@
 */
 
 // Module Imports
-import { Snackbar } from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
-import { useSelector } from 'react-redux' 
+import { Snackbar } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
+import { useSelector } from "react-redux";
 
-// Styles 
+// Styles
 import { useStyles } from "./styles";
 
 // Redux Imports
-import type { RootState } from 'redux/store';
+import type { RootState } from "redux/store";
+
+const OfflineBanner = () => {
+  const classes = useStyles();
+  return (
+    <MuiAlert
+      elevation={6}
+      variant="filled"
+      className={classes.alert}
+      severity="error"
+    >
+      You are offline
+    </MuiAlert>
+  );
+};
 
 const AlertContainer = () => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const selectAlert = (state: RootState) => state.alert;
-    const { text, type, timeout, level } = useSelector(selectAlert); 
+  const selectAlert = (state: RootState) => state.alert;
+  const { text, type, timeout, level } = useSelector(selectAlert);
+  const offline = useSelector((state: RootState) => state.app.offline);
 
-    if (type === undefined) {
-        return null;
-    }
-
-    return type === 'snack' ? (
-        <Snackbar open={ type === "snack" } autoHideDuration={timeout}>
-            <MuiAlert elevation={6} variant="filled" className={classes.alert} severity={level}>
-                {text ?? ''}
-            </MuiAlert>
-        </Snackbar>
-    ) : (
-        <MuiAlert elevation={6} variant="filled" className={classes.alert} severity={level}>
-            {text ?? ''}
+  if (type !== undefined) {
+    return type === "snack" ? (
+      <Snackbar open={type === "snack"} autoHideDuration={timeout}>
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          className={classes.alert}
+          severity={level}
+        >
+          {text ?? ""}
         </MuiAlert>
-    )
-}
+      </Snackbar>
+    ) : (
+      <MuiAlert
+        elevation={6}
+        variant="filled"
+        className={classes.alert}
+        severity={level}
+      >
+        {text ?? ""}
+      </MuiAlert>
+    );
+  } else if (offline) {
+    return <OfflineBanner />;
+  } else {
+    return null;
+  }
+};
 
 export default AlertContainer;

@@ -43,8 +43,6 @@ export const userMiddleware: Middleware<{}, any> =
 
       if (offline) {
         storeAPI.dispatch(setOffline());
-        const offlineAlert = createAlert(3000, "warning", "alert", "Cannot login as you are offline");
-        storeAPI.dispatch(showAlert(offlineAlert));
         return next(action);
       } else if (accessToken === undefined) {
         const loginFailedAlert = createAlert(3000, "error", "alert", "Login Failed :( Make sure your credentials are correct!"); 

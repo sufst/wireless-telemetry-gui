@@ -1,7 +1,5 @@
-import { createAlert } from "modules/alert/alert";
 import { getAllSessions } from "modules/api/sessions";
 import { Middleware } from "redux";
-import { showAlert } from "redux/slices/alert";
 import { setOffline, setOnline } from "redux/slices/app";
 import { replaceSessions } from "redux/slices/sessions";
 
@@ -13,8 +11,6 @@ export const sessionsMiddleware: Middleware<{}, any> = (storeAPI) => (next) => a
       storeAPI.dispatch(replaceSessions(sessions));
     } else {
       storeAPI.dispatch(setOffline());
-      const offlineAlert = createAlert(3000, "error", "alert", "Can't get sessions list as you are offline");
-      storeAPI.dispatch(showAlert(offlineAlert));
     }
   }
 
