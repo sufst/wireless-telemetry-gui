@@ -22,6 +22,7 @@ import { createAlert } from "modules/alert/alert";
 import { createSession, getSessionDetail, stopSession } from "modules/api/sessions";
 import { Middleware } from "redux";
 import { showAlert } from "redux/slices/alert";
+import { setOffline, setOnline } from "redux/slices/app";
 import { refreshSessions } from "redux/slices/sessions";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
@@ -45,10 +46,12 @@ export const sessionMiddleware: Middleware<{}, any> =
         const [response, offline] = await createSession(accessToken, name, sessionMeta, sensors); 
 
         if (response) {
+            storeAPI.dispatch(setOnline());
             const createSessionOkayAlert = createAlert(3000, "success", "alert", "New session created."); 
             storeAPI.dispatch(showAlert(createSessionOkayAlert));
         } 
         else if (offline) {
+            storeAPI.dispatch(setOffline());
             const offlineAlert = createAlert(3000, "error", "alert", "Can't create a new session as you are offline"); 
             storeAPI.dispatch(showAlert(offlineAlert))
         }
@@ -69,11 +72,13 @@ export const sessionMiddleware: Middleware<{}, any> =
         const [response, offline] = await stopSession(name, accessToken); 
 
         if (response) {
+            storeAPI.dispatch(setOnline());
             const stopSessionOkayAlert = createAlert(3000, "success", "alert", "Session Stopped."); 
             storeAPI.dispatch(showAlert(stopSessionOkayAlert));
             storeAPI.dispatch(refreshSessions());
         } 
         else if (offline) {
+            storeAPI.dispatch(setOffline());
             const offlineAlert = createAlert(3000, "error", "alert", "Can't stop session as you are offline"); 
             storeAPI.dispatch(showAlert(offlineAlert));
         }
@@ -88,6 +93,7 @@ export const sessionMiddleware: Middleware<{}, any> =
     if (action.type === "session/getSessionDetail") {
         const [response, offline] = await getSessionDetail(action.payload.name, storeAPI.getState().user.accessToken);
         if (offline) {
+            storeAPI.dispatch(setOffline());
             const offlineAlert = createAlert(3000, "error", "alert", "Can't download sessions as you are offline"); 
             storeAPI.dispatch(showAlert(offlineAlert));
         }

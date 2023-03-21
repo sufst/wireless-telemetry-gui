@@ -1,5 +1,7 @@
 import MuiAlert from "@material-ui/lab/Alert";
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/store";
 import { useStyles } from "../alert/styles";
 
 // See https://www.30secondsofcode.org/react/s/use-navigator-on-line/
@@ -22,23 +24,23 @@ export const useOnline = () => {
 const OfflineBanner = () => {
   const classes = useStyles();
 
-  const online = useOnline();
+  const offline = useSelector((state: RootState) => state.app).offline;
 
-  if (online) {
-    console.log("Online");
-    return <></>;
-  } else {
+  if (offline) {
     console.log("Offline");
     return (
       <MuiAlert
         elevation={6}
         variant="filled"
         className={classes.alert}
-        severity="info"
+        severity="error"
       >
         You are offline
       </MuiAlert>
     );
+  } else {
+    console.log("Online");
+    return <></>;
   }
 };
 
