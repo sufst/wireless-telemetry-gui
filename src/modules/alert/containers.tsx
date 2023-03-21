@@ -36,7 +36,7 @@ const OfflineBanner = () => {
       className={classes.alert}
       severity="error"
     >
-      You are offline
+      Lost connection to the server
     </MuiAlert>
   );
 };
