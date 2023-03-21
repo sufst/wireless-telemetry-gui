@@ -25,6 +25,7 @@ import { v4 }from 'uuid';
 import { useSelector } from 'react-redux';
 import { RootState } from "redux/store";
 import Dash from '../dash/container';
+import OfflineBanner from 'modules/navigation/OfflineBanner';
 
 export const DashboardHeader = () => {
 
@@ -52,6 +53,7 @@ export const DashboardHeader = () => {
 
     return(
         <div>
+            <OfflineBanner/>
             <Tabs variant="scrollable" scrollButtons="auto" value={selectedTab} onChange={onTabChange}>
                 {viewTabs.current.map(x => x[1])}
             </Tabs>
