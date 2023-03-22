@@ -31,6 +31,7 @@ import { getUser } from "modules/api/user";
 import { sioConnect } from "modules/api/sio";
 import { usersCreate } from "modules/api/users";
 import { SioOnDataHandler, SioOnMetaHander } from "types/api/api";
+import { setOffline, setOnline } from "redux/slices/app";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
 export const userMiddleware: Middleware<{}, any> = 
@@ -41,8 +42,7 @@ export const userMiddleware: Middleware<{}, any> =
       const [accessToken, offline] = await loginUser(username, password); 
 
       if (offline) {
-        const offlineAlert = createAlert(3000, "warning", "alert", "Cannot login as you are offline");
-        storeAPI.dispatch(showAlert(offlineAlert));
+        storeAPI.dispatch(setOffline());
         return next(action);
       } else if (accessToken === undefined) {
         const loginFailedAlert = createAlert(3000, "error", "alert", "Login Failed :( Make sure your credentials are correct!"); 
@@ -50,6 +50,8 @@ export const userMiddleware: Middleware<{}, any> =
         return next(action);
       } 
       
+      storeAPI.dispatch(setOnline());
+
       const successAlert = createAlert(3000, "success", "snack", `Login Success! ${username} successfully logged in!`); 
 
       storeAPI.dispatch(showAlert(successAlert));
@@ -88,6 +90,7 @@ export const userMiddleware: Middleware<{}, any> =
       const success = await usersCreate(username, password, privilege, department, {}, accessToken); 
 
       if (success) {
+        storeAPI.dispatch(setOnline());
         const registerSuccessAlert = createAlert(3000, "success", "alert", "Success!! You can logout and login again with the new account."); 
 
         storeAPI.dispatch(showAlert(registerSuccessAlert));

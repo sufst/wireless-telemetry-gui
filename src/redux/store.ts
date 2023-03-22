@@ -19,6 +19,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import alertReducer from './slices/alert';
+import appReducer from "./slices/app";
 import sensorsReducer from './slices/sensors';
 import userReducer from './slices/user';
 import sessionReducer from './slices/session'
@@ -33,6 +34,7 @@ import { sessionsMiddleware } from './middleware/sessions';
 const store = configureStore({
   reducer: {
      alert: alertReducer, 
+     app: appReducer,
      sensors : sensorsReducer,
      user: userReducer, 
      session: sessionReducer,
