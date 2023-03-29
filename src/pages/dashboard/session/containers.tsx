@@ -55,9 +55,9 @@ export const SessionContainer: React.FC = () => {
     state.session.sessionSensorGroups;
   const sessionGroups = useSelector(selectSessionGrps);
 
-    // Session isRunning from Redux 
-    const selectIsRunning = (state: RootState) => state.session.isRunning; 
-    const isSessionRunning = useSelector(selectIsRunning);
+  // Session isRunning from Redux
+  const selectIsRunning = (state: RootState) => state.session.isRunning;
+  const isSessionRunning = useSelector(selectIsRunning);
 
   // All Sensor Groups from Redux
   const selectGroups = (state: RootState) => state.sensors.groups;
@@ -73,13 +73,19 @@ export const SessionContainer: React.FC = () => {
 
   const { privilege } = user;
 
-    dispatch(getAllSessions());
-    const sessionData = useSelector((state:RootState) => state.sessions);
+  dispatch(getAllSessions());
+  const sessionData = useSelector((state: RootState) => state.sessions);
 
-    const handleStartSession: StartSessionButtonAction = useCallback((name, driver, condition, sessionSensorGroups) => {
-        // Creates an array of all the names of the sensors to be saved in the session. 
-        const groupsForSession = Object.entries(groups).filter((group: [key: string, value: string[]]) => sessionSensorGroups.includes(group[0]))
-        const sensors = groupsForSession.map((group: [key: string, value: string[]]) => (group[1])).flat();
+  const handleStartSession: StartSessionButtonAction = useCallback(
+    (name, driver, condition, sessionSensorGroups) => {
+      // Creates an array of all the names of the sensors to be saved in the session.
+      const groupsForSession = Object.entries(groups).filter(
+        (group: [key: string, value: string[]]) =>
+          sessionSensorGroups.includes(group[0])
+      );
+      const sensors = groupsForSession
+        .map((group: [key: string, value: string[]]) => group[1])
+        .flat();
 
       console.log(sessionSensorGroups);
 

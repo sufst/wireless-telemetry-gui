@@ -27,15 +27,17 @@ import { SessionsState } from "types/models/sessions";
 export const SessionContainer: React.FC = () => {
   const dispatch = useDispatch();
 
-    const classes = useStyles();
+  const classes = useStyles();
 
-    dispatch(getAllSessions());
-    const sessionData: SessionsState = useSelector((state:RootState) => state.sessions);
-    return (
-        <>
-            <Paper className={classes.rootPaper}>
-                {/* TODO: Loading logic needs to go back in */}
-                {/* <>
+  dispatch(getAllSessions());
+  const sessionData: SessionsState = useSelector(
+    (state: RootState) => state.sessions
+  );
+  return (
+    <>
+      <Paper className={classes.rootPaper}>
+        {/* TODO: Loading logic needs to go back in */}
+        {/* <>
                     {!isLoading.sessions && (
                         <SessionTable sessionData={sessionData}/>
                     ) || (

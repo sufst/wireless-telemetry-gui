@@ -1,3 +1,3 @@
 export type AppState = {
-    offline: boolean,
+  offline: boolean;
 };

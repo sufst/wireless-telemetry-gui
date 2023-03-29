@@ -53,11 +53,16 @@ export const userMiddleware: Middleware<any, any> =
         );
         storeAPI.dispatch(showAlert(loginFailedAlert));
         return next(action);
-      } 
-      
+      }
+
       storeAPI.dispatch(setOnline());
 
-      const successAlert = createAlert(3000, "success", "snack", `Login Success! ${username} successfully logged in!`); 
+      const successAlert = createAlert(
+        3000,
+        "success",
+        "snack",
+        `Login Success! ${username} successfully logged in!`
+      );
 
       storeAPI.dispatch(showAlert(successAlert));
 
@@ -107,7 +112,12 @@ export const userMiddleware: Middleware<any, any> =
 
       if (success) {
         storeAPI.dispatch(setOnline());
-        const registerSuccessAlert = createAlert(3000, "success", "alert", "Success!! You can logout and login again with the new account."); 
+        const registerSuccessAlert = createAlert(
+          3000,
+          "success",
+          "alert",
+          "Success!! You can logout and login again with the new account."
+        );
 
         storeAPI.dispatch(showAlert(registerSuccessAlert));
       } else {

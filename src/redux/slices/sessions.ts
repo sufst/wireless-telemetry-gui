@@ -19,10 +19,9 @@
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SessionsArray, SessionsState } from "types/models/sessions";
-import {SessionsGetResponse} from "types/api/api";
+import { SessionsGetResponse } from "types/api/api";
 
-const initialState: SessionsState = {sessions: []};
-
+const initialState: SessionsState = { sessions: [] };
 
 export const sessionsSlice = createSlice({
   name: "sessions",
@@ -33,11 +32,19 @@ export const sessionsSlice = createSlice({
     clearSessions: (state: SessionsState) => {
       state.sessions = [];
     },
-    replaceSessions: (state: SessionsState, payload: PayloadAction<SessionsGetResponse>) => {
+    replaceSessions: (
+      state: SessionsState,
+      payload: PayloadAction<SessionsGetResponse>
+    ) => {
       const newSessions: SessionsArray = [];
-      for(const key in payload.payload) {
+      for (const key in payload.payload) {
         const content = payload.payload[key];
-        newSessions.push({name: key, creation: content.creation, status: content.status, sensors: content.sensors});
+        newSessions.push({
+          name: key,
+          creation: content.creation,
+          status: content.status,
+          sensors: content.sensors,
+        });
       }
       state.sessions = newSessions;
     },
@@ -48,6 +55,7 @@ export const {
   refreshSessions,
   clearSessions,
   replaceSessions,
+  getAllSessions,
 } = sessionsSlice.actions;
 
 export default sessionsSlice.reducer;

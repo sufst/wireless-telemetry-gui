@@ -17,7 +17,14 @@
 */
 
 import { url } from "config";
-import { SessionDetailGet, SessionCreate, SessionCreateFields, SessionsGet, SessionStop, SessionsGetResponse } from "types/api/api";
+import {
+  SessionDetailGet,
+  SessionCreate,
+  SessionCreateFields,
+  SessionsGet,
+  SessionStop,
+  SessionsGetResponse,
+} from "types/api/api";
 
 /**
  * Creating new sessions
