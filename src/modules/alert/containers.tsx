@@ -28,19 +28,40 @@ import { useStyles } from "./styles";
 // Redux Imports
 import type { RootState } from "redux/store";
 
+const OfflineBanner = () => {
+  const classes = useStyles();
+  return (
+    <MuiAlert
+      elevation={6}
+      variant="filled"
+      className={classes.alert}
+      severity="error"
+    >
+      Lost connection to the server
+    </MuiAlert>
+  );
+};
+
 const AlertContainer: React.FC = () => {
   const classes = useStyles();
 
-  const { text, type, timeout, level } = useSelector(
-    (state: RootState) => state.alert
-  );
+  const selectAlert = (state: RootState) => state.alert;
+  const { text, type, timeout, level } = useSelector(selectAlert);
+  const offline = useSelector((state: RootState) => state.app.offline);
 
-  if (type === undefined) {
-    return null;
-  }
-
-  return type === "snack" ? (
-    <Snackbar open={type === "snack"} autoHideDuration={timeout}>
+  if (type !== undefined) {
+    return type === "snack" ? (
+      <Snackbar open={type === "snack"} autoHideDuration={timeout}>
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          className={classes.alert}
+          severity={level}
+        >
+          {text ?? ""}
+        </MuiAlert>
+      </Snackbar>
+    ) : (
       <MuiAlert
         elevation={6}
         variant="filled"
@@ -49,17 +70,13 @@ const AlertContainer: React.FC = () => {
       >
         {text ?? ""}
       </MuiAlert>
-    </Snackbar>
-  ) : (
-    <MuiAlert
-      elevation={6}
-      variant="filled"
-      className={classes.alert}
-      severity={level}
-    >
-      {text ?? ""}
-    </MuiAlert>
-  );
+    );
+  } else if (offline) {
+    return <OfflineBanner />;
+  } else {
+    return null;
+  }
 };
 
 export default AlertContainer;
+

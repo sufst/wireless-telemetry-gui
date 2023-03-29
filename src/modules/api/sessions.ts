@@ -17,13 +17,7 @@
 */
 
 import { url } from "config";
-import {
-  SessionDetailGet,
-  SessionCreate,
-  SessionCreateFields,
-  SessionsGet,
-  SessionStop,
-} from "types/api/api";
+import { SessionDetailGet, SessionCreate, SessionCreateFields, SessionsGet, SessionStop, SessionsGetResponse } from "types/api/api";
 
 /**
  * Creating new sessions
@@ -145,7 +139,7 @@ const handleGetAllSessions: SessionsGet = async () => {
       throw response.statusText;
     }
 
-    const data = await response.json();
+    const data: SessionsGetResponse = await response.json();
     return data;
   } catch (error) {
     throw new Error("offline");
@@ -154,7 +148,7 @@ const handleGetAllSessions: SessionsGet = async () => {
 
 export const getAllSessions: SessionsGet = async () => {
   try {
-    const sessionResponse = await handleGetAllSessions();
+    const sessionResponse: SessionsGetResponse = await handleGetAllSessions();
     return [sessionResponse, false];
   } catch (error: any) {
     console.error("Error in Sessions GET: ", error);

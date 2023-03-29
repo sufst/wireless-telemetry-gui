@@ -98,7 +98,7 @@ export type UserPatch = (
 //
 // SESSIONS
 //
-export type SessionsGet = () => Promise;
+export type SessionsGet = () => Promise<[SessionsGetResponse | null, boolean]>;
 
 export type SessionsGetResponse = {
   [name: string]: {

@@ -16,46 +16,26 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import React from "react";
-import { useCallback, useEffect, useState } from "react";
 import { Paper } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "../dashboard/session/styles";
-import { getAllSessions } from "modules/api/sessions";
+import { getAllSessions } from "redux/slices/sessions";
 import { SessionTable, SessionPaper } from "./components";
-import { showAlert } from "redux/slices/alert";
-import { createAlert } from "modules/alert/alert";
+import { RootState } from "redux/store";
+import { SessionsState } from "types/models/sessions";
 
-export const SessionContainer = () => {
+export const SessionContainer: React.FC = () => {
   const dispatch = useDispatch();
 
-  const classes = useStyles();
+    const classes = useStyles();
 
-  const [sessionData, setSessionData] = useState({});
-
-  const fetchAllSessions = useCallback(async () => {
-    const [sessions] = await getAllSessions();
-    if (sessions) {
-      setSessionData(sessions);
-    } else {
-      const offlineAlert = createAlert(
-        3000,
-        "error",
-        "alert",
-        "Can't get sessions list as you are offline"
-      );
-      dispatch(showAlert(offlineAlert));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    fetchAllSessions();
-  }, [fetchAllSessions]);
-
-  return (
-    <>
-      <Paper className={classes.rootPaper}>
-        {/* TODO: Loading logic needs to go back in */}
-        {/* <>
+    dispatch(getAllSessions());
+    const sessionData: SessionsState = useSelector((state:RootState) => state.sessions);
+    return (
+        <>
+            <Paper className={classes.rootPaper}>
+                {/* TODO: Loading logic needs to go back in */}
+                {/* <>
                     {!isLoading.sessions && (
                         <SessionTable sessionData={sessionData}/>
                     ) || (

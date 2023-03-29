@@ -16,150 +16,21 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Module Imports
-// TODO: Downloadjs is deprecated, needs replaced with a new library
-import download from "downloadjs";
-import { createAlert } from "modules/alert/alert";
-import {
-  createSession,
-  getSessionDetail,
-  stopSession,
-} from "modules/api/sessions";
+import { getAllSessions } from "modules/api/sessions";
 import { Middleware } from "redux";
-import { showAlert } from "redux/slices/alert";
+import { setOffline, setOnline } from "redux/slices/app";
+import { replaceSessions } from "redux/slices/sessions";
 
-// any should be rootState but I can't work out how to fix the circular dependancy issue....
-export const sessionMiddleware: Middleware<any, any> =
-  (storeAPI) => (next) => async (action) => {
-    if (action.type === "session/startSession") {
-      const { name, driver, condition } = action.payload;
-      const sensors: string[] = action.payload.sensors;
-      const groups: string[] = action.payload.groups;
-
-      const accessToken = storeAPI.getState().user.accessToken;
-
-      console.log(
-        "Starting session from middleware: ",
-        name,
-        driver,
-        condition,
-        sensors,
-        groups
-      );
-
-      const sessionMeta = {
-        driver: driver,
-        condition: condition,
-      };
-
-      const [response, offline] = await createSession(
-        accessToken,
-        name,
-        sessionMeta,
-        sensors
-      );
-
-      if (response) {
-        const createSessionOkayAlert = createAlert(
-          3000,
-          "success",
-          "alert",
-          "New session created."
-        );
-        storeAPI.dispatch(showAlert(createSessionOkayAlert));
-      } else if (offline) {
-        const offlineAlert = createAlert(
-          3000,
-          "error",
-          "alert",
-          "Can't create a new session as you are offline"
-        );
-        storeAPI.dispatch(showAlert(offlineAlert));
-      } else {
-        const createSessionFailedAlert = createAlert(
-          3000,
-          "error",
-          "alert",
-          "Can't create a new session..."
-        );
-        storeAPI.dispatch(showAlert(createSessionFailedAlert));
-      }
-
-      if (response != null) {
-        const createSessionOkayAlert = createAlert(
-          3000,
-          "success",
-          "alert",
-          "New session created."
-        );
-        storeAPI.dispatch(showAlert(createSessionOkayAlert));
-      } else {
-        const createSessionFailedAlert = createAlert(
-          3000,
-          "error",
-          "alert",
-          "Can't create a new session..."
-        );
-        storeAPI.dispatch(showAlert(createSessionFailedAlert));
-      }
-
-      return next(action);
+export const sessionsMiddleware: Middleware<{}, any> = (storeAPI) => (next) => async (action) => {
+  if ((storeAPI.getState().sessions.sessions.length === 0 && action.type === 'sessions/getAllSessions') || action.type === 'sessions/refreshSessions') {
+    const [sessions] = await getAllSessions();
+    if (sessions) {
+      storeAPI.dispatch(setOnline());
+      storeAPI.dispatch(replaceSessions(sessions));
+    } else {
+      storeAPI.dispatch(setOffline());
     }
+  }
 
-    if (action.type === "session/stopSession") {
-      const accessToken = storeAPI.getState().user.accessToken;
-      const name = storeAPI.getState().session.sessionName;
-
-      console.log("Stopping session from middleware: ", name);
-
-      const [response, offline] = await stopSession(name, accessToken);
-
-      if (response) {
-        const stopSessionOkayAlert = createAlert(
-          3000,
-          "success",
-          "alert",
-          "Session Stopped."
-        );
-        storeAPI.dispatch(showAlert(stopSessionOkayAlert));
-      } else if (offline) {
-        const offlineAlert = createAlert(
-          3000,
-          "error",
-          "alert",
-          "Can't stop session as you are offline"
-        );
-        storeAPI.dispatch(showAlert(offlineAlert));
-      } else {
-        const stopSessionFailedAlert = createAlert(
-          3000,
-          "error",
-          "alert",
-          "Can't stop session..."
-        );
-        storeAPI.dispatch(showAlert(stopSessionFailedAlert));
-      }
-
-      return next(action);
-    }
-
-    if (action.type === "session/getSessionDetail") {
-      const [response, offline] = await getSessionDetail(
-        action.payload.name,
-        storeAPI.getState().user.accessToken
-      );
-      if (offline) {
-        const offlineAlert = createAlert(
-          3000,
-          "error",
-          "alert",
-          "Can't download sessions as you are offline"
-        );
-        storeAPI.dispatch(showAlert(offlineAlert));
-      } else {
-        download(response, action.payload.name + ".zip", "application/zip");
-      }
-    }
-
-    return next(action);
-  };
+  return next(action);
+}

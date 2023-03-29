@@ -18,7 +18,7 @@
 import React, { useCallback, useEffect } from "react";
 import { Grid, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { startSession, stopSession } from "redux/slices/sessions";
+import { startSession, stopSession } from "redux/slices/session";
 import { RootState } from "redux/store";
 import {
   DashStatusItem,

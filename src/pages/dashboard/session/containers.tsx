@@ -19,7 +19,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Paper } from "@material-ui/core";
 import { useStyles } from "./styles";
-import { getAllSessions } from "modules/api/sessions";
+import { getAllSessions } from "redux/slices/sessions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import {
@@ -29,7 +29,7 @@ import {
 } from "./components";
 import { showAlert } from "redux/slices/alert";
 import { createAlert } from "modules/alert/alert";
-import { startSession, stopSession } from "redux/slices/sessions";
+import { startSession, stopSession } from "redux/slices/session";
 import { StartSessionButtonAction } from "types/models/actions";
 
 export const SessionContainer: React.FC = () => {
@@ -55,11 +55,9 @@ export const SessionContainer: React.FC = () => {
     state.session.sessionSensorGroups;
   const sessionGroups = useSelector(selectSessionGrps);
 
-  // Session isRunning from Redux
-  const selectIsRunning = (state: RootState) => state.session.isRunning;
-  const isSessionRunning = useSelector(selectIsRunning);
-
-  const [sessionData, setSessionData] = useState({});
+    // Session isRunning from Redux 
+    const selectIsRunning = (state: RootState) => state.session.isRunning; 
+    const isSessionRunning = useSelector(selectIsRunning);
 
   // All Sensor Groups from Redux
   const selectGroups = (state: RootState) => state.sensors.groups;
@@ -75,35 +73,13 @@ export const SessionContainer: React.FC = () => {
 
   const { privilege } = user;
 
-  const fetchAllSessions = useCallback(async () => {
-    const [sessions] = await getAllSessions();
-    if (sessions) {
-      setSessionData(sessions);
-    } else {
-      const offlineAlert = createAlert(
-        3000,
-        "error",
-        "alert",
-        "Can't get sessions list as you are offline"
-      );
-      dispatch(showAlert(offlineAlert));
-    }
-  }, [dispatch]);
+    dispatch(getAllSessions());
+    const sessionData = useSelector((state:RootState) => state.sessions);
 
-  useEffect(() => {
-    fetchAllSessions();
-  }, [fetchAllSessions]);
-
-  const handleStartSession: StartSessionButtonAction = useCallback(
-    (name, driver, condition, sessionSensorGroups) => {
-      // Creates an array of all the names of the sensors to be saved in the session.
-      const groupsForSession = Object.entries(groups).filter(
-        (group: [key: string, value: string[]]) =>
-          sessionSensorGroups.includes(group[0])
-      );
-      const sensors = groupsForSession
-        .map((group: [key: string, value: string[]]) => group[1])
-        .flat();
+    const handleStartSession: StartSessionButtonAction = useCallback((name, driver, condition, sessionSensorGroups) => {
+        // Creates an array of all the names of the sensors to be saved in the session. 
+        const groupsForSession = Object.entries(groups).filter((group: [key: string, value: string[]]) => sessionSensorGroups.includes(group[0]))
+        const sensors = groupsForSession.map((group: [key: string, value: string[]]) => (group[1])).flat();
 
       console.log(sessionSensorGroups);
 

@@ -39,9 +39,9 @@ export const useStyles = makeStyles((theme: Theme) =>
       background: "darkBlue",
     },
     newSessionText: {
-      margin: "0",
-      marginBottom: "0.5rem",
-      fontSize: "20px",
+        margin: 'auto',
+        flexGrow: 1,
+        fontSize: '20px'
     },
     heading: {
       fontSize: theme.typography.pxToRem(15),
@@ -74,8 +74,15 @@ export const useStyles = makeStyles((theme: Theme) =>
     sessionName: {
       fontWeight: "bold",
     },
+    refreshButton: {
+        backgroundColor: 'green',
+    },
     rootSessionPaper: {
-      marginTop: "1rem",
+        marginTop: '1rem'
+    }, 
+    sessionHeadingContainer: {
+        display: 'flex',
+        marginBottom: '1rem',
     },
     sessionButtonStopBox: {
       color: "white",

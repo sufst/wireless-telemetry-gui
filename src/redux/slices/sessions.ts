@@ -18,53 +18,36 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  GetSessionDetailAction,
-  StartSessionAction,
-} from "types/models/actions";
-import { SessionState } from "types/models/session";
+import { SessionsArray, SessionsState } from "types/models/sessions";
+import {SessionsGetResponse} from "types/api/api";
 
-const initialState: SessionState = {
-  sessionName: "",
-  sessionDriver: "",
-  sessionConditions: "",
-  sessionSensors: [],
-  sessionSensorGroups: [],
-  isRunning: false,
-};
+const initialState: SessionsState = {sessions: []};
 
-export const sessionSlice = createSlice({
-  name: "session",
+
+export const sessionsSlice = createSlice({
+  name: "sessions",
   initialState,
   reducers: {
     getAllSessions: () => {},
-    getSessionDetail: (
-      state: SessionState,
-      action: PayloadAction<GetSessionDetailAction>
-    ) => {},
-    startSession: (
-      state: SessionState,
-      action: PayloadAction<StartSessionAction>
-    ) => {
-      state.sessionName = action.payload.name;
-      state.sessionDriver = action.payload.driver;
-      state.sessionConditions = action.payload.condition;
-      state.sessionSensors = action.payload.sensors;
-      state.sessionSensorGroups = action.payload.groups;
-      state.isRunning = true;
+    refreshSessions: () => {},
+    clearSessions: (state: SessionsState) => {
+      state.sessions = [];
     },
-    stopSession: (state: SessionState) => {
-      state.sessionName = "";
-      state.sessionDriver = "";
-      state.sessionConditions = "";
-      state.sessionSensors = [];
-      state.sessionSensorGroups = [];
-      state.isRunning = false;
+    replaceSessions: (state: SessionsState, payload: PayloadAction<SessionsGetResponse>) => {
+      const newSessions: SessionsArray = [];
+      for(const key in payload.payload) {
+        const content = payload.payload[key];
+        newSessions.push({name: key, creation: content.creation, status: content.status, sensors: content.sensors});
+      }
+      state.sessions = newSessions;
     },
   },
 });
 
-export const { getAllSessions, getSessionDetail, startSession, stopSession } =
-  sessionSlice.actions;
+export const {
+  refreshSessions,
+  clearSessions,
+  replaceSessions,
+} = sessionsSlice.actions;
 
-export default sessionSlice.reducer;
+export default sessionsSlice.reducer;
