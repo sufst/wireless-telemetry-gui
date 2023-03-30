@@ -24,6 +24,8 @@ import {
   SessionsGet,
   SessionStop,
   SessionsGetResponse,
+  HandleSessionsGet,
+  HandleSessionsGetPromise,
 } from "types/api/api";
 
 /**
@@ -133,7 +135,7 @@ export const stopSession: SessionStop = async (name, token) => {
 /**
  * Getting all the sessions in the database
  */
-const handleGetAllSessions: SessionsGet = async () => {
+const handleGetAllSessions: HandleSessionsGetPromise  = async () => {
   try {
     const response = await fetch(`http://${url}/sessions`, {
       method: "GET",
@@ -155,7 +157,7 @@ const handleGetAllSessions: SessionsGet = async () => {
 
 export const getAllSessions: SessionsGet = async () => {
   try {
-    const sessionResponse: SessionsGetResponse = await handleGetAllSessions();
+    const sessionResponse: HandleSessionsGet = await handleGetAllSessions();
     return [sessionResponse, false];
   } catch (error: any) {
     console.error("Error in Sessions GET: ", error);

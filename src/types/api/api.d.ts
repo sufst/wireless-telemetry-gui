@@ -98,6 +98,11 @@ export type UserPatch = (
 //
 // SESSIONS
 //
+
+export type HandleSessionsGet = SessionsGetResponse | null;
+
+export type HandleSessionsGetPromise = () => Promise<HandleSessionsGet>;
+
 export type SessionsGet = () => Promise<[SessionsGetResponse | null, boolean]>;
 
 export type SessionsGetResponse = {
