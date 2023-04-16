@@ -15,19 +15,22 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
-import { UserState } from 'types/models/user';
-import { AdminPanelTable } from './components';
+import React from "react";
+import { UserState } from "types/models/user";
+import { AdminPanelTable } from "./components";
 import { useStyles } from "./styles";
 
-export const AdminPanelContainer = (props: { users: UserState[]}) => {
-   const classes = useStyles(); 
-
-   return (
-      <div className={classes.adminPanelContainer}>
-         <h2>Admin Panel</h2>
-         <AdminPanelTable users={props.users}/> 
-      </div>
-   )
+interface AdminPanelProps {
+  users: UserState[];
 }
 
+export const AdminPanelContainer: React.FC<AdminPanelProps> = ({ users }) => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.adminPanelContainer}>
+      <h2>Admin Panel</h2>
+      <AdminPanelTable users={users} />
+    </div>
+  );
+};

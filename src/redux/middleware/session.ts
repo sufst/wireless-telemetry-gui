@@ -19,81 +19,114 @@
 // Module Imports
 import download from "downloadjs";
 import { createAlert } from "modules/alert/alert";
-import { createSession, getSessionDetail, stopSession } from "modules/api/sessions";
+import {
+  createSession,
+  getSessionDetail,
+  stopSession,
+} from "modules/api/sessions";
 import { Middleware } from "redux";
 import { showAlert } from "redux/slices/alert";
 import { setOffline, setOnline } from "redux/slices/app";
 import { refreshSessions } from "redux/slices/sessions";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
-export const sessionMiddleware: Middleware<{}, any> = 
-  (storeAPI) => (next) => async (action) => {
+export const sessionMiddleware: Middleware<any, any> =
+  (storeAPI) => (next) => async (action) => {
     if (action.type === "session/startSession") {
+      const { name, driver, condition } = action.payload;
+      const sensors: string[] = action.payload.sensors;
+      const groups: string[] = action.payload.groups;
 
-        const { name, driver, condition } = action.payload;
-        const sensors: string[] = action.payload.sensors;
-        const groups: string[] = action.payload.groups;
-        
-        const accessToken = storeAPI.getState().user.accessToken; 
+      const accessToken = storeAPI.getState().user.accessToken;
 
-        console.log('Starting session from middleware: ', name, driver, condition, sensors, groups);
+      console.log(
+        "Starting session from middleware: ",
+        name,
+        driver,
+        condition,
+        sensors,
+        groups
+      );
 
-        const sessionMeta = {
-            driver: driver, 
-            condition: condition
-        }; 
-        
-        const [response, offline] = await createSession(accessToken, name, sessionMeta, sensors); 
+      const sessionMeta = {
+        driver: driver,
+        condition: condition,
+      };
 
-        if (response) {
-            storeAPI.dispatch(setOnline());
-            const createSessionOkayAlert = createAlert(3000, "success", "alert", "New session created."); 
-            storeAPI.dispatch(showAlert(createSessionOkayAlert));
-        } 
-        else if (offline) {
-            storeAPI.dispatch(setOffline());
-        }
-        else {
-            const createSessionFailedAlert = createAlert(3000, "error", "alert", "Can't create a new session..."); 
-            storeAPI.dispatch(showAlert(createSessionFailedAlert))
-        }
+      const [response, offline] = await createSession(
+        accessToken,
+        name,
+        sessionMeta,
+        sensors
+      );
 
-        return next(action);
-    } 
+      if (response) {
+        storeAPI.dispatch(setOnline());
+        const createSessionOkayAlert = createAlert(
+          3000,
+          "success",
+          "alert",
+          "New session created."
+        );
+        storeAPI.dispatch(showAlert(createSessionOkayAlert));
+      } else if (offline) {
+        storeAPI.dispatch(setOffline());
+      } else {
+        const createSessionFailedAlert = createAlert(
+          3000,
+          "error",
+          "alert",
+          "Can't create a new session..."
+        );
+        storeAPI.dispatch(showAlert(createSessionFailedAlert));
+      }
+
+      return next(action);
+    }
 
     if (action.type === "session/stopSession") {
-        const accessToken = storeAPI.getState().user.accessToken; 
-        const name = storeAPI.getState().session.sessionName; 
+      const accessToken = storeAPI.getState().user.accessToken;
+      const name = storeAPI.getState().session.sessionName;
 
-        console.log('Stopping session from middleware: ', name);
+      console.log("Stopping session from middleware: ", name);
 
-        const [response, offline] = await stopSession(name, accessToken); 
+      const [response, offline] = await stopSession(name, accessToken);
 
-        if (response) {
-            storeAPI.dispatch(setOnline());
-            const stopSessionOkayAlert = createAlert(3000, "success", "alert", "Session Stopped."); 
-            storeAPI.dispatch(showAlert(stopSessionOkayAlert));
-            storeAPI.dispatch(refreshSessions());
-        } 
-        else if (offline) {
-            storeAPI.dispatch(setOffline());
-        }
-        else {
-            const stopSessionFailedAlert = createAlert(3000, "error", "alert", "Can't stop session..."); 
-            storeAPI.dispatch(showAlert(stopSessionFailedAlert));
-        }
+      if (response) {
+        storeAPI.dispatch(setOnline());
+        const stopSessionOkayAlert = createAlert(
+          3000,
+          "success",
+          "alert",
+          "Session Stopped."
+        );
+        storeAPI.dispatch(showAlert(stopSessionOkayAlert));
+        storeAPI.dispatch(refreshSessions());
+      } else if (offline) {
+        storeAPI.dispatch(setOffline());
+      } else {
+        const stopSessionFailedAlert = createAlert(
+          3000,
+          "error",
+          "alert",
+          "Can't stop session..."
+        );
+        storeAPI.dispatch(showAlert(stopSessionFailedAlert));
+      }
 
-        return next(action);
+      return next(action);
     }
 
     if (action.type === "session/getSessionDetail") {
-        const [response, offline] = await getSessionDetail(action.payload.name, storeAPI.getState().user.accessToken);
-        if (offline) {
-            storeAPI.dispatch(setOffline());
-        }
-        else {
-            download(response, action.payload.name + ".zip", "application/zip");
-        }
+      const [response, offline] = await getSessionDetail(
+        action.payload.name,
+        storeAPI.getState().user.accessToken
+      );
+      if (offline) {
+        storeAPI.dispatch(setOffline());
+      } else {
+        download(response, action.payload.name + ".zip", "application/zip");
+      }
     }
 
     return next(action);

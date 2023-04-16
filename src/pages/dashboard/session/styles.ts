@@ -16,190 +16,190 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
     root: {
-        width: '100%',
-        margin: '0'
+      width: "100%",
+      margin: "0",
     },
     rootPaper: {
-        flexGrow: 1,
-        padding: '1rem',
-        marginBottom: '1rem',
-        marginTop: '1rem',
-        background: '#292929'
-    }, 
+      flexGrow: 1,
+      padding: "1rem",
+      marginBottom: "1rem",
+      marginTop: "1rem",
+      background: "#292929",
+    },
     rootPaperRunningSession: {
-        flexGrow: 1,
-        padding: '1rem',
-        marginBottom: '1rem',
-        marginTop: '1rem',
-        background: 'darkBlue'
-    }, 
+      flexGrow: 1,
+      padding: "1rem",
+      marginBottom: "1rem",
+      marginTop: "1rem",
+      background: "darkBlue",
+    },
     newSessionText: {
-        margin: 'auto',
-        flexGrow: 1,
-        fontSize: '20px'
+      margin: "auto",
+      flexGrow: 1,
+      fontSize: "20px",
     },
     heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightRegular,
+      fontSize: theme.typography.pxToRem(15),
     },
     currentSessionTypo: {
-        textAlign: 'center',
+      textAlign: "center",
     },
-    currentSessionText: { 
-        color: '#eee'
+    currentSessionText: {
+      color: "#eee",
     },
     startStopBtn: {
-        marginLeft: '1rem',
+      marginLeft: "1rem",
     },
     newSessionWrapper: {
-        margin: '1rem 1rem 0 1rem',
-        backgroundColor: '#292929'
-    }, 
+      margin: "1rem 1rem 0 1rem",
+      backgroundColor: "#292929",
+    },
     newSessionSubmitBtn: {
-        marginLeft: '0.5rem',
-    }, 
+      marginLeft: "0.5rem",
+    },
     newSessionTextField: {
-        marginBottom: '1rem',
-        width: '200px'
+      marginBottom: "1rem",
+      width: "200px",
     },
     newSessionTextFieldMargin: {
-        marginLeft: '1rem',
-        marginBottom: '1rem',
-        width: '200px'
+      marginLeft: "1rem",
+      marginBottom: "1rem",
+      width: "200px",
     },
     sessionName: {
-        fontWeight: 'bold'
+      fontWeight: "bold",
     },
     refreshButton: {
-        backgroundColor: 'green',
+      backgroundColor: "green",
     },
     rootSessionPaper: {
-        marginTop: '1rem'
-    }, 
+      marginTop: "1rem",
+    },
     sessionHeadingContainer: {
-        display: 'flex',
-        marginBottom: '1rem',
+      display: "flex",
+      marginBottom: "1rem",
     },
     sessionButtonStopBox: {
-        color: 'white',
-        overflow: 'hidden',
-        height: '80px',
-        textAlign: 'center',
-        fontSize: '20px',
-        fontWeight: 'bold',
-        borderRadius: '10px',
-        backgroundColor: 'darkOrange',
-        display: 'flex',
-        justifyContent: "center",
-        alignItems: "center",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0, 
+      color: "white",
+      overflow: "hidden",
+      height: "80px",
+      textAlign: "center",
+      fontSize: "20px",
+      fontWeight: "bold",
+      borderRadius: "10px",
+      backgroundColor: "darkOrange",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
 
-        "&:hover": {
-            cursor: 'pointer', 
-            filter: 'brightness(125%)'
-        }
-    }, 
+      "&:hover": {
+        cursor: "pointer",
+        filter: "brightness(125%)",
+      },
+    },
     sessionButtonStartBox: {
-        color: 'white',
-        overflow: 'hidden',
-        height: '80px',
-        textAlign: 'center',
-        fontSize: '20px',
-        fontWeight: 'bold',
-        borderRadius: '10px',
-        backgroundColor: 'green',
-        display: 'flex',
-        justifyContent: "center",
-        alignItems: "center",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
+      color: "white",
+      overflow: "hidden",
+      height: "80px",
+      textAlign: "center",
+      fontSize: "20px",
+      fontWeight: "bold",
+      borderRadius: "10px",
+      backgroundColor: "green",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
 
-        "&:hover": {
-            cursor: 'pointer', 
-            filter: 'brightness(125%)'
-        }
-    }, 
+      "&:hover": {
+        cursor: "pointer",
+        filter: "brightness(125%)",
+      },
+    },
     gridContainer: {
-        marginBottom: '0.5rem'
+      marginBottom: "0.5rem",
     },
     formLabel: {
-       paddingTop: '0.7rem',
-       marginRight: '1rem'
+      paddingTop: "0.7rem",
+      marginRight: "1rem",
     },
     sessionAlreadyRunningText: {
-        marginTop: '-10px',
-        fontWeight: 'bold', 
-        color: 'red', 
-        opacity: '70%'
-    }, 
+      marginTop: "-10px",
+      fontWeight: "bold",
+      color: "red",
+      opacity: "70%",
+    },
     sensorChooserBox: {
-        marginBottom: '1rem',
-        display: 'flex', 
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-    }, 
+      marginBottom: "1rem",
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+    },
     sessionButtonStartBoxDisabled: {
-        color: 'white',
-        overflow: 'hidden',
-        height: '80px',
-        textAlign: 'center',
-        fontSize: '20px',
-        fontWeight: 'bold',
-        borderRadius: '10px',
-        backgroundColor: 'darkGray',
-        opacity: '60%',
-        display: 'flex',
-        justifyContent: "center",
-        alignItems: "center",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-    }, 
+      color: "white",
+      overflow: "hidden",
+      height: "80px",
+      textAlign: "center",
+      fontSize: "20px",
+      fontWeight: "bold",
+      borderRadius: "10px",
+      backgroundColor: "darkGray",
+      opacity: "60%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
     sessionButtonStopBoxDisabled: {
-        color: 'white',
-        overflow: 'hidden',
-        height: '80px',
-        textAlign: 'center',
-        fontSize: '20px',
-        fontWeight: 'bold',
-        borderRadius: '10px',
-        backgroundColor: 'darkGray',
-        opacity: '60%',
-        display: 'flex',
-        justifyContent: "center",
-        alignItems: "center",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0, 
-    }, 
-}));
-
+      color: "white",
+      overflow: "hidden",
+      height: "80px",
+      textAlign: "center",
+      fontSize: "20px",
+      fontWeight: "bold",
+      borderRadius: "10px",
+      backgroundColor: "darkGray",
+      opacity: "60%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
+  })
+);
 
 export const sessionTableStyles = makeStyles((theme) => ({
-    headerText: {
-        fontWeight: "bold",
-        fontSize: "20px",
-    },
-    plainText: { 
-        fontSize: "18px"
-    },
-    aliveStatusText: {
-        fontSize: "18px",
-        color: "green"
-    },
-    deadStatusText: {
-        fontSize: "18px",
-        color: "red"
-    }
-})); 
+  headerText: {
+    fontWeight: "bold",
+    fontSize: "20px",
+  },
+  plainText: {
+    fontSize: "18px",
+  },
+  aliveStatusText: {
+    fontSize: "18px",
+    color: "green",
+  },
+  deadStatusText: {
+    fontSize: "18px",
+    color: "red",
+  },
+}));

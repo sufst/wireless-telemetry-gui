@@ -19,78 +19,74 @@
 import { AlertState } from "./alert";
 import { UserDepartment, UserMeta, UserPrivilege } from "./user";
 
-// 
-// USER 
-// 
-export type SetUserAction = {
-    username: string,
-    accessToken: string,
-    creation: number,
-    privilege: UserPrivilege,
-    department: UserDepartment,
-    meta: UserMeta
-};
+//
+// USER
+//
+export interface SetUserAction {
+  username: string;
+  accessToken: string;
+  creation: number;
+  privilege: UserPrivilege;
+  department: UserDepartment;
+  meta: UserMeta;
+}
 
-export type RegisterUserAction = {
-    username: string, 
-    password: string, 
-    privilege: UserPrivilege, 
-    department: UserDepartment,
+export interface RegisterUserAction {
+  username: string;
+  password: string;
+  privilege: UserPrivilege;
+  department: UserDepartment;
 }
 
 export type UserRegister = (
-    username: string,
-    password: string,
-    privilege: UserPrivilege,
-    department: UserDepartment,
+  username: string,
+  password: string,
+  privilege: UserPrivilege,
+  department: UserDepartment
 ) => void;
 
-export type LoginUserAction = {
-    username: string,
-    password: string
-};
+export interface LoginUserAction {
+  username: string;
+  password: string;
+}
 
-
-// 
+//
 // SESSION
-// 
-export type StartSessionAction = {
-    name: string,
-    driver: string, 
-    condition: string, 
-    sensors: string[],
-    groups: string[],
+//
+export interface StartSessionAction {
+  name: string;
+  driver: string;
+  condition: string;
+  sensors: string[];
+  groups: string[];
 }
 
 export type StartSessionButtonAction = (
-    name: string, 
-    driver: string, 
-    condition: string, 
-    sensors: Array<string>,
-    groups: Array<string>
+  name: string,
+  driver: string,
+  condition: string,
+  sensors: string[],
+  groups: string[]
 ) => void;
 
 export type GetSessionDetailAction = {
-    name: string,
-}
+  name: string;
+};
 
 //
 // SENSORS
 //
-export type UpdateSensorsMetaAction = {
-    sensor: string,
-    key: string,
-    value: any
-};
+export interface UpdateSensorsMetaAction {
+  sensor: string;
+  key: string;
+  value: any;
+}
 
 export type BuildSensorsFromMetaAction = SensorsMeta;
 
-export type InsertSensorsBulkDataAction = {
-    [sensor: string]: Array<SensorData>
-};
-
-
-
+export interface InsertSensorsBulkDataAction {
+  [sensor: string]: SensorData[];
+}
 
 //
 // ALERT

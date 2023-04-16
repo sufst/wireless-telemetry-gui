@@ -50,21 +50,21 @@ export type UsersCreate = (
 
 export type UsersGet = (username: string, accessToken: string) => Promise;
 
-export type UsersGetResponse = {
+export interface UsersGetResponse {
   username: string;
   creation: number;
   privilege: UserPrivilege;
   department: UserDepartment;
   meta: string;
-};
+}
 
-export type UsersPatchRequest = {
+export interface UsersPatchRequest {
   [username: ?string]: string;
   [password: ?string]: string;
   [privilege: ?string]: UserPrivilege;
   [department: ?string]: UserDepartment;
   [meta: ?string]: UserMeta;
-};
+}
 
 export type UsersPatch = (
   username: string,
@@ -74,21 +74,21 @@ export type UsersPatch = (
 
 export type UserGet = (accessToken: string) => Promise;
 
-export type UserGetResponse = {
+export interface UserGetResponse {
   username: string;
   creation: number;
   privilege: UserPrivilege;
   department: UserDepartment;
   meta: string;
-};
+}
 
-export type UserPatchRequest = {
+export interface UserPatchRequest {
   [username: ?string]: string;
   [password: ?string]: string;
   [privilege: ?string]: UserPrivilege;
   [department: ?string]: UserDepartment;
   [meta: ?string]: UserMeta;
-};
+}
 
 export type UserPatch = (
   accessToken: string,
@@ -98,29 +98,34 @@ export type UserPatch = (
 //
 // SESSIONS
 //
+
+export type HandleSessionsGet = SessionsGetResponse | null;
+
+export type HandleSessionsGetPromise = () => Promise<HandleSessionsGet>;
+
 export type SessionsGet = () => Promise<[SessionsGetResponse | null, boolean]>;
 
 export type SessionsGetResponse = {
   [name: string]: {
-    creation: number,
-    status: string,
-    sensors: [string]
-  }
+    creation: number;
+    status: string;
+    sensors: [string];
+  };
 };
 
 export type SessionDetailGet = (string, string) => Promise;
 
 export type SessionDetailGetResponse = {
   meta: {
-    condition: string,
-    creation: Number,
-    driver: string,
-    sensors: [string],
-  },
-  notes: [],
+    condition: string;
+    creation: number;
+    driver: string;
+    sensors: [string];
+  };
+  notes: [];
   data: {
-    string: [{ epoch: Number, value: Number }]
-  },
+    string: [{ epoch: number; value: number }];
+  };
 };
 
 export type SessionCreate = (
@@ -130,11 +135,8 @@ export type SessionCreate = (
 ) => Promise;
 
 type SessionCreateFields = {
-  sessionMetadata: Object,
-  sessionSensors: Object
+  sessionMetadata: any;
+  sessionSensors: any;
 };
 
-export type SessionStop = (
-  name: string,
-  accessToken: string
-) => Promise;
+export type SessionStop = (name: string, accessToken: string) => Promise;

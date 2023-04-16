@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
+import React from "react";
 import { Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "../dashboard/session/styles";
@@ -24,28 +24,29 @@ import { SessionTable, SessionPaper } from "./components";
 import { RootState } from "redux/store";
 import { SessionsState } from "types/models/sessions";
 
-export const SessionContainer = () => {
+export const SessionContainer: React.FC = () => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const classes = useStyles();
 
-    const classes = useStyles();
-
-    dispatch(getAllSessions());
-    const sessionData: SessionsState = useSelector((state:RootState) => state.sessions);
-    return (
-        <>
-            <Paper className={classes.rootPaper}>
-                {/* TODO: Loading logic needs to go back in */}
-                {/* <>
+  dispatch(getAllSessions());
+  const sessionData: SessionsState = useSelector(
+    (state: RootState) => state.sessions
+  );
+  return (
+    <>
+      <Paper className={classes.rootPaper}>
+        {/* TODO: Loading logic needs to go back in */}
+        {/* <>
                     {!isLoading.sessions && (
                         <SessionTable sessionData={sessionData}/>
                     ) || (
                         <LinearProgress />
                     )}
                 </> */}
-                <SessionPaper />
-                <SessionTable sessionData={sessionData} />
-            </Paper>
-        </>
-    )
-}
+        <SessionPaper />
+        <SessionTable sessionData={sessionData} />
+      </Paper>
+    </>
+  );
+};

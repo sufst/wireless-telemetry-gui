@@ -16,84 +16,114 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Module Imports 
-import React, { useCallback } from 'react'
-import { useHistory } from 'react-router';
-import { useDispatch } from 'react-redux';
-import clsx from 'clsx';
+// Module Imports
+import React, { useCallback } from "react";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import clsx from "clsx";
 
-// Material UI Imports 
-import { AppBar, Button, CssBaseline, IconButton, Toolbar, Typography } from '@material-ui/core'
+// Material UI Imports
+import {
+  AppBar,
+  Button,
+  CssBaseline,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
 
 // Material UI Icon Imports
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from "@material-ui/icons/Menu";
 
 // Styles
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 // Redux Imports
-import { logoutUser } from 'redux/slices/user';
-import { UserState } from 'types/models/user';
+import { logoutUser } from "redux/slices/user";
+import { UserState } from "types/models/user";
+
+interface NavigationBarProps {
+  handleDrawerOpen: () => void;
+  open: boolean;
+  onAccountClick: () => void;
+  user: UserState;
+}
 
 /**
  * A Component that holds the top navigation bar of the application.
  */
-const AppNavigationBar = (props: { handleDrawerOpen: () => void , open: boolean, onAccountClick: () => void, user: UserState }) =>  {
-   const classes = useStyles(); 
-   const history = useHistory(); 
-   const dispatch = useDispatch(); 
+const AppNavigationBar: React.FC<NavigationBarProps> = ({
+  handleDrawerOpen,
+  open,
+  onAccountClick,
+  user,
+}) => {
+  const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-   const username = props.user.username;
+  const username = user.username;
 
-   const loginLogoutButtonText = useCallback(() =>{
-      if (username === 'anonymous' || username === undefined) {
-         return 'Login'
-      } 
+  const loginLogoutButtonText = useCallback(() => {
+    if (username === "anonymous" || username === undefined) {
+      return "Login";
+    }
 
-      return 'Logout'
-   }, [username])
+    return "Logout";
+  }, [username]);
 
-   const onLoginLogoutButtonClick = useCallback(() => {
-      if (username === 'anonymous' || username === undefined) {
-         history.push('/login');
-      } 
-      else {
-         dispatch(logoutUser())
-      }
-   }, [username, history, dispatch])
+  const onLoginLogoutButtonClick = useCallback(() => {
+    if (username === "anonymous" || username === undefined) {
+      history.push("/login");
+    } else {
+      dispatch(logoutUser());
+    }
+  }, [username, history, dispatch]);
 
-   return (
-      <div>
-         <CssBaseline />
-         <AppBar
-            position="fixed"
-            className={clsx(classes.appBar, {
-            [classes.appBarShift]: props.open,
+  return (
+    <div>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, {
+              [classes.hide]: open,
             })}
-         >
-            <Toolbar>
-               <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={props.handleDrawerOpen}
-                  edge="start"
-                  className={clsx(classes.menuButton, {
-                  [classes.hide]: props.open,
-                  })}
-               >
-                  <MenuIcon />
-               </IconButton>
-               <Typography variant="h6" noWrap className={classes.title}>
-                  SUFST Telemetry
-               </Typography>
-               <Typography className={classes.usernameLabel} variant='h6'>
-                  {username === 'anonymous' ? '' : username} 
-               </Typography>
-               <Button variant='contained' disableElevation color="secondary"  onClick={onLoginLogoutButtonClick} className={username === 'anonymous' ? classes.loginButton : classes.logoutButton}>{loginLogoutButtonText()}</Button>
-            </Toolbar>
-         </AppBar>
-      </div>
-   )
-}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap className={classes.title}>
+            SUFST Telemetry
+          </Typography>
+          <Typography className={classes.usernameLabel} variant="h6">
+            {username === "anonymous" ? "" : username}
+          </Typography>
+          <Button
+            variant="contained"
+            disableElevation
+            color="secondary"
+            onClick={onLoginLogoutButtonClick}
+            className={
+              username === "anonymous"
+                ? classes.loginButton
+                : classes.logoutButton
+            }
+          >
+            {loginLogoutButtonText()}
+          </Button>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+};
 
-export default AppNavigationBar
+export default AppNavigationBar;

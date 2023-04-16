@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2021 SUFST 
+    Copyright (C) 2021 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,81 +15,96 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
+import React, { useCallback, useEffect } from "react";
 import { Grid, Paper } from "@material-ui/core";
-import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { startSession, stopSession } from "redux/slices/session";
 import { RootState } from "redux/store";
-import { DashStatusItem, CurrentTime, DashSensors, DashSession } from "./components";
+import {
+  DashStatusItem,
+  CurrentTime,
+  DashSensors,
+  DashSession,
+} from "./components";
 import { useStyles } from "./styles";
 
 const Dash = () => {
-    //
-    // TODO: These sensors are hardcoded in for now. 
-    // They should be set from attributes in the DBC file. 
-    //
-    const _RTD = 'VCU_Ready_To_Drive';
-    const _SHUTDOWN = 'VCU_Shutdown';
-    const _APPS = 'VCU_APPS';
-    const _BPS = 'VCU_BPS';
+  //
+  // TODO: These sensors are hardcoded in for now.
+  // They should be set from attributes in the DBC file.
+  //
+  const _RTD = "VCU_Ready_To_Drive";
+  const _SHUTDOWN = "VCU_Shutdown";
+  const _APPS = "VCU_APPS";
+  const _BPS = "VCU_BPS";
 
-    const dispatch = useDispatch(); 
-    const classes = useStyles(); 
+  const dispatch = useDispatch();
+  const classes = useStyles();
 
-    // All Sensor Groups from Redux
-    const selectGroups = (state: RootState) => state.sensors.groups;
-    const groups = useSelector(selectGroups);
-    const sensorGroupNames = Object.keys(groups);
+  // All Sensor Groups from Redux
+  const selectGroups = (state: RootState) => state.sensors.groups;
+  const groups = useSelector(selectGroups);
+  const sensorGroupNames = Object.keys(groups);
 
-    // All Sensors from Redux 
-    const selectAllSensors = (state: RootState) => state.sensors.sensorMetadata;
-    const allSensorMeta = useSelector(selectAllSensors);
-    const allSensors = Object.keys(allSensorMeta);
+  // All Sensors from Redux
+  const selectAllSensors = (state: RootState) => state.sensors.sensorMetadata;
+  const allSensorMeta = useSelector(selectAllSensors);
+  const allSensors = Object.keys(allSensorMeta);
 
-    const rtdSelector = (state: RootState) => state.sensors.sensors[_RTD]?.data;
-    const rtdSensorData = useSelector(rtdSelector);
-    
-    const appsSelector = (state: RootState) => state.sensors.sensors[_APPS]?.data;
-    const appsSensorData = useSelector(appsSelector);
+  const rtdSelector = (state: RootState) => state.sensors.sensors[_RTD]?.data;
+  const rtdSensorData = useSelector(rtdSelector);
 
-    const bpsSelector = (state: RootState) => state.sensors.sensors[_BPS]?.data;
-    const bpsSensorData = useSelector(bpsSelector);
+  const appsSelector = (state: RootState) => state.sensors.sensors[_APPS]?.data;
+  const appsSensorData = useSelector(appsSelector);
 
-    const shutdownSelector = (state: RootState) => state.sensors.sensors[_SHUTDOWN]?.data;
-    const shutdownSensorData = useSelector(shutdownSelector);
+  const bpsSelector = (state: RootState) => state.sensors.sensors[_BPS]?.data;
+  const bpsSensorData = useSelector(bpsSelector);
 
-    const handleStopSession = useCallback((e, name) => {
-        dispatch(stopSession())
-    }, [dispatch])
+  const shutdownSelector = (state: RootState) =>
+    state.sensors.sensors[_SHUTDOWN]?.data;
+  const shutdownSensorData = useSelector(shutdownSelector);
 
-    const handleStartSession = useCallback((e, name) => {
-        console.log("Starting From Component: ", name)
-        const driver: string = "", condition: string = ""; 
-        const sensors: string[] = allSensors;
-        const groups: string[] = sensorGroupNames;
-        dispatch(startSession( { name, driver, condition, sensors, groups }))
-    }, [dispatch, allSensors, sensorGroupNames])
+  const handleStopSession = useCallback(
+    (e, name) => {
+      dispatch(stopSession());
+    },
+    [dispatch]
+  );
 
-    return (
-        <>
-            <Paper className={classes.rootPaper}>
-                <CurrentTime />
-                <Grid container spacing={3} className={classes.gridContainer}>
-                    <DashStatusItem name="RTD" data={rtdSensorData}/>
-                    <DashStatusItem name="SHUTDOWN" data={shutdownSensorData}/>
-                    <DashStatusItem name="" data={bpsSensorData}/>
-                    <DashStatusItem name="" data={shutdownSensorData}/>
-                </Grid>
-            </Paper>
-            <Paper className={classes.rootPaper}>
-                <DashSensors />
-            </Paper>
-            <Paper className={classes.rootPaper}>
-                <DashSession handleStart={handleStartSession} handleStop={handleStopSession}/>
-            </Paper>
-        </>
-    )
-}
+  const handleStartSession = useCallback(
+    (e, name) => {
+      console.log("Starting From Component: ", name);
+      const driver = "";
+      const condition = "";
+      const sensors: string[] = allSensors;
+      const groups: string[] = sensorGroupNames;
+      dispatch(startSession({ name, driver, condition, sensors, groups }));
+    },
+    [dispatch, allSensors, sensorGroupNames]
+  );
 
-export default Dash; 
+  return (
+    <>
+      <Paper className={classes.rootPaper}>
+        <CurrentTime />
+        <Grid container spacing={3} className={classes.gridContainer}>
+          <DashStatusItem name="RTD" data={rtdSensorData} />
+          <DashStatusItem name="SHUTDOWN" data={shutdownSensorData} />
+          <DashStatusItem name="" data={bpsSensorData} />
+          <DashStatusItem name="" data={shutdownSensorData} />
+        </Grid>
+      </Paper>
+      <Paper className={classes.rootPaper}>
+        <DashSensors />
+      </Paper>
+      <Paper className={classes.rootPaper}>
+        <DashSession
+          handleStart={handleStartSession}
+          handleStop={handleStopSession}
+        />
+      </Paper>
+    </>
+  );
+};
+
+export default Dash;

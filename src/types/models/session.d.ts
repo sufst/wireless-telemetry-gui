@@ -16,11 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export type SessionState = {
-    sessionName: string,
-    sessionDriver: string, 
-    sessionConditions: string,
-    sessionSensors: Array<string>,
-    sessionSensorGroups: Array<string>,
-    isRunning: boolean,
+export interface SessionState {
+  sessionName: string;
+  sessionDriver: string;
+  sessionConditions: string;
+  sessionSensors: string[];
+  sessionSensorGroups: string[];
+  isRunning: boolean;
 }

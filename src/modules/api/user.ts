@@ -27,18 +27,25 @@ const handleGetUser: UserGet = async (accessToken) => {
       "Content-Type": "application/json",
       Authorization: "Bearer " + accessToken,
     },
-  })
+  });
 
   if (!response.ok) {
-    throw response.statusText; 
+    throw Object.assign(new Error(response.statusText));
   }
 
-  const data = await response.json(); 
-  return data; 
-}
+  const data = await response.json();
+  return data;
+};
 
-export const getUser = async (username: string, accessToken: string) => {
+type UserGetPromise = (
+  username: string,
+  accessToken: string
+) => Promise<SetUserAction | null>;
 
+export const getUser: UserGetPromise = async (
+  username: string,
+  accessToken: string
+) => {
   const user: SetUserAction = {
     username,
     accessToken,
@@ -48,26 +55,25 @@ export const getUser = async (username: string, accessToken: string) => {
     meta: {},
   };
 
-  if (username === 'anonymous') {
-    return user; 
+  if (username === "anonymous") {
+    return user;
   }
 
   try {
-    const data = await handleGetUser(accessToken); 
-        
-    user.username = data.username
-    user.creation = data.creation
-    user.privilege = data.privilege
-    user.department = data.department
-    user.meta = JSON.parse(data.meta)
-  } 
-  catch(statusText) {
-    console.error('Error Getting User:', statusText);
-    return null; 
+    const data = await handleGetUser(accessToken);
+
+    user.username = data.username;
+    user.creation = data.creation;
+    user.privilege = data.privilege;
+    user.department = data.department;
+    user.meta = JSON.parse(data.meta);
+  } catch (statusText) {
+    console.error("Error Getting User:", statusText);
+    return null;
   }
 
-  return user; 
-}
+  return user;
+};
 
 const handleUserPatch: UserPatch = async (accessToken, fields) => {
   const response = await fetch(`http://${url}/user`, {
@@ -77,27 +83,26 @@ const handleUserPatch: UserPatch = async (accessToken, fields) => {
       Authorization: "Bearer " + accessToken,
     },
     body: JSON.stringify(fields),
-  })
+  });
 
   if (!response.ok) {
-    throw response.statusText; 
+    throw Object.assign(new Error(response.statusText));
   }
 
-  return response; 
-}
+  return response;
+};
 
 export const userPatch: UserPatch = async (accessToken, fields) => {
   try {
-    const response = await handleUserPatch(accessToken, fields); 
+    const response = await handleUserPatch(accessToken, fields);
 
     if (response.status === 200) {
-      return true; 
-    } 
+      return true;
+    }
 
-    return false; 
-  } 
-  catch(statusText) {
-    console.log('Error in User Patch: ', statusText);
-    return false; 
-  } 
-}; 
+    return false;
+  } catch (statusText) {
+    console.log("Error in User Patch: ", statusText);
+    return false;
+  }
+};

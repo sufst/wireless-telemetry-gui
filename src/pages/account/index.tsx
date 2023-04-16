@@ -17,47 +17,49 @@
 */
 
 // Module Imports
-import React, { useCallback, useEffect} from 'react'
+import React, { useCallback, useEffect } from "react";
 
 // Container
-import AccountContainer from './container'
+import AccountContainer from "./container";
 
 // Context
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "redux/store";
 
-import { logoutUser } from 'redux/slices/user';
-import { useHistory } from 'react-router';
+import { logoutUser } from "redux/slices/user";
+import { useHistory } from "react-router";
 
 const Account = () => {
-   const dispatch = useDispatch(); 
-   const history = useHistory(); 
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-   const selectUser = (state: RootState) => state.user;
-   const user = useSelector(selectUser);
-   const { username } = user
-  
-   const onLogoutClick = useCallback(() => {
-      dispatch(logoutUser()); 
-   }, [dispatch]); 
+  const selectUser = (state: RootState) => state.user;
+  const user = useSelector(selectUser);
+  const { username } = user;
 
-   const onRegisterNewUser = useCallback(() => {
-      history.push('/register'); 
-   }, [history]); 
+  const onLogoutClick = useCallback(() => {
+    dispatch(logoutUser());
+  }, [dispatch]);
 
-   useEffect(() => {
-      if (username === undefined || username === 'anonymous') {
-         history.push('/')
-         return; 
-      }
+  const onRegisterNewUser = useCallback(() => {
+    history.push("/register");
+  }, [history]);
 
-   }, [history, username])
+  useEffect(() => {
+    if (username === undefined || username === "anonymous") {
+      history.push("/");
+    }
+  }, [history, username]);
 
-   return (
-      <>
-          <AccountContainer user={user} onLogoutClick={onLogoutClick} onRegisterNewUser={onRegisterNewUser}/>
-      </>
-   )
-}
+  return (
+    <>
+      <AccountContainer
+        user={user}
+        onLogoutClick={onLogoutClick}
+        onRegisterNewUser={onRegisterNewUser}
+      />
+    </>
+  );
+};
 
-export default Account
+export default Account;

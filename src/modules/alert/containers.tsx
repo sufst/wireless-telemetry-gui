@@ -17,6 +17,7 @@
 */
 
 // Module Imports
+import React from "react";
 import { Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 import { useSelector } from "react-redux";
@@ -41,7 +42,7 @@ const OfflineBanner = () => {
   );
 };
 
-const AlertContainer = () => {
+const AlertContainer: React.FC = () => {
   const classes = useStyles();
 
   const selectAlert = (state: RootState) => state.alert;

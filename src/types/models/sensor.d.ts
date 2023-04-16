@@ -16,31 +16,31 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export type SensorData = {
-    epoch: number,
-    value: number
-};
+export interface SensorData {
+  epoch: number;
+  value: number;
+}
 
-export type SensorMeta = { 
-    [entry: string ]: any 
-};
+export interface SensorMeta {
+  [entry: string]: any;
+}
 
-export type Sensor = {
-    meta: SensorMeta,
-    data: Array<SensorData>,
-    isDisplay: boolean
-};
+export interface Sensor {
+  meta: SensorMeta;
+  data: SensorData[];
+  isDisplay: boolean;
+}
 
-export type SensorsState = {
-    sensors: {
-        [sensor: string]: Sensor
-    },
-    groups: {
-        [sensor: string]: Array<string>
-    }, 
-    sensorMetadata: SensorMeta
-};
+export interface SensorsState {
+  sensors: {
+    [sensor: string]: Sensor;
+  };
+  groups: {
+    [sensor: string]: string[];
+  };
+  sensorMetadata: SensorMeta;
+}
 
-export type SensorsMeta = {
-    [sensor: string]: SensorMeta
-};
+export interface SensorsMeta {
+  [sensor: string]: SensorMeta;
+}

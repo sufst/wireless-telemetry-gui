@@ -1,6 +1,6 @@
 /*
     Southampton University Formula Student Team
-    Copyright (C) 2022 SUFST 
+    Copyright (C) 2022 SUFST
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,15 +17,28 @@
 */
 
 import { url } from "config";
-import { SessionDetailGet, SessionCreate, SessionCreateFields, SessionsGet, SessionStop, SessionsGetResponse } from "types/api/api";
+import {
+  SessionDetailGet,
+  SessionCreate,
+  SessionCreateFields,
+  SessionsGet,
+  SessionStop,
+  SessionsGetResponse,
+  HandleSessionsGet,
+  HandleSessionsGetPromise,
+} from "types/api/api";
 
 /**
- * Creating new sessions 
- * @param accessToken JWT authentication token 
+ * Creating new sessions
+ * @param accessToken JWT authentication token
  * @param name Name for new session
- * @param fields Object housing the session metadata and sensors to be saved. 
+ * @param fields Object housing the session metadata and sensors to be saved.
  */
-const handleCreateSession: SessionCreate = async (accessToken, name, fields) => {
+const handleCreateSession: SessionCreate = async (
+  accessToken,
+  name,
+  fields
+) => {
   try {
     const response = await fetch(`http://${url}/sessions/${name}`, {
       method: "POST",
@@ -35,9 +48,9 @@ const handleCreateSession: SessionCreate = async (accessToken, name, fields) => 
       },
       body: JSON.stringify({
         meta: fields.sessionMetadata,
-        sensors: fields.sessionSensors
-      })
-    })
+        sensors: fields.sessionSensors,
+      }),
+    });
 
     if (!response.ok) {
       throw response.statusText;
@@ -46,33 +59,47 @@ const handleCreateSession: SessionCreate = async (accessToken, name, fields) => 
     const data = await response.json();
     return data;
   } catch (error) {
-    throw new Error('offline');
+    throw new Error("offline");
   }
-}
+};
 
-export const createSession = async (accessToken: string, name: string, sessionMeta: object, sessionSensors: Array<string>) => {
+// NEEDS MOVED TO APPROPRIATE TYPES FILE
+type SessionCreatePromise = (
+  accessToken: string,
+  name: string,
+  sessionMeta: object,
+  sessionSensors: string[]
+) => Promise<[SessionCreate | null, boolean]>;
 
+export const createSession: SessionCreatePromise = async (
+  accessToken: string,
+  name: string,
+  sessionMeta: object,
+  sessionSensors: string[]
+) => {
   const fields: SessionCreateFields = {
     sessionMetadata: sessionMeta,
-    sessionSensors: sessionSensors
+    sessionSensors: sessionSensors,
   };
 
   try {
     const response = await handleCreateSession(accessToken, name, fields);
     return [response, false];
+  } catch (error: any) {
+    console.log("Error creating new session: ", error);
+    return [null, error.message === "offline"];
   }
-  catch (error: any) {
-    console.log('Error creating new session: ', error);
-    return [null, error.message === 'offline'];
-  }
-}
+};
 
 /**
- * Stopping a currently alive session 
- * @param name Name of session to be stopped. 
- * @param accessToken JWT authentication token 
+ * Stopping a currently alive session
+ * @param name Name of session to be stopped.
+ * @param accessToken JWT authentication token
  */
-const handleSessionStop = async (name: string, accessToken: string) => {
+const handleSessionStop: SessionStop = async (
+  name: string,
+  accessToken: string
+) => {
   try {
     const response = await fetch(`http://${url}/sessions/${name}`, {
       method: "PATCH",
@@ -81,9 +108,9 @@ const handleSessionStop = async (name: string, accessToken: string) => {
         Authorization: "Bearer " + accessToken,
       },
       body: JSON.stringify({
-        status: 'dead'
-      })
-    })
+        status: "dead",
+      }),
+    });
 
     if (!response.ok) {
       throw response.statusText;
@@ -91,32 +118,31 @@ const handleSessionStop = async (name: string, accessToken: string) => {
 
     return response;
   } catch (error) {
-    throw new Error('offline');
+    throw new Error("offline");
   }
-}
+};
 
 export const stopSession: SessionStop = async (name, token) => {
   try {
     const response = await handleSessionStop(name, token);
     return [response, false];
+  } catch (error: any) {
+    console.error("Error Stopping session: ", error);
+    return [null, error.message === "offline"];
   }
-  catch (error: any) {
-    console.error('Error Stopping session: ', error);
-    return [null, error.message === 'offline'];
-  }
-}
+};
 
 /**
- * Getting all the sessions in the database 
+ * Getting all the sessions in the database
  */
-const handleGetAllSessions = async () => {
+const handleGetAllSessions: HandleSessionsGetPromise = async () => {
   try {
     const response = await fetch(`http://${url}/sessions`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-    })
+    });
 
     if (!response.ok) {
       throw response.statusText;
@@ -125,25 +151,24 @@ const handleGetAllSessions = async () => {
     const data: SessionsGetResponse = await response.json();
     return data;
   } catch (error) {
-    throw new Error('offline');
+    throw new Error("offline");
   }
-}
+};
 
 export const getAllSessions: SessionsGet = async () => {
   try {
-    const sessionResponse: SessionsGetResponse = await handleGetAllSessions();
+    const sessionResponse: HandleSessionsGet = await handleGetAllSessions();
     return [sessionResponse, false];
-  }
-  catch (error: any) {
-    console.error('Error in Sessions GET: ', error);
-    return [null, error.message === 'offline'];
+  } catch (error: any) {
+    console.error("Error in Sessions GET: ", error);
+    return [null, error.message === "offline"];
   }
 };
 
 /**
- * Getting details of one of the sessions in the database 
+ * Getting details of one of the sessions in the database
  */
-const handleGetSessionDetail = async (name: String, accessToken: string) => {
+const handleGetSessionDetail = async (name: string, accessToken: string) => {
   try {
     const response = await fetch(`http://${url}/sessions/${name}`, {
       method: "GET",
@@ -151,7 +176,7 @@ const handleGetSessionDetail = async (name: String, accessToken: string) => {
         "Content-Type": "application/zip",
         Authorization: "Bearer " + accessToken,
       },
-    })
+    });
 
     if (!response.ok) {
       throw response.statusText;
@@ -160,17 +185,19 @@ const handleGetSessionDetail = async (name: String, accessToken: string) => {
     const data = await response.blob();
     return data;
   } catch (error) {
-    throw new Error('offline');
+    throw new Error("offline");
   }
-}
+};
 
-export const getSessionDetail: SessionDetailGet = async (name: string, token: string) => {
+export const getSessionDetail: SessionDetailGet = async (
+  name: string,
+  token: string
+) => {
   try {
     const sessionResponse = await handleGetSessionDetail(name, token);
     return [sessionResponse, false];
-  }
-  catch (error: any) {
-    console.error('Error in Session Detail GET: ', error);
-    return [null, error.message === 'offline'];
+  } catch (error: any) {
+    console.error("Error in Session Detail GET: ", error);
+    return [null, error.message === "offline"];
   }
 };

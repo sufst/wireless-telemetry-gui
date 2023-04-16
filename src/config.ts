@@ -16,16 +16,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// 
+//
 // UPDATE THIS FILE THIS YOUR BACK-END
-// SERVER IP address. 
+// SERVER IP address.
 //
 
 /**
- * BACK-END SERVER IP HERE 
- * 
+ * BACK-END SERVER IP HERE
+ *
  * FORMAT: '<ip>:5000'
  * EXAMPLE: '192.168.1.26:5000'
  */
-export const url: string = 'localhost:5000';
-
+export const url = "localhost:5000";

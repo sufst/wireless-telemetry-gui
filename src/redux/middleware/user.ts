@@ -34,25 +34,35 @@ import { SioOnDataHandler, SioOnMetaHander } from "types/api/api";
 import { setOffline, setOnline } from "redux/slices/app";
 
 // any should be rootState but I can't work out how to fix the circular dependancy issue....
-export const userMiddleware: Middleware<{}, any> = 
-  (storeAPI) => (next) => async (action) => {
+export const userMiddleware: Middleware<any, any> =
+  (storeAPI) => (next) => async (action) => {
     if (action.type === "user/loginUser") {
       const { username, password } = action.payload;
 
-      const [accessToken, offline] = await loginUser(username, password); 
+      const [accessToken, offline] = await loginUser(username, password);
 
       if (offline) {
         storeAPI.dispatch(setOffline());
         return next(action);
       } else if (accessToken === undefined) {
-        const loginFailedAlert = createAlert(3000, "error", "alert", "Login Failed :( Make sure your credentials are correct!"); 
+        const loginFailedAlert = createAlert(
+          3000,
+          "error",
+          "alert",
+          "Login Failed :( Make sure your credentials are correct!"
+        );
         storeAPI.dispatch(showAlert(loginFailedAlert));
         return next(action);
-      } 
-      
+      }
+
       storeAPI.dispatch(setOnline());
 
-      const successAlert = createAlert(3000, "success", "snack", `Login Success! ${username} successfully logged in!`); 
+      const successAlert = createAlert(
+        3000,
+        "success",
+        "snack",
+        `Login Success! ${username} successfully logged in!`
+      );
 
       storeAPI.dispatch(showAlert(successAlert));
 
@@ -71,39 +81,60 @@ export const userMiddleware: Middleware<{}, any> =
       );
 
       const user = await getUser(username, accessToken);
-      
-      if(user == null) {
-        const getFailedAlert = createAlert(3000, "error", "snack", `Failed to get user details :(`); 
+
+      if (user == null) {
+        const getFailedAlert = createAlert(
+          3000,
+          "error",
+          "snack",
+          "Failed to get user details :("
+        );
         storeAPI.dispatch(showAlert(getFailedAlert));
-      }  
-      else {
-        storeAPI.dispatch(setUser(user))
+      } else {
+        storeAPI.dispatch(setUser(user));
       }
 
       return next(action);
-    } 
+    }
 
     if (action.type === "user/registerNewUser") {
-      const { username, password, privilege, department } = action.payload; 
-      const accessToken = storeAPI.getState().user.accessToken; 
+      const { username, password, privilege, department } = action.payload;
+      const accessToken = storeAPI.getState().user.accessToken;
 
-      const success = await usersCreate(username, password, privilege, department, {}, accessToken); 
+      const success = await usersCreate(
+        username,
+        password,
+        privilege,
+        department,
+        {},
+        accessToken
+      );
 
       if (success) {
         storeAPI.dispatch(setOnline());
-        const registerSuccessAlert = createAlert(3000, "success", "alert", "Success!! You can logout and login again with the new account."); 
+        const registerSuccessAlert = createAlert(
+          3000,
+          "success",
+          "alert",
+          "Success!! You can logout and login again with the new account."
+        );
 
         storeAPI.dispatch(showAlert(registerSuccessAlert));
       } else {
-        const registerFailedAlert = createAlert(3000, "error", "alert", "Something went wrong when creating a new user :("); 
+        const registerFailedAlert = createAlert(
+          3000,
+          "error",
+          "alert",
+          "Something went wrong when creating a new user :("
+        );
 
-        storeAPI.dispatch(showAlert(registerFailedAlert))
+        storeAPI.dispatch(showAlert(registerFailedAlert));
       }
     }
 
-    if(action.type === "user/getAllUsers") {
-      const accessToken = storeAPI.getState().user.accessToken; 
-      console.log('Getting ALL users...', accessToken);
+    if (action.type === "user/getAllUsers") {
+      const accessToken = storeAPI.getState().user.accessToken;
+      console.log("Getting ALL users...", accessToken);
     }
 
     return next(action);

@@ -16,91 +16,92 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { 
-    Avatar,
-    Button,
-    TextField,
-    Link,
-    Box,
-    Typography
-} from "@material-ui/core";
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import React from "react";
 import {
-    useStyles 
-} from "./styles";
+  Avatar,
+  Button,
+  TextField,
+  Link,
+  Box,
+  Typography,
+} from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { useStyles } from "./styles";
 
-export const LoginFooter = () => {
-    return (
-       <Box mt={4} >
-          <Typography variant="body2" color="textSecondary" align="center">
-             {'Copyright © '}
-             <Link color="inherit" href="https://sufst.co.uk/">
-             SUFST
-             </Link>{' '}
-             {new Date().getFullYear()}
-             {'.'}
-          </Typography>
-       </Box>
-    );
- }
- 
- export const LoginHeader = () => {
-    const classes = useStyles();
- 
-    return (
-       <>
-          <Avatar className={classes.avatar}>
-             <LockOutlinedIcon className={classes.lockIcon}/>
-          </Avatar>
-          <Typography component="h1" variant="h5">
-             Please Login In
-          </Typography>
-       </>
-    )
- }
- 
- export const UsernameField = () => {
-   return (
-      <TextField 
-         variant="outlined"
-         margin="normal"
-         required
-         fullWidth
-         id="username"
-         label="Username"
-         autoComplete="root"
-         autoFocus
-      />
-   );
- }
- 
- export const PasswordField = (props: { label: string, id: string }) => {
-    return (
-       <TextField 
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          label={props.label}
-          type="password"
-          id={props.id}
-          autoComplete="current-password"
-       />
-    );
- }
- 
-export const LoginButton = (props: { text: string }) => {
-   const classes = useStyles();
+export const LoginFooter: React.FC = () => {
+  return (
+    <Box mt={4}>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {"Copyright © "}
+        <Link color="inherit" href="https://sufst.co.uk/">
+          SUFST
+        </Link>{" "}
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    </Box>
+  );
+};
 
-   return (
-      <Button 
-         type="submit"
-         fullWidth
-         variant="contained"
-         color="primary"
-         className={classes.submit}
-      >
-         {props.text}
-      </Button>
-   );
-}
+export const LoginHeader: React.FC = () => {
+  const classes = useStyles();
+
+  return (
+    <>
+      <Avatar className={classes.avatar}>
+        <LockOutlinedIcon className={classes.lockIcon} />
+      </Avatar>
+      <Typography component="h1" variant="h5">
+        Please Login In
+      </Typography>
+    </>
+  );
+};
+
+export const UsernameField: React.FC = () => {
+  return (
+    <TextField
+      variant="outlined"
+      margin="normal"
+      required
+      fullWidth
+      id="username"
+      label="Username"
+      autoComplete="root"
+      autoFocus
+    />
+  );
+};
+
+export const PasswordField: React.FC<{ label: string; id: string }> = (
+  props
+) => {
+  return (
+    <TextField
+      variant="outlined"
+      margin="normal"
+      required
+      fullWidth
+      label={props.label}
+      type="password"
+      id={props.id}
+      autoComplete="current-password"
+    />
+  );
+};
+
+export const LoginButton: React.FC<{ text: string }> = (props) => {
+  const classes = useStyles();
+
+  return (
+    <Button
+      type="submit"
+      fullWidth
+      variant="contained"
+      color="primary"
+      className={classes.submit}
+    >
+      {props.text}
+    </Button>
+  );
+};

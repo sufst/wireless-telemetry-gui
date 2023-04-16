@@ -20,41 +20,42 @@ import { url } from "config";
 import { LoginUser } from "types/api/api";
 
 const handleLoginUser: LoginUser = async (username, password) => {
-    try {
-        const response = await fetch(`http://${url}/login/${username}`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                password: password
-            })
-        })
+  try {
+    const response: Response = await fetch(`http://${url}/login/${username}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        password: password,
+      }),
+    });
 
-        if (!response.ok) {
-            throw response.statusText;
-        }
-
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        throw new Error('offline');
-    }
-}
-
-export const loginUser = async (username: string, password: string) => {
-
-    let token = undefined;
-    let offline = false;
-
-    try {
-        const data = await handleLoginUser(username, password);
-        token = data.access_token
-    }
-    catch (error: any) {
-        console.error('Error Logging in:', error);
-        offline = error.message === 'offline';
+    if (!response.ok) {
+      throw response.statusText;
     }
 
-    return [token, offline];
-}
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error("offline");
+  }
+};
+
+export const loginUser: LoginUser = async (
+  username: string,
+  password: string
+) => {
+  let token = undefined;
+  let offline = false;
+
+  try {
+    const data = await handleLoginUser(username, password);
+    token = data.access_token;
+  } catch (error: any) {
+    console.error("Error Logging in:", error);
+    offline = error.message === "offline";
+  }
+
+  return [token, offline];
+};

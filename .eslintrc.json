@@ -16,14 +16,32 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createTheme } from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
-
-const theme = createTheme({
-  palette: {
-    type: "dark",
-    primary: blue,
+{
+  "env": {
+    "browser": true,
+    "es2021": true
   },
-});
-
-export default theme;
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "rules": {
+    "@typescript-eslint/quotes": "off",
+    "quotes": [
+      "off", // Temporarily disabled since i'm not bothered rn
+      "double"
+    ],
+    "semi": "off"
+  }
+}

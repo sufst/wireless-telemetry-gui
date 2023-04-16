@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /*
     Southampton University Formula Student Team
     Copyright (C) 2021 SUFST
@@ -17,7 +18,11 @@
 */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LoginUserAction, RegisterUserAction, SetUserAction } from "types/models/actions";
+import {
+  LoginUserAction,
+  RegisterUserAction,
+  SetUserAction,
+} from "types/models/actions";
 import { UserMeta, UserState } from "types/models/user";
 
 const initialMetaState: UserMeta = {
@@ -39,12 +44,12 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    getAllUsers: () => {
-    },
-    registerNewUser: (state: UserState, action: PayloadAction<RegisterUserAction>) => {
-    },
-    loginUser: (state: UserState, action: PayloadAction<LoginUserAction>) => {
-    },
+    getAllUsers: () => {},
+    registerNewUser: (
+      state: UserState,
+      action: PayloadAction<RegisterUserAction>
+    ) => {},
+    loginUser: (state: UserState, action: PayloadAction<LoginUserAction>) => {},
     setUser: (state: UserState, action: PayloadAction<SetUserAction>) => {
       state.username = action.payload.username;
       state.accessToken = action.payload.accessToken;
@@ -52,13 +57,14 @@ export const userSlice = createSlice({
       state.meta = action.payload.meta;
       state.department = action.payload.department;
       state.creation = action.payload.creation;
-    }, 
+    },
     logoutUser: (state: UserState) => {
-      state.username = undefined; 
+      state.username = undefined;
     },
   },
 });
 
-export const { loginUser, setUser, logoutUser, registerNewUser, getAllUsers } = userSlice.actions;
+export const { loginUser, setUser, logoutUser, registerNewUser, getAllUsers } =
+  userSlice.actions;
 
 export default userSlice.reducer;

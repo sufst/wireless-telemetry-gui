@@ -17,14 +17,12 @@
 */
 
 // Imports
-import ReactDOM from 'react-dom';
-import { registerServiceWorker } from 'serviceWorkerRegistration';
-import { App } from './app/index';
-import './index.css';
+import ReactDOM from "react-dom";
+import React from "react";
+import { App } from "./app/index";
+import "./index.css";
 
-ReactDOM.render(
-    <App />,
-    document.getElementById('root')
-);
+import { registerServiceWorker } from "serviceWorkerRegistration";
 
+ReactDOM.render(<App />, document.getElementById("root"));
 registerServiceWorker();

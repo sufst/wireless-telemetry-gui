@@ -15,11 +15,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
-import { DashboardHeader } from "./header/containers"
+import React from "react";
+import { DashboardHeader } from "./header/containers";
 
 export const Dashboard = () => {
-    return (
-        <DashboardHeader/>
-    );
-}
+  return <DashboardHeader />;
+};

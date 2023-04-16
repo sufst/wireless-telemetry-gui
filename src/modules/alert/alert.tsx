@@ -15,43 +15,51 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
-
-import { AlertState, AlertLevel, AlertText, AlertTimeout, AlertType } from 'types/models/alert';
-import AlertContainer from './containers';
+import React from "react";
+import {
+  AlertState,
+  AlertLevel,
+  AlertText,
+  AlertTimeout,
+  AlertType,
+} from "types/models/alert";
+import AlertContainer from "./containers";
 
 /**
  * Alert Levels - (severity) - as specified from MUI Labs - Name of type to be specified
- * 
+ *
  * "info": Blue Background in the Alert
- * "error": Red Background in the Alert 
+ * "error": Red Background in the Alert
  * "warning": Yellow Background in the Alert
  * "success": Green Background in the Alert
  */
 
-const Alert = () => {
-    return (
-        <AlertContainer />
-    )
-}
+const Alert: React.FC = () => {
+  return <AlertContainer />;
+};
 
 /**
  * Function to create a new Alert in the system
- * 
+ *
  * @param timeout the time in ms until the alert is dismissed
  * @param level the level of the alert (info, error, success, warning)
  * @param type the type of the alert (snack, alert)
  * @param text the text to be shown in the alert
  */
 export const createAlert: CreateAlert = (timeout, level, type, text) => {
-    return {
-        timeout, 
-        level,
-        type,
-        text
-    }
-}
+  return {
+    timeout,
+    level,
+    type,
+    text,
+  };
+};
 
-type CreateAlert = (timeout: AlertTimeout, level: AlertLevel, type: AlertType, text: AlertText) => AlertState;
+type CreateAlert = (
+  timeout: AlertTimeout,
+  level: AlertLevel,
+  type: AlertType,
+  text: AlertText
+) => AlertState;
 
-export default Alert; 
+export default Alert;

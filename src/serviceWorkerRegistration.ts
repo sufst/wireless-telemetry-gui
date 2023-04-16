@@ -1,13 +1,32 @@
-const isLocalhost: boolean = Boolean(
-  window.location.hostname === 'localhost' ||
-  // [::1] is the IPv6 localhost address.
-  window.location.hostname === '[::1]' ||
-  // 127.0.0.0/8 are considered localhost for IPv4.
-  window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+/*
+    Southampton University Formula Student Team
+    Copyright (C) 2021 SUFST
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+const isLocalhost = Boolean(
+  window.location.hostname === "localhost" ||
+    // [::1] is the IPv6 localhost address.
+    window.location.hostname === "[::1]" ||
+    // 127.0.0.0/8 are considered localhost for IPv4.
+    window.location.hostname.match(
+      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+    )
 );
 
 export const registerServiceWorker = (config: any) => {
-  if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+  if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
     if (publicUrl.origin !== window.location.origin) {
@@ -17,7 +36,7 @@ export const registerServiceWorker = (config: any) => {
       return;
     }
 
-    window.addEventListener('load', () => {
+    window.addEventListener("load", () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
       if (isLocalhost) {
@@ -28,8 +47,8 @@ export const registerServiceWorker = (config: any) => {
         // service worker/PWA documentation.
         navigator.serviceWorker.ready.then(() => {
           console.log(
-            'This web app is being served cache-first by a service ' +
-            'worker. To learn more, visit https://cra.link/PWA'
+            "This web app is being served cache-first by a service " +
+              "worker. To learn more, visit https://cra.link/PWA"
           );
         });
       } else {
@@ -38,7 +57,7 @@ export const registerServiceWorker = (config: any) => {
       }
     });
   }
-}
+};
 
 const registerValidSW = (swUrl: string, config: any) => {
   navigator.serviceWorker
@@ -50,14 +69,14 @@ const registerValidSW = (swUrl: string, config: any) => {
           return;
         }
         installingWorker.onstatechange = () => {
-          if (installingWorker.state === 'installed') {
+          if (installingWorker.state === "installed") {
             if (navigator.serviceWorker.controller) {
               // At this point, the updated precached content has been fetched,
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
               console.log(
-                'New content is available and will be used when all ' +
-                'tabs for this page are closed. See https://cra.link/PWA.'
+                "New content is available and will be used when all " +
+                  "tabs for this page are closed. See https://cra.link/PWA."
               );
 
               // Execute callback
@@ -68,7 +87,7 @@ const registerValidSW = (swUrl: string, config: any) => {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
-              console.log('Content is cached for offline use.');
+              console.log("Content is cached for offline use.");
 
               // Execute callback
               if (config && config.onSuccess) {
@@ -80,21 +99,21 @@ const registerValidSW = (swUrl: string, config: any) => {
       };
     })
     .catch((error) => {
-      console.error('Error during service worker registration:', error);
+      console.error("Error during service worker registration:", error);
     });
-}
+};
 
 const checkValidServiceWorker = (swUrl: string, config: any) => {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl, {
-    headers: { 'Service-Worker': 'script' },
+    headers: { "Service-Worker": "script" },
   })
     .then((response) => {
       // Ensure service worker exists, and that we really are getting a JS file.
-      const contentType = response.headers.get('content-type');
+      const contentType = response.headers.get("content-type");
       if (
         response.status === 404 ||
-        (contentType != null && contentType.indexOf('javascript') === -1)
+        (contentType != null && contentType.indexOf("javascript") === -1)
       ) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then((registration) => {
@@ -108,12 +127,14 @@ const checkValidServiceWorker = (swUrl: string, config: any) => {
       }
     })
     .catch(() => {
-      console.log('No internet connection found. App is running in offline mode.');
+      console.log(
+        "No internet connection found. App is running in offline mode."
+      );
     });
-}
+};
 
 export const unregisterServiceWorker = () => {
-  if ('serviceWorker' in navigator) {
+  if ("serviceWorker" in navigator) {
     navigator.serviceWorker.ready
       .then((registration) => {
         registration.unregister();
@@ -122,4 +143,4 @@ export const unregisterServiceWorker = () => {
         console.error(error.message);
       });
   }
-}
+};

@@ -17,103 +17,105 @@
 */
 
 // Module Imports
-import { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect, useHistory } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+  useHistory,
+} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 // Material UI Imports
-import { Paper } from '@material-ui/core';
+import { Paper } from "@material-ui/core";
 
 // Component Imports
 import { Dashboard } from "pages/dashboard/index";
 import Admin from "pages/admin/index";
-import Account from 'pages/account/';
+import Account from "pages/account/";
 import { SignIn } from "pages/signin/index";
 import AppNavigation from "modules/navigation/navigation";
-import { Register } from 'pages/registration';
-import Alert from 'modules/alert/alert';
-import Sessions from 'pages/sessions';
+import { Register } from "pages/registration";
+import Alert from "modules/alert/alert";
+import Sessions from "pages/sessions";
 
 // Styles
 import { useStyles } from "./styles";
 
 // Redux Imports
-import { loginUser } from 'redux/slices/user';
-import type { RootState } from 'redux/store';
+import { loginUser } from "redux/slices/user";
+import type { RootState } from "redux/store";
 
-const AppRouterSwitch = () => {
-    const classes = useStyles();
-    const dispatch = useDispatch();
-    const history = useHistory(); 
+const AppRouterSwitch: React.FC = () => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    const selectUser = (state: RootState) => state.user;
-    const user = useSelector(selectUser); 
+  const user = useSelector((state: RootState) => state.user);
 
-    useEffect(() => {
-        if (user.username === undefined) {
-            const username = "anonymous"
-            const password = "anonymous"
-        
-            dispatch(loginUser( { username, password } ))
-        } else {
-            history.push('/')
-        }
-    }, [user, dispatch, history])
+  useEffect(() => {
+    if (user.username === undefined) {
+      const username = "anonymous";
+      const password = "anonymous";
+      dispatch(loginUser({ username, password }));
+    } else {
+      history.push("/");
+    }
+  }, [user, dispatch, history]);
+  return (
+    <Switch>
+      <Route path="/" exact>
+        <Redirect to="/dashboard" />
+      </Route>
+      <Route path="/login" exact>
+        <Paper className={classes.viewPaper}>
+          <Alert />
+          <SignIn />
+        </Paper>
+      </Route>
+      <Route path="/register" exact>
+        <Paper className={classes.viewPaper}>
+          <Alert />
+          <Register />
+        </Paper>
+      </Route>
+      <Route path="/dashboard" exact>
+        <Paper className={classes.viewPaper}>
+          <Alert />
+          <Dashboard />
+        </Paper>
+      </Route>
+      <Route path="/account" exact>
+        <Paper className={classes.viewPaper}>
+          <Alert />
+          <Account />
+        </Paper>
+      </Route>
+      <Route path="/admin" exact>
+        <Paper className={classes.viewPaper}>
+          <Alert />
+          <Admin />
+        </Paper>
+      </Route>
+      <Route path="/sessions" exact>
+        <Paper className={classes.viewPaper}>
+          <Alert />
+          <Sessions />
+        </Paper>
+      </Route>
+      <Route path="*">
+        <Redirect to="/" />
+      </Route>
+    </Switch>
+  );
+};
 
-    return (
-        <Switch>
-            <Route path="/" exact>
-                <Redirect to="/dashboard"/>
-            </Route>
-            <Route path="/login" exact>
-                <Paper className={classes.viewPaper} >
-                    <Alert /> 
-                    <SignIn />
-                </Paper>
-            </Route>
-            <Route path="/register" exact>
-                <Paper className={classes.viewPaper} >
-                    <Alert /> 
-                    <Register />
-                </Paper>
-            </Route>
-            <Route path="/dashboard" exact>
-                <Paper className={classes.viewPaper}>
-                    <Alert /> 
-                    <Dashboard/>
-                </Paper> 
-            </Route>
-            <Route path="/account" exact>
-                <Paper className={classes.viewPaper}>
-                    <Alert /> 
-                    <Account /> 
-                </Paper> 
-            </Route>
-            <Route path="/admin" exact>
-                <Paper className={classes.viewPaper}>
-                    <Alert /> 
-                    <Admin />
-                </Paper> 
-            </Route>
-            <Route path="/sessions" exact>
-                <Paper className={classes.viewPaper}>
-                    <Alert /> 
-                    <Sessions />
-                </Paper> 
-            </Route>
-            <Route path="*">
-                <Redirect to="/" />
-            </Route>
-        </Switch>
-    )
-}
-
-export const AppContainer = () => {    
-    return (
-        <Router>
-            <AppNavigation />
-            <AppRouterSwitch />
-        </Router>
-    );
-} 
+export const AppContainer: React.FC = () => {
+  return (
+    <Router>
+      <AppNavigation />
+      <AppRouterSwitch />
+    </Router>
+  );
+};

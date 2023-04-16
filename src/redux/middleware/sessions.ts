@@ -1,18 +1,41 @@
+/*
+    Southampton University Formula Student Team
+    Copyright (C) 2022 SUFST
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 import { getAllSessions } from "modules/api/sessions";
 import { Middleware } from "redux";
 import { setOffline, setOnline } from "redux/slices/app";
 import { replaceSessions } from "redux/slices/sessions";
 
-export const sessionsMiddleware: Middleware<{}, any> = (storeAPI) => (next) => async (action) => {
-  if ((storeAPI.getState().sessions.sessions.length === 0 && action.type === 'sessions/getAllSessions') || action.type === 'sessions/refreshSessions') {
-    const [sessions] = await getAllSessions();
-    if (sessions) {
-      storeAPI.dispatch(setOnline());
-      storeAPI.dispatch(replaceSessions(sessions));
-    } else {
-      storeAPI.dispatch(setOffline());
+export const sessionsMiddleware: Middleware<any, any> =
+  (storeAPI) => (next) => async (action) => {
+    if (
+      (storeAPI.getState().sessions.sessions.length === 0 &&
+        action.type === "sessions/getAllSessions") ||
+      action.type === "sessions/refreshSessions"
+    ) {
+      const [sessions] = await getAllSessions();
+      if (sessions) {
+        storeAPI.dispatch(setOnline());
+        storeAPI.dispatch(replaceSessions(sessions));
+      } else {
+        storeAPI.dispatch(setOffline());
+      }
     }
-  }
 
-  return next(action);
-}
+    return next(action);
+  };

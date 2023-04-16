@@ -16,40 +16,37 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
 
-import alertReducer from './slices/alert';
+import alertReducer from "./slices/alert";
 import appReducer from "./slices/app";
-import sensorsReducer from './slices/sensors';
-import userReducer from './slices/user';
-import sessionReducer from './slices/session'
-import sessionsReducer from './slices/sessions';
+import sensorsReducer from "./slices/sensors";
+import userReducer from "./slices/user";
+import sessionReducer from "./slices/session";
+import sessionsReducer from "./slices/sessions";
 
-import { alertMiddleware } from './middleware/alert';
-import { userMiddleware } from './middleware/user';
-import { sessionMiddleware } from './middleware/session';
-import { sessionsMiddleware } from './middleware/sessions';
+import { alertMiddleware } from "./middleware/alert";
+import { userMiddleware } from "./middleware/user";
+import { sessionMiddleware } from "./middleware/session";
+import { sessionsMiddleware } from "./middleware/sessions";
 
-
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-     alert: alertReducer, 
-     app: appReducer,
-     sensors : sensorsReducer,
-     user: userReducer, 
-     session: sessionReducer,
-     sessions: sessionsReducer,
+    alert: alertReducer,
+    app: appReducer,
+    sensors: sensorsReducer,
+    user: userReducer,
+    session: sessionReducer,
+    sessions: sessionsReducer,
   },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware()
-        .prepend(
-            alertMiddleware, 
-            userMiddleware,
-            sessionMiddleware,
-            sessionsMiddleware,
-        )
-})
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().prepend(
+      alertMiddleware,
+      userMiddleware,
+      sessionMiddleware,
+      sessionsMiddleware
+    ),
+});
 
-export type RootState = ReturnType<typeof store.getState>
-
-export default store; 
+export type RootState = ReturnType<typeof store.getState>;
+export default store;
