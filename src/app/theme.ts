@@ -16,11 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 
 
-const theme = createMuiTheme({
+const theme = createTheme({
    palette: {
       type: 'dark',
       primary: blue

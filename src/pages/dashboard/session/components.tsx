@@ -41,7 +41,7 @@ import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { refreshSessions } from "redux/slices/sessions";
 import { SessionsState } from "types/models/sessions";
-import { useStyles } from "./styles";
+import { sessionTableStyles, useStyles } from "./styles";
 
 export const CurrentSessionHeader = (props: { name: string }) => {
     const classes = useStyles(); 
@@ -192,14 +192,16 @@ export const NewSessionContainer = (props: { onSubmit: any, onStop: () => void, 
 
 export const SensorChooser = (props: { allGroups: string[], selectedGroups: string[], onSensorChangeCallback: (sensor : string) => void, disabled: boolean }) => {
     
-    const checkboxes = props.allGroups.map(groupName => {
+    const checkboxes = props.allGroups.map(groupName => {    
         return (
             <FormControlLabel
-                control = { <Checkbox id={groupName} 
-                                      checked={props.selectedGroups.includes(groupName)}
-                                      onChange={() => props.onSensorChangeCallback(groupName)} 
-                                      style={{ color: 'lightBlue' }} 
-                          /> } 
+                id = { groupName }
+                control = { 
+                    <Checkbox id={groupName} 
+                        checked={props.selectedGroups.includes(groupName)}
+                        onChange={() => props.onSensorChangeCallback(groupName)} 
+                        style={{ color: 'lightBlue' }} 
+                    /> } 
                 label={ groupName }
                 disabled={props.disabled} />
         )
@@ -216,70 +218,85 @@ export const SensorChooser = (props: { allGroups: string[], selectedGroups: stri
 }
 
 export const SessionTable = (props: { sessionData: SessionsState }) => {
+    
     const classes = useStyles();
+    const tableClasses = sessionTableStyles(); 
+    
     const dispatch = useDispatch();
+    
+    const sessions = props.sessionData.sessions; 
+    const sortedSessions = sessions.concat().sort((a, b) => (b.creation - a.creation)); 
+    const last10Sessions = sortedSessions.slice(0, 10);
 
-    const sessionEntries = props.sessionData.sessions.concat().sort((a, b) => (b.creation - a.creation)).slice(0, 10);
-    const info = sessionEntries.map(sessionEntry => {
+    const tableSessionInfo = last10Sessions.map(sessionEntry => {
+        var creationDate = new Date(0); 
+        creationDate.setUTCSeconds(sessionEntry.creation);
+        const day = creationDate.getDate(); 
+        const month  = creationDate.getMonth() + 1;
+        const year = creationDate.getFullYear(); 
+        var createdString = day + "/" + month + "/" + year;
+
         return {
             name: sessionEntry.name,
             status: sessionEntry.status,
-            created: (new Date(sessionEntry.creation)).toString(),
-            actions: <>
-            {/* TODO: Add callback to download data and add button to stop session */}
-            <IconButton color="primary" aria-label="upload picture" component="span">
-                <GetAppIcon />
-            </IconButton>
-          </>
+            created: createdString,
+            actions: 
+                <>
+                    {/* TODO: Add callback to download data and add button to stop session */}
+                    <IconButton color="primary" component="span">
+                        <GetAppIcon />
+                    </IconButton>
+                </>,
+            statusClassName: sessionEntry.status === "alive" ? tableClasses.aliveStatusText : tableClasses.deadStatusText
         }
-    });
-
-    function checkColors(value : String) {
-        /// assigns the status a colour based on its value
-        var colourVal:string;
-        if (value === "alive"){
-            colourVal = "green";
-        }
-        else {
-            colourVal = "red";
-        }
-        return {color:colourVal, fontSize:18}
-    }
-
-    
-    function formatDate(date : string) {
-        const d = new Date(date);
-        /// formats date in form day/month/year - .getMonth()+1 as it returns a value 0 to 11
-        return d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear();  
-    }
-    
-    
+    }); 
 
     return (
         <div>
             <div className={classes.sessionHeadingContainer}>
                 <span className={classes.newSessionText}>All Sessions</span>
-                <Button onClick={() => dispatch(refreshSessions())} className={classes.refreshButton} variant='contained' disableElevation color="secondary">Refresh</Button>
+                <Button 
+                    onClick={() => dispatch(refreshSessions())} 
+                    className={classes.refreshButton} 
+                    variant='contained' disableElevation color="primary">
+                    Refresh
+                </Button>
             </div>
 
             <TableContainer component={Paper}>
                 <Table aria-label="customized table">
                     <TableHead>
-                    <TableRow>
-                        <TableCell style={{fontWeight:"bold", fontSize:24}}>Name</TableCell>
-                        <TableCell align="right" style={{fontWeight:"bold", fontSize:24}}>Status</TableCell>
-                        <TableCell align="right" style={{fontWeight:"bold", fontSize:24}}>Creation Date</TableCell>
-                        <TableCell align="right" style={{fontWeight:"bold", fontSize:24}}>Actions</TableCell>
-                    </TableRow>
+                        <TableRow>
+                            <TableCell className={tableClasses.headerText}>
+                                Name
+                            </TableCell>
+                            <TableCell align="right" className={tableClasses.headerText}>
+                                Status
+                            </TableCell>
+                            <TableCell align="right" className={tableClasses.headerText}>
+                                Creation Date
+                            </TableCell>
+                            <TableCell align="right" className={tableClasses.headerText}>
+                                Actions
+                            </TableCell>
+                        </TableRow>
                     </TableHead>
+
                     <TableBody>
-                        {info.map((sessionEntry) => (
+                        { tableSessionInfo.map((sessionEntry) => (
                             <TableRow key={sessionEntry.name}>
-                            <TableCell component="th" scope="row" style={{fontSize:18}}>{sessionEntry.name}</TableCell>
-                            {/*checkColors can be replaced by: style={sessionEntry.status === "alive" ? {color : "green"} : {color : "red"}} */}
-                            <TableCell align="right" style={checkColors(sessionEntry.status)}>{sessionEntry.status}</TableCell> 
-                            <TableCell align="right" style={{fontSize:18}}>{formatDate(sessionEntry.created)}</TableCell>
-                            <TableCell align="right">{sessionEntry.actions}</TableCell>
+                                <TableCell className={tableClasses.plainText}>
+                                    {sessionEntry.name}
+                                </TableCell>
+                                <TableCell align="right" className={sessionEntry.statusClassName}>
+                                    {sessionEntry.status}
+                                </TableCell> 
+                                <TableCell align="right" className={tableClasses.plainText}>
+                                    {sessionEntry.created}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {sessionEntry.actions}
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
