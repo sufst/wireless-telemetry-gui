@@ -28,11 +28,15 @@ import {
 } from "./components";
 import { useStyles } from "./styles";
 
-const Dash: React.FC = () => {
-  const _ecu = "status_ecu_connected";
-  const _engine = "status_engine";
-  const _battery = "status_battery";
-  const _log = "status_logging";
+const Dash = () => {
+  //
+  // TODO: These sensors are hardcoded in for now.
+  // They should be set from attributes in the DBC file.
+  //
+  const _RTD = "VCU_Ready_To_Drive";
+  const _SHUTDOWN = "VCU_Shutdown";
+  const _APPS = "VCU_APPS";
+  const _BPS = "VCU_BPS";
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -47,20 +51,18 @@ const Dash: React.FC = () => {
   const allSensorMeta = useSelector(selectAllSensors);
   const allSensors = Object.keys(allSensorMeta);
 
-  const ecuSelector = (state: RootState) => state.sensors.sensors[_ecu]?.data;
-  const ecuSensorData = useSelector(ecuSelector);
+  const rtdSelector = (state: RootState) => state.sensors.sensors[_RTD]?.data;
+  const rtdSensorData = useSelector(rtdSelector);
 
-  const engineSelector = (state: RootState) =>
-    state.sensors.sensors[_engine]?.data;
-  const engineSensorData = useSelector(engineSelector);
+  const appsSelector = (state: RootState) => state.sensors.sensors[_APPS]?.data;
+  const appsSensorData = useSelector(appsSelector);
 
-  const batterySelector = (state: RootState) =>
-    state.sensors.sensors[_battery]?.data;
-  const batterySensorData = useSelector(batterySelector);
+  const bpsSelector = (state: RootState) => state.sensors.sensors[_BPS]?.data;
+  const bpsSensorData = useSelector(bpsSelector);
 
-  const loggingSelector = (state: RootState) =>
-    state.sensors.sensors[_log]?.data;
-  const loggingSensorData = useSelector(loggingSelector);
+  const shutdownSelector = (state: RootState) =>
+    state.sensors.sensors[_SHUTDOWN]?.data;
+  const shutdownSensorData = useSelector(shutdownSelector);
 
   const handleStopSession = useCallback(
     (e, name) => {
@@ -86,10 +88,10 @@ const Dash: React.FC = () => {
       <Paper className={classes.rootPaper}>
         <CurrentTime />
         <Grid container spacing={3} className={classes.gridContainer}>
-          <DashStatusItem name="ECU" data={ecuSensorData} />
-          <DashStatusItem name="ENGINE" data={engineSensorData} />
-          <DashStatusItem name="BATTERY" data={batterySensorData} />
-          <DashStatusItem name="LOGGING" data={loggingSensorData} />
+          <DashStatusItem name="RTD" data={rtdSensorData} />
+          <DashStatusItem name="SHUTDOWN" data={shutdownSensorData} />
+          <DashStatusItem name="" data={bpsSensorData} />
+          <DashStatusItem name="" data={shutdownSensorData} />
         </Grid>
       </Paper>
       <Paper className={classes.rootPaper}>

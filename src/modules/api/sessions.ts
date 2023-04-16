@@ -135,7 +135,7 @@ export const stopSession: SessionStop = async (name, token) => {
 /**
  * Getting all the sessions in the database
  */
-const handleGetAllSessions: HandleSessionsGetPromise  = async () => {
+const handleGetAllSessions: HandleSessionsGetPromise = async () => {
   try {
     const response = await fetch(`http://${url}/sessions`, {
       method: "GET",

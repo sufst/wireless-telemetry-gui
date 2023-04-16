@@ -23,16 +23,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "redux/slices/alert";
 import { RootState } from "redux/store";
 import { SensorData } from "types/models/sensor";
-import { DashStatusItemColor, DashStatusItemText } from "types/models/ui-types";
+import { DashStatusItemColor } from "types/models/ui-types";
 import { useStyles } from "./styles";
 
-export const DashStatusItem: React.FC<{ name: string; data: SensorData[] }> = ({
+export const DashStatusItem = ({
   name,
   data,
+}: {
+  name: string;
+  data: SensorData[];
 }) => {
   const classes = useStyles();
   let background: DashStatusItemColor = "rgba(0, 0, 0, 0.5)";
-  let text: DashStatusItemText = " ";
+  let text = " ";
 
   // Component renders this when initial state is still undefined, basically meaning
   // state has not been intiailised since socket.io is still fetching sensor data/metadata
@@ -52,61 +55,43 @@ export const DashStatusItem: React.FC<{ name: string; data: SensorData[] }> = ({
 
   const lastValue = data[data?.length - 1]?.value;
 
-  const checkECU = () => {
-    if (lastValue === 1) {
-      text = "CONNECTED";
+  // ESLint needs to be disabled here for now, as the values are of type "number" but come in as "true" or "false"
+  const checkShutdown = () => {
+    // eslint-disable-next-line
+    if (lastValue == 1) {
+      text = "TRUE";
       background = "green";
-    } else if (lastValue === 0) {
-      text = "DISCONNECTED";
+    }
+    // eslint-disable-next-line
+    else if (lastValue == 0) {
+      text = "FALSE";
       background = "red";
     }
   };
 
-  const checkEngine = () => {
-    if (lastValue === 1) {
-      text = "INACTIVE";
-      background = "red";
-    } else if (lastValue === 2) {
-      text = "IDLE";
-      background = "orange";
-    } else if (lastValue === 3) {
-      text = "ACTIVE";
+  const checkRTD = () => {
+    // eslint-disable-next-line
+    if (lastValue == 1) {
+      text = "ENABLED";
       background = "green";
+    }
+    // eslint-disable-next-line
+    else if (lastValue == 0) {
+      text = "DISABLED";
+      background = "red";
     }
   };
 
-  const checkBattery = () => {
-    if (lastValue === 1) {
-      text = "DISCONNECTED";
-      background = "grey";
-    } else if (lastValue === 2) {
-      text = "LOW";
-      background = "red";
-    } else if (lastValue === 3) {
-      text = "HEALTHY";
-      background = "green";
-    }
-  };
-
-  const checkLogging = () => {
-    if (lastValue === 0) {
-      text = "INACTIVE";
-      background = "red";
-    } else if (lastValue === 1) {
-      text = "ACTIVE";
-      background = "green";
-    }
-  };
-
-  if (name === "ECU") {
-    checkECU();
-  } else if (name === "ENGINE") {
-    checkEngine();
-  } else if (name === "BATTERY") {
-    checkBattery();
-  } else if (name === "LOGGING") {
-    checkLogging();
+  if (name === "RTD") {
+    checkRTD();
+  } else if (name === "SHUTDOWN") {
+    checkShutdown();
   }
+  /*
+    else if (name === 'ADD SENSOR HERE') {
+    }
+    else if (name === 'ADD SENSOR HERE') {
+    }*/
 
   return (
     <Grid item lg={3} xs={12} sm={6} className={classes.item}>

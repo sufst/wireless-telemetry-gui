@@ -185,3 +185,21 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
+export const sessionTableStyles = makeStyles((theme) => ({
+  headerText: {
+    fontWeight: "bold",
+    fontSize: "20px",
+  },
+  plainText: {
+    fontSize: "18px",
+  },
+  aliveStatusText: {
+    fontSize: "18px",
+    color: "green",
+  },
+  deadStatusText: {
+    fontSize: "18px",
+    color: "red",
+  },
+}));

@@ -41,7 +41,7 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import { useDispatch } from "react-redux";
 import { refreshSessions } from "redux/slices/sessions";
 import { SessionsState } from "types/models/sessions";
-import { useStyles } from "./styles";
+import { sessionTableStyles, useStyles } from "./styles";
 
 export const CurrentSessionHeader: React.FC<{ name: string }> = ({ name }) => {
   const classes = useStyles();
@@ -222,10 +222,11 @@ interface sensorChooserInterface {
   disabled: boolean;
 }
 
-export const SensorChooser: React.FC<sensorChooserInterface> = (props) => {
+export const SensorChooser = (props: sensorChooserInterface) => {
   const checkboxes = props.allGroups.map((groupName) => {
     return (
       <FormControlLabel
+        id={groupName}
         control={
           <Checkbox
             id={groupName}
@@ -253,48 +254,44 @@ export const SensorChooser: React.FC<sensorChooserInterface> = (props) => {
   );
 };
 
-export const SessionTable: React.FC<{ sessionData: SessionsState }> = (
-  props
-) => {
+export const SessionTable = (props: { sessionData: SessionsState }) => {
   const classes = useStyles();
+  const tableClasses = sessionTableStyles();
+
   const dispatch = useDispatch();
 
-  const sessionEntries = props.sessionData.sessions
+  const sessions = props.sessionData.sessions;
+  const sortedSessions = sessions
     .concat()
-    .sort((a, b) => b.creation - a.creation)
-    .slice(0, 10);
-  const info = sessionEntries.map((sessionEntry) => {
+    .sort((a, b) => b.creation - a.creation);
+  const last10Sessions = sortedSessions.slice(0, 10);
+
+  const tableSessionInfo = last10Sessions.map((sessionEntry) => {
+    const creationDate = new Date(0);
+    creationDate.setUTCSeconds(sessionEntry.creation);
+    const day = creationDate.getDate();
+    const month = creationDate.getMonth() + 1;
+    const year = creationDate.getFullYear();
+    const createdString = day + "/" + month + "/" + year;
+
     return {
       name: sessionEntry.name,
       status: sessionEntry.status,
-      created: new Date(sessionEntry.creation).toString(),
+      created: createdString,
       actions: (
         <>
           {/* TODO: Add callback to download data and add button to stop session */}
-          <IconButton
-            color="primary"
-            aria-label="upload picture"
-            component="span"
-          >
+          <IconButton color="primary" component="span">
             <GetAppIcon />
           </IconButton>
         </>
       ),
+      statusClassName:
+        sessionEntry.status === "alive"
+          ? tableClasses.aliveStatusText
+          : tableClasses.deadStatusText,
     };
   });
-
-  function checkColors(value: string) {
-    /// assigns the status a colour based on its value
-    const colourVal: string = value == "alive" ? "green" : "red";
-
-    return { color: colourVal, fontSize: 18 };
-  }
-
-  function formatDate(date: string) {
-    const d = new Date(date);
-    /// formats date in form day/month/year - .getMonth()+1 as it returns a value 0 to 11
-    return d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-  }
 
   return (
     <div>
@@ -305,7 +302,7 @@ export const SessionTable: React.FC<{ sessionData: SessionsState }> = (
           className={classes.refreshButton}
           variant="contained"
           disableElevation
-          color="secondary"
+          color="primary"
         >
           Refresh
         </Button>
@@ -315,44 +312,33 @@ export const SessionTable: React.FC<{ sessionData: SessionsState }> = (
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
-              <TableCell style={{ fontWeight: "bold", fontSize: 24 }}>
-                Name
-              </TableCell>
-              <TableCell
-                align="right"
-                style={{ fontWeight: "bold", fontSize: 24 }}
-              >
+              <TableCell className={tableClasses.headerText}>Name</TableCell>
+              <TableCell align="right" className={tableClasses.headerText}>
                 Status
               </TableCell>
-              <TableCell
-                align="right"
-                style={{ fontWeight: "bold", fontSize: 24 }}
-              >
+              <TableCell align="right" className={tableClasses.headerText}>
                 Creation Date
               </TableCell>
-              <TableCell
-                align="right"
-                style={{ fontWeight: "bold", fontSize: 24 }}
-              >
+              <TableCell align="right" className={tableClasses.headerText}>
                 Actions
               </TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {info.map((sessionEntry) => (
+            {tableSessionInfo.map((sessionEntry) => (
               <TableRow key={sessionEntry.name}>
-                <TableCell component="th" scope="row" style={{ fontSize: 18 }}>
+                <TableCell className={tableClasses.plainText}>
                   {sessionEntry.name}
                 </TableCell>
-                {/*checkColors can be replaced by: style={sessionEntry.status === "alive" ? {color : "green"} : {color : "red"}} */}
                 <TableCell
                   align="right"
-                  style={checkColors(sessionEntry.status)}
+                  className={sessionEntry.statusClassName}
                 >
                   {sessionEntry.status}
                 </TableCell>
-                <TableCell align="right" style={{ fontSize: 18 }}>
-                  {formatDate(sessionEntry.created)}
+                <TableCell align="right" className={tableClasses.plainText}>
+                  {sessionEntry.created}
                 </TableCell>
                 <TableCell align="right">{sessionEntry.actions}</TableCell>
               </TableRow>
