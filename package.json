@@ -9,6 +9,8 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/lab": "^5.0.0-alpha.128",
     "@mui/material": "^5.12.2",
     "@mui/styles": "^5.12.0",
     "clsx": "^1.1.1",
@@ -56,9 +58,6 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
-    "@mui/core": "^4.12.4",
-    "@mui/icons": "^4.11.2",
-    "@mui/lab": "^4.0.0-alpha.57",
     "@reduxjs/toolkit": "^1.5.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
