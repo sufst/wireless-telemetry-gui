@@ -19,7 +19,7 @@
 import React, { useMemo } from "react";
 import { v4 } from "uuid";
 import { useStyles } from "./styles";
-import { Box, Grid, Paper } from "@material-ui/core";
+import { Box, Grid, Paper } from "@mui/core";
 import { useSelector } from "react-redux";
 import type { RootState } from "redux/store";
 

@@ -17,7 +17,7 @@
 */
 import React from "react";
 import { useStyles } from "./styles";
-import { Switch, FormControlLabel, Typography } from "@material-ui/core";
+import { Switch, FormControlLabel, Typography } from "@mui/core";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Label } from "recharts";
 import { GraphData } from "types/models/ui-types";
 

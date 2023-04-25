@@ -24,8 +24,8 @@ import {
   Link,
   Box,
   Typography,
-} from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+} from "@mui/core";
+import LockOutlinedIcon from "@mui/icons/LockOutlined";
 import { useStyles } from "./styles";
 
 export const LoginFooter: React.FC = () => {

@@ -17,7 +17,7 @@
 */
 
 // Material UI Imports
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/core/styles";
 import { PrivilegeColor, PrivilegeToColors } from "types/models/ui-types";
 import { UserPrivilege } from "types/models/user";
 

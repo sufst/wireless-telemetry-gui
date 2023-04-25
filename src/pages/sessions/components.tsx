@@ -26,8 +26,8 @@ import {
   TableCell,
   TableHead,
   TableRow,
-} from "@material-ui/core";
-import GetAppIcon from "@material-ui/icons/GetApp";
+} from "@mui/core";
+import GetAppIcon from "@mui/icons/GetApp";
 import { useStyles } from "../dashboard/session/styles";
 import { getSessionDetail } from "redux/slices/session";
 import { useDispatch } from "react-redux";

@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@mui/core";
 export const useStyles = makeStyles((theme) => ({
   sessionsContainer: {
     margin: "10px 10px",

@@ -17,7 +17,7 @@
 */
 
 import React, { useState, useCallback, useEffect } from "react";
-import { Paper } from "@material-ui/core";
+import { Paper } from "@mui/core";
 import { useStyles } from "./styles";
 import { getAllSessions } from "redux/slices/sessions";
 import { useDispatch, useSelector } from "react-redux";

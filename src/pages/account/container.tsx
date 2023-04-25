@@ -20,13 +20,13 @@
 import React from "react";
 
 // Material UI Imports
-import Card from "@material-ui/core/Card";
-import Grid from "@material-ui/core/Grid";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
-import { Button, Divider, List, ListItemText } from "@material-ui/core";
+import Card from "@mui/core/Card";
+import Grid from "@mui/core/Grid";
+import CardHeader from "@mui/core/CardHeader";
+import CardContent from "@mui/core/CardContent";
+import Avatar from "@mui/core/Avatar";
+import Typography from "@mui/core/Typography";
+import { Button, Divider, List, ListItemText } from "@mui/core";
 import { UserState } from "types/models/user";
 
 // Styles

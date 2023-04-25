@@ -24,8 +24,8 @@ import {
   Link,
   InputLabel,
   Select,
-} from "@material-ui/core";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+} from "@mui/core";
+import AccountCircleIcon from "@mui/icons/AccountCircle";
 import { UserDepartment, UserPrivilege } from "types/models/user";
 import { useStyles } from "./styles";
 

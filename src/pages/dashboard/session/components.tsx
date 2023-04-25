@@ -36,8 +36,8 @@ import {
   TableRow,
   Checkbox,
   Grid,
-} from "@material-ui/core";
-import GetAppIcon from "@material-ui/icons/GetApp";
+} from "@mui/core";
+import GetAppIcon from "@mui/icons/GetApp";
 import { useDispatch } from "react-redux";
 import { refreshSessions } from "redux/slices/sessions";
 import { SessionsState } from "types/models/sessions";

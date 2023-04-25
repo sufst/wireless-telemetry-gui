@@ -16,9 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import Tabs from "@material-ui/core/Tabs";
+import Tabs from "@mui/core/Tabs";
 import React, { useCallback, useState, useRef } from "react";
-import Tab from "@material-ui/core/Tab";
+import Tab from "@mui/core/Tab";
 import { SessionContainer } from "../session/containers";
 import RealtimeSensorsGroupContainer from "modules/realtimegraphs/realtimegraphs";
 import { v4 } from "uuid";

@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import React, { useCallback, useEffect } from "react";
-import { Grid, Paper } from "@material-ui/core";
+import { Grid, Paper } from "@mui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { startSession, stopSession } from "redux/slices/session";
 import { RootState } from "redux/store";

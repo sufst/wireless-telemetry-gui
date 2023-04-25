@@ -31,7 +31,7 @@ import {
   Avatar,
   Grid,
   Typography,
-} from "@material-ui/core";
+} from "@mui/core";
 
 export const AdminPanelTable: React.FC<{ users: UserState[] }> = ({
   users,
