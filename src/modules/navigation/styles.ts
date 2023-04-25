@@ -18,25 +18,49 @@
 
 import { makeStyles } from "@mui/material";
 
-// The width of the drawer when opened
-const DRAWER_WIDTH = 240;
+import { styled } from '@mui/material/styles';
+const PREFIX = 'styles';
 
-export const useStyles = makeStyles((theme) => ({
-  navigationRoot: {
+const classes = {
+  navigationRoot: `${PREFIX}-navigationRoot`,
+  title: `${PREFIX}-title`,
+  appBar: `${PREFIX}-appBar`,
+  appBarShift: `${PREFIX}-appBarShift`,
+  menuButton: `${PREFIX}-menuButton`,
+  usernameLabel: `${PREFIX}-usernameLabel`,
+  loginButton: `${PREFIX}-loginButton`,
+  logoutButton: `${PREFIX}-logoutButton`,
+  hide: `${PREFIX}-hide`,
+  drawer: `${PREFIX}-drawer`,
+  drawerOpen: `${PREFIX}-drawerOpen`,
+  drawerClose: `${PREFIX}-drawerClose`,
+  toolbar: `${PREFIX}-toolbar`,
+  content: `${PREFIX}-content`
+};
+
+const Root = styled('https://www.gnu.org/licenses/')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.navigationRoot}`]: {
     display: "flex",
   },
-  title: {
+
+  [`& .${classes.title}`]: {
     flexGrow: 1,
     fontWeight: "bold",
   },
-  appBar: {
+
+  [`& .${classes.appBar}`]: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
-  appBarShift: {
+
+  [`& .${classes.appBarShift}`]: {
     marginLeft: DRAWER_WIDTH,
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
     transition: theme.transitions.create(["width", "margin"], {
@@ -44,35 +68,43 @@ export const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  menuButton: {
+
+  [`& .${classes.menuButton}`]: {
     marginRight: 36,
   },
-  usernameLabel: {
+
+  [`& .${classes.usernameLabel}`]: {
     color: "white",
     marginRight: "1rem",
   },
-  loginButton: {
+
+  [`& .${classes.loginButton}`]: {
     backgroundColor: "green",
   },
-  logoutButton: {
+
+  [`& .${classes.logoutButton}`]: {
     backgroundColor: "red",
   },
-  hide: {
+
+  [`& .${classes.hide}`]: {
     display: "none",
   },
-  drawer: {
+
+  [`& .${classes.drawer}`]: {
     width: DRAWER_WIDTH,
     flexShrink: 0,
     whiteSpace: "nowrap",
   },
-  drawerOpen: {
+
+  [`& .${classes.drawerOpen}`]: {
     width: DRAWER_WIDTH,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  drawerClose: {
+
+  [`& .${classes.drawerClose}`]: {
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -83,7 +115,8 @@ export const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9) + 1,
     },
   },
-  toolbar: {
+
+  [`& .${classes.toolbar}`]: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
@@ -91,8 +124,14 @@ export const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
-  content: {
+
+  [`& .${classes.content}`]: {
     flexGrow: 1,
     padding: theme.spacing(3),
-  },
+  }
 }));
+
+// The width of the drawer when opened
+const DRAWER_WIDTH = 240;
+
+export {};

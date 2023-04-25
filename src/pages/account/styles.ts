@@ -18,8 +18,51 @@
 
 // Material UI Imports
 import { makeStyles } from "@mui/material/styles";
+import { styled } from '@mui/material/styles';
 import { PrivilegeColor, PrivilegeToColors } from "types/models/ui-types";
 import { UserPrivilege } from "types/models/user";
+
+const PREFIX = 'styles';
+
+const classes = {
+  cardRoot: `${PREFIX}-cardRoot`,
+  btn: `${PREFIX}-btn`,
+  btn_register: `${PREFIX}-btn_register`,
+  list: `${PREFIX}-list`,
+  line: `${PREFIX}-line`
+};
+
+const Root = styled('https://www.gnu.org/licenses/')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.cardRoot}`]: {
+    marginTop: "1em",
+    backgroundColor: "#292929",
+  },
+
+  [`& .${classes.btn}`]: {
+    marginTop: "20px",
+    backgroundColor: "red",
+  },
+
+  [`& .${classes.btn_register}`]: {
+    marginTop: "20px",
+    marginLeft: "20px",
+    backgroundColor: "green",
+  },
+
+  [`& .${classes.list}`]: {
+    margin: "0px",
+    paddingBottom: "0px",
+    paddingTop: "0px",
+  },
+
+  [`& .${classes.line}`]: {
+    marginTop: "20px",
+  }
+}));
 
 const privilegeToColors: PrivilegeToColors = {
   Anon: "gray",
@@ -58,26 +101,4 @@ export const avatarStyle = (privilege?: UserPrivilege) => {
   };
 };
 
-export const useStyles = makeStyles((theme) => ({
-  cardRoot: {
-    marginTop: "1em",
-    backgroundColor: "#292929",
-  },
-  btn: {
-    marginTop: "20px",
-    backgroundColor: "red",
-  },
-  btn_register: {
-    marginTop: "20px",
-    marginLeft: "20px",
-    backgroundColor: "green",
-  },
-  list: {
-    margin: "0px",
-    paddingBottom: "0px",
-    paddingTop: "0px",
-  },
-  line: {
-    marginTop: "20px",
-  },
-}));
+export {};

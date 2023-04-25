@@ -17,23 +17,53 @@
 */
 import { makeStyles } from "@mui/material";
 
-export const useStyles = makeStyles((theme) => ({
-  root: {
+import { styled } from '@mui/material/styles';
+const PREFIX = 'styles';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  rootPaper: `${PREFIX}-rootPaper`,
+  headingText: `${PREFIX}-headingText`,
+  sensorBox: `${PREFIX}-sensorBox`,
+  sensorGraphContainerRoot: `${PREFIX}-sensorGraphContainerRoot`,
+  sensorPaperHeaderButton: `${PREFIX}-sensorPaperHeaderButton`,
+  sensorPaperHeaderTitle: `${PREFIX}-sensorPaperHeaderTitle`,
+  sensorGraph: `${PREFIX}-sensorGraph`,
+  sensorLastValue: `${PREFIX}-sensorLastValue`,
+  sensorLiveValue: `${PREFIX}-sensorLiveValue`,
+  sensorPaper: `${PREFIX}-sensorPaper`,
+  groupPaperHeaderButton: `${PREFIX}-groupPaperHeaderButton`,
+  groupPaperHeaderTitle: `${PREFIX}-groupPaperHeaderTitle`,
+  groupPaperHeader: `${PREFIX}-groupPaperHeader`,
+  groupPaper: `${PREFIX}-groupPaper`,
+  sensorNameText: `${PREFIX}-sensorNameText`,
+  sensorValueText: `${PREFIX}-sensorValueText`
+};
+
+const Root = styled('https://www.gnu.org/licenses/')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
     flexGrow: 1,
   },
-  rootPaper: {
+
+  [`& .${classes.rootPaper}`]: {
     flexGrow: 1,
     padding: "1rem",
     marginBottom: "1rem",
     marginTop: "1rem",
     background: "#292929",
   },
-  headingText: {
+
+  [`& .${classes.headingText}`]: {
     margin: "0rem 0 1rem 0",
     fontSize: "20px",
     fontWeight: "bold",
   },
-  sensorBox: {
+
+  [`& .${classes.sensorBox}`]: {
     color: "white",
     overflow: "hidden",
     height: "120px",
@@ -51,15 +81,18 @@ export const useStyles = makeStyles((theme) => ({
     paddingTop: "60px",
     paddingBottom: "60px",
   },
-  sensorGraphContainerRoot: {
+
+  [`& .${classes.sensorGraphContainerRoot}`]: {
     paddingBottom: "25px",
     backgroundColor: "#292929",
   },
-  sensorPaperHeaderButton: {
+
+  [`& .${classes.sensorPaperHeaderButton}`]: {
     color: "white",
     width: "10%",
   },
-  sensorPaperHeaderTitle: {
+
+  [`& .${classes.sensorPaperHeaderTitle}`]: {
     textAlign: "left",
     color: "white",
     width: "90%",
@@ -67,49 +100,61 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: 23,
     margin: "0% 0% 0% 5%",
   },
-  sensorGraph: {
+
+  [`& .${classes.sensorGraph}`]: {
     fontSize: 28,
     color: "white",
     fill: "white",
   },
-  sensorLastValue: {
+
+  [`& .${classes.sensorLastValue}`]: {
     fontWeight: "bold",
   },
-  sensorLiveValue: {
+
+  [`& .${classes.sensorLiveValue}`]: {
     textAlign: "left",
     color: "white",
     width: "90%",
     margin: "0% 0% 0% 10%",
   },
-  sensorPaper: {
+
+  [`& .${classes.sensorPaper}`]: {
     textAlign: "center",
     background: "#292929",
     width: "100%",
     margin: "1% 0% 1% 0%",
   },
-  groupPaperHeaderButton: {
+
+  [`& .${classes.groupPaperHeaderButton}`]: {
     color: "#002472",
     width: "10%",
   },
-  groupPaperHeaderTitle: {
+
+  [`& .${classes.groupPaperHeaderTitle}`]: {
     textAlign: "center",
     color: "white",
     width: "90%",
     fontSize: 33,
   },
-  groupPaperHeader: {
+
+  [`& .${classes.groupPaperHeader}`]: {
     background: "#292929",
     textAlign: "center",
     margin: "1% 0% 1% 0%",
   },
-  groupPaper: {
+
+  [`& .${classes.groupPaper}`]: {
     width: "99.9%",
     background: "#292929",
   },
-  sensorNameText: {
+
+  [`& .${classes.sensorNameText}`]: {
     paddingBottom: "10px",
   },
-  sensorValueText: {
+
+  [`& .${classes.sensorValueText}`]: {
     fontSize: "30px",
-  },
+  }
 }));
+
+export {};

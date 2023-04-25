@@ -17,28 +17,51 @@
 */
 import { makeStyles } from "@mui/material";
 
-export const useStyles = makeStyles((theme) => ({
-  paper: {
+import { styled } from '@mui/material/styles';
+const PREFIX = 'styles';
+
+const classes = {
+  paper: `${PREFIX}-paper`,
+  avatar: `${PREFIX}-avatar`,
+  lockIcon: `${PREFIX}-lockIcon`,
+  form: `${PREFIX}-form`,
+  submit: `${PREFIX}-submit`,
+  btnContainer: `${PREFIX}-btnContainer`
+};
+
+const Root = styled('https://www.gnu.org/licenses/')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.paper}`]: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
+
+  [`& .${classes.avatar}`]: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
-  lockIcon: {
+
+  [`& .${classes.lockIcon}`]: {
     color: "white",
   },
-  form: {
+
+  [`& .${classes.form}`]: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-  submit: {
+
+  [`& .${classes.submit}`]: {
     margin: theme.spacing(2, 0, 1),
   },
-  btnContainer: {
+
+  [`& .${classes.btnContainer}`]: {
     marginTop: "2rem",
-  },
+  }
 }));
+
+export {};

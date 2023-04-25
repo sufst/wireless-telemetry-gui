@@ -17,16 +17,33 @@
 */
 import { makeStyles } from "@mui/material";
 
-export const useStyles = makeStyles((theme) => ({
-  root: {
+import { styled } from '@mui/material/styles';
+const PREFIX = 'styles';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  viewPaper: `${PREFIX}-viewPaper`,
+  alert: `${PREFIX}-alert`
+};
+
+const Root = styled('https://www.gnu.org/licenses/')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
     display: "flex",
   },
-  viewPaper: {
+
+  [`& .${classes.viewPaper}`]: {
     margin: "45px 0px 0px 75px",
     padding: "15px",
     boxShadow: "0px 0px 0px 0px",
   },
-  alert: {
+
+  [`& .${classes.alert}`]: {
     marginBottom: "2rem",
-  },
+  }
 }));
+
+export {};

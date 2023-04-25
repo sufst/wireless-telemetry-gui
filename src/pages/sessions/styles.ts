@@ -16,42 +16,69 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import { makeStyles } from "@mui/material";
-export const useStyles = makeStyles((theme) => ({
-  sessionsContainer: {
+import { styled } from '@mui/material/styles';
+const PREFIX = 'styles';
+
+const classes = {
+  sessionsContainer: `${PREFIX}-sessionsContainer`,
+  table: `${PREFIX}-table`,
+  tableContainer: `${PREFIX}-tableContainer`,
+  tableHeaderCell: `${PREFIX}-tableHeaderCell`,
+  avatar: `${PREFIX}-avatar`,
+  name: `${PREFIX}-name`,
+  department: `${PREFIX}-department`,
+  createdAt: `${PREFIX}-createdAt`,
+  status: `${PREFIX}-status`
+};
+
+const Root = styled('https://www.gnu.org/licenses/')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.sessionsContainer}`]: {
     margin: "10px 10px",
     marginBottom: "3rem",
   },
-  table: {
+
+  [`& .${classes.table}`]: {
     minWidth: 650,
   },
-  tableContainer: {
+
+  [`& .${classes.tableContainer}`]: {
     borderRadius: 5,
     maxWidth: "90%",
     background: "#292929",
   },
-  tableHeaderCell: {
+
+  [`& .${classes.tableHeaderCell}`]: {
     fontWeight: "bold",
     fontSize: "1rem",
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.getContrastText(theme.palette.primary.dark),
   },
-  avatar: {
+
+  [`& .${classes.avatar}`]: {
     backgroundColor: theme.palette.primary.light,
     color: theme.palette.getContrastText(theme.palette.primary.light),
   },
-  name: {
+
+  [`& .${classes.name}`]: {
     fontWeight: "bold",
     marginLeft: "1.2rem",
     paddingTop: "0.5rem",
     color: "white",
   },
-  department: {
+
+  [`& .${classes.department}`]: {
     color: "lightGray",
   },
-  createdAt: {
+
+  [`& .${classes.createdAt}`]: {
     color: "lightGray",
   },
-  status: {
+
+  [`& .${classes.status}`]: {
     fontWeight: "bold",
     fontSize: "0.75rem",
     color: "white",
@@ -59,5 +86,7 @@ export const useStyles = makeStyles((theme) => ({
     borderRadius: 8,
     padding: "3px 10px",
     display: "inline-block",
-  },
+  }
 }));
+
+export {};

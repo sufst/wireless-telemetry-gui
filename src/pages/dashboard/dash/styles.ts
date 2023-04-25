@@ -18,21 +18,51 @@
 
 import { makeStyles } from "@mui/material/styles";
 
-export const useStyles = makeStyles((theme) => ({
-  rootPaper: {
+import { styled } from '@mui/material/styles';
+const PREFIX = 'styles';
+
+const classes = {
+  rootPaper: `${PREFIX}-rootPaper`,
+  gridContainer: `${PREFIX}-gridContainer`,
+  item: `${PREFIX}-item`,
+  box: `${PREFIX}-box`,
+  status: `${PREFIX}-status`,
+  currentTimeText: `${PREFIX}-currentTimeText`,
+  time: `${PREFIX}-time`,
+  startSessionBtn: `${PREFIX}-startSessionBtn`,
+  sensorBox: `${PREFIX}-sensorBox`,
+  sessionButtonStartBox: `${PREFIX}-sessionButtonStartBox`,
+  sessionButtonStartBoxDisabled: `${PREFIX}-sessionButtonStartBoxDisabled`,
+  sessionButtonStopBox: `${PREFIX}-sessionButtonStopBox`,
+  sessionButtonStopBoxDisabled: `${PREFIX}-sessionButtonStopBoxDisabled`,
+  currentSessionBox: `${PREFIX}-currentSessionBox`,
+  sessionStatusText: `${PREFIX}-sessionStatusText`,
+  sensorsText: `${PREFIX}-sensorsText`,
+  sensorLastValue: `${PREFIX}-sensorLastValue`
+};
+
+const Root = styled('https://www.gnu.org/licenses/')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.rootPaper}`]: {
     flexGrow: 1,
     padding: "1rem",
     marginBottom: "1rem",
     marginTop: "1rem",
     background: "#292929",
   },
-  gridContainer: {
+
+  [`& .${classes.gridContainer}`]: {
     marginBottom: "0.5rem",
   },
-  item: {
+
+  [`& .${classes.item}`]: {
     height: "130px",
   },
-  box: {
+
+  [`& .${classes.box}`]: {
     color: "white",
     overflow: "hidden",
     height: "120px",
@@ -47,22 +77,27 @@ export const useStyles = makeStyles((theme) => ({
     right: 0,
     bottom: 0,
   },
-  status: {
+
+  [`& .${classes.status}`]: {
     fontWeight: "bold",
   },
-  currentTimeText: {
+
+  [`& .${classes.currentTimeText}`]: {
     fontSize: "20px",
     margin: "0",
     marginBottom: "0.5rem",
     padding: "0",
   },
-  time: {
+
+  [`& .${classes.time}`]: {
     fontWeight: "bold",
   },
-  startSessionBtn: {
+
+  [`& .${classes.startSessionBtn}`]: {
     color: "red",
   },
-  sensorBox: {
+
+  [`& .${classes.sensorBox}`]: {
     color: "white",
     overflow: "hidden",
     height: "120px",
@@ -78,7 +113,8 @@ export const useStyles = makeStyles((theme) => ({
     right: 0,
     bottom: 0,
   },
-  sessionButtonStartBox: {
+
+  [`& .${classes.sessionButtonStartBox}`]: {
     color: "white",
     overflow: "hidden",
     height: "80px",
@@ -100,7 +136,8 @@ export const useStyles = makeStyles((theme) => ({
       filter: "brightness(125%)",
     },
   },
-  sessionButtonStartBoxDisabled: {
+
+  [`& .${classes.sessionButtonStartBoxDisabled}`]: {
     color: "white",
     overflow: "hidden",
     height: "80px",
@@ -118,7 +155,8 @@ export const useStyles = makeStyles((theme) => ({
     right: 0,
     bottom: 0,
   },
-  sessionButtonStopBox: {
+
+  [`& .${classes.sessionButtonStopBox}`]: {
     color: "white",
     overflow: "hidden",
     height: "80px",
@@ -140,7 +178,8 @@ export const useStyles = makeStyles((theme) => ({
       filter: "brightness(125%)",
     },
   },
-  sessionButtonStopBoxDisabled: {
+
+  [`& .${classes.sessionButtonStopBoxDisabled}`]: {
     color: "white",
     overflow: "hidden",
     height: "80px",
@@ -158,7 +197,8 @@ export const useStyles = makeStyles((theme) => ({
     right: 0,
     bottom: 0,
   },
-  currentSessionBox: {
+
+  [`& .${classes.currentSessionBox}`]: {
     color: "white",
     overflow: "hidden",
     height: "80px",
@@ -175,18 +215,23 @@ export const useStyles = makeStyles((theme) => ({
     right: 0,
     bottom: 0,
   },
-  sessionStatusText: {
+
+  [`& .${classes.sessionStatusText}`]: {
     color: "red",
     fontWeight: "bold",
     margin: "0.5rem 0",
     fontSize: "20px",
   },
-  sensorsText: {
+
+  [`& .${classes.sensorsText}`]: {
     margin: "0",
     marginBottom: "0.5rem",
     fontSize: "20px",
   },
-  sensorLastValue: {
+
+  [`& .${classes.sensorLastValue}`]: {
     fontWeight: "bold",
-  },
+  }
 }));
+
+export {};

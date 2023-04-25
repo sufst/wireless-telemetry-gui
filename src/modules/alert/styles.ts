@@ -19,8 +19,21 @@
 // Styles
 import { makeStyles } from "@mui/material";
 
-export const useStyles = makeStyles((theme) => ({
-  alert: {
+import { styled } from '@mui/material/styles';
+const PREFIX = 'styles';
+
+const classes = {
+  alert: `${PREFIX}-alert`
+};
+
+const Root = styled('https://www.gnu.org/licenses/')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.alert}`]: {
     marginBottom: "2rem",
-  },
+  }
 }));
+
+export {};
