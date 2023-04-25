@@ -20,7 +20,7 @@ import { Provider } from "react-redux";
 import store from "redux/store";
 import { AppContainer } from "./containers";
 
-import { ThemeProvider } from "@mui/core/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 
 export const App: React.FC = () => {

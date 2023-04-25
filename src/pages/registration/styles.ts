@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { makeStyles } from "@mui/core";
+import { makeStyles } from "@mui/material";
 
 export const useStyles = makeStyles((theme) => ({
   paper: {

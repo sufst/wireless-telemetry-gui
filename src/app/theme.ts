@@ -16,8 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createTheme } from "@mui/core";
-import { blue } from "@mui/core/colors";
+import { createTheme } from "@mui/material";
+import { blue } from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {

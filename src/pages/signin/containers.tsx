@@ -17,8 +17,8 @@
 */
 
 import React, { useCallback } from "react";
-import CssBaseline from "@mui/core/CssBaseline";
-import Container from "@mui/core/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
 
 import { useDispatch } from "react-redux";
 

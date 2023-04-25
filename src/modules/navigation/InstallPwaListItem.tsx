@@ -15,11 +15,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import Divider from "@mui/core/Divider";
-import GetAppIcon from "@mui/icons/GetApp";
-import ListItem from "@mui/core/ListItem";
-import ListItemIcon from "@mui/core/ListItemIcon";
-import ListItemText from "@mui/core/ListItemText";
+import Divider from "@mui/material/Divider";
+import GetAppIcon from "@mui/icons-material/GetApp";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import React, { useState } from "react";
 
 const InstallPwaListItem = (props: { key: string }) => {

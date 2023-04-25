@@ -22,31 +22,31 @@ import { useHistory } from "react-router";
 import clsx from "clsx";
 
 // Material UI Imports
-import Drawer from "@mui/core/Drawer";
-import List from "@mui/core/List";
-import Divider from "@mui/core/Divider";
-import IconButton from "@mui/core/IconButton";
-import ChevronLeftIcon from "@mui/icons/ChevronLeft";
-import ChevronRightIcon from "@mui/icons/ChevronRight";
-import ListItem from "@mui/core/ListItem";
-import ListItemIcon from "@mui/core/ListItemIcon";
-import ListItemText from "@mui/core/ListItemText";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
-import { useTheme } from "@mui/core/styles";
+import { useTheme } from "@mui/material/styles";
 import { useStyles } from "./styles";
 import InstallPwaListItem from "./InstallPwaListItem";
 
 // Material UI Icons Imports
-import AccountCircleIcon from "@mui/icons/AccountCircle";
-import SpeedIcon from "@mui/icons/Speed";
-import SupervisorAccountIcon from "@mui/icons/SupervisorAccount";
-import AccessTimeIcon from "@mui/icons/AccessTime";
-import StorageIcon from "@mui/icons/Storage";
-import RssFeedIcon from "@mui/icons/RssFeed";
-import SettingsIcon from "@mui/icons/Settings";
-import InstagramIcon from "@mui/icons/Instagram";
-import TwitterIcon from "@mui/icons/Twitter";
-import GitHubIcon from "@mui/icons/GitHub";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SpeedIcon from "@mui/icons-material/Speed";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import StorageIcon from "@mui/icons-material/Storage";
+import RssFeedIcon from "@mui/icons-material/RssFeed";
+import SettingsIcon from "@mui/icons-material/Settings";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 interface AppSideBarProps {
   handleDrawerClose: () => void;

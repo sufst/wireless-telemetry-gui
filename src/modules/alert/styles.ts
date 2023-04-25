@@ -17,7 +17,7 @@
 */
 
 // Styles
-import { makeStyles } from "@mui/core";
+import { makeStyles } from "@mui/material";
 
 export const useStyles = makeStyles((theme) => ({
   alert: {

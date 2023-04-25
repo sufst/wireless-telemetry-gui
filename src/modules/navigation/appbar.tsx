@@ -30,10 +30,10 @@ import {
   IconButton,
   Toolbar,
   Typography,
-} from "@mui/core";
+} from "@mui/material";
 
 // Material UI Icon Imports
-import MenuIcon from "@mui/icons/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
 
 // Styles
 import { useStyles } from "./styles";

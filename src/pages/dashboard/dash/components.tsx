@@ -17,7 +17,7 @@
 */
 import React, { useState, useEffect } from "react";
 import { useCallback } from "react";
-import { Box, Grid } from "@mui/core";
+import { Box, Grid } from "@mui/material";
 import { createAlert } from "modules/alert/alert";
 import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "redux/slices/alert";

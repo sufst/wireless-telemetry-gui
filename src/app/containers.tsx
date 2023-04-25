@@ -28,7 +28,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 // Material UI Imports
-import { Paper } from "@mui/core";
+import { Paper } from "@mui/material";
 
 // Component Imports
 import { Dashboard } from "pages/dashboard/index";

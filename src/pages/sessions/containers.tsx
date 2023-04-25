@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import React from "react";
-import { Paper } from "@mui/core";
+import { Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "../dashboard/session/styles";
 import { getAllSessions } from "redux/slices/sessions";

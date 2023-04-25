@@ -17,7 +17,7 @@
 */
 
 import React, { useCallback, useState } from "react";
-import { Container, CssBaseline } from "@mui/core";
+import { Container, CssBaseline } from "@mui/material";
 import { createAlert } from "modules/alert/alert";
 import {
   LoginButton,

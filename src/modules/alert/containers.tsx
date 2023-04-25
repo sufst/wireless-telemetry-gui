@@ -18,7 +18,7 @@
 
 // Module Imports
 import React from "react";
-import { Snackbar } from "@mui/core";
+import { Snackbar } from "@mui/material";
 import MuiAlert from "@mui/lab/Alert";
 import { useSelector } from "react-redux";
 
