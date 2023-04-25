@@ -63,7 +63,7 @@ const AccountContainer = (props: {
       container
       spacing={0}
       direction="row"
-      justify="center"
+      justifyContent="center"
       style={{ minHeight: "100vh" }}
     >
       <Grid item xs={8}>

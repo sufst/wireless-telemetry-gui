@@ -84,6 +84,7 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
     <div>
       <CssBaseline />
       <AppBar
+        enableColorOnDark
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -98,7 +99,7 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
             className={clsx(classes.menuButton, {
               [classes.hide]: open,
             })}
-          >
+            size="large">
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap className={classes.title}>

@@ -72,7 +72,7 @@ export const SessionTable: React.FC<{ sessionData: SessionsState }> = (
             onClick={() =>
               dispatch(getSessionDetail({ name: sessionEntry.name }))
             }
-          >
+            size="large">
             <GetAppIcon />
           </IconButton>
         </>

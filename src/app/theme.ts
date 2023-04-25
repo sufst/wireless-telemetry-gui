@@ -17,13 +17,14 @@
 */
 
 import { createTheme } from "@mui/material";
+import { adaptV4Theme } from '@mui/material/styles';
 import { blue } from "@mui/material/colors";
 
-const theme = createTheme({
+const theme = createTheme(adaptV4Theme({
   palette: {
-    type: "dark",
+    mode: "dark",
     primary: blue,
   },
-});
+}));
 
 export default theme;
