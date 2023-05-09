@@ -16,93 +16,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { makeStyles } from "@mui/styles";
+import MuiDrawer from '@mui/material/Drawer';
+import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import MuiAppBar from '@mui/material/AppBar';
+import { styled, Theme, CSSObject } from '@mui/material/styles';
+import { Button, Typography } from "@mui/material";
 
 // The width of the drawer when opened
 const DRAWER_WIDTH = 240;
-
-export const useStyles = makeStyles((theme) => ({
-  navigationRoot: {
-    display: "flex",
-  },
-  title: {
-    flexGrow: 1,
-    fontWeight: "bold",
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: DRAWER_WIDTH,
-    width: `calc(100% - ${DRAWER_WIDTH}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  usernameLabel: {
-    color: "white",
-    marginRight: "1rem",
-  },
-  loginButton: {
-    backgroundColor: "green",
-  },
-  logoutButton: {
-    backgroundColor: "red",
-  },
-  hide: {
-    display: "none",
-  },
-  drawer: {
-    width: DRAWER_WIDTH,
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-  },
-  drawerOpen: {
-    width: DRAWER_WIDTH,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: "hidden",
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9) + 1,
-    },
-  },
-  toolbar: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-}));
-
-///
-///
-///
-
-import MuiDrawer from '@mui/material/Drawer';
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: DRAWER_WIDTH,
@@ -124,6 +45,49 @@ const closedMixin = (theme: Theme): CSSObject => ({
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
+export const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})<AppBarProps>(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: DRAWER_WIDTH,
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+interface TitleAppButtonType {
+  username: string;
+}
+
+export const TitleAppBarButton = styled(Button, {
+  shouldForwardProp: (prop) => {
+    return prop !== "username";
+  }
+})((props: TitleAppButtonType) => ({
+  backgroundColor: props.username === "anonymous" ? "green" : "red",
+
+  "&:hover": {
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+  }
+}));
+
+export const TitleTypography = styled(Typography, {})(() => ({
+    flexGrow: 1,
+    fontWeight: "bold",
+}));
 
 export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({

@@ -20,11 +20,9 @@
 import React, { useCallback } from "react";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
-import clsx from "clsx";
 
 // Material UI Imports
 import {
-  AppBar,
   Button,
   CssBaseline,
   IconButton,
@@ -36,7 +34,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 
 // Styles
-import { useStyles } from "./styles";
+import { AppBar, TitleAppBarButton, TitleTypography } from "./styles";
 
 // Redux Imports
 import { logoutUser } from "redux/slices/user";
@@ -58,7 +56,6 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
   onAccountClick,
   user,
 }) => {
-  const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -83,35 +80,29 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
   return (
     <div>
       <CssBaseline />
-      <AppBar
-        enableColorOnDark
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
+      <AppBar open={open} position="fixed" enableColorOnDark>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-            size="large">
+            sx={{
+              marginRight: 5,
+              ...(open && { display: 'none' }),
+            }}
+          >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap className={classes.title}>
+
+          <TitleTypography variant="h6" noWrap>
             SUFST Telemetry
-          </Typography>
-          <Typography className={classes.usernameLabel} variant="h6">
-            {username === "anonymous" ? "" : username}
-          </Typography>
-          <Button
+          </TitleTypography>
+
+          {/* <Button
             variant="contained"
             disableElevation
-            color="secondary"
+            color="primary"
             onClick={onLoginLogoutButtonClick}
             className={
               username === "anonymous"
@@ -120,11 +111,20 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
             }
           >
             {loginLogoutButtonText()}
-          </Button>
+          </Button> */}
+
+          <TitleAppBarButton 
+            username={username!}
+            variant="contained"
+            disableElevation
+            onClick={onLoginLogoutButtonClick}
+          >
+            { loginLogoutButtonText() }
+          </TitleAppBarButton>
         </Toolbar>
       </AppBar>
     </div>
-  );
+  ); 
 };
 
 export default AppNavigationBar;
