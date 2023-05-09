@@ -15,53 +15,30 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { makeStyles } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
-import { styled } from '@mui/material/styles';
-const PREFIX = 'styles';
-
-const classes = {
-  paper: `${PREFIX}-paper`,
-  avatar: `${PREFIX}-avatar`,
-  lockIcon: `${PREFIX}-lockIcon`,
-  form: `${PREFIX}-form`,
-  submit: `${PREFIX}-submit`,
-  btnContainer: `${PREFIX}-btnContainer`
-};
-
-const Root = styled('https://www.gnu.org/licenses/')((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.paper}`]: {
+export const useStyles = makeStyles((theme) => ({
+  paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
-
-  [`& .${classes.avatar}`]: {
+  avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
-
-  [`& .${classes.lockIcon}`]: {
+  lockIcon: {
     color: "white",
   },
-
-  [`& .${classes.form}`]: {
+  form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-
-  [`& .${classes.submit}`]: {
+  submit: {
     margin: theme.spacing(2, 0, 1),
   },
-
-  [`& .${classes.btnContainer}`]: {
+  btnContainer: {
     marginTop: "2rem",
-  }
+  },
 }));
-
-export {};

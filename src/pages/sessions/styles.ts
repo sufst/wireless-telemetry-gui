@@ -15,78 +15,40 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { makeStyles } from "@mui/material";
-import { styled } from '@mui/material/styles';
-const PREFIX = 'styles';
 
-const classes = {
-  sessionsContainer: `${PREFIX}-sessionsContainer`,
-  table: `${PREFIX}-table`,
-  tableContainer: `${PREFIX}-tableContainer`,
-  tableHeaderCell: `${PREFIX}-tableHeaderCell`,
-  avatar: `${PREFIX}-avatar`,
-  name: `${PREFIX}-name`,
-  department: `${PREFIX}-department`,
-  createdAt: `${PREFIX}-createdAt`,
-  status: `${PREFIX}-status`
-};
+import { makeStyles } from "@mui/styles";
 
-const Root = styled('https://www.gnu.org/licenses/')((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.sessionsContainer}`]: {
-    margin: "10px 10px",
-    marginBottom: "3rem",
+export const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(2),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
-
-  [`& .${classes.table}`]: {
-    minWidth: 650,
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
   },
-
-  [`& .${classes.tableContainer}`]: {
-    borderRadius: 5,
-    maxWidth: "90%",
-    background: "#292929",
-  },
-
-  [`& .${classes.tableHeaderCell}`]: {
-    fontWeight: "bold",
-    fontSize: "1rem",
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.getContrastText(theme.palette.primary.dark),
-  },
-
-  [`& .${classes.avatar}`]: {
-    backgroundColor: theme.palette.primary.light,
-    color: theme.palette.getContrastText(theme.palette.primary.light),
-  },
-
-  [`& .${classes.name}`]: {
-    fontWeight: "bold",
-    marginLeft: "1.2rem",
-    paddingTop: "0.5rem",
+  department_label: {
+    marginTop: "20px",
     color: "white",
   },
-
-  [`& .${classes.department}`]: {
-    color: "lightGray",
+  department_select: {
+    marginTop: "5px",
   },
-
-  [`& .${classes.createdAt}`]: {
-    color: "lightGray",
-  },
-
-  [`& .${classes.status}`]: {
-    fontWeight: "bold",
-    fontSize: "0.75rem",
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
     color: "white",
-    backgroundColor: "grey",
-    borderRadius: 8,
-    padding: "3px 10px",
-    display: "inline-block",
-  }
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(2, 0, 1),
+  },
+  btnContainer: {
+    marginTop: "2rem",
+  },
 }));
-
-export {};

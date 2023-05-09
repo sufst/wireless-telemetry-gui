@@ -15,35 +15,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { makeStyles } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
-import { styled } from '@mui/material/styles';
-const PREFIX = 'styles';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  viewPaper: `${PREFIX}-viewPaper`,
-  alert: `${PREFIX}-alert`
-};
-
-const Root = styled('https://www.gnu.org/licenses/')((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.root}`]: {
+export const useStyles = makeStyles((theme: any) => ({
+  root: {
     display: "flex",
   },
-
-  [`& .${classes.viewPaper}`]: {
+  viewPaper: {
     margin: "45px 0px 0px 75px",
     padding: "15px",
     boxShadow: "0px 0px 0px 0px",
   },
-
-  [`& .${classes.alert}`]: {
+  alert: {
     marginBottom: "2rem",
-  }
+  },
 }));
-
-export {};

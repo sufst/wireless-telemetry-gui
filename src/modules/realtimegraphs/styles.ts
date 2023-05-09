@@ -15,55 +15,25 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { makeStyles } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
-import { styled } from '@mui/material/styles';
-const PREFIX = 'styles';
-
-const classes = {
-  root: `${PREFIX}-root`,
-  rootPaper: `${PREFIX}-rootPaper`,
-  headingText: `${PREFIX}-headingText`,
-  sensorBox: `${PREFIX}-sensorBox`,
-  sensorGraphContainerRoot: `${PREFIX}-sensorGraphContainerRoot`,
-  sensorPaperHeaderButton: `${PREFIX}-sensorPaperHeaderButton`,
-  sensorPaperHeaderTitle: `${PREFIX}-sensorPaperHeaderTitle`,
-  sensorGraph: `${PREFIX}-sensorGraph`,
-  sensorLastValue: `${PREFIX}-sensorLastValue`,
-  sensorLiveValue: `${PREFIX}-sensorLiveValue`,
-  sensorPaper: `${PREFIX}-sensorPaper`,
-  groupPaperHeaderButton: `${PREFIX}-groupPaperHeaderButton`,
-  groupPaperHeaderTitle: `${PREFIX}-groupPaperHeaderTitle`,
-  groupPaperHeader: `${PREFIX}-groupPaperHeader`,
-  groupPaper: `${PREFIX}-groupPaper`,
-  sensorNameText: `${PREFIX}-sensorNameText`,
-  sensorValueText: `${PREFIX}-sensorValueText`
-};
-
-const Root = styled('https://www.gnu.org/licenses/')((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.root}`]: {
+export const useStyles = makeStyles((theme) => ({
+  root: {
     flexGrow: 1,
   },
-
-  [`& .${classes.rootPaper}`]: {
+  rootPaper: {
     flexGrow: 1,
     padding: "1rem",
     marginBottom: "1rem",
     marginTop: "1rem",
     background: "#292929",
   },
-
-  [`& .${classes.headingText}`]: {
+  headingText: {
     margin: "0rem 0 1rem 0",
     fontSize: "20px",
     fontWeight: "bold",
   },
-
-  [`& .${classes.sensorBox}`]: {
+  sensorBox: {
     color: "white",
     overflow: "hidden",
     height: "120px",
@@ -81,18 +51,15 @@ const Root = styled('https://www.gnu.org/licenses/')((
     paddingTop: "60px",
     paddingBottom: "60px",
   },
-
-  [`& .${classes.sensorGraphContainerRoot}`]: {
+  sensorGraphContainerRoot: {
     paddingBottom: "25px",
     backgroundColor: "#292929",
   },
-
-  [`& .${classes.sensorPaperHeaderButton}`]: {
+  sensorPaperHeaderButton: {
     color: "white",
     width: "10%",
   },
-
-  [`& .${classes.sensorPaperHeaderTitle}`]: {
+  sensorPaperHeaderTitle: {
     textAlign: "left",
     color: "white",
     width: "90%",
@@ -100,61 +67,49 @@ const Root = styled('https://www.gnu.org/licenses/')((
     fontSize: 23,
     margin: "0% 0% 0% 5%",
   },
-
-  [`& .${classes.sensorGraph}`]: {
+  sensorGraph: {
     fontSize: 28,
     color: "white",
     fill: "white",
   },
-
-  [`& .${classes.sensorLastValue}`]: {
+  sensorLastValue: {
     fontWeight: "bold",
   },
-
-  [`& .${classes.sensorLiveValue}`]: {
+  sensorLiveValue: {
     textAlign: "left",
     color: "white",
     width: "90%",
     margin: "0% 0% 0% 10%",
   },
-
-  [`& .${classes.sensorPaper}`]: {
+  sensorPaper: {
     textAlign: "center",
     background: "#292929",
     width: "100%",
     margin: "1% 0% 1% 0%",
   },
-
-  [`& .${classes.groupPaperHeaderButton}`]: {
+  groupPaperHeaderButton: {
     color: "#002472",
     width: "10%",
   },
-
-  [`& .${classes.groupPaperHeaderTitle}`]: {
+  groupPaperHeaderTitle: {
     textAlign: "center",
     color: "white",
     width: "90%",
     fontSize: 33,
   },
-
-  [`& .${classes.groupPaperHeader}`]: {
+  groupPaperHeader: {
     background: "#292929",
     textAlign: "center",
     margin: "1% 0% 1% 0%",
   },
-
-  [`& .${classes.groupPaper}`]: {
+  groupPaper: {
     width: "99.9%",
     background: "#292929",
   },
-
-  [`& .${classes.sensorNameText}`]: {
+  sensorNameText: {
     paddingBottom: "10px",
   },
-
-  [`& .${classes.sensorValueText}`]: {
+  sensorValueText: {
     fontSize: "30px",
-  }
+  },
 }));
-
-export {};

@@ -16,51 +16,27 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { makeStyles } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
-import { styled } from '@mui/material/styles';
-const PREFIX = 'styles';
+// The width of the drawer when opened
+const DRAWER_WIDTH = 240;
 
-const classes = {
-  navigationRoot: `${PREFIX}-navigationRoot`,
-  title: `${PREFIX}-title`,
-  appBar: `${PREFIX}-appBar`,
-  appBarShift: `${PREFIX}-appBarShift`,
-  menuButton: `${PREFIX}-menuButton`,
-  usernameLabel: `${PREFIX}-usernameLabel`,
-  loginButton: `${PREFIX}-loginButton`,
-  logoutButton: `${PREFIX}-logoutButton`,
-  hide: `${PREFIX}-hide`,
-  drawer: `${PREFIX}-drawer`,
-  drawerOpen: `${PREFIX}-drawerOpen`,
-  drawerClose: `${PREFIX}-drawerClose`,
-  toolbar: `${PREFIX}-toolbar`,
-  content: `${PREFIX}-content`
-};
-
-const Root = styled('https://www.gnu.org/licenses/')((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.navigationRoot}`]: {
+export const useStyles = makeStyles((theme) => ({
+  navigationRoot: {
     display: "flex",
   },
-
-  [`& .${classes.title}`]: {
+  title: {
     flexGrow: 1,
     fontWeight: "bold",
   },
-
-  [`& .${classes.appBar}`]: {
+  appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
-
-  [`& .${classes.appBarShift}`]: {
+  appBarShift: {
     marginLeft: DRAWER_WIDTH,
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
     transition: theme.transitions.create(["width", "margin"], {
@@ -68,43 +44,35 @@ const Root = styled('https://www.gnu.org/licenses/')((
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-
-  [`& .${classes.menuButton}`]: {
+  menuButton: {
     marginRight: 36,
   },
-
-  [`& .${classes.usernameLabel}`]: {
+  usernameLabel: {
     color: "white",
     marginRight: "1rem",
   },
-
-  [`& .${classes.loginButton}`]: {
+  loginButton: {
     backgroundColor: "green",
   },
-
-  [`& .${classes.logoutButton}`]: {
+  logoutButton: {
     backgroundColor: "red",
   },
-
-  [`& .${classes.hide}`]: {
+  hide: {
     display: "none",
   },
-
-  [`& .${classes.drawer}`]: {
+  drawer: {
     width: DRAWER_WIDTH,
     flexShrink: 0,
     whiteSpace: "nowrap",
   },
-
-  [`& .${classes.drawerOpen}`]: {
+  drawerOpen: {
     width: DRAWER_WIDTH,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-
-  [`& .${classes.drawerClose}`]: {
+  drawerClose: {
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -115,8 +83,7 @@ const Root = styled('https://www.gnu.org/licenses/')((
       width: theme.spacing(9) + 1,
     },
   },
-
-  [`& .${classes.toolbar}`]: {
+  toolbar: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
@@ -124,14 +91,8 @@ const Root = styled('https://www.gnu.org/licenses/')((
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
-
-  [`& .${classes.content}`]: {
+  content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-  }
+  },
 }));
-
-// The width of the drawer when opened
-const DRAWER_WIDTH = 240;
-
-export {};

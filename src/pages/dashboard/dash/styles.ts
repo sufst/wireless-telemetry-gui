@@ -16,53 +16,23 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { makeStyles } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 
-import { styled } from '@mui/material/styles';
-const PREFIX = 'styles';
-
-const classes = {
-  rootPaper: `${PREFIX}-rootPaper`,
-  gridContainer: `${PREFIX}-gridContainer`,
-  item: `${PREFIX}-item`,
-  box: `${PREFIX}-box`,
-  status: `${PREFIX}-status`,
-  currentTimeText: `${PREFIX}-currentTimeText`,
-  time: `${PREFIX}-time`,
-  startSessionBtn: `${PREFIX}-startSessionBtn`,
-  sensorBox: `${PREFIX}-sensorBox`,
-  sessionButtonStartBox: `${PREFIX}-sessionButtonStartBox`,
-  sessionButtonStartBoxDisabled: `${PREFIX}-sessionButtonStartBoxDisabled`,
-  sessionButtonStopBox: `${PREFIX}-sessionButtonStopBox`,
-  sessionButtonStopBoxDisabled: `${PREFIX}-sessionButtonStopBoxDisabled`,
-  currentSessionBox: `${PREFIX}-currentSessionBox`,
-  sessionStatusText: `${PREFIX}-sessionStatusText`,
-  sensorsText: `${PREFIX}-sensorsText`,
-  sensorLastValue: `${PREFIX}-sensorLastValue`
-};
-
-const Root = styled('https://www.gnu.org/licenses/')((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.rootPaper}`]: {
+export const useStyles = makeStyles((theme) => ({
+  rootPaper: {
     flexGrow: 1,
     padding: "1rem",
     marginBottom: "1rem",
     marginTop: "1rem",
     background: "#292929",
   },
-
-  [`& .${classes.gridContainer}`]: {
+  gridContainer: {
     marginBottom: "0.5rem",
   },
-
-  [`& .${classes.item}`]: {
+  item: {
     height: "130px",
   },
-
-  [`& .${classes.box}`]: {
+  box: {
     color: "white",
     overflow: "hidden",
     height: "120px",
@@ -77,27 +47,22 @@ const Root = styled('https://www.gnu.org/licenses/')((
     right: 0,
     bottom: 0,
   },
-
-  [`& .${classes.status}`]: {
+  status: {
     fontWeight: "bold",
   },
-
-  [`& .${classes.currentTimeText}`]: {
+  currentTimeText: {
     fontSize: "20px",
     margin: "0",
     marginBottom: "0.5rem",
     padding: "0",
   },
-
-  [`& .${classes.time}`]: {
+  time: {
     fontWeight: "bold",
   },
-
-  [`& .${classes.startSessionBtn}`]: {
+  startSessionBtn: {
     color: "red",
   },
-
-  [`& .${classes.sensorBox}`]: {
+  sensorBox: {
     color: "white",
     overflow: "hidden",
     height: "120px",
@@ -113,8 +78,7 @@ const Root = styled('https://www.gnu.org/licenses/')((
     right: 0,
     bottom: 0,
   },
-
-  [`& .${classes.sessionButtonStartBox}`]: {
+  sessionButtonStartBox: {
     color: "white",
     overflow: "hidden",
     height: "80px",
@@ -136,8 +100,7 @@ const Root = styled('https://www.gnu.org/licenses/')((
       filter: "brightness(125%)",
     },
   },
-
-  [`& .${classes.sessionButtonStartBoxDisabled}`]: {
+  sessionButtonStartBoxDisabled: {
     color: "white",
     overflow: "hidden",
     height: "80px",
@@ -155,8 +118,7 @@ const Root = styled('https://www.gnu.org/licenses/')((
     right: 0,
     bottom: 0,
   },
-
-  [`& .${classes.sessionButtonStopBox}`]: {
+  sessionButtonStopBox: {
     color: "white",
     overflow: "hidden",
     height: "80px",
@@ -178,8 +140,7 @@ const Root = styled('https://www.gnu.org/licenses/')((
       filter: "brightness(125%)",
     },
   },
-
-  [`& .${classes.sessionButtonStopBoxDisabled}`]: {
+  sessionButtonStopBoxDisabled: {
     color: "white",
     overflow: "hidden",
     height: "80px",
@@ -197,8 +158,7 @@ const Root = styled('https://www.gnu.org/licenses/')((
     right: 0,
     bottom: 0,
   },
-
-  [`& .${classes.currentSessionBox}`]: {
+  currentSessionBox: {
     color: "white",
     overflow: "hidden",
     height: "80px",
@@ -215,23 +175,18 @@ const Root = styled('https://www.gnu.org/licenses/')((
     right: 0,
     bottom: 0,
   },
-
-  [`& .${classes.sessionStatusText}`]: {
+  sessionStatusText: {
     color: "red",
     fontWeight: "bold",
     margin: "0.5rem 0",
     fontSize: "20px",
   },
-
-  [`& .${classes.sensorsText}`]: {
+  sensorsText: {
     margin: "0",
     marginBottom: "0.5rem",
     fontSize: "20px",
   },
-
-  [`& .${classes.sensorLastValue}`]: {
+  sensorLastValue: {
     fontWeight: "bold",
-  }
+  },
 }));
-
-export {};

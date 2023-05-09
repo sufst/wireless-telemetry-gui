@@ -16,66 +16,39 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { makeStyles } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
-import { styled } from '@mui/material/styles';
-const PREFIX = 'styles';
-
-const classes = {
-  paper: `${PREFIX}-paper`,
-  formControl: `${PREFIX}-formControl`,
-  department_label: `${PREFIX}-department_label`,
-  department_select: `${PREFIX}-department_select`,
-  avatar: `${PREFIX}-avatar`,
-  form: `${PREFIX}-form`,
-  submit: `${PREFIX}-submit`,
-  btnContainer: `${PREFIX}-btnContainer`
-};
-
-const Root = styled('https://www.gnu.org/licenses/')((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.paper}`]: {
+export const useStyles = makeStyles((theme) => ({
+  paper: {
     marginTop: theme.spacing(2),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
-
-  [`& .${classes.formControl}`]: {
+  formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
   },
-
-  [`& .${classes.department_label}`]: {
+  department_label: {
     marginTop: "20px",
     color: "white",
   },
-
-  [`& .${classes.department_select}`]: {
+  department_select: {
     marginTop: "5px",
   },
-
-  [`& .${classes.avatar}`]: {
+  avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
     color: "white",
   },
-
-  [`& .${classes.form}`]: {
+  form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-
-  [`& .${classes.submit}`]: {
+  submit: {
     margin: theme.spacing(2, 0, 1),
   },
-
-  [`& .${classes.btnContainer}`]: {
+  btnContainer: {
     marginTop: "2rem",
-  }
+  },
 }));
-
-export {};
