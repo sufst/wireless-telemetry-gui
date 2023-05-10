@@ -98,6 +98,9 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
             SUFST Telemetry
           </TitleTypography>
 
+          <Typography sx={{ marginRight: "1rem" }}>
+            { username === "anonymous" ? "" : username }
+          </Typography>
 
           <TitleAppBarButton variant="contained" disableElevation
             username={username!} onClick={ onLoginLogoutButtonClick }

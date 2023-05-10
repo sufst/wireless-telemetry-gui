@@ -66,6 +66,11 @@ export const useStyles = makeStyles((theme) => ({
   btn: {
     marginTop: "20px",
     backgroundColor: "red",
+    color: "white",
+
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.8)"
+    }
   },
   btn_register: {
     marginTop: "20px",
