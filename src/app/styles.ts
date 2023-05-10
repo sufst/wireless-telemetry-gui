@@ -22,6 +22,7 @@ export const useStyles = makeStyles((theme: any) => ({
     display: "flex",
   },
   viewPaper: {
+    backgroundColor: "#3a3a3a",
     margin: "45px 0px 0px 75px",
     padding: "15px",
     boxShadow: "0px 0px 0px 0px",

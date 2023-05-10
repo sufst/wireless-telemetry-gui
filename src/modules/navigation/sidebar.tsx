@@ -101,6 +101,10 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
     <Drawer 
       variant="permanent"
       open={open}
+      PaperProps={{
+        sx: {
+        backgroundColor: "#3a3a3a",
+      }}}
     >
       <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>

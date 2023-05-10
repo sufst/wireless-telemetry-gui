@@ -84,7 +84,6 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
         <Toolbar>
           <IconButton
             color="inherit"
-            aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
@@ -99,25 +98,9 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
             SUFST Telemetry
           </TitleTypography>
 
-          {/* <Button
-            variant="contained"
-            disableElevation
-            color="primary"
-            onClick={onLoginLogoutButtonClick}
-            className={
-              username === "anonymous"
-                ? classes.loginButton
-                : classes.logoutButton
-            }
-          >
-            {loginLogoutButtonText()}
-          </Button> */}
 
-          <TitleAppBarButton 
-            username={username!}
-            variant="contained"
-            disableElevation
-            onClick={onLoginLogoutButtonClick}
+          <TitleAppBarButton variant="contained" disableElevation
+            username={username!} onClick={ onLoginLogoutButtonClick }
           >
             { loginLogoutButtonText() }
           </TitleAppBarButton>
