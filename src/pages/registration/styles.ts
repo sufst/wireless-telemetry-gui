@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { makeStyles } from "@mui/styles";
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,7 +38,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.grey[600],
+    backgroundColor: theme.palette.secondary.main,
     color: "white",
   },
   form: {

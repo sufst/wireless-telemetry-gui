@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Color } from "@mui/lab/Alert";
+import { Color } from '@mui/material/Alert';
 
 export type AlertTimeout = number;
 export type AlertLevel = Color;

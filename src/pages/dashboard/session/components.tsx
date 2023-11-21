@@ -154,7 +154,7 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (
 
   return (
     <>
-      <p className={classes.newSessionText}>New Session</p>
+      <p className={classes.newSessionTextHeader}>New Session</p>
       <FormControl error={error}>
         <Box>
           <TextField
@@ -281,7 +281,7 @@ export const SessionTable = (props: { sessionData: SessionsState }) => {
       actions: (
         <>
           {/* TODO: Add callback to download data and add button to stop session */}
-          <IconButton color="primary" component="span">
+          <IconButton color="primary" component="span" size="large">
             <GetAppIcon />
           </IconButton>
         </>

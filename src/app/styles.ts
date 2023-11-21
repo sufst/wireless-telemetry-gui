@@ -15,14 +15,13 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import { makeStyles } from "@mui/styles";
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles((theme: any) => ({
   root: {
     display: "flex",
   },
   viewPaper: {
-    backgroundColor: "#3a3a3a",
     margin: "45px 0px 0px 75px",
     padding: "15px",
     boxShadow: "0px 0px 0px 0px",

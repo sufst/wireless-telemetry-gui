@@ -20,9 +20,11 @@
 import React, { useCallback } from "react";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
+import clsx from "clsx";
 
 // Material UI Imports
 import {
+  AppBar,
   Button,
   CssBaseline,
   IconButton,
@@ -34,7 +36,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 
 // Styles
-import { AppBar, TitleAppBarButton, TitleTypography } from "./styles";
+import { useStyles } from "./styles";
 
 // Redux Imports
 import { logoutUser } from "redux/slices/user";
@@ -56,6 +58,7 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
   onAccountClick,
   user,
 }) => {
+  const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -80,37 +83,47 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
   return (
     <div>
       <CssBaseline />
-      <AppBar open={open} position="fixed" enableColorOnDark>
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
+            aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
+            className={clsx(classes.menuButton, {
+              [classes.hide]: open,
+            })}
+            size="large">
             <MenuIcon />
           </IconButton>
-
-          <TitleTypography variant="h6" noWrap>
+          <Typography variant="h6" noWrap className={classes.title}>
             SUFST Telemetry
-          </TitleTypography>
-
-          <Typography sx={{ marginRight: "1rem" }}>
-            { username === "anonymous" ? "" : username }
           </Typography>
-
-          <TitleAppBarButton variant="contained" disableElevation
-            username={username!} onClick={ onLoginLogoutButtonClick }
+          <Typography className={classes.usernameLabel} variant="h6">
+            {username === "anonymous" ? "" : username}
+          </Typography>
+          <Button
+            variant="contained"
+            disableElevation
+            color="secondary"
+            onClick={onLoginLogoutButtonClick}
+            className={
+              username === "anonymous"
+                ? classes.loginButton
+                : classes.logoutButton
+            }
           >
-            { loginLogoutButtonText() }
-          </TitleAppBarButton>
+            {loginLogoutButtonText()}
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
-  ); 
+  );
 };
 
 export default AppNavigationBar;

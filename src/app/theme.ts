@@ -17,14 +17,37 @@
 */
 
 import { createTheme } from "@mui/material";
-import { adaptV4Theme } from '@mui/material/styles';
-import { blue } from "@mui/material/colors";
 
-const theme = createTheme(adaptV4Theme({
+const theme = createTheme({
   palette: {
-    mode: "dark",
-    primary: blue,
+    mode: 'dark',
+    primary: {
+      main: "#2196f3",
+      dark: "#2196f3",
+    },
+    background:{
+      default:"#303030",
+      paper:"#303030",
+    }
   },
-}));
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: "white",
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides:{
+        root:{
+          '@media (min-width: 600px)': {
+            minWidth: '160px'
+          }
+        }
+      }
+  }
+},
+});
 
 export default theme;

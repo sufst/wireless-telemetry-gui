@@ -19,8 +19,10 @@
 // Module Imports
 import React, { useCallback, useMemo } from "react";
 import { useHistory } from "react-router";
+import clsx from "clsx";
 
 // Material UI Imports
+import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -29,10 +31,9 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from "@mui/material/ListItemButton";
 
 import { useTheme } from "@mui/material/styles";
-import { DrawerHeader, Drawer } from "./styles";
+import { useStyles } from "./styles";
 import InstallPwaListItem from "./InstallPwaListItem";
 
 // Material UI Icons Imports
@@ -43,6 +44,9 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import StorageIcon from "@mui/icons-material/Storage";
 import RssFeedIcon from "@mui/icons-material/RssFeed";
 import SettingsIcon from "@mui/icons-material/Settings";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 interface AppSideBarProps {
   handleDrawerClose: () => void;
@@ -50,7 +54,9 @@ interface AppSideBarProps {
 }
 
 const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
+  const classes = useStyles();
   const theme = useTheme();
+
   const history = useHistory();
 
   const actionTitles = [
@@ -63,6 +69,8 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
     "Settings",
   ];
 
+  const socialTitles = ["Instagram", "Twitter", "GitHub"];
+
   const actionIcons = useMemo(() => {
     return [
       <AccountCircleIcon key="accountCircleIcon" />,
@@ -72,6 +80,14 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
       <StorageIcon key="storageIcon" />,
       <RssFeedIcon key="rssFeedIcon" />,
       <SettingsIcon key="settingsIcon" />,
+    ];
+  }, []);
+
+  const socialIcons = useMemo(() => {
+    return [
+      <InstagramIcon key="instagramIcon" />,
+      <TwitterIcon key="twitterIcon" />,
+      <GitHubIcon key="githubIcon" />,
     ];
   }, []);
 
@@ -88,6 +104,15 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
     [history]
   );
 
+  const handleSocialIconClicked = useMemo(
+    () => [
+      () => openSocial("https://www.instagram.com/sufst"),
+      () => openSocial("https://twitter.com/sufst"),
+      () => openSocial("https://github.com/orgs/sufst"),
+    ],
+    []
+  );
+
   const onIconClick = useCallback(
     (index) => {
       if (index < handleActionIconClicked.length) {
@@ -97,40 +122,66 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
     [handleActionIconClicked]
   );
 
-  return (
-    <Drawer 
-      variant="permanent"
-      open={open}
-      PaperProps={{
-        sx: {
-        backgroundColor: "#3a3a3a",
-      }}}
-    >
-      <DrawerHeader>
-        <IconButton onClick={handleDrawerClose}>
-          { theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-        </IconButton>
-      </DrawerHeader>
-      <Divider />
-
-      <List>
-        { actionTitles.map((text, index) => (
-          <ListItem 
-            key={text} 
-            disablePadding
-            onClick={() => onIconClick(index)}>
-            <ListItemButton>
-              <ListItemIcon>{actionIcons[index]}</ListItemIcon>
-              <ListItemText primary={text}/>
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider/>
-      
-      <InstallPwaListItem key={"install"} />
-    </Drawer>
+  const onSocialClick = useCallback(
+    (index) => {
+      if (index < handleSocialIconClicked.length) {
+        handleSocialIconClicked[index]();
+      }
+    },
+    [handleSocialIconClicked]
   );
-}; 
+
+  const openSocial = (url: string) => {
+    const win = window.open(url, "_blank");
+    win?.focus();
+  };
+
+  return (
+    <div>
+      <Drawer
+        variant="permanent"
+        className={clsx(classes.drawer, {
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open,
+        })}
+        classes={{
+          paper: clsx({
+            [classes.drawerOpen]: open,
+            [classes.drawerClose]: !open,
+          }),
+        }}
+      >
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawerClose} size="large">
+            {theme.direction === "rtl" ? (
+              <ChevronRightIcon />
+            ) : (
+              <ChevronLeftIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {actionTitles.map((text, index) => (
+            <ListItem button key={text} onClick={() => onIconClick(index)}>
+              <ListItemIcon>{actionIcons[index]}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {socialTitles.map((text, index) => (
+            <ListItem button key={text} onClick={() => onSocialClick(index)}>
+              <ListItemIcon>{socialIcons[index]}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <InstallPwaListItem key={"install"} />
+      </Drawer>
+    </div>
+  );
+};
 
 export default AppSideBar;

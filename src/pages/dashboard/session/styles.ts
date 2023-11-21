@@ -16,9 +16,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { makeStyles, createStyles } from "@mui/styles";
+import { Theme } from "@mui/material/styles";
 
-export const useStyles = makeStyles((theme) =>
+import makeStyles from '@mui/styles/makeStyles';
+import createStyles from '@mui/styles/createStyles';
+
+export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
@@ -42,6 +45,12 @@ export const useStyles = makeStyles((theme) =>
       margin: "auto",
       flexGrow: 1,
       fontSize: "20px",
+    },
+    newSessionTextHeader: {
+      margin: "auto",
+      flexGrow: 1,
+      fontSize: "20px",
+      marginBottom: "1rem",
     },
     heading: {
       fontSize: theme.typography.pxToRem(15),

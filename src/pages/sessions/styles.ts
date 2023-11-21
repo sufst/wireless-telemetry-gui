@@ -15,40 +15,49 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
-import { makeStyles } from "@mui/styles";
-
+import makeStyles from '@mui/styles/makeStyles';
 export const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(2),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+  sessionsContainer: {
+    margin: "10px 10px",
+    marginBottom: "3rem",
   },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
+  table: {
+    minWidth: 650,
   },
-  department_label: {
-    marginTop: "20px",
-    color: "white",
+  tableContainer: {
+    borderRadius: 5,
+    maxWidth: "90%",
+    background: "#292929",
   },
-  department_select: {
-    marginTop: "5px",
+  tableHeaderCell: {
+    fontWeight: "bold",
+    fontSize: "1rem",
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.getContrastText(theme.palette.primary.dark),
   },
   avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.getContrastText(theme.palette.primary.light),
+  },
+  name: {
+    fontWeight: "bold",
+    marginLeft: "1.2rem",
+    paddingTop: "0.5rem",
     color: "white",
   },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+  department: {
+    color: "lightGray",
   },
-  submit: {
-    margin: theme.spacing(2, 0, 1),
+  createdAt: {
+    color: "lightGray",
   },
-  btnContainer: {
-    marginTop: "2rem",
+  status: {
+    fontWeight: "bold",
+    fontSize: "0.75rem",
+    color: "white",
+    backgroundColor: "grey",
+    borderRadius: 8,
+    padding: "3px 10px",
+    display: "inline-block",
   },
 }));
