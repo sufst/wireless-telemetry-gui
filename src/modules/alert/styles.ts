@@ -17,10 +17,9 @@
 */
 
 // Styles
-import makeStyles from '@mui/styles/makeStyles';
+import styled from '@emotion/styled';
+import MUIAlert from "@mui/material/Alert"
 
-export const useStyles = makeStyles((theme) => ({
-  alert: {
-    marginBottom: "2rem",
-  },
+export const Alert = styled(MUIAlert)(() => ({
+  marginBottom: "2rem",
 }));

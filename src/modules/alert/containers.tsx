@@ -19,23 +19,21 @@
 // Module Imports
 import React from "react";
 import { Snackbar } from "@mui/material";
-import MuiAlert from '@mui/material/Alert';
-import { Alert } from "@mui/material";
+// import { Alert } from "@mui/material";
 import { useSelector } from "react-redux";
 
 // Styles
-import { useStyles } from "./styles";
+import { Alert } from "./styles";
 
 // Redux Imports
 import type { RootState } from "redux/store";
 
 const OfflineBanner = () => {
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
     <Alert
       elevation={6}
       variant="filled"
-      className={classes.alert}
       severity="error"
     >
       Lost connection to the server
@@ -44,7 +42,6 @@ const OfflineBanner = () => {
 };
 
 const AlertContainer: React.FC = () => {
-  const classes = useStyles();
 
   const selectAlert = (state: RootState) => state.alert;
   const { text, type, timeout, level } = useSelector(selectAlert);
@@ -56,7 +53,6 @@ const AlertContainer: React.FC = () => {
         <Alert
           elevation={6}
           variant="filled"
-          className={classes.alert}
           severity={level}
         >
           {text ?? ""}
@@ -66,7 +62,6 @@ const AlertContainer: React.FC = () => {
       <Alert
         elevation={6}
         variant="filled"
-        className={classes.alert}
         severity={level}
       >
         {text ?? ""}
