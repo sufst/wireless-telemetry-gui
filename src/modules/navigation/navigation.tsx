@@ -27,13 +27,12 @@ import AppNavigationBar from "./appbar";
 import AppSideBar from "./sidebar";
 
 // Material UI Imports
-import { useStyles } from "./styles";
+import { NavigationRoot } from "./styles";
 
 /**
  * A Container that holds all the logic & views for the main AppBar and the AppSideBar
  */
 const AppNav: React.FC = () => {
-  const classes = useStyles();
   const history = useHistory();
 
   const user = useSelector((state: RootState) => state.user);
@@ -53,7 +52,7 @@ const AppNav: React.FC = () => {
   }, [history]);
 
   return (
-    <div className={classes.navigationRoot}>
+    <NavigationRoot>
       <AppNavigationBar
         open={open}
         handleDrawerOpen={handleDrawerOpen}
@@ -61,8 +60,11 @@ const AppNav: React.FC = () => {
         user={user}
       />
       SideBar
-      <AppSideBar open={open} handleDrawerClose={handleDrawerClose} />
-    </div>
+      <AppSideBar
+        open={open}
+        handleDrawerClose={handleDrawerClose}
+      />
+    </NavigationRoot>
   );
 };
 

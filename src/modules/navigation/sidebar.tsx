@@ -19,7 +19,6 @@
 // Module Imports
 import React, { useCallback, useMemo } from "react";
 import { useHistory } from "react-router";
-import clsx from "clsx";
 
 // Material UI Imports
 // import Drawer from "@mui/material/Drawer";
@@ -153,7 +152,8 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
           <ListItem
             key={text}
             disablePadding
-            onClick={() => onIconClick(index)}>
+            onClick={() => onIconClick(index)}
+          >
             <ListItemButton>
               <ListItemIcon>{actionIcons[index]}</ListItemIcon>
               <ListItemText primary={text}/>

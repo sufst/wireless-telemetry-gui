@@ -17,7 +17,7 @@
 */
 import Divider from "@mui/material/Divider";
 import GetAppIcon from "@mui/icons-material/GetApp";
-import ListItem from "@mui/material/ListItem";
+import { ListItemButton } from "@mui/material"
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import React, { useState } from "react";
@@ -43,12 +43,17 @@ const InstallPwaListItem = (props: { key: string }) => {
     return (
       <>
         <Divider />
-        <ListItem button key={props.key} onClick={onButtonClick}>
+        <ListItemButton
+          key={props.key}
+          onClick={onButtonClick}
+        >
           <ListItemIcon>
             <GetAppIcon />
           </ListItemIcon>
-          <ListItemText>Install</ListItemText>
-        </ListItem>
+          <ListItemText>
+            Install
+          </ListItemText>
+        </ListItemButton>
       </>
     );
   } else {
