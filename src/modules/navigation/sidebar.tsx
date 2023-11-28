@@ -22,7 +22,7 @@ import { useHistory } from "react-router";
 import clsx from "clsx";
 
 // Material UI Imports
-import Drawer from "@mui/material/Drawer";
+// import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -33,7 +33,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
 import { useTheme } from "@mui/material/styles";
-import { useStyles } from "./styles";
+import { Drawer, DrawerHeader } from "./styles";
 import InstallPwaListItem from "./InstallPwaListItem";
 
 // Material UI Icons Imports
@@ -47,6 +47,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { ListItemButton } from "@mui/material";
 
 interface AppSideBarProps {
   handleDrawerClose: () => void;
@@ -54,7 +55,6 @@ interface AppSideBarProps {
 }
 
 const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
-  const classes = useStyles();
   const theme = useTheme();
 
   const history = useHistory();
@@ -137,50 +137,41 @@ const AppSideBar: React.FC<AppSideBarProps> = ({ handleDrawerClose, open }) => {
   };
 
   return (
-    <div>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose} size="large">
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {actionTitles.map((text, index) => (
-            <ListItem button key={text} onClick={() => onIconClick(index)}>
+    <Drawer
+      variant="permanent"
+      open={open}
+    >
+      <DrawerHeader>
+        <IconButton onClick={handleDrawerClose}>
+          { theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+        </IconButton>
+      </DrawerHeader>
+      <Divider />
+
+      <List>
+        { actionTitles.map((text, index) => (
+          <ListItem
+            key={text}
+            disablePadding
+            onClick={() => onIconClick(index)}>
+            <ListItemButton>
               <ListItemIcon>{actionIcons[index]}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {socialTitles.map((text, index) => (
-            <ListItem button key={text} onClick={() => onSocialClick(index)}>
-              <ListItemIcon>{socialIcons[index]}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <InstallPwaListItem key={"install"} />
-      </Drawer>
-    </div>
+              <ListItemText primary={text}/>
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider/>
+      <List>
+        {socialTitles.map((text, index) => (
+          <ListItemButton key={text} onClick={() => onSocialClick(index)}>
+            <ListItemIcon>{socialIcons[index]}</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItemButton>
+        ))}
+      </List>
+      <InstallPwaListItem key={"install"} />
+    </Drawer>
   );
 };
 
