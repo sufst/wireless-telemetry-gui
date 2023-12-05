@@ -17,7 +17,7 @@
 */
 import React from "react";
 import { UserState } from "types/models/user";
-import { useStyles, getColorForPrivelege } from "./styles";
+import { getColorForPrivelege, TableHeaderCell, Avatar, Username } from "./styles";
 import { v4 } from "uuid";
 
 import {
@@ -28,7 +28,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Avatar,
   Grid,
   Typography,
 } from "@mui/material";
@@ -36,11 +35,17 @@ import {
 export const AdminPanelTable: React.FC<{ users: UserState[] }> = ({
   users,
 }) => {
-  const classes = useStyles();
 
   return (
-    <TableContainer component={Paper} className={classes.tableContainer}>
-      <Table className={classes.table} aria-label="simple table">
+    <TableContainer
+      component={Paper}
+      sx={{
+        borderRadius: 5,
+        maxWidth: "90%",
+        background: "#292929",
+      }}
+    >
+      <Table sx={{minWidth: 650}} aria-label="simple table">
         <AdminPanelTableHead />
         <TableBody>
           {users.map((user) => (
@@ -54,7 +59,6 @@ export const AdminPanelTable: React.FC<{ users: UserState[] }> = ({
 
 // TODO: Solve the warning about user.creation being optional, even though its requied as part of the calculation, potentially breaking the application
 const AdminPanelTableRow: React.FC<{ user: UserState }> = ({ user }) => {
-  const classes = useStyles();
 
   // TODO: Remove force unwrapping here. Make it safer.
   const createdAt = new Date(user.creation! * 1000).toLocaleString("en-GB", {
@@ -68,17 +72,17 @@ const AdminPanelTableRow: React.FC<{ user: UserState }> = ({ user }) => {
       <TableCell>
         <Grid container>
           <Grid item lg={2}>
-            <Avatar alt={user.username} src="." className={classes.avatar} />
+            <Avatar alt={user.username} src="." />
           </Grid>
           <Grid item lg={10}>
-            <Typography className={classes.name}>{user.username}</Typography>
+            <Username>{user.username}</Username>
           </Grid>
         </Grid>
       </TableCell>
 
       <TableCell>
         <Typography
-          className={classes.department}
+          sx={{color: "lightGray"}}
           color="primary"
           variant="subtitle2"
         >
@@ -98,22 +102,23 @@ const AdminPanelTableRow: React.FC<{ user: UserState }> = ({ user }) => {
       </TableCell>
 
       <TableCell>
-        <div className={classes.createdAt}>{createdAt}</div>
+        <div style={{color: "lightGray"}}>
+          {createdAt}
+        </div>
       </TableCell>
     </TableRow>
   );
 };
 
 const AdminPanelTableHead: React.FC = () => {
-  const classes = useStyles();
 
   return (
     <TableHead>
       <TableRow>
-        <TableCell className={classes.tableHeaderCell}>Username</TableCell>
-        <TableCell className={classes.tableHeaderCell}>Department</TableCell>
-        <TableCell className={classes.tableHeaderCell}>Privilege</TableCell>
-        <TableCell className={classes.tableHeaderCell}>Created At</TableCell>
+        <TableHeaderCell>Username</TableHeaderCell>
+        <TableHeaderCell>Department</TableHeaderCell>
+        <TableHeaderCell>Privilege</TableHeaderCell>
+        <TableHeaderCell>Created At</TableHeaderCell>
       </TableRow>
     </TableHead>
   );

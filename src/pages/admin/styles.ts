@@ -16,7 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from "@mui/material/styles";
+import MUITableCell from "@mui/material/TableCell";
+import MUIAvatar from "@mui/material/Avatar";
+import MUITypography from "@mui/material/Typography"
 import { UserPrivilege } from "types/models/user";
 
 export const getColorForPrivelege = (privilege: UserPrivilege) => {
@@ -34,48 +37,26 @@ export const getColorForPrivelege = (privilege: UserPrivilege) => {
   }
 };
 
-export const useStyles = makeStyles((theme) => ({
-  adminPanelContainer: {
-    margin: "10px 10px",
-    marginBottom: "3rem",
-  },
-  table: {
-    minWidth: 650,
-  },
-  tableContainer: {
-    borderRadius: 5,
-    maxWidth: "90%",
-    background: "#292929",
-  },
-  tableHeaderCell: {
-    fontWeight: "bold",
-    fontSize: "1rem",
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.getContrastText(theme.palette.primary.dark),
-  },
-  avatar: {
-    backgroundColor: theme.palette.primary.light,
-    color: theme.palette.getContrastText(theme.palette.primary.light),
-  },
-  name: {
-    fontWeight: "bold",
-    marginLeft: "1.2rem",
-    paddingTop: "0.5rem",
-    color: "white",
-  },
-  department: {
-    color: "lightGray",
-  },
-  createdAt: {
-    color: "lightGray",
-  },
-  status: {
-    fontWeight: "bold",
-    fontSize: "0.75rem",
-    color: "white",
-    backgroundColor: "grey",
-    borderRadius: 8,
-    padding: "3px 10px",
-    display: "inline-block",
-  },
-}));
+export const TableHeaderCell = styled(MUITableCell)(({theme})=>({
+  fontWeight: "bold",
+  fontSize: "1rem",
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.getContrastText(theme.palette.primary.dark),
+}))
+
+export const Avatar = styled(MUIAvatar)(({theme})=>({
+  backgroundColor: theme.palette.primary.light,
+  color: theme.palette.getContrastText(theme.palette.primary.light),
+}))
+
+export const Username = styled(MUITypography)(()=>({
+  fontWeight: "bold",
+  marginLeft: "1.2rem",
+  paddingTop: "0.5rem",
+  color: "white",
+}))
+
+export const AdminPanel = styled("div")(()=>({
+  margin: "10px 10px",
+  marginBottom: "3rem",
+}))
