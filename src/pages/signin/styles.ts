@@ -15,30 +15,31 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
+import MUIButton from "@mui/material/Button";
+import MUIAvatar from "@mui/material/Avatar";
 
-export const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  lockIcon: {
-    color: "white",
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(2, 0, 1),
-  },
-  btnContainer: {
-    marginTop: "2rem",
-  },
+export const SignInPaper = styled('div')(({theme})=>({
+  marginTop: theme.spacing(8),
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
 }));
+
+export const SignInForm = styled('form')(({theme})=>({
+  width: "100%", // Fix IE 11 issue.
+  marginTop: theme.spacing(1),
+}))
+
+export const ButtonContainer = styled('div')(()=>({
+  marginTop: "2rem",
+}))
+
+export const SubmitButton = styled(MUIButton)(({theme})=>({
+  margin: theme.spacing(2, 0, 1),
+}))
+
+export const Avatar = styled(MUIAvatar)(({theme})=>({
+  margin: theme.spacing(1),
+  backgroundColor: theme.palette.secondary.main,
+}))

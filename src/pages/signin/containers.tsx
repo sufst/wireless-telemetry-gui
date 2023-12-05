@@ -31,10 +31,9 @@ import {
   PasswordField,
 } from "./components";
 
-import { useStyles } from "./styles";
+import { ButtonContainer, SignInForm, SignInPaper } from "./styles";
 
 const LoginContainer: React.FC = () => {
-  const classes = useStyles();
 
   const dispatch = useDispatch();
 
@@ -53,16 +52,16 @@ const LoginContainer: React.FC = () => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
+      <SignInPaper>
         <LoginHeader />
-        <form className={classes.form} noValidate onSubmit={onLoginSubmit}>
+        <SignInForm noValidate onSubmit={onLoginSubmit}>
           <UsernameField />
           <PasswordField label={"Password"} id={"password"} />
-          <div className={classes.btnContainer}>
+          <ButtonContainer>
             <LoginButton text="Login" />
-          </div>
-        </form>
-      </div>
+          </ButtonContainer>
+        </SignInForm>
+      </SignInPaper>
       <LoginFooter />
     </Container>
   );

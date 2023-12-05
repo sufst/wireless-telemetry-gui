@@ -18,15 +18,13 @@
 
 import React from "react";
 import {
-  Avatar,
-  Button,
   TextField,
   Link,
   Box,
   Typography,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { useStyles } from "./styles";
+import { SubmitButton, Avatar } from "./styles";
 
 export const LoginFooter: React.FC = () => {
   return (
@@ -43,13 +41,12 @@ export const LoginFooter: React.FC = () => {
   );
 };
 
-export const LoginHeader: React.FC = () => {
-  const classes = useStyles();
+export const LoginHeader: React.FC = () => {;
 
   return (
     <>
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon className={classes.lockIcon} />
+      <Avatar>
+        <LockOutlinedIcon sx={{color:"white"}} />
       </Avatar>
       <Typography component="h1" variant="h5">
         Please Login In
@@ -91,17 +88,15 @@ export const PasswordField: React.FC<{ label: string; id: string }> = (
 };
 
 export const LoginButton: React.FC<{ text: string }> = (props) => {
-  const classes = useStyles();
 
   return (
-    <Button
+    <SubmitButton
       type="submit"
       fullWidth
       variant="contained"
       color="primary"
-      className={classes.submit}
     >
       {props.text}
-    </Button>
+    </SubmitButton>
   );
 };
