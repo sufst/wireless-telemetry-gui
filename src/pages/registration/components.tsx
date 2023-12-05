@@ -18,7 +18,6 @@
 
 import React from "react";
 import {
-  Avatar,
   Box,
   Typography,
   Link,
@@ -27,29 +26,27 @@ import {
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { UserDepartment, UserPrivilege } from "types/models/user";
-import { useStyles } from "./styles";
+import { DepartmentLabel, Avatar } from "./styles";
 
 export const DepartmentSelect = (props: {
   department: UserDepartment;
   handleDepartmentChange: (event: any) => void;
 }) => {
-  const classes = useStyles();
 
   const { department, handleDepartmentChange } = props;
 
   return (
     <>
-      <InputLabel
+      <DepartmentLabel
         htmlFor="department-select"
-        className={classes.department_label}
       >
         Department
-      </InputLabel>
+      </DepartmentLabel>
       <Select
         native
         value={department}
         onChange={handleDepartmentChange}
-        className={classes.department_select}
+        sx={{marginTop:"5px"}}
         autoWidth={true}
         inputProps={{
           name: "department",
@@ -71,23 +68,21 @@ export const PrivilegeSelect = (props: {
   privilege: UserPrivilege;
   handlePrivilegeChange: (event: any) => void;
 }) => {
-  const classes = useStyles();
 
   const { privilege, handlePrivilegeChange } = props;
 
   return (
     <>
-      <InputLabel
+      <DepartmentLabel
         htmlFor="privilege-select"
-        className={classes.department_label}
       >
         Privilege Level
-      </InputLabel>
+      </DepartmentLabel>
       <Select
         native
         value={privilege}
         onChange={handlePrivilegeChange}
-        className={classes.department_select}
+        sx={{marginTop:"5px"}}
         autoWidth={true}
         inputProps={{
           name: "privilege",
@@ -103,11 +98,10 @@ export const PrivilegeSelect = (props: {
 };
 
 export const RegisterHeader = () => {
-  const classes = useStyles();
 
   return (
     <>
-      <Avatar className={classes.avatar}>
+      <Avatar>
         <AccountCircleIcon />
       </Avatar>
       <Typography component="h1" variant="h5">

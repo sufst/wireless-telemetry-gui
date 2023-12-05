@@ -34,12 +34,11 @@ import {
   RegisterFooter,
   RegisterHeader,
 } from "./components";
-import { useStyles } from "./styles";
+import { RegistrationForm, RegisterPaper } from "./styles";
 
 export const RegisterContainer: React.FC<{ registerUser: UserRegister }> = (
   props
 ) => {
-  const classes = useStyles();
 
   const { registerUser } = props;
 
@@ -95,9 +94,9 @@ export const RegisterContainer: React.FC<{ registerUser: UserRegister }> = (
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
+      <RegisterPaper>
         <RegisterHeader />
-        <form className={classes.form} noValidate onSubmit={onRegisterSubmit}>
+        <RegistrationForm noValidate onSubmit={onRegisterSubmit}>
           <UsernameField />
           <PasswordField label="Password" id={"password"} />
           <PasswordField label="Confirm Password" id={"passconfirm"} />
@@ -109,11 +108,11 @@ export const RegisterContainer: React.FC<{ registerUser: UserRegister }> = (
             privilege={privilege}
             handlePrivilegeChange={handlePrivilegeChange}
           />
-          <div className={classes.btnContainer}>
+          <div style={{marginTop: "2rem"}}>
             <LoginButton text="Register" />
           </div>
-        </form>
-      </div>
+        </RegistrationForm>
+      </RegisterPaper>
       <RegisterFooter />
     </Container>
   );
