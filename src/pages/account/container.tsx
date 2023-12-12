@@ -20,24 +20,28 @@
 import React from "react";
 
 // Material UI Imports
-import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { Button, Divider, List, ListItemText } from "@mui/material";
+import { ListItemText } from "@mui/material";
 import { UserState } from "types/models/user";
 
 // Styles
-import { avatarStyle, subheaderStyle, useStyles } from "./styles";
+import {  Divider,
+          LogOutButton,
+          ProfileCard,
+          ProfileContent,
+          ProfileContentWrapper,
+          RegisterButton,
+          avatarStyle,
+          subheaderStyle } from "./styles";
 
 const AccountContainer = (props: {
   user: UserState;
   onLogoutClick: () => void;
   onRegisterNewUser: () => void;
 }) => {
-  const classes = useStyles();
 
   const { onRegisterNewUser, onLogoutClick } = props;
 
@@ -67,7 +71,7 @@ const AccountContainer = (props: {
       style={{ minHeight: "100vh" }}
     >
       <Grid item xs={8}>
-        <Card className={classes.cardRoot}>
+        <ProfileCard>
           <CardHeader
             subheaderTypographyProps={subheaderProps}
             avatar={
@@ -78,8 +82,8 @@ const AccountContainer = (props: {
             title={username}
             subheader={privilege}
           />
-          <CardContent className={classes.list}>
-            <List className={classes.list}>
+          <ProfileContentWrapper>
+            <ProfileContent>
               <ListItemText>
                 <span>DEPARTMENT:</span> <span>{department}</span>
               </ListItemText>
@@ -88,26 +92,24 @@ const AccountContainer = (props: {
                   {`Account Created: ${createdAt}`}
                 </Typography>
               </ListItemText>
-            </List>
-            <Divider className={classes.line} />
-            <Button
+            </ProfileContent>
+            <Divider />
+            <LogOutButton
               variant="contained"
               color="secondary"
-              className={classes.btn}
               onClick={onLogoutClick}
             >
               LOG OUT
-            </Button>
-            <Button
+            </LogOutButton>
+            <RegisterButton
               variant="contained"
               color="primary"
-              className={classes.btn_register}
               onClick={onRegisterNewUser}
             >
               Register New User
-            </Button>
-          </CardContent>
-        </Card>
+            </RegisterButton>
+          </ProfileContentWrapper>
+        </ProfileCard>
       </Grid>
     </Grid>
   );

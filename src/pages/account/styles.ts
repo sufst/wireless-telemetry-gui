@@ -17,8 +17,13 @@
 */
 
 // Material UI Imports
-import makeStyles from '@mui/styles/makeStyles';
+import { CSSObject, styled } from '@mui/material/styles';
 import { PrivilegeColor, PrivilegeToColors } from "types/models/ui-types";
+import MUIDivider from "@mui/material/Divider";
+import MUICard from "@mui/material/Card";
+import MUICardContent from "@mui/material/CardContent";
+import MUIList from "@mui/material/List";
+import MUIButton from "@mui/material/Button";
 import { UserPrivilege } from "types/models/user";
 
 const privilegeToColors: PrivilegeToColors = {
@@ -58,31 +63,42 @@ export const avatarStyle = (privilege?: UserPrivilege) => {
   };
 };
 
-export const useStyles = makeStyles((theme) => ({
-  cardRoot: {
-    marginTop: "1em",
-    backgroundColor: "#292929",
-  },
-  btn: {
-    marginTop: "20px",
-    backgroundColor: "red",
-    color: "white",
+export const Divider = styled(MUIDivider)(()=>({
+  marginTop: "20px",
+}))
 
-    "&:hover": {
-      backgroundColor: "rgba(0, 0, 0, 0.8)"
-    }
-  },
-  btn_register: {
-    marginTop: "20px",
-    marginLeft: "20px",
-    backgroundColor: "green",
-  },
-  list: {
-    margin: "0px",
-    paddingBottom: "0px",
-    paddingTop: "0px",
-  },
-  line: {
-    marginTop: "20px",
-  },
+export const ProfileCard = styled(MUICard)(()=>({
+  marginTop: "1em",
+  backgroundColor: "#292929",
+}));
+
+const list = (): CSSObject => ({
+  margin: "0px",
+  paddingBottom: "0px",
+  paddingTop: "0px",
+});
+
+
+export const ProfileContentWrapper = styled(MUICardContent)(()=>({
+  ...list(),
+}));
+
+export const ProfileContent = styled(MUIList)(()=>({
+  ...list(),
+}));
+
+export const LogOutButton = styled(MUIButton)(()=>({
+  marginTop: "20px",
+  backgroundColor: "red",
+  color: "white",
+
+  "&:hover": {
+    backgroundColor: "rgba(0, 0, 0, 0.8)"
+  }
+}));
+
+export const RegisterButton = styled(MUIButton)(()=>({
+  marginTop: "20px",
+  marginLeft: "20px",
+  backgroundColor: "green",
 }));
