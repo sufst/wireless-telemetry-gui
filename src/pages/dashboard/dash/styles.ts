@@ -16,177 +16,168 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import makeStyles from '@mui/styles/makeStyles';
+import MUIBox from "@mui/material/Box";
+import MUIGrid from "@mui/material/Grid";
+import MUIPaper from "@mui/material/Paper";
+import { CSSObject, styled } from '@mui/material';
 
-export const useStyles = makeStyles((theme) => ({
-  rootPaper: {
-    flexGrow: 1,
-    padding: "1rem",
-    marginBottom: "1rem",
-    marginTop: "1rem",
-    background: "#292929",
-  },
-  gridContainer: {
-    marginBottom: "0.5rem",
-  },
+
+//#region components.tsx styles
+
+export const Box = styled(MUIBox)(()=>({
+  color: "white",
+  overflow: "hidden",
+  height: "120px",
+  fontSize: "20px",
+  borderRadius: "10px",
+  backgroundColor: "green",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+}));
+
+export const StatusItem = styled(MUIGrid)(()=>({
   item: {
     height: "130px",
   },
-  box: {
-    color: "white",
-    overflow: "hidden",
-    height: "120px",
-    fontSize: "20px",
-    borderRadius: "10px",
-    backgroundColor: "green",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  status: {
-    fontWeight: "bold",
-  },
-  currentTimeText: {
-    fontSize: "20px",
-    margin: "0",
-    marginBottom: "0.5rem",
-    padding: "0",
-  },
-  time: {
-    fontWeight: "bold",
-  },
-  startSessionBtn: {
-    color: "red",
-  },
-  sensorBox: {
-    color: "white",
-    overflow: "hidden",
-    height: "120px",
-    textAlign: "center",
-    fontSize: "20px",
-    borderRadius: "10px",
-    backgroundColor: "black",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  sessionButtonStartBox: {
-    color: "white",
-    overflow: "hidden",
-    height: "80px",
-    textAlign: "center",
-    fontSize: "20px",
-    fontWeight: "bold",
-    borderRadius: "10px",
-    backgroundColor: "green",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-
-    "&:hover": {
-      cursor: "pointer",
-      filter: "brightness(125%)",
-    },
-  },
-  sessionButtonStartBoxDisabled: {
-    color: "white",
-    overflow: "hidden",
-    height: "80px",
-    textAlign: "center",
-    fontSize: "20px",
-    fontWeight: "bold",
-    borderRadius: "10px",
-    backgroundColor: "darkGray",
-    opacity: "60%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  sessionButtonStopBox: {
-    color: "white",
-    overflow: "hidden",
-    height: "80px",
-    textAlign: "center",
-    fontSize: "20px",
-    fontWeight: "bold",
-    borderRadius: "10px",
-    backgroundColor: "darkOrange",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-
-    "&:hover": {
-      cursor: "pointer",
-      filter: "brightness(125%)",
-    },
-  },
-  sessionButtonStopBoxDisabled: {
-    color: "white",
-    overflow: "hidden",
-    height: "80px",
-    textAlign: "center",
-    fontSize: "20px",
-    fontWeight: "bold",
-    borderRadius: "10px",
-    backgroundColor: "darkGray",
-    opacity: "60%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  currentSessionBox: {
-    color: "white",
-    overflow: "hidden",
-    height: "80px",
-    textAlign: "center",
-    fontSize: "20px",
-    fontWeight: "bold",
-    borderRadius: "10px",
-    backgroundColor: "gray",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  sessionStatusText: {
-    color: "red",
-    fontWeight: "bold",
-    margin: "0.5rem 0",
-    fontSize: "20px",
-  },
-  sensorsText: {
-    margin: "0",
-    marginBottom: "0.5rem",
-    fontSize: "20px",
-  },
-  sensorLastValue: {
-    fontWeight: "bold",
-  },
 }));
+
+export const StatusText = styled('span')(()=>({
+  fontWeight: "bold",
+}));
+
+export const SensorBox = styled(MUIBox)(()=>({
+  color: "white",
+  overflow: "hidden",
+  height: "120px",
+  textAlign: "center",
+  fontSize: "20px",
+  borderRadius: "10px",
+  backgroundColor: "black",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+}));
+
+export const SensorLastValue = styled('span')(()=>({
+  fontWeight:"bold",
+}));
+
+export const DashHeader = styled('p')(()=>({
+  margin: "0",
+  marginBottom: "0.5rem",
+  fontSize: "20px",
+}));
+
+export const GridContainer = styled(MUIGrid)({
+  marginBottom: "0.5rem",
+})
+
+export const CurrentSessionBoxWrapper = styled(MUIBox,
+   {shouldForwardProp: (prop) => prop !== "bgColor",})<{ bgColor?:string;}>(({bgColor})=>({
+  color: "white",
+  overflow: "hidden",
+  height: "80px",
+  textAlign: "center",
+  fontSize: "20px",
+  fontWeight: "bold",
+  borderRadius: "10px",
+  backgroundColor:   bgColor ? bgColor : "gray",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+}))
+
+//#endregion
+
+//#region container.tsx styles
+
+export const Paper = styled(MUIPaper)({
+  flexGrow: 1,
+  padding: "1rem",
+  marginBottom: "1rem",
+  marginTop: "1rem",
+  background: "#292929",
+})
+
+export const Grid = styled(MUIGrid)({
+  marginBottom: "0.5rem",
+})
+
+//#endregion
+
+
+//#region session buttons
+
+
+// type interface for classes dictionary
+type Styles = {
+  [key : string] : CSSObject,
+}
+
+const sessionButtonBox : CSSObject = {
+  color: "white",
+  overflow: "hidden",
+  height: "80px",
+  textAlign: "center",
+  fontSize: "20px",
+  fontWeight: "bold",
+  borderRadius: "10px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+}
+
+const sessionButtonHover : CSSObject = {
+  "&:hover": {
+    cursor: "pointer",
+    filter: "brightness(125%)",
+  },
+}
+
+export const sessionButtonClasses : Styles = {
+  "sessionButtonStopBox" : {
+    ...sessionButtonBox,
+
+    backgroundColor: "darkOrange",
+
+    ...sessionButtonHover,
+  },
+  "sessionButtonStopBoxDisabled" : {
+    ...sessionButtonBox,
+
+    backgroundColor: "darkGray",
+    opacity: "60%",
+  },
+  "sessionButtonStartBox" : {
+    ...sessionButtonBox ,
+
+    backgroundColor: "green",
+
+    ...sessionButtonHover,
+  },
+  "sessionButtonStartBoxDisabled" : {
+    ...sessionButtonBox,
+
+    backgroundColor: "darkGray",
+    opacity: "60%",
+  }
+}
+
+//#endregion
