@@ -27,9 +27,6 @@ import {
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-// Material UI Imports
-import { Paper } from "@mui/material";
-
 // Component Imports
 import { Dashboard } from "pages/dashboard/index";
 import Admin from "pages/admin/index";
