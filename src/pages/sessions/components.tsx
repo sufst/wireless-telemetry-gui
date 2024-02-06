@@ -18,7 +18,6 @@
 import React from "react";
 import {
   Paper,
-  Button,
   IconButton,
   Table,
   TableBody,
@@ -28,29 +27,27 @@ import {
   TableRow,
 } from "@mui/material";
 import GetAppIcon from "@mui/icons-material/GetApp";
-import { useStyles } from "../dashboard/session/styles";
+import { NewSessionText, RefreshButton, SessionHeadingContainer } from "../dashboard/session/styles";
 import { getSessionDetail } from "redux/slices/session";
 import { useDispatch } from "react-redux";
 import { SessionsState } from "types/models/sessions";
 import { refreshSessions } from "redux/slices/sessions";
 
 export const SessionPaper = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
 
   return (
-    <div className={classes.sessionHeadingContainer}>
-      <p className={classes.newSessionText}>Session</p>
-      <Button
+    <SessionHeadingContainer>
+      <NewSessionText header={false}>Session</NewSessionText>
+      <RefreshButton
         onClick={() => dispatch(refreshSessions())}
-        className={classes.refreshButton}
         variant="contained"
         disableElevation
         color="secondary"
       >
         Refresh
-      </Button>
-    </div>
+      </RefreshButton>
+    </SessionHeadingContainer>
   );
 };
 

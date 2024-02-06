@@ -16,9 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import React from "react";
-import { Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useStyles } from "../dashboard/session/styles";
+import { RootPaper } from "../dashboard/session/styles";
 import { getAllSessions } from "redux/slices/sessions";
 import { SessionTable, SessionPaper } from "./components";
 import { RootState } from "redux/store";
@@ -27,15 +26,13 @@ import { SessionsState } from "types/models/sessions";
 export const SessionContainer: React.FC = () => {
   const dispatch = useDispatch();
 
-  const classes = useStyles();
-
   dispatch(getAllSessions());
   const sessionData: SessionsState = useSelector(
     (state: RootState) => state.sessions
   );
   return (
     <>
-      <Paper className={classes.rootPaper}>
+      <RootPaper>
         {/* TODO: Loading logic needs to go back in */}
         {/* <>
                     {!isLoading.sessions && (
@@ -46,7 +43,7 @@ export const SessionContainer: React.FC = () => {
                 </> */}
         <SessionPaper />
         <SessionTable sessionData={sessionData} />
-      </Paper>
+      </RootPaper>
     </>
   );
 };

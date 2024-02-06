@@ -15,6 +15,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
+//!!!!!!!!! TO BE REPLACED WITH styled() WHEN DOING "feat: style session table in /sessions #94" GITHUB ERROR
+// (look for other styles.ts files as an example)
+
 import makeStyles from '@mui/styles/makeStyles';
 export const useStyles = makeStyles((theme) => ({
   sessionsContainer: {

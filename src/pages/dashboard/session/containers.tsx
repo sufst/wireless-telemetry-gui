@@ -17,8 +17,7 @@
 */
 
 import React, { useState, useCallback, useEffect } from "react";
-import { Paper } from "@mui/material";
-import { useStyles } from "./styles";
+import { RootPaper } from "./styles";
 import { getAllSessions } from "redux/slices/sessions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
@@ -34,8 +33,6 @@ import { StartSessionButtonAction } from "types/models/actions";
 
 export const SessionContainer: React.FC = () => {
   const dispatch = useDispatch();
-
-  const classes = useStyles();
 
   // Session Name from Redux
   const selectSessionName = (state: RootState) => state.session.sessionName;
@@ -125,12 +122,6 @@ export const SessionContainer: React.FC = () => {
     dispatch(stopSession());
   }, [dispatch]);
 
-  const currentSessionStyles = useCallback(() => {
-    return isSessionRunning
-      ? classes.rootPaperRunningSession
-      : classes.rootPaper;
-  }, [isSessionRunning, classes.rootPaper, classes.rootPaperRunningSession]);
-
   const sessionMeta = useCallback(() => {
     return {
       name: sessionName,
@@ -142,10 +133,10 @@ export const SessionContainer: React.FC = () => {
 
   return (
     <>
-      <Paper className={currentSessionStyles()}>
+      <RootPaper sx={{background: isSessionRunning ? "darkBlue": "#292929" }}>
         <CurrentSessionHeader name={sessionNameLabelText} />
-      </Paper>
-      <Paper className={classes.rootPaper}>
+      </RootPaper>
+      <RootPaper>
         <NewSessionContainer
           onSubmit={onStartClicked}
           onStop={onStopClicked}
@@ -153,8 +144,8 @@ export const SessionContainer: React.FC = () => {
           isRunning={isSessionRunning}
           sessionMeta={sessionMeta()}
         />
-      </Paper>
-      <Paper className={classes.rootPaper}>
+      </RootPaper>
+      <RootPaper>
         {/* TODO: Loading logic needs to go back in */}
         {/* <>
                     {!isLoading.sessions && (
@@ -164,7 +155,7 @@ export const SessionContainer: React.FC = () => {
                     )}
                 </> */}
         <SessionTable sessionData={sessionData} />
-      </Paper>
+      </RootPaper>
     </>
   );
 };

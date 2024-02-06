@@ -19,10 +19,7 @@
 import React, { useState, useCallback } from "react";
 import {
   Paper,
-  Typography,
-  TextField,
   Box,
-  Button,
   FormLabel,
   FormControl,
   FormControlLabel,
@@ -35,32 +32,39 @@ import {
   TableHead,
   TableRow,
   Checkbox,
-  Grid,
-} from "@mui/material";
+  Grid, } from "@mui/material";
 import GetAppIcon from "@mui/icons-material/GetApp";
 import { useDispatch } from "react-redux";
 import { refreshSessions } from "redux/slices/sessions";
 import { SessionsState } from "types/models/sessions";
-import { sessionTableStyles, useStyles } from "./styles";
+import {
+  sessionTableClasses,
+  SessionButtonBox,
+  RootPaper,
+  NewSessionTextField,
+  NewSessionText,
+  SensorChooserBox,
+  RefreshButton,
+  SessionHeadingContainer,
+  SessionAlreadyRunning,
+  CurrentSessionTypography } from "./styles";
 
 export const CurrentSessionHeader: React.FC<{ name: string }> = ({ name }) => {
-  const classes = useStyles();
 
   return (
-    <Typography variant="h6" className={classes.currentSessionTypo}>
-      <span className={classes.currentSessionText}>Current Session: </span>
-      <span className={classes.sessionName}>{name}</span>
-    </Typography>
+    <CurrentSessionTypography variant="h6">
+      <span style={{color: "#eee"}}>Current Session: </span>
+      <span style={{fontWeight: "bold"}}>{name}</span>
+    </CurrentSessionTypography>
   );
 };
 
 export const SessionPaper: React.FC = () => {
-  const classes = useStyles();
 
   return (
-    <Paper className={classes.rootPaper}>
-      <p className={classes.newSessionText}>Session</p>
-    </Paper>
+    <RootPaper>
+      <NewSessionText header={false}>Session</NewSessionText>
+    </RootPaper>
   );
 };
 
@@ -80,7 +84,6 @@ interface NewSessionContainerProps {
 export const NewSessionContainer: React.FC<NewSessionContainerProps> = (
   props
 ) => {
-  const classes = useStyles();
 
   const [name, setName] = useState<string>(props.sessionMeta.name);
   const [driver, setDriver] = useState(props.sessionMeta.driver);
@@ -93,30 +96,6 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (
   const [error, setError] = useState(false);
 
   const isSessionRunning = props.isRunning;
-
-  const startButtonClasses = useCallback(() => {
-    if (!isSessionRunning) {
-      return classes.sessionButtonStartBox;
-    } else {
-      return classes.sessionButtonStartBoxDisabled;
-    }
-  }, [
-    isSessionRunning,
-    classes.sessionButtonStartBox,
-    classes.sessionButtonStartBoxDisabled,
-  ]);
-
-  const stopButtonClasses = useCallback(() => {
-    if (!isSessionRunning) {
-      return classes.sessionButtonStopBoxDisabled;
-    } else {
-      return classes.sessionButtonStopBox;
-    }
-  }, [
-    isSessionRunning,
-    classes.sessionButtonStopBox,
-    classes.sessionButtonStopBoxDisabled,
-  ]);
 
   const startPressed = useCallback(() => {
     if (name === "" || sensorGroups.length === 0) {
@@ -154,12 +133,12 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (
 
   return (
     <>
-      <p className={classes.newSessionTextHeader}>New Session</p>
+      <NewSessionText header={true}>New Session</NewSessionText>
       <FormControl error={error}>
         <Box>
-          <TextField
+          <NewSessionTextField
             label="Session Name"
-            className={classes.newSessionTextField}
+            leftMargin = {false}
             value={name}
             disabled={isSessionRunning}
             helperText={isSessionRunning ? "Session is already running" : null}
@@ -167,18 +146,18 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (
               setName(e.target.value);
             }}
           />
-          <TextField
+          <NewSessionTextField
             label="Driver"
-            className={classes.newSessionTextFieldMargin}
+            leftMargin = {true}
             value={driver}
             disabled={isSessionRunning}
             onChange={(e) => {
               setDriver(e.target.value);
             }}
           />
-          <TextField
+          <NewSessionTextField
             label="Conditions"
-            className={classes.newSessionTextFieldMargin}
+            leftMargin = {true}
             value={condition}
             disabled={isSessionRunning}
             onChange={(e) => {
@@ -193,21 +172,31 @@ export const NewSessionContainer: React.FC<NewSessionContainerProps> = (
           disabled={isSessionRunning}
         />
         {isSessionRunning && (
-          <p className={classes.sessionAlreadyRunningText}>
+          <SessionAlreadyRunning>
             Session is already running. You can&apos;t edit these now.
-          </p>
+          </SessionAlreadyRunning>
         )}
         {error && (
           <FormHelperText>
             Set a name and choose at least one sensor
           </FormHelperText>
         )}
-        <Grid container className={classes.gridContainer} spacing={3}>
+        <Grid container sx={{marginBottom: "0.5rem"}} spacing={3}>
           <Grid item xs={4} onClick={startPressed}>
-            <Box className={startButtonClasses()}>Start Session</Box>
+            <SessionButtonBox
+              type="start"
+              disabled={isSessionRunning ? true : false}
+            >
+              Start Session
+            </SessionButtonBox>
           </Grid>
           <Grid item xs={4} onClick={stopPressed}>
-            <Box className={stopButtonClasses()}>Stop Session</Box>
+            <SessionButtonBox
+              type="stop"
+              disabled={isSessionRunning ? false : true}
+            >
+              Stop Session
+            </SessionButtonBox>
           </Grid>
         </Grid>
       </FormControl>
@@ -242,21 +231,21 @@ export const SensorChooser = (props: sensorChooserInterface) => {
     );
   });
 
-  const classes = useStyles();
-
   return (
-    <Box className={classes.sensorChooserBox}>
-      <FormLabel component="legend" className={classes.formLabel}>
+    <SensorChooserBox>
+      <FormLabel
+        component="legend"
+        sx={{ paddingTop: "0.7rem",
+              marginRight: "1rem",}}
+      >
         Sensors
       </FormLabel>
       {checkboxes}
-    </Box>
+    </SensorChooserBox>
   );
 };
 
 export const SessionTable = (props: { sessionData: SessionsState }) => {
-  const classes = useStyles();
-  const tableClasses = sessionTableStyles();
 
   const dispatch = useDispatch();
 
@@ -288,38 +277,37 @@ export const SessionTable = (props: { sessionData: SessionsState }) => {
       ),
       statusClassName:
         sessionEntry.status === "alive"
-          ? tableClasses.aliveStatusText
-          : tableClasses.deadStatusText,
+          ? sessionTableClasses.aliveStatusText
+          : sessionTableClasses.deadStatusText,
     };
   });
 
   return (
     <div>
-      <div className={classes.sessionHeadingContainer}>
-        <span className={classes.newSessionText}>All Sessions</span>
-        <Button
+      <SessionHeadingContainer>
+        <NewSessionText header={false}>All Sessions</NewSessionText>
+        <RefreshButton
           onClick={() => dispatch(refreshSessions())}
-          className={classes.refreshButton}
           variant="contained"
           disableElevation
           color="primary"
         >
           Refresh
-        </Button>
-      </div>
+        </RefreshButton>
+      </SessionHeadingContainer>
 
       <TableContainer component={Paper}>
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
-              <TableCell className={tableClasses.headerText}>Name</TableCell>
-              <TableCell align="right" className={tableClasses.headerText}>
+              <TableCell sx={sessionTableClasses.headerText}>Name</TableCell>
+              <TableCell align="right" sx={sessionTableClasses.headerText}>
                 Status
               </TableCell>
-              <TableCell align="right" className={tableClasses.headerText}>
+              <TableCell align="right" sx={sessionTableClasses.headerText}>
                 Creation Date
               </TableCell>
-              <TableCell align="right" className={tableClasses.headerText}>
+              <TableCell align="right" sx={sessionTableClasses.headerText}>
                 Actions
               </TableCell>
             </TableRow>
@@ -328,16 +316,16 @@ export const SessionTable = (props: { sessionData: SessionsState }) => {
           <TableBody>
             {tableSessionInfo.map((sessionEntry) => (
               <TableRow key={sessionEntry.name}>
-                <TableCell className={tableClasses.plainText}>
+                <TableCell sx={sessionTableClasses.plainText}>
                   {sessionEntry.name}
                 </TableCell>
                 <TableCell
                   align="right"
-                  className={sessionEntry.statusClassName}
+                  sx={sessionEntry.statusClassName}
                 >
                   {sessionEntry.status}
                 </TableCell>
-                <TableCell align="right" className={tableClasses.plainText}>
+                <TableCell align="right" sx={sessionTableClasses.plainText}>
                   {sessionEntry.created}
                 </TableCell>
                 <TableCell align="right">{sessionEntry.actions}</TableCell>
