@@ -41,14 +41,13 @@ import Alert from "modules/alert/alert";
 import Sessions from "pages/sessions";
 
 // Styles
-import { useStyles } from "./styles";
+import { ViewPaper } from "./styles";
 
 // Redux Imports
 import { loginUser } from "redux/slices/user";
 import type { RootState } from "redux/store";
 
 const AppRouterSwitch: React.FC = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -69,40 +68,40 @@ const AppRouterSwitch: React.FC = () => {
         <Redirect to="/dashboard" />
       </Route>
       <Route path="/login" exact>
-        <Paper className={classes.viewPaper}>
+        <ViewPaper>
           <Alert />
           <SignIn />
-        </Paper>
+        </ViewPaper>
       </Route>
       <Route path="/register" exact>
-        <Paper className={classes.viewPaper}>
+        <ViewPaper>
           <Alert />
           <Register />
-        </Paper>
+        </ViewPaper>
       </Route>
       <Route path="/dashboard" exact>
-        <Paper className={classes.viewPaper}>
+        <ViewPaper>
           <Alert />
           <Dashboard />
-        </Paper>
+        </ViewPaper>
       </Route>
       <Route path="/account" exact>
-        <Paper className={classes.viewPaper}>
+        <ViewPaper>
           <Alert />
           <Account />
-        </Paper>
+        </ViewPaper>
       </Route>
       <Route path="/admin" exact>
-        <Paper className={classes.viewPaper}>
+        <ViewPaper>
           <Alert />
           <Admin />
-        </Paper>
+        </ViewPaper>
       </Route>
       <Route path="/sessions" exact>
-        <Paper className={classes.viewPaper}>
+        <ViewPaper>
           <Alert />
           <Sessions />
-        </Paper>
+        </ViewPaper>
       </Route>
       <Route path="*">
         <Redirect to="/" />

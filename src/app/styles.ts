@@ -15,18 +15,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-import makeStyles from '@mui/styles/makeStyles';
+import { Paper, styled } from '@mui/material';
 
-export const useStyles = makeStyles((theme: any) => ({
-  root: {
-    display: "flex",
-  },
-  viewPaper: {
-    margin: "45px 0px 0px 75px",
-    padding: "15px",
-    boxShadow: "0px 0px 0px 0px",
-  },
-  alert: {
-    marginBottom: "2rem",
-  },
-}));
+// export const useStyles = makeStyles((theme: any) => ({
+//   root: {
+//     display: "flex",
+//   },
+//   alert: {
+//     marginBottom: "2rem",
+//   },
+// }));
+
+
+export const ViewPaper = styled(Paper)({
+  margin: "45px 0px 0px 75px",
+  padding: "15px",
+  boxShadow: "0px 0px 0px 0px",
+})
