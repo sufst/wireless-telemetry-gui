@@ -17,15 +17,6 @@
 */
 import { Paper, styled } from '@mui/material';
 
-// export const useStyles = makeStyles((theme: any) => ({
-//   root: {
-//     display: "flex",
-//   },
-//   alert: {
-//     marginBottom: "2rem",
-//   },
-// }));
-
 
 export const ViewPaper = styled(Paper)({
   margin: "45px 0px 0px 75px",

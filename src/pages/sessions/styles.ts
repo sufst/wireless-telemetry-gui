@@ -16,7 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-//!!!!!!!!! TO BE REPLACED WITH styled() WHEN DOING "feat: style session table in /sessions #94" GITHUB ERROR
+//!!!!!!!!! Currently sessions page does not have it's own styles(uses dash/sessions styles)
+// so this file is currently "unused"
+// GitHub issue #94 suggests to make own styles for this page
+// TO BE REPLACED WITH styled() (REMOVE makeStyles) WHEN DOING "feat: style session table in /sessions #94" GITHUB ERROR
 // (look for other styles.ts files as an example)
 
 import makeStyles from '@mui/styles/makeStyles';

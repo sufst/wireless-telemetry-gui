@@ -19,46 +19,6 @@
 import { Box, Button, CSSObject, Paper, styled, TextField } from "@mui/material";
 import MUITypo from "@mui/material/Typography";
 
-// export const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       width: "100%",
-//       margin: "0",
-//     },
-//     heading: {
-//       fontSize: theme.typography.pxToRem(15),
-//     },
-//     startStopBtn: {
-//       marginLeft: "1rem",
-//     },
-//     newSessionWrapper: {
-//       margin: "1rem 1rem 0 1rem",
-//       backgroundColor: "#292929",
-//     },
-//     newSessionSubmitBtn: {
-//       marginLeft: "0.5rem",
-//     },
-//     newSessionTextFieldMargin: {
-//       marginLeft: "1rem",
-//       marginBottom: "1rem",
-//       width: "200px",
-//     },
-//     sessionName: {
-//       fontWeight: "bold",
-//     },
-//     rootSessionPaper: {
-//       marginTop: "1rem",
-//     },
-//     sessionHeadingContainer: {
-//       display: "flex",
-//       marginBottom: "1rem",
-//     },
-//     gridContainer: {
-//       marginBottom: "0.5rem",
-//     }
-//   })
-// );
-
 // type interface for classes dictionary
 type Styles = {
   [key : string] : CSSObject,
