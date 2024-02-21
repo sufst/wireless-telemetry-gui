@@ -17,14 +17,24 @@
 */
 import React, { useState, useEffect } from "react";
 import { useCallback } from "react";
-import { Box, Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import { createAlert } from "modules/alert/alert";
 import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "redux/slices/alert";
 import { RootState } from "redux/store";
 import { SensorData } from "types/models/sensor";
 import { DashStatusItemColor } from "types/models/ui-types";
-import { useStyles } from "./styles";
+
+// custom styles import
+import {  Box,
+          SensorBox,
+          StatusItem,
+          SensorLastValue,
+          StatusText,
+          DashHeader,
+          GridContainer,
+          CurrentSessionBoxWrapper,
+          sessionButtonClasses } from "./styles";
 
 export const DashStatusItem = ({
   name,
@@ -33,7 +43,6 @@ export const DashStatusItem = ({
   name: string;
   data: SensorData[];
 }) => {
-  const classes = useStyles();
   let background: DashStatusItemColor = "rgba(0, 0, 0, 0.5)";
   let text = " ";
 
@@ -41,16 +50,15 @@ export const DashStatusItem = ({
   // state has not been intiailised since socket.io is still fetching sensor data/metadata
   if (data == undefined)
     return (
-      <Grid item lg={3} xs={12} sm={6} className={classes.item}>
+      <StatusItem item lg={3} xs={12} sm={6}>
         <Box
-          className={classes.box}
           style={{
             backgroundColor: background,
           }}
         >
           <span>Loading</span>
         </Box>
-      </Grid>
+      </StatusItem>
     );
 
   const lastValue = data[data?.length - 1]?.value;
@@ -94,25 +102,22 @@ export const DashStatusItem = ({
     }*/
 
   return (
-    <Grid item lg={3} xs={12} sm={6} className={classes.item}>
+    <StatusItem item lg={3} xs={12} sm={6}>
       <Box
-        className={classes.box}
         style={{
           backgroundColor: background,
         }}
       >
         <span>
-          {name}: <span className={classes.status}>{text}</span>
+          {name}: <StatusText>{text}</StatusText>
         </span>
       </Box>
-    </Grid>
+    </StatusItem>
   );
 };
 
 export const CurrentTime: React.FC = () => {
   const [time, setTime] = useState(new Date());
-
-  const classes = useStyles();
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -123,15 +128,14 @@ export const CurrentTime: React.FC = () => {
   }, [time]);
 
   return (
-    <p className={classes.currentTimeText}>
+    <DashHeader>
       Current Time:{" "}
-      <span className={classes.time}>{time.toLocaleTimeString()}</span>
-    </p>
+      <span style={{fontWeight:"bold"}}>{time.toLocaleTimeString()}</span>
+    </DashHeader>
   );
 };
 
 export const DashSensorsItem: React.FC<{ name: string }> = ({ name }) => {
-  const classes = useStyles();
 
   const sensorsSelector = (state: RootState) => state.sensors.sensors[name];
   const sensor = useSelector(sensorsSelector);
@@ -141,19 +145,18 @@ export const DashSensorsItem: React.FC<{ name: string }> = ({ name }) => {
 
   return (
     <Grid item xs={12} sm={6} lg={3}>
-      <Box className={classes.sensorBox}>
+      <SensorBox>
         <div>
           {sensor?.meta?.name}:<br />
-          <span className={classes.sensorLastValue}>{lastValue} </span>
+          <SensorLastValue>{lastValue} </SensorLastValue>
           {sensor?.meta?.units}
         </div>
-      </Box>
+      </SensorBox>
     </Grid>
   );
 };
 
 export const DashSensors: React.FC = () => {
-  const classes = useStyles();
 
   const names = [
     "PM100_Motor_Speed",
@@ -164,13 +167,13 @@ export const DashSensors: React.FC = () => {
 
   return (
     <>
-      <p className={classes.sensorsText}>Sensors</p>
-      <Grid container className={classes.gridContainer} spacing={2}>
+      <DashHeader>Sensors</DashHeader>
+      <GridContainer container spacing={2}>
         <DashSensorsItem name={names[0]} />
         <DashSensorsItem name={names[1]} />
         <DashSensorsItem name={names[2]} />
         <DashSensorsItem name={names[3]} />
-      </Grid>
+      </GridContainer>
     </>
   );
 };
@@ -179,7 +182,6 @@ export const DashSession = (props: {
   handleStart: (event: any, name: string) => void;
   handleStop: (event: any, name: string) => void;
 }) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
 
   // isRunning status from Redux
@@ -261,42 +263,42 @@ export const DashSession = (props: {
 
   const startButtonClasses = useCallback(() => {
     if (!isSessionRunning) {
-      return classes.sessionButtonStartBox;
+      return sessionButtonClasses.sessionButtonStartBox;
     } else {
-      return classes.sessionButtonStartBoxDisabled;
+      return sessionButtonClasses.sessionButtonStartBoxDisabled;
     }
   }, [
     isSessionRunning,
-    classes.sessionButtonStartBox,
-    classes.sessionButtonStartBoxDisabled,
+    sessionButtonClasses.sessionButtonStartBox,
+    sessionButtonClasses.sessionButtonStartBoxDisabled,
   ]);
 
   const stopButtonClasses = useCallback(() => {
     if (!isSessionRunning) {
-      return classes.sessionButtonStopBoxDisabled;
+      return sessionButtonClasses.sessionButtonStopBoxDisabled;
     } else {
-      return classes.sessionButtonStopBox;
+      return sessionButtonClasses.sessionButtonStopBox;
     }
   }, [
     isSessionRunning,
-    classes.sessionButtonStopBox,
-    classes.sessionButtonStopBoxDisabled,
+    sessionButtonClasses.sessionButtonStopBox,
+    sessionButtonClasses.sessionButtonStopBoxDisabled,
   ]);
 
   return (
     <>
-      <p className={classes.sensorsText}>Session</p>
-      <Grid container className={classes.gridContainer} spacing={3}>
+      <DashHeader>Session</DashHeader>
+      <GridContainer container spacing={3}>
         <Grid item xs={12} lg={4}>
           <CurrentSessionBox currentSessionName={sessionNameLabelText} />
         </Grid>
         <Grid item xs={12} lg={4} onClick={startPressed}>
-          <Box className={startButtonClasses()}>Start Session</Box>
+          <Box sx={startButtonClasses()}>Start Session</Box>
         </Grid>
         <Grid item xs={12} lg={4} onClick={stopPressed}>
-          <Box className={stopButtonClasses()}>Stop Session</Box>
+          <Box sx={stopButtonClasses()}>Stop Session</Box>
         </Grid>
-      </Grid>
+      </GridContainer>
       <span
         style={{
           opacity: "0.3",
@@ -312,7 +314,6 @@ export const DashSession = (props: {
 const CurrentSessionBox: React.FC<{ currentSessionName: string }> = ({
   currentSessionName,
 }) => {
-  const classes = useStyles();
 
   let backgroundColor = "grey";
 
@@ -323,16 +324,13 @@ const CurrentSessionBox: React.FC<{ currentSessionName: string }> = ({
   }
 
   return (
-    <Box
-      className={classes.currentSessionBox}
-      style={{
-        backgroundColor,
-      }}
+    <CurrentSessionBoxWrapper
+      bgColor = {backgroundColor}
     >
       <p>
         Current: <br />
         {currentSessionName}
       </p>
-    </Box>
+    </CurrentSessionBoxWrapper>
   );
 };

@@ -16,14 +16,38 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createTheme } from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
+import { createTheme } from "@mui/material";
 
 const theme = createTheme({
   palette: {
-    type: "dark",
-    primary: blue,
+    mode: 'dark',
+    primary: {
+      main: "#2196f3",
+      dark: "#2196f3",
+    },
+    background:{
+      default:"#303030",
+      paper:"#303030",
+    }
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: "white",
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides:{
+        root:{
+          '@media (min-width: 600px)': {
+            minWidth: '160px'
+          }
+        }
+      }
+  }
+},
 });
 
 export default theme;

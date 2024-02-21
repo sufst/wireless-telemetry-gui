@@ -18,32 +18,30 @@
 
 // Module Imports
 import React from "react";
-import { Snackbar } from "@material-ui/core";
-import MuiAlert from "@material-ui/lab/Alert";
+import { Snackbar } from "@mui/material";
+// import { Alert } from "@mui/material";
 import { useSelector } from "react-redux";
 
 // Styles
-import { useStyles } from "./styles";
+import { Alert } from "./styles";
 
 // Redux Imports
 import type { RootState } from "redux/store";
 
 const OfflineBanner = () => {
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
-    <MuiAlert
+    <Alert
       elevation={6}
       variant="filled"
-      className={classes.alert}
       severity="error"
     >
       Lost connection to the server
-    </MuiAlert>
+    </Alert>
   );
 };
 
 const AlertContainer: React.FC = () => {
-  const classes = useStyles();
 
   const selectAlert = (state: RootState) => state.alert;
   const { text, type, timeout, level } = useSelector(selectAlert);
@@ -52,24 +50,22 @@ const AlertContainer: React.FC = () => {
   if (type !== undefined) {
     return type === "snack" ? (
       <Snackbar open={type === "snack"} autoHideDuration={timeout}>
-        <MuiAlert
+        <Alert
           elevation={6}
           variant="filled"
-          className={classes.alert}
           severity={level}
         >
           {text ?? ""}
-        </MuiAlert>
+        </Alert>
       </Snackbar>
     ) : (
-      <MuiAlert
+      <Alert
         elevation={6}
         variant="filled"
-        className={classes.alert}
         severity={level}
       >
         {text ?? ""}
-      </MuiAlert>
+      </Alert>
     );
   } else if (offline) {
     return <OfflineBanner />;

@@ -20,23 +20,20 @@
 import React, { useCallback } from "react";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
-import clsx from "clsx";
 
 // Material UI Imports
 import {
-  AppBar,
-  Button,
   CssBaseline,
-  IconButton,
   Toolbar,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
+
 
 // Material UI Icon Imports
-import MenuIcon from "@material-ui/icons/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
 
 // Styles
-import { useStyles } from "./styles";
+import { AppBar, IconButton, LogButton } from "./styles";
 
 // Redux Imports
 import { logoutUser } from "redux/slices/user";
@@ -58,7 +55,6 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
   onAccountClick,
   user,
 }) => {
-  const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -85,9 +81,7 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
       <CssBaseline />
       <AppBar
         position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
+        open={open}
       >
         <Toolbar>
           <IconButton
@@ -95,31 +89,39 @@ const AppNavigationBar: React.FC<NavigationBarProps> = ({
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
+            open={open}
+            size="large"
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap className={classes.title}>
+          <Typography
+            variant="h6"
+            noWrap
+            sx={{
+              flexGrow: 1,
+              fontWeight: "bold",
+            }}
+          >
             SUFST Telemetry
           </Typography>
-          <Typography className={classes.usernameLabel} variant="h6">
+          <Typography
+            variant="h6"
+            sx={{
+              color: "white",
+              marginRight: "1rem",
+            }}
+          >
             {username === "anonymous" ? "" : username}
           </Typography>
-          <Button
+          <LogButton
             variant="contained"
             disableElevation
             color="secondary"
             onClick={onLoginLogoutButtonClick}
-            className={
-              username === "anonymous"
-                ? classes.loginButton
-                : classes.logoutButton
-            }
+            username={username}
           >
             {loginLogoutButtonText()}
-          </Button>
+          </LogButton>
         </Toolbar>
       </AppBar>
     </div>

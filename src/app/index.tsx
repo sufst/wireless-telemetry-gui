@@ -20,15 +20,24 @@ import { Provider } from "react-redux";
 import store from "redux/store";
 import { AppContainer } from "./containers";
 
-import { ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
 import theme from "./theme";
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 export const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <AppContainer />
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <AppContainer />
+        </ThemeProvider>
+      </StyledEngineProvider>
     </Provider>
   );
 };

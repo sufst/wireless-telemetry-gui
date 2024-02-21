@@ -16,190 +16,117 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Box, Button, CSSObject, Paper, styled, TextField } from "@mui/material";
+import MUITypo from "@mui/material/Typography";
 
-export const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: "100%",
-      margin: "0",
-    },
-    rootPaper: {
-      flexGrow: 1,
-      padding: "1rem",
-      marginBottom: "1rem",
-      marginTop: "1rem",
-      background: "#292929",
-    },
-    rootPaperRunningSession: {
-      flexGrow: 1,
-      padding: "1rem",
-      marginBottom: "1rem",
-      marginTop: "1rem",
-      background: "darkBlue",
-    },
-    newSessionText: {
-      margin: "auto",
-      flexGrow: 1,
-      fontSize: "20px",
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-    },
-    currentSessionTypo: {
-      textAlign: "center",
-    },
-    currentSessionText: {
-      color: "#eee",
-    },
-    startStopBtn: {
-      marginLeft: "1rem",
-    },
-    newSessionWrapper: {
-      margin: "1rem 1rem 0 1rem",
-      backgroundColor: "#292929",
-    },
-    newSessionSubmitBtn: {
-      marginLeft: "0.5rem",
-    },
-    newSessionTextField: {
-      marginBottom: "1rem",
-      width: "200px",
-    },
-    newSessionTextFieldMargin: {
-      marginLeft: "1rem",
-      marginBottom: "1rem",
-      width: "200px",
-    },
-    sessionName: {
-      fontWeight: "bold",
-    },
-    refreshButton: {
-      backgroundColor: "green",
-    },
-    rootSessionPaper: {
-      marginTop: "1rem",
-    },
-    sessionHeadingContainer: {
-      display: "flex",
-      marginBottom: "1rem",
-    },
-    sessionButtonStopBox: {
-      color: "white",
-      overflow: "hidden",
-      height: "80px",
-      textAlign: "center",
-      fontSize: "20px",
-      fontWeight: "bold",
-      borderRadius: "10px",
-      backgroundColor: "darkOrange",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
+// type interface for classes dictionary
+type Styles = {
+  [key : string] : CSSObject,
+}
 
-      "&:hover": {
-        cursor: "pointer",
-        filter: "brightness(125%)",
-      },
-    },
-    sessionButtonStartBox: {
-      color: "white",
-      overflow: "hidden",
-      height: "80px",
-      textAlign: "center",
-      fontSize: "20px",
-      fontWeight: "bold",
-      borderRadius: "10px",
-      backgroundColor: "green",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
+//#region containers.tsx styles
 
-      "&:hover": {
-        cursor: "pointer",
-        filter: "brightness(125%)",
-      },
-    },
-    gridContainer: {
-      marginBottom: "0.5rem",
-    },
-    formLabel: {
-      paddingTop: "0.7rem",
-      marginRight: "1rem",
-    },
-    sessionAlreadyRunningText: {
-      marginTop: "-10px",
-      fontWeight: "bold",
-      color: "red",
-      opacity: "70%",
-    },
-    sensorChooserBox: {
-      marginBottom: "1rem",
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
-    },
-    sessionButtonStartBoxDisabled: {
-      color: "white",
-      overflow: "hidden",
-      height: "80px",
-      textAlign: "center",
-      fontSize: "20px",
-      fontWeight: "bold",
-      borderRadius: "10px",
-      backgroundColor: "darkGray",
-      opacity: "60%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-    },
-    sessionButtonStopBoxDisabled: {
-      color: "white",
-      overflow: "hidden",
-      height: "80px",
-      textAlign: "center",
-      fontSize: "20px",
-      fontWeight: "bold",
-      borderRadius: "10px",
-      backgroundColor: "darkGray",
-      opacity: "60%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-    },
-  })
-);
+export const RootPaper = styled(Paper)(({
+  flexGrow: 1,
+  padding: "1rem",
+  marginBottom: "1rem",
+  marginTop: "1rem",
+  background: "#292929",
+}))
 
-export const sessionTableStyles = makeStyles((theme) => ({
-  headerText: {
+//#endregion
+
+//#region components.tsx styles
+
+export const CurrentSessionTypography = styled(MUITypo)({
+  textAlign: "center"
+})
+
+export const SessionAlreadyRunning = styled("p")({
+  marginTop: "-10px",
+  fontWeight: "bold",
+  color: "red",
+  opacity: "70%",
+})
+
+export const SessionHeadingContainer = styled("div")({
+  display: "flex",
+  marginBottom: "1rem",
+})
+
+export const RefreshButton = styled(Button)({
+  backgroundColor: "green",
+})
+
+export const SensorChooserBox = styled(Box)({
+  marginBottom: "1rem",
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+})
+
+export const SessionButtonBox = styled(Box,
+  {shouldForwardProp : (prop) => prop != "type" && prop != "disabled",})<{type : "start" | "stop", disabled : boolean}>(({type, disabled})=>({
+    color: "white",
+    overflow: "hidden",
+    height: "80px",
+    textAlign: "center",
+    fontSize: "20px",
+    fontWeight: "bold",
+    borderRadius: "10px",
+    backgroundColor: disabled ? "darkGray" : type == "start" ? "green" : "darkOrange",
+    opacity : disabled ? "60%" : "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+
+    "&:hover": disabled ? "" : {
+      cursor: "pointer",
+      filter: "brightness(125%)",
+    },
+}))
+
+export const NewSessionTextField = styled(TextField,
+  {shouldForwardProp : (prop) => prop != "leftMargin",})<{leftMargin : boolean}>(({leftMargin})=>({
+    marginLeft: leftMargin ? "1rem" : "0rem",
+    marginBottom: "1rem",
+    width: "200px",
+  }))
+
+
+export const NewSessionText = styled("p",
+  {shouldForwardProp : (prop) => prop != "header",})<{header : boolean}>(({header})=>({
+    margin: "auto",
+    flexGrow: 1,
+    fontSize: "20px",
+    marginBottom: header ? "1rem" : "0rem",
+  }))
+
+//#endregion
+
+//#region Session Table Styles
+
+
+export const sessionTableClasses : Styles = {
+  "headerText": {
     fontWeight: "bold",
     fontSize: "20px",
   },
-  plainText: {
+  "plainText": {
     fontSize: "18px",
   },
-  aliveStatusText: {
+  "aliveStatusText": {
     fontSize: "18px",
     color: "green",
   },
-  deadStatusText: {
+  "deadStatusText": {
     fontSize: "18px",
     color: "red",
   },
-}));
+}
+
+//#endregion

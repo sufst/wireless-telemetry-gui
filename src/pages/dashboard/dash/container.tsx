@@ -16,7 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 import React, { useCallback, useEffect } from "react";
-import { Grid, Paper } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { startSession, stopSession } from "redux/slices/session";
 import { RootState } from "redux/store";
@@ -26,7 +25,9 @@ import {
   DashSensors,
   DashSession,
 } from "./components";
-import { useStyles } from "./styles";
+
+// import custom styles
+import { Grid, Paper } from "./styles";
 
 const Dash = () => {
   //
@@ -39,7 +40,6 @@ const Dash = () => {
   const _BPS = "VCU_BPS";
 
   const dispatch = useDispatch();
-  const classes = useStyles();
 
   // All Sensor Groups from Redux
   const selectGroups = (state: RootState) => state.sensors.groups;
@@ -85,19 +85,19 @@ const Dash = () => {
 
   return (
     <>
-      <Paper className={classes.rootPaper}>
+      <Paper>
         <CurrentTime />
-        <Grid container spacing={3} className={classes.gridContainer}>
+        <Grid container spacing={3}>
           <DashStatusItem name="RTD" data={rtdSensorData} />
           <DashStatusItem name="SHUTDOWN" data={shutdownSensorData} />
           <DashStatusItem name="" data={bpsSensorData} />
           <DashStatusItem name="" data={shutdownSensorData} />
         </Grid>
       </Paper>
-      <Paper className={classes.rootPaper}>
+      <Paper>
         <DashSensors />
       </Paper>
-      <Paper className={classes.rootPaper}>
+      <Paper>
         <DashSession
           handleStart={handleStartSession}
           handleStop={handleStopSession}
