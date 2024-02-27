@@ -30,7 +30,11 @@ import {
   Paper,
   Grid,
   Typography,
+  Button,
+  Stack,
 } from "@mui/material";
+
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const AdminPanelTable: React.FC<{ users: UserState[] }> = ({
   users,
@@ -106,6 +110,16 @@ const AdminPanelTableRow: React.FC<{ user: UserState }> = ({ user }) => {
           {createdAt}
         </div>
       </TableCell>
+      <TableCell>
+        <Stack spacing={3} direction="row">
+          <Button variant="contained">
+            Edit
+          </Button>
+          <Button color="error" variant="contained" >
+            <DeleteIcon/>
+          </Button>
+        </Stack>
+      </TableCell>
     </TableRow>
   );
 };
@@ -119,6 +133,7 @@ const AdminPanelTableHead: React.FC = () => {
         <TableHeaderCell>Department</TableHeaderCell>
         <TableHeaderCell>Privilege</TableHeaderCell>
         <TableHeaderCell>Created At</TableHeaderCell>
+        <TableHeaderCell sx={{width:"15%"}} >Modification</TableHeaderCell>
       </TableRow>
     </TableHead>
   );
