@@ -43,6 +43,7 @@ import { ViewPaper } from "./styles";
 // Redux Imports
 import { loginUser } from "redux/slices/user";
 import type { RootState } from "redux/store";
+import { Modify } from "pages/modifyuser";
 
 const AppRouterSwitch: React.FC = () => {
   const dispatch = useDispatch();
@@ -74,6 +75,12 @@ const AppRouterSwitch: React.FC = () => {
         <ViewPaper>
           <Alert />
           <Register />
+        </ViewPaper>
+      </Route>
+      <Route path="/modify" exact>
+        <ViewPaper>
+          <Alert />
+          <Modify />
         </ViewPaper>
       </Route>
       <Route path="/dashboard" exact>

@@ -35,6 +35,7 @@ import {
 } from "@mui/material";
 
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useHistory } from "react-router-dom";
 
 export const AdminPanelTable: React.FC<{ users: UserState[] }> = ({
   users,
@@ -63,6 +64,8 @@ export const AdminPanelTable: React.FC<{ users: UserState[] }> = ({
 
 // TODO: Solve the warning about user.creation being optional, even though its requied as part of the calculation, potentially breaking the application
 const AdminPanelTableRow: React.FC<{ user: UserState }> = ({ user }) => {
+
+  const history = useHistory();
 
   // TODO: Remove force unwrapping here. Make it safer.
   const createdAt = new Date(user.creation! * 1000).toLocaleString("en-GB", {
@@ -112,7 +115,13 @@ const AdminPanelTableRow: React.FC<{ user: UserState }> = ({ user }) => {
       </TableCell>
       <TableCell>
         <Stack spacing={3} direction="row">
-          <Button variant="contained">
+          <Button onClick={()=>history.push({
+            pathname:"/modify",
+            search: `?username=${user.username}`,
+            state: {  // location state
+              username: user.username, 
+            },
+          })} variant="contained">
             Edit
           </Button>
           <Button color="error" variant="contained" >
