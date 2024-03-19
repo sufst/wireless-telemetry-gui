@@ -25,7 +25,6 @@ import { RootState } from "redux/store";
 import { ModifyUserContainer } from "./containers";
 import { useLocation } from "react-router-dom";
 
-import { registerNewUser } from "redux/slices/user";
 import { SetUserAction, UserRegister } from "types/models/actions";
 import { usersGet } from "modules/api/users";
 
@@ -94,7 +93,7 @@ export const Modify: React.FC = () => {
 
   return (
     <>
-      <ModifyUserContainer currentUser={user} />
+      <ModifyUserContainer user={user} />
     </>
   );
 };
