@@ -55,7 +55,7 @@ export const DepartmentSelect = (props: {
         <option value={"Electronics"}>Electronics</option>
         <option value={"Tier 1"}>Tier 1</option>
         <option value={"Operations"}>Operations</option>
-        <option value={"Power-Train"}>Power-Train</option>
+        <option value={"Powertrain"}>Power-Train</option>
         <option value={"Vehicle Performance"}>Vehicle Performance</option>
         <option value={"Race Engineering"}>Race Engineering</option>
       </Select>
