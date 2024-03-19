@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Container, CssBaseline } from "@mui/material";
 import { createAlert } from "modules/alert/alert";
 import {
@@ -24,9 +24,9 @@ import {
   PasswordField,
   UsernameField,
 } from "pages/signin/components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showAlert } from "redux/slices/alert";
-import { SetUserAction, UserRegister } from "types/models/actions";
+import { SetUserAction } from "types/models/actions";
 import { UserDepartment, UserPrivilege } from "types/models/user";
 import {
   DepartmentSelect,
@@ -35,17 +35,25 @@ import {
   RegisterHeader,
 } from "./components";
 import { RegistrationForm, RegisterPaper } from "./styles";
+import { userPatch } from "modules/api/user";
+import { RootState } from "redux/store";
+import { usersPatch } from "modules/api/users";
 
-export const ModifyUserContainer: React.FC<{ currentUser: SetUserAction | undefined }> = (
+export const ModifyUserContainer: React.FC<{ user: SetUserAction | undefined }> = (
   props
 ) => {
 
-  const { currentUser } = props;
+  const { user } = props;
+
+  const selectUser = (state: RootState) => state.user;
+  const currentUser = useSelector(selectUser);
+
+  const token = currentUser.accessToken
 
   const dispatch = useDispatch();
 
+  const [username, setUsername] = useState<string>("");
   const [department, setDepartment] = useState<UserDepartment>("Electronics");
-
   const [privilege, setPrivilege] = useState<UserPrivilege>("Basic");
 
   const handleDepartmentChange = useCallback((event: any) => {
@@ -55,6 +63,15 @@ export const ModifyUserContainer: React.FC<{ currentUser: SetUserAction | undefi
   const handlePrivilegeChange = useCallback((event: any) => {
     setPrivilege(event.target.value);
   }, []);
+
+  useEffect(() => {
+    console.log(user)
+    if (user) {
+      setDepartment(user.department)
+      setPrivilege(user.privilege)
+      setUsername(user.username)
+    }
+  }, [user])
 
 
 
@@ -66,7 +83,48 @@ export const ModifyUserContainer: React.FC<{ currentUser: SetUserAction | undefi
       const password: string = event.target.password.value;
       const confirmPass: string = event.target.passconfirm.value;
 
-      if (username === "" || password === "" || confirmPass === "") {
+      interface Fields {
+        [key: string]: string;
+      }
+
+      const defaultFields : Fields = {
+        username: username,
+        password: password,
+        department: department,
+        privilege: privilege
+      };
+
+      const patchFields: Fields = {};
+
+      for (const [key, value] of Object.entries(defaultFields)) {
+        if (value !== '') {
+          switch (key) {
+            case "department":
+              if (value !== user?.department) {
+                patchFields[key] = value;
+              }
+              break;
+            case "privilege":
+              if (value !== user?.privilege) {
+                patchFields[key] = value;
+              }
+              break;
+            case "username":
+              if (value !== user?.username) {
+                patchFields[key] = value;
+              }
+              break;
+            // Add other cases as needed
+            default:
+              patchFields[key] = value;
+              break;
+          }
+        }
+      }
+
+
+
+      if (username === "") {
         const emptyFieldAlert = createAlert(
           3000,
           "error",
@@ -77,28 +135,34 @@ export const ModifyUserContainer: React.FC<{ currentUser: SetUserAction | undefi
         return;
       }
 
+      // console.log(username, password, confirmPass, department, privilege)
 
-      const mismatchPassAlert = createAlert(
-        3000,
-        "error",
-        "alert",
-        "The passwords don't match."
-      );
-      dispatch(showAlert(mismatchPassAlert));
+      if (password !== confirmPass) {
+        const mismatchPassAlert = createAlert(
+          3000,
+          "error",
+          "alert",
+          "The passwords don't match."
+        );
+        dispatch(showAlert(mismatchPassAlert));
+      }
+
+      console.log(patchFields)
 
       //todo
+    if (token && user) {
+      usersPatch(user.username, token, patchFields);
+    }
     },
     [department, privilege, dispatch]
   );
 
   // TODO create a loading page to let user get loaded first
-  if (!currentUser) {
+  if (!user) {
     return(
       <div>Loading</div>
     );
   }
-
-  console.log(currentUser)
 
   return (
     <Container component="main" maxWidth="xs">
@@ -107,8 +171,8 @@ export const ModifyUserContainer: React.FC<{ currentUser: SetUserAction | undefi
         <RegisterHeader />
         {/* TODO Change form to be more scalable rather than stock html form */}
         <RegistrationForm noValidate onSubmit={onSubmit}>
-          <UsernameField />
-          <PasswordField label="Password" id={"password"} />
+          <UsernameField value={username} onChange={setUsername}/>
+          <PasswordField label="New Password" id={"password"} />
           <PasswordField label="Confirm Password" id={"passconfirm"} />
           <DepartmentSelect
             department={department}
